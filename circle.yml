@@ -1,0 +1,18 @@
+machine:
+  java:
+    version: "oraclejdk8"
+
+dependencies:
+  override:
+    - "mvn dependency:go-offline"
+  cache_directories:
+    - "~/.m2"
+
+test:
+  override:
+    - "mvn clean install site"
+
+general:
+  artifacts:
+    - "target/*.jar"
+    - "target/site"
