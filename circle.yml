@@ -11,6 +11,8 @@ dependencies:
 test:
   override:
     - "mvn clean install site"
+    - "cd sample/tomcat; mvn clean install"
+    - "cd sample/jetty; mvn clean install"
 
 general:
   artifacts:
