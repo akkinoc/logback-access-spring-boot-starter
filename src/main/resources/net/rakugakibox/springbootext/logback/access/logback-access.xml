@@ -1,0 +1,8 @@
+<configuration>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>common</pattern>
+        </encoder>
+    </appender>
+    <appender-ref ref="CONSOLE" />
+</configuration>
