@@ -19,6 +19,11 @@
         <version>1.3.0.RELEASE</version>
     </parent>
 
+    <organization>
+        <name>rakugakibox.net</name>
+        <url>http://rakugakibox.net</url>
+    </organization>
+
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
