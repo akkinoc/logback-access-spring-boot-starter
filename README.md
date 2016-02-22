@@ -18,13 +18,13 @@ Supported servlet containers
 Usage
 -----
 
-### Maven dependency:
+### Maven dependency (pom.xml):
 
 ```xml
 <dependency>
     <groupId>net.rakugakibox.springbootext</groupId>
     <artifactId>spring-boot-ext-logback-access</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
 </dependency>
 ```
 
