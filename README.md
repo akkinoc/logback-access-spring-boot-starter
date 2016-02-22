@@ -39,7 +39,7 @@ logback.access:
     #   => "classpath:net/rakugakibox/springbootext/logback/access/logback-access.xml"
 ```
 
-### Logback-access configuration example (logback-access.xml)
+### Logback-access configuration example (logback-access.xml):
 
 ```xml
 <configuration>
