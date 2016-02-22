@@ -27,6 +27,8 @@ class ReconfigurableLogbackValve extends LogbackValve {
     public ReconfigurableLogbackValve() {
         // Suppress status printing.
         setQuiet(true);
+        // Allows asynchronous responses.
+        setAsyncSupported(true);
     }
 
     /** {@inheritDoc} */
