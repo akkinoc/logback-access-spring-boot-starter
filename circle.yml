@@ -4,15 +4,15 @@ machine:
 
 dependencies:
   override:
-    - "mvn dependency:go-offline"
+    - "mvn --batch-mode dependency:go-offline"
   cache_directories:
     - "~/.m2"
 
 test:
   override:
-    - "mvn clean install site"
-    - "mvn --file sample/tomcat clean install"
-    - "mvn --file sample/jetty clean install"
+    - "mvn --batch-mode clean install site"
+    - "mvn --batch-mode --file sample/tomcat clean install"
+    - "mvn --batch-mode --file sample/jetty clean install"
 
 general:
   artifacts:
