@@ -1,0 +1,15 @@
+<configuration>
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                %d{HH:mm:ss.SSS} %highlight(%.-3p) %cyan(%-30.30c{1}): %m %blue(-- %C{1}.%M\(%F:%L\) / %t){}%n
+            </pattern>
+        </encoder>
+    </appender>
+    <logger name="net.rakugakibox.springbootext.logback.access" level="debug" additivity="false">
+        <appender-ref ref="console" />
+    </logger>
+    <root level="info">
+        <appender-ref ref="console" />
+    </root>
+</configuration>
