@@ -12,7 +12,7 @@ import org.springframework.boot.context.embedded.tomcat.TomcatContextCustomizer;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 
 /**
- * {@link EmbeddedServletContainerCustomizer} for Tomcat.
+ * Tomcat customizer for the Logback-access.
  */
 @Slf4j
 public class LogbackAccessTomcatCustomizer implements EmbeddedServletContainerCustomizer {
@@ -31,7 +31,7 @@ public class LogbackAccessTomcatCustomizer implements EmbeddedServletContainerCu
         if (container instanceof TomcatEmbeddedServletContainerFactory) {
             customize((TomcatEmbeddedServletContainerFactory) container);
         } else {
-            log.debug("Skipped customization for Tomcat: container=[{}]", container);
+            log.warn("Skipped the Tomcat customization: container=[{}]", container);
         }
     }
 
@@ -41,8 +41,9 @@ public class LogbackAccessTomcatCustomizer implements EmbeddedServletContainerCu
      * @param container {@link TomcatEmbeddedServletContainerFactory} to customize.
      */
     public void customize(TomcatEmbeddedServletContainerFactory container) {
-        container.addContextCustomizers(new ContextCustomizer());
-        log.debug("Added Tomcat context customizer: customizer=[{}] to container=[{}]", this, container);
+        ContextCustomizer customizer = new ContextCustomizer();
+        container.addContextCustomizers(customizer);
+        log.debug("Added the Tomcat context customizer: customizer=[{}] to container=[{}]", customizer, container);
     }
 
     /**
@@ -56,7 +57,7 @@ public class LogbackAccessTomcatCustomizer implements EmbeddedServletContainerCu
             ReconfigurableLogbackValve valve = new ReconfigurableLogbackValve();
             valve.setReconfigurator(configurator);
             context.getPipeline().addValve(valve);
-            log.debug("Added Tomcat valve: valve=[{}] to context=[{}]", valve, context);
+            log.debug("Added the Tomcat valve: valve=[{}] to context=[{}]", valve, context);
         }
 
     }

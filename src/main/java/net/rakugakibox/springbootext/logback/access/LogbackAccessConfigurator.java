@@ -15,14 +15,14 @@ import org.springframework.util.ResourceUtils;
 import org.springframework.util.StringUtils;
 
 /**
- * Configurator of Logback-access.
+ * Configurator of the Logback-access.
  */
 @ConfigurationProperties(prefix = "logback.access")
 @Slf4j
 public class LogbackAccessConfigurator {
 
     /**
-     * Default location of the configuration files.
+     * Default locations of the configuration file.
      */
     private static final String[] DEFAULT_CONFIGS = new String[]{
         "classpath:logback-access-test.xml",
@@ -44,7 +44,7 @@ public class LogbackAccessConfigurator {
     private String config;
 
     /**
-     * Configure Logback-access.
+     * Configures the Logback-access.
      *
      * @param context context to configure.
      */
@@ -65,6 +65,7 @@ public class LogbackAccessConfigurator {
                 return;
             } catch (IOException exc) {
                 // continue
+                // The default configuration files is optional.
             } catch (JoranException exc) {
                 throw createException(context, defaultConfig, exc);
             }
@@ -79,7 +80,7 @@ public class LogbackAccessConfigurator {
     }
 
     /**
-     * Configure Logback-access.
+     * Configures the Logback-access.
      *
      * @param context context to configure.
      * @param config location of the configuration file.
@@ -92,19 +93,21 @@ public class LogbackAccessConfigurator {
         JoranConfigurator configurator = new JoranConfigurator();
         configurator.setContext(context);
         configurator.doConfigure(stream);
-        log.info("Configured Logback-access: context=[{}] from config=[{}]", context, config);
+        log.info("Configured the Logback-access: context=[{}] from config=[{}]", context, config);
     }
 
     /**
-     * Create unchecked exception.
+     * Creates a exception.
      *
      * @param context context to configure.
      * @param config location of the configuration file.
      * @param cause cause of exception.
      */
     private RuntimeException createException(Context context, String config, Exception cause) {
-        return new IllegalStateException("Could not configure Logback-access: "
-                + "context=[" + context + "] from config=[" + config + "]", cause);
+        return new IllegalStateException(
+                "Could not configure the Logback-access: context=[" + context + "] from config=[" + config + "]",
+                cause
+        );
     }
 
 }

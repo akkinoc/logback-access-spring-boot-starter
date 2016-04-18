@@ -8,7 +8,7 @@ import net.rakugakibox.springbootext.logback.access.LogbackAccessConfigurator;
 
 /**
  * Customized {@link RequestLogImpl}.
- * Reconfigure Logback-access if reconfigurator is set.
+ * Reconfigures the {@link RequestLogImpl} if reconfigurator is set.
  */
 @Slf4j
 class ReconfigurableRequestLog extends RequestLogImpl {
@@ -24,7 +24,7 @@ class ReconfigurableRequestLog extends RequestLogImpl {
      * Constructor.
      */
     public ReconfigurableRequestLog() {
-        // Suppress status printing.
+        // Suppresses status printing.
         setQuiet(true);
     }
 
@@ -35,9 +35,9 @@ class ReconfigurableRequestLog extends RequestLogImpl {
         if (reconfigurator != null) {
             getStatusManager().clear();
             reconfigurator.configure(this);
-            log.debug("Reconfigured RequestLog: requestLog=[{}] with reconfigurator=[{}]", this, reconfigurator);
+            log.debug("Reconfigured the RequestLog: requestLog=[{}] with reconfigurator=[{}]", this, reconfigurator);
         } else {
-            log.debug("Skipped reconfiguration: requestLog=[{}]", this);
+            log.debug("Skipped the RequestLog reconfiguration: requestLog=[{}]", this);
         }
     }
 

@@ -13,10 +13,10 @@ import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletConta
 import org.springframework.boot.context.embedded.jetty.JettyServerCustomizer;
 
 /**
- * Jetty customizer for Logback-access.
+ * Jetty customizer for the Logback-access.
  */
 @Slf4j
-public class LogbackAccessContainerCustomizer implements EmbeddedServletContainerCustomizer {
+public class LogbackAccessJettyCustomizer implements EmbeddedServletContainerCustomizer {
 
     /**
      * Configurator.
@@ -32,7 +32,7 @@ public class LogbackAccessContainerCustomizer implements EmbeddedServletContaine
         if (container instanceof JettyEmbeddedServletContainerFactory) {
             customize((JettyEmbeddedServletContainerFactory) container);
         } else {
-            log.debug("Skipped customization for Jetty: container=[{}]", container);
+            log.warn("Skipped the Jetty customization: container=[{}]", container);
         }
     }
 
@@ -42,7 +42,9 @@ public class LogbackAccessContainerCustomizer implements EmbeddedServletContaine
      * @param container {@link JettyEmbeddedServletContainerFactory} to customize.
      */
     public void customize(JettyEmbeddedServletContainerFactory container) {
-        container.addServerCustomizers(new ServerCustomizer());
+        ServerCustomizer customizer = new ServerCustomizer();
+        container.addServerCustomizers(customizer);
+        log.debug("Added the Jetty server customizer: customizer=[{}] to container=[{}]", customizer, container);
     }
 
     /**
@@ -59,7 +61,7 @@ public class LogbackAccessContainerCustomizer implements EmbeddedServletContaine
             requestLogHandler.setHandler(server.getHandler());
             requestLogHandler.setRequestLog(requestLog);
             server.setHandler(requestLogHandler);
-            log.debug("Set Jetty handler: handler=[{}] to server=[{}]", requestLogHandler, server);
+            log.debug("Set the Jetty handler: handler=[{}] to server=[{}]", requestLogHandler, server);
         }
 
     }

@@ -9,7 +9,7 @@ import org.apache.catalina.LifecycleException;
 
 /**
  * Customized {@link LogbackValve}.
- * Reconfigure Logback-access if reconfigurator is set.
+ * Reconfigures the {@link LogbackValve} if reconfigurator is set.
  */
 @Slf4j
 class ReconfigurableLogbackValve extends LogbackValve {
@@ -25,7 +25,7 @@ class ReconfigurableLogbackValve extends LogbackValve {
      * Constructor.
      */
     public ReconfigurableLogbackValve() {
-        // Suppress status printing.
+        // Suppresses status printing.
         setQuiet(true);
         // Allows asynchronous responses.
         setAsyncSupported(true);
@@ -38,9 +38,9 @@ class ReconfigurableLogbackValve extends LogbackValve {
         if (reconfigurator != null) {
             getStatusManager().clear();
             reconfigurator.configure(this);
-            log.debug("Reconfigured LogbackValve: valve=[{}] with reconfigurator=[{}]", this, reconfigurator);
+            log.debug("Reconfigured the Valve: valve=[{}] with reconfigurator=[{}]", this, reconfigurator);
         } else {
-            log.debug("Skipped reconfiguration: valve=[{}]", this);
+            log.debug("Skipped the Valve reconfiguration: valve=[{}]", this);
         }
     }
 
