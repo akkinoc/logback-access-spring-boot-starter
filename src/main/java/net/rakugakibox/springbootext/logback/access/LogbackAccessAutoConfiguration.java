@@ -3,10 +3,12 @@ package net.rakugakibox.springbootext.logback.access;
 import lombok.extern.slf4j.Slf4j;
 import net.rakugakibox.springbootext.logback.access.jetty.LogbackAccessJettyCustomizer;
 import net.rakugakibox.springbootext.logback.access.tomcat.LogbackAccessTomcatCustomizer;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
+import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainerFactory;
+import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +26,7 @@ public class LogbackAccessAutoConfiguration {
      * Configuration for if Tomcat is being used.
      */
     @Configuration
-    @ConditionalOnClass(org.apache.catalina.startup.Tomcat.class)
+    @ConditionalOnBean(value = TomcatEmbeddedServletContainerFactory.class)
     public static class ForTomcat {
 
         /**
@@ -58,7 +60,7 @@ public class LogbackAccessAutoConfiguration {
      * Configuration for if Jetty is being used.
      */
     @Configuration
-    @ConditionalOnClass(org.eclipse.jetty.server.Server.class)
+    @ConditionalOnBean(value = JettyEmbeddedServletContainerFactory.class)
     public static class ForJetty {
 
         /**
@@ -70,7 +72,7 @@ public class LogbackAccessAutoConfiguration {
         @ConditionalOnMissingBean
         public LogbackAccessConfigurator logbackAccessConfigurator() {
             LogbackAccessConfigurator configurator = new LogbackAccessConfigurator();
-            log.debug("Created LogbackAccessConfigurator: [{}]", configurator);
+            log.debug("Created a LogbackAccessConfigurator: [{}]", configurator);
             return configurator;
         }
 
