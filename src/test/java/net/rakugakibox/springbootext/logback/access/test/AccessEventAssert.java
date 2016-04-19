@@ -15,7 +15,7 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
     /**
      * Constructs an instance.
      *
-     * @param actual the actual value.
+     * @param actual the actual event.
      */
     protected AccessEventAssert(A actual) {
         super(actual, AccessEventAssert.class);
@@ -24,7 +24,7 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
     /**
      * Constructs an instance.
      *
-     * @param actual the actual value.
+     * @param actual the actual event.
      * @param selfClass the self class.
      */
     protected AccessEventAssert(A actual, Class<?> selfClass) {
@@ -57,10 +57,20 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
     }
 
     /**
+     * Verifies that the event does not have content length.
+     *
+     * @return this instance.
+     */
+    public S doesNotHaveContentLength() {
+        Assertions.assertThat(actual.getContentLength()).isLessThan(0);
+        return myself;
+    }
+
+    /**
      * Starts the assertion.
      *
-     * @param <A> the actual value type.
-     * @param actual the actual value.
+     * @param <A> the actual event type.
+     * @param actual the actual event.
      * @return an assertion instance.
      */
     public static <A extends IAccessEvent> AccessEventAssert<?, A> assertThat(A actual) {
