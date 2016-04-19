@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Auto-configuration for the Logback-access.
+ * The auto-configuration for the Logback-access.
  */
 @Configuration
 @EnableConfigurationProperties
@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Configuration;
 public class LogbackAccessAutoConfiguration {
 
     /**
-     * Configuration for if Tomcat is being used.
+     * The configuration for if Tomcat is being used.
      */
     @Configuration
     @ConditionalOnBean(value = TomcatEmbeddedServletContainerFactory.class)
@@ -32,7 +32,7 @@ public class LogbackAccessAutoConfiguration {
         /**
          * Creates a configurator of the Logback-access.
          *
-         * @return configurator of the Logback-access.
+         * @return a configurator of the Logback-access.
          */
         @Bean
         @ConditionalOnMissingBean
@@ -43,9 +43,9 @@ public class LogbackAccessAutoConfiguration {
         }
 
         /**
-         * Creates a {@link EmbeddedServletContainerCustomizer} for the Logback-access.
+         * Creates a container customizer for the Logback-access.
          *
-         * @return {@link EmbeddedServletContainerCustomizer} for the Logback-access.
+         * @return a container customizer for the Logback-access.
          */
         @Bean
         public EmbeddedServletContainerCustomizer logbackAccessContainerCustomizer() {
@@ -57,7 +57,7 @@ public class LogbackAccessAutoConfiguration {
     }
 
     /**
-     * Configuration for if Jetty is being used.
+     * The configuration for if Jetty is being used.
      */
     @Configuration
     @ConditionalOnBean(value = JettyEmbeddedServletContainerFactory.class)
@@ -66,7 +66,7 @@ public class LogbackAccessAutoConfiguration {
         /**
          * Creates a configurator of the Logback-access.
          *
-         * @return configurator of the Logback-access.
+         * @return a configurator of the Logback-access.
          */
         @Bean
         @ConditionalOnMissingBean
@@ -77,9 +77,9 @@ public class LogbackAccessAutoConfiguration {
         }
 
         /**
-         * Creates a {@link EmbeddedServletContainerCustomizer} for the Logback-access.
+         * Creates a container customizer for the Logback-access.
          *
-         * @return {@link EmbeddedServletContainerCustomizer} for the Logback-access.
+         * @return a container customizer for the Logback-access.
          */
         @Bean
         public EmbeddedServletContainerCustomizer logbackAccessContainerCustomizer() {

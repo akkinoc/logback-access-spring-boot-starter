@@ -8,21 +8,21 @@ import net.rakugakibox.springbootext.logback.access.LogbackAccessConfigurator;
 import org.apache.catalina.LifecycleException;
 
 /**
- * Customized {@link LogbackValve}.
+ * The customized {@link LogbackValve}.
  * Reconfigures the {@link LogbackValve} if reconfigurator is set.
  */
 @Slf4j
 class ReconfigurableLogbackValve extends LogbackValve {
 
     /**
-     * Reconfigurator.
+     * The reconfigurator.
      */
     @Getter
     @Setter
     private LogbackAccessConfigurator reconfigurator;
 
     /**
-     * Constructor.
+     * Constructs an instance.
      */
     public ReconfigurableLogbackValve() {
         // Suppresses status printing.

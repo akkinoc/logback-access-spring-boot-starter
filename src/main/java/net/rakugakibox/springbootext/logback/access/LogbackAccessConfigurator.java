@@ -16,14 +16,14 @@ import org.springframework.util.ResourceUtils;
 import org.springframework.util.StringUtils;
 
 /**
- * Configurator of the Logback-access.
+ * The configurator of the Logback-access.
  */
 @ConfigurationProperties(prefix = "logback.access")
 @Slf4j
 public class LogbackAccessConfigurator {
 
     /**
-     * Default locations of the configuration file.
+     * The default locations of the configuration file.
      */
     private static final String[] DEFAULT_CONFIGS = new String[] {
         "classpath:logback-access-test.xml",
@@ -31,13 +31,13 @@ public class LogbackAccessConfigurator {
     };
 
     /**
-     * Fallback location of the configuration file.
+     * The fallback location of the configuration file.
      */
     private static final String FALLBACK_CONFIG = "classpath:"
             + ClassUtils.addResourcePathToPackagePath(LogbackAccessConfigurator.class, "logback-access.xml");
 
     /**
-     * Location of the configuration file.
+     * The location of the configuration file.
      */
     @Getter
     @Setter
@@ -46,7 +46,7 @@ public class LogbackAccessConfigurator {
     /**
      * Configures the Logback-access.
      *
-     * @param context context to configure.
+     * @param context the context to configure.
      */
     public void configure(Context context) {
 
@@ -82,8 +82,8 @@ public class LogbackAccessConfigurator {
     /**
      * Configures the Logback-access.
      *
-     * @param context context to configure.
-     * @param config location of the configuration file.
+     * @param context the context to configure.
+     * @param config the location of the configuration file.
      * @throws IOException if an I/O exception occurs.
      * @throws JoranException if a {@link JoranConfigurator} exception occurs.
      */
@@ -97,11 +97,12 @@ public class LogbackAccessConfigurator {
     }
 
     /**
-     * Creates a exception.
+     * Creates an exception.
      *
-     * @param context context to configure.
-     * @param config location of the configuration file.
-     * @param cause cause of exception.
+     * @param context the context to configure.
+     * @param config the location of the configuration file.
+     * @param cause the cause of exception.
+     * @return an exception.
      */
     private RuntimeException createException(Context context, String config, Exception cause) {
         return new IllegalStateException(
