@@ -5,12 +5,12 @@ import ch.qos.logback.core.AppenderBase;
 import java.util.LinkedList;
 
 /**
- * Singleton list appender.
+ * The appender that has a singleton list.
  */
 public class SingletonListAppender extends AppenderBase<IAccessEvent> {
 
     /**
-     * Events that appended.
+     * The events that appended.
      */
     private static final LinkedList<IAccessEvent> events = new LinkedList<>();
 

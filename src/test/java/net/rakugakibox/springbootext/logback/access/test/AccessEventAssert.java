@@ -4,7 +4,7 @@ import ch.qos.logback.access.spi.IAccessEvent;
 import org.assertj.core.api.AbstractAssert;
 
 /**
- * The {@link IAccessEvent} assertion.
+ * The assertion of the {@link IAccessEvent}.
  */
 public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAccessEvent> extends AbstractAssert<S, A> {
 
