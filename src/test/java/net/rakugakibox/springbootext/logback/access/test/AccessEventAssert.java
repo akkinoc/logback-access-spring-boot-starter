@@ -32,7 +32,7 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
     }
 
     /**
-     * Verifies that the timestamp in the actual value is in given range.
+     * Verifies that the timestamp is in given range.
      *
      * @param start the start value of range (inclusive).
      * @param end the end value of range (inclusive).
@@ -46,7 +46,7 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
     }
 
     /**
-     * Verifies that the content length in the actual value is equal to the given one.
+     * Verifies that the content length is equal to the given one.
      *
      * @param expected the expected content length.
      * @return this instance.
