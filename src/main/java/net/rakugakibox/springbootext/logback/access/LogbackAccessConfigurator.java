@@ -25,7 +25,7 @@ public class LogbackAccessConfigurator {
     /**
      * Default locations of the configuration file.
      */
-    private static final String[] DEFAULT_CONFIGS = new String[]{
+    private static final String[] DEFAULT_CONFIGS = new String[] {
         "classpath:logback-access-test.xml",
         "classpath:logback-access.xml",
     };
