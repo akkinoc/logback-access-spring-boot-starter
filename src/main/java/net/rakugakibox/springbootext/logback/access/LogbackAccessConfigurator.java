@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.util.ClassUtils;
 import org.springframework.util.ResourceUtils;
 import org.springframework.util.StringUtils;
 
@@ -33,8 +34,7 @@ public class LogbackAccessConfigurator {
      * Fallback location of the configuration file.
      */
     private static final String FALLBACK_CONFIG = "classpath:"
-            + StringUtils.replace(LogbackAccessConfigurator.class.getPackage().getName(), ".", "/")
-            + "/logback-access.xml";
+            + ClassUtils.addResourcePathToPackagePath(LogbackAccessConfigurator.class, "logback-access.xml");
 
     /**
      * Location of the configuration file.
