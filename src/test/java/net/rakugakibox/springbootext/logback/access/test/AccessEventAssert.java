@@ -47,6 +47,16 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
     }
 
     /**
+     * Verifies that the protocol is HTTP.
+     *
+     * @return this instance.
+     */
+    public S hasHttpProtocol() {
+        Assertions.assertThat(actual.getProtocol()).startsWith("HTTP/");
+        return myself;
+    }
+
+    /**
      * Verifies that the method is equal to the given one.
      *
      * @param expected the expected method.

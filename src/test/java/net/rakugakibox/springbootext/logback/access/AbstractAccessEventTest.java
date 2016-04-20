@@ -57,18 +57,19 @@ public abstract class AbstractAccessEventTest {
     @Test
     public void postText() {
 
-        restTemplate.put(baseUrl.resolve(TextRestController.PATH), "POST");
+        restTemplate.put(baseUrl.resolve(TextRestController.PATH), "POST-TEXT");
         SingletonQueueAppender.pop();
 
         LocalDateTime startTime = LocalDateTime.now();
-        restTemplate.postForObject(baseUrl.resolve(TextRestController.PATH), "POST", String.class);
+        restTemplate.postForObject(baseUrl.resolve(TextRestController.PATH), "-TEXT", String.class);
         IAccessEvent event = SingletonQueueAppender.pop();
         LocalDateTime endTime = LocalDateTime.now();
 
         assertThat(event)
                 .hasTimestamp(startTime, endTime)
+                .hasHttpProtocol()
                 .hasMethod(HttpMethod.POST)
-                .hasContentLength("POSTPOST".getBytes().length);
+                .hasContentLength("POST-TEXT-TEXT".getBytes().length);
 
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
@@ -80,7 +81,7 @@ public abstract class AbstractAccessEventTest {
     @Test
     public void getText() {
 
-        restTemplate.put(baseUrl.resolve(TextRestController.PATH), "GET");
+        restTemplate.put(baseUrl.resolve(TextRestController.PATH), "GET-TEXT");
         SingletonQueueAppender.pop();
 
         LocalDateTime startTime = LocalDateTime.now();
@@ -90,8 +91,9 @@ public abstract class AbstractAccessEventTest {
 
         assertThat(event)
                 .hasTimestamp(startTime, endTime)
+                .hasHttpProtocol()
                 .hasMethod(HttpMethod.GET)
-                .hasContentLength("GET".getBytes().length);
+                .hasContentLength("GET-TEXT".getBytes().length);
 
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
@@ -104,14 +106,15 @@ public abstract class AbstractAccessEventTest {
     public void putText() {
 
         LocalDateTime startTime = LocalDateTime.now();
-        restTemplate.put(baseUrl.resolve(TextRestController.PATH), "PUT");
+        restTemplate.put(baseUrl.resolve(TextRestController.PATH), "PUT-TEXT");
         IAccessEvent event = SingletonQueueAppender.pop();
         LocalDateTime endTime = LocalDateTime.now();
 
         assertThat(event)
                 .hasTimestamp(startTime, endTime)
+                .hasHttpProtocol()
                 .hasMethod(HttpMethod.PUT)
-                .hasContentLength("PUT".getBytes().length);
+                .hasContentLength("PUT-TEXT".getBytes().length);
 
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
@@ -130,6 +133,7 @@ public abstract class AbstractAccessEventTest {
 
         assertThat(event)
                 .hasTimestamp(startTime, endTime)
+                .hasHttpProtocol()
                 .hasMethod(HttpMethod.DELETE);
                 // TODO: .hasContentLength(0);
 
