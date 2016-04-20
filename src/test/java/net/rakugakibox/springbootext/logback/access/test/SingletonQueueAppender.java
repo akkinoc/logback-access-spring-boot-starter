@@ -6,7 +6,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 /**
- * The appender that has the singleton event queue.
+ * The Logback-access appender that has the singleton event queue.
  */
 public class SingletonQueueAppender extends AppenderBase<IAccessEvent> {
 

@@ -29,7 +29,7 @@ public class TextRestController {
     /**
      * Posts (appends) the text.
      *
-     * @param the text.
+     * @param text the text.
      * @return the text.
      */
     @RequestMapping(method = RequestMethod.POST)
@@ -51,6 +51,7 @@ public class TextRestController {
     /**
      * Puts the text.
      *
+     * @param text the text.
      * @return the text.
      */
     @RequestMapping(method = RequestMethod.PUT)
