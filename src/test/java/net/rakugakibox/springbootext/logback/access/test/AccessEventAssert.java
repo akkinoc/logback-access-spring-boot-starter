@@ -126,6 +126,17 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
     }
 
     /**
+     * Verifies that the remote user is equal to the given one.
+     *
+     * @param expected the expected remote user.
+     * @return this instance.
+     */
+    public S hasRemoteUser(String expected) {
+        Assertions.assertThat(actual.getRemoteUser()).isEqualTo(expected);
+        return myself;
+    }
+
+    /**
      * Verifies that the content length is equal to the given one.
      *
      * @param expected the expected content length.

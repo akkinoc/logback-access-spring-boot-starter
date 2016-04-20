@@ -83,6 +83,7 @@ public abstract class AbstractAccessEventTest {
                 .hasRequestUrl(HttpMethod.POST, TextRestController.PATH, "HTTP/1.1")
                 .hasRemoteAddr("127.0.0.1")
                 .hasRemoteHost("127.0.0.1")
+                .hasRemoteUser(null)
                 .hasContentLength("TEXT-POST-TEXT".getBytes().length);
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
@@ -109,6 +110,7 @@ public abstract class AbstractAccessEventTest {
                 .hasRequestUrl(HttpMethod.GET, TextRestController.PATH + "?addition=-GET-TEXT", "HTTP/1.1")
                 .hasRemoteAddr("127.0.0.1")
                 .hasRemoteHost("127.0.0.1")
+                .hasRemoteUser(null)
                 .hasContentLength("TEXT-GET-TEXT".getBytes().length);
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
@@ -132,7 +134,8 @@ public abstract class AbstractAccessEventTest {
                 .hasRequestUri(TextRestController.PATH)
                 .hasRequestUrl(HttpMethod.PUT, TextRestController.PATH, "HTTP/1.1")
                 .hasRemoteAddr("127.0.0.1")
-                .hasRemoteHost("127.0.0.1");
+                .hasRemoteHost("127.0.0.1")
+                .hasRemoteUser(null);
                 // TODO: .hasContentLength(0);
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
@@ -156,7 +159,8 @@ public abstract class AbstractAccessEventTest {
                 .hasRequestUri(TextRestController.PATH)
                 .hasRequestUrl(HttpMethod.DELETE, TextRestController.PATH, "HTTP/1.1")
                 .hasRemoteAddr("127.0.0.1")
-                .hasRemoteHost("127.0.0.1");
+                .hasRemoteHost("127.0.0.1")
+                .hasRemoteUser(null);
                 // TODO: .hasContentLength(0);
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
