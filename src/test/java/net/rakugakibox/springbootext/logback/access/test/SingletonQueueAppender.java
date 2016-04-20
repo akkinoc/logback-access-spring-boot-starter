@@ -13,26 +13,27 @@ public class SingletonQueueAppender extends AppenderBase<IAccessEvent> {
     /**
      * The event queue.
      */
-    private static final LinkedBlockingQueue<IAccessEvent> events = new LinkedBlockingQueue<>();
+    private static final LinkedBlockingQueue<IAccessEvent> queue = new LinkedBlockingQueue<>();
 
     /**
      * Removes all elements from the event queue.
      */
     public static void clear() {
-        events.clear();
+        queue.clear();
     }
 
     /**
-     * Removes and returns the first element from the event queue.
+     * Removes and returns the head element of the event queue.
+     * Waits a moment if necessary until an element becomes available.
      *
-     * @return the first element from the event queue.
+     * @return the head element of the event queue.
      */
     public static IAccessEvent pop() {
         try {
-            return events.poll(1, TimeUnit.MINUTES);
+            return queue.poll(1, TimeUnit.MINUTES);
         } catch (InterruptedException exc) {
             Thread.currentThread().interrupt();
-            throw new IllegalStateException(exc);
+            throw new IllegalStateException("Events was not added to the queue.", exc);
         }
     }
 
@@ -42,7 +43,7 @@ public class SingletonQueueAppender extends AppenderBase<IAccessEvent> {
      * @return {@code true} if the event queue is empty.
      */
     public static boolean isEmpty() {
-        return events.isEmpty();
+        return queue.isEmpty();
     }
 
     /** {@inheritDoc} */
@@ -50,10 +51,10 @@ public class SingletonQueueAppender extends AppenderBase<IAccessEvent> {
     protected void append(IAccessEvent event) {
         event.prepareForDeferredProcessing();
         try {
-            events.offer(event, 1, TimeUnit.MINUTES);
+            queue.offer(event, 1, TimeUnit.MINUTES);
         } catch (InterruptedException exc) {
             Thread.currentThread().interrupt();
-            throw new IllegalStateException(exc);
+            throw new IllegalStateException("Could not add the event: event=[" + event + "]", exc);
         }
     }
 

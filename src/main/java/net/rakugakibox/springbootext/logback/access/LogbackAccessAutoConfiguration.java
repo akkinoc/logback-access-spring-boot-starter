@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * The auto-configuration for the Logback-access.
+ * The auto-configuration for Logback-access.
  */
 @Configuration
 @EnableConfigurationProperties
@@ -30,9 +30,9 @@ public class LogbackAccessAutoConfiguration {
     public static class ForTomcat {
 
         /**
-         * Creates a configurator of the Logback-access.
+         * Creates a configurator of Logback-access.
          *
-         * @return a configurator of the Logback-access.
+         * @return a configurator of Logback-access.
          */
         @Bean
         @ConditionalOnMissingBean
@@ -43,9 +43,9 @@ public class LogbackAccessAutoConfiguration {
         }
 
         /**
-         * Creates a container customizer for the Logback-access.
+         * Creates a container customizer for Logback-access.
          *
-         * @return a container customizer for the Logback-access.
+         * @return a container customizer for Logback-access.
          */
         @Bean
         public EmbeddedServletContainerCustomizer logbackAccessContainerCustomizer() {
@@ -64,9 +64,9 @@ public class LogbackAccessAutoConfiguration {
     public static class ForJetty {
 
         /**
-         * Creates a configurator of the Logback-access.
+         * Creates a configurator of Logback-access.
          *
-         * @return a configurator of the Logback-access.
+         * @return a configurator of Logback-access.
          */
         @Bean
         @ConditionalOnMissingBean
@@ -77,9 +77,9 @@ public class LogbackAccessAutoConfiguration {
         }
 
         /**
-         * Creates a container customizer for the Logback-access.
+         * Creates a container customizer for Logback-access.
          *
-         * @return a container customizer for the Logback-access.
+         * @return a container customizer for Logback-access.
          */
         @Bean
         public EmbeddedServletContainerCustomizer logbackAccessContainerCustomizer() {

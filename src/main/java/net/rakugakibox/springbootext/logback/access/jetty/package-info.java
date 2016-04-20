@@ -1,4 +1,4 @@
 /**
- * for the Jetty.
+ * for Jetty.
  */
 package net.rakugakibox.springbootext.logback.access.jetty;

@@ -16,7 +16,7 @@ import org.springframework.util.ResourceUtils;
 import org.springframework.util.StringUtils;
 
 /**
- * The configurator of the Logback-access.
+ * The configurator of Logback-access.
  */
 @ConfigurationProperties(prefix = "logback.access")
 @Slf4j
@@ -46,7 +46,7 @@ public class LogbackAccessConfigurator {
     /**
      * Configures the Logback-access.
      *
-     * @param context the context to configure.
+     * @param context the Logback-access context.
      */
     public void configure(Context context) {
 
@@ -64,8 +64,8 @@ public class LogbackAccessConfigurator {
                 configure(context, defaultConfig);
                 return;
             } catch (IOException exc) {
-                // continue
                 // The default configuration files is optional.
+                log.debug("Skipped a default configuration file: config=[{}] with exc=[{}]", defaultConfig, exc);
             } catch (JoranException exc) {
                 throw createException(context, defaultConfig, exc);
             }
@@ -82,7 +82,7 @@ public class LogbackAccessConfigurator {
     /**
      * Configures the Logback-access.
      *
-     * @param context the context to configure.
+     * @param context the Logback-access context.
      * @param config the location of the configuration file.
      * @throws IOException if an I/O exception occurs.
      * @throws JoranException if a {@link JoranConfigurator} exception occurs.
@@ -99,7 +99,7 @@ public class LogbackAccessConfigurator {
     /**
      * Creates an exception.
      *
-     * @param context the context to configure.
+     * @param context the context.
      * @param config the location of the configuration file.
      * @param cause the cause of exception.
      * @return an exception.

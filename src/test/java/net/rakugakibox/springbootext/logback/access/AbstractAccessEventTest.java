@@ -21,7 +21,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * The base class to test of the access event.
+ * The base class to test of access event.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration
@@ -56,17 +56,17 @@ public abstract class AbstractAccessEventTest {
     @Test
     public void postText() {
 
-        restTemplate.put(baseUrl.resolve(TextRestController.PATH), "post");
+        restTemplate.put(baseUrl.resolve(TextRestController.PATH), "POST");
         SingletonQueueAppender.pop();
 
         LocalDateTime startTime = LocalDateTime.now();
-        restTemplate.postForObject(baseUrl.resolve(TextRestController.PATH), "post", String.class);
+        restTemplate.postForObject(baseUrl.resolve(TextRestController.PATH), "POST", String.class);
         IAccessEvent event = SingletonQueueAppender.pop();
         LocalDateTime endTime = LocalDateTime.now();
 
         assertThat(event)
                 .hasTimestamp(startTime, endTime)
-                .hasContentLength("postpost".getBytes().length);
+                .hasContentLength("POSTPOST".getBytes().length);
 
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
@@ -78,7 +78,7 @@ public abstract class AbstractAccessEventTest {
     @Test
     public void getText() {
 
-        restTemplate.put(baseUrl.resolve(TextRestController.PATH), "get");
+        restTemplate.put(baseUrl.resolve(TextRestController.PATH), "GET");
         SingletonQueueAppender.pop();
 
         LocalDateTime startTime = LocalDateTime.now();
@@ -88,7 +88,7 @@ public abstract class AbstractAccessEventTest {
 
         assertThat(event)
                 .hasTimestamp(startTime, endTime)
-                .hasContentLength("get".getBytes().length);
+                .hasContentLength("GET".getBytes().length);
 
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
@@ -101,13 +101,13 @@ public abstract class AbstractAccessEventTest {
     public void putText() {
 
         LocalDateTime startTime = LocalDateTime.now();
-        restTemplate.put(baseUrl.resolve(TextRestController.PATH), "put");
+        restTemplate.put(baseUrl.resolve(TextRestController.PATH), "PUT");
         IAccessEvent event = SingletonQueueAppender.pop();
         LocalDateTime endTime = LocalDateTime.now();
 
         assertThat(event)
                 .hasTimestamp(startTime, endTime)
-                .hasContentLength("put".getBytes().length);
+                .hasContentLength("PUT".getBytes().length);
 
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 

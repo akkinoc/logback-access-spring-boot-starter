@@ -13,13 +13,13 @@ import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletConta
 import org.springframework.boot.context.embedded.jetty.JettyServerCustomizer;
 
 /**
- * The Jetty customizer for the Logback-access.
+ * The Jetty customizer for Logback-access.
  */
 @Slf4j
 public class LogbackAccessJettyCustomizer implements EmbeddedServletContainerCustomizer {
 
     /**
-     * The configurator.
+     * The configurator of Logback-access.
      */
     @Getter
     @Setter
@@ -32,14 +32,14 @@ public class LogbackAccessJettyCustomizer implements EmbeddedServletContainerCus
         if (container instanceof JettyEmbeddedServletContainerFactory) {
             customize((JettyEmbeddedServletContainerFactory) container);
         } else {
-            log.warn("Skipped the Jetty customization: container=[{}]", container);
+            log.debug("Skipped the Jetty customization: container=[{}]", container);
         }
     }
 
     /**
      * Customizes the Jetty container.
      *
-     * @param container the Jetty container factory to customize.
+     * @param container the Jetty container factory.
      */
     public void customize(JettyEmbeddedServletContainerFactory container) {
         ServerCustomizer customizer = new ServerCustomizer();

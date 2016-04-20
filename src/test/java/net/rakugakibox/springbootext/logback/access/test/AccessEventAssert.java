@@ -8,7 +8,7 @@ import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.api.Assertions;
 
 /**
- * The assertion of the {@link IAccessEvent}.
+ * The assertion of {@link IAccessEvent}.
  */
 public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAccessEvent> extends AbstractAssert<S, A> {
 

@@ -1,4 +1,4 @@
 /**
- * for the Tomcat.
+ * for Tomcat.
  */
 package net.rakugakibox.springbootext.logback.access.tomcat;

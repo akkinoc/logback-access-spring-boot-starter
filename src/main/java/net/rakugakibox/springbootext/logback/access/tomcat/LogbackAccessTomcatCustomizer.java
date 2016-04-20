@@ -12,13 +12,13 @@ import org.springframework.boot.context.embedded.tomcat.TomcatContextCustomizer;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 
 /**
- * The Tomcat customizer for the Logback-access.
+ * The Tomcat customizer for Logback-access.
  */
 @Slf4j
 public class LogbackAccessTomcatCustomizer implements EmbeddedServletContainerCustomizer {
 
     /**
-     * The configurator.
+     * The configurator of Logback-access.
      */
     @Getter
     @Setter
@@ -31,14 +31,14 @@ public class LogbackAccessTomcatCustomizer implements EmbeddedServletContainerCu
         if (container instanceof TomcatEmbeddedServletContainerFactory) {
             customize((TomcatEmbeddedServletContainerFactory) container);
         } else {
-            log.warn("Skipped the Tomcat customization: container=[{}]", container);
+            log.debug("Skipped the Tomcat customization: container=[{}]", container);
         }
     }
 
     /**
      * Customizes the Tomcat container.
      *
-     * @param container the Tomcat container factory to customize.
+     * @param container the Tomcat container factory.
      */
     public void customize(TomcatEmbeddedServletContainerFactory container) {
         ContextCustomizer customizer = new ContextCustomizer();
