@@ -104,6 +104,28 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
     }
 
     /**
+     * Verifies that the remote address is equal to the given one.
+     *
+     * @param expected the expected remote address.
+     * @return this instance.
+     */
+    public S hasRemoteAddr(String expected) {
+        Assertions.assertThat(actual.getRemoteAddr()).isEqualTo(expected);
+        return myself;
+    }
+
+    /**
+     * Verifies that the remote host is equal to the given one.
+     *
+     * @param expected the expected remote host.
+     * @return this instance.
+     */
+    public S hasRemoteHost(String expected) {
+        Assertions.assertThat(actual.getRemoteHost()).isEqualTo(expected);
+        return myself;
+    }
+
+    /**
      * Verifies that the content length is equal to the given one.
      *
      * @param expected the expected content length.

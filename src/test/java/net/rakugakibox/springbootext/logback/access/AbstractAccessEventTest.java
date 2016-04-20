@@ -34,15 +34,15 @@ import org.springframework.web.util.UriComponentsBuilder;
 public abstract class AbstractAccessEventTest {
 
     /**
-     * The REST template.
-     */
-    private final RestTemplate restTemplate = new TestRestTemplate();
-
-    /**
      * The base URL.
      */
     @Value("http://localhost:${local.server.port}/")
     private URI baseUrl;
+
+    /**
+     * The REST template.
+     */
+    private RestTemplate rest;
 
     /**
      * Sets up resources.
@@ -50,11 +50,14 @@ public abstract class AbstractAccessEventTest {
     @Before
     public void setup() {
 
+        // Initializes the REST template.
+        rest = new TestRestTemplate();
+
         // Initializes the event queue.
         SingletonQueueAppender.clear();
 
         // Initializes the text resource.
-        restTemplate.put(url(TextRestController.PATH).build().toUri(), "TEXT");
+        rest.put(url(TextRestController.PATH).build().toUri(), "TEXT");
         SingletonQueueAppender.pop();
 
     }
@@ -66,7 +69,7 @@ public abstract class AbstractAccessEventTest {
     public void postText() {
 
         LocalDateTime startTime = LocalDateTime.now();
-        String response = restTemplate.postForObject(
+        String response = rest.postForObject(
                 url(TextRestController.PATH).build().toUri(), "-POST-TEXT", String.class);
         IAccessEvent event = SingletonQueueAppender.pop();
         LocalDateTime endTime = LocalDateTime.now();
@@ -78,6 +81,8 @@ public abstract class AbstractAccessEventTest {
                 .hasMethod(HttpMethod.POST)
                 .hasRequestUri(TextRestController.PATH)
                 .hasRequestUrl(HttpMethod.POST, TextRestController.PATH, "HTTP/1.1")
+                .hasRemoteAddr("127.0.0.1")
+                .hasRemoteHost("127.0.0.1")
                 .hasContentLength("TEXT-POST-TEXT".getBytes().length);
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
@@ -90,7 +95,7 @@ public abstract class AbstractAccessEventTest {
     public void getText() {
 
         LocalDateTime startTime = LocalDateTime.now();
-        String response = restTemplate.getForObject(
+        String response = rest.getForObject(
                 url(TextRestController.PATH).queryParam("addition", "-GET-TEXT").build().toUri(), String.class);
         IAccessEvent event = SingletonQueueAppender.pop();
         LocalDateTime endTime = LocalDateTime.now();
@@ -102,6 +107,8 @@ public abstract class AbstractAccessEventTest {
                 .hasMethod(HttpMethod.GET)
                 .hasRequestUri(TextRestController.PATH)
                 .hasRequestUrl(HttpMethod.GET, TextRestController.PATH + "?addition=-GET-TEXT", "HTTP/1.1")
+                .hasRemoteAddr("127.0.0.1")
+                .hasRemoteHost("127.0.0.1")
                 .hasContentLength("TEXT-GET-TEXT".getBytes().length);
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
@@ -114,7 +121,7 @@ public abstract class AbstractAccessEventTest {
     public void putText() {
 
         LocalDateTime startTime = LocalDateTime.now();
-        restTemplate.put(url(TextRestController.PATH).build().toUri(), "PUT-TEXT");
+        rest.put(url(TextRestController.PATH).build().toUri(), "PUT-TEXT");
         IAccessEvent event = SingletonQueueAppender.pop();
         LocalDateTime endTime = LocalDateTime.now();
 
@@ -123,7 +130,9 @@ public abstract class AbstractAccessEventTest {
                 .hasProtocol("HTTP/1.1")
                 .hasMethod(HttpMethod.PUT)
                 .hasRequestUri(TextRestController.PATH)
-                .hasRequestUrl(HttpMethod.PUT, TextRestController.PATH, "HTTP/1.1");
+                .hasRequestUrl(HttpMethod.PUT, TextRestController.PATH, "HTTP/1.1")
+                .hasRemoteAddr("127.0.0.1")
+                .hasRemoteHost("127.0.0.1");
                 // TODO: .hasContentLength(0);
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
@@ -136,7 +145,7 @@ public abstract class AbstractAccessEventTest {
     public void deleteText() {
 
         LocalDateTime startTime = LocalDateTime.now();
-        restTemplate.delete(url(TextRestController.PATH).build().toUri());
+        rest.delete(url(TextRestController.PATH).build().toUri());
         IAccessEvent event = SingletonQueueAppender.pop();
         LocalDateTime endTime = LocalDateTime.now();
 
@@ -145,7 +154,9 @@ public abstract class AbstractAccessEventTest {
                 .hasProtocol("HTTP/1.1")
                 .hasMethod(HttpMethod.DELETE)
                 .hasRequestUri(TextRestController.PATH)
-                .hasRequestUrl(HttpMethod.DELETE, TextRestController.PATH, "HTTP/1.1");
+                .hasRequestUrl(HttpMethod.DELETE, TextRestController.PATH, "HTTP/1.1")
+                .hasRemoteAddr("127.0.0.1")
+                .hasRemoteHost("127.0.0.1");
                 // TODO: .hasContentLength(0);
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
