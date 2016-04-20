@@ -42,6 +42,7 @@ public class TextRestController {
     /**
      * Gets the text.
      *
+     * @param addition the additional text.
      * @return the text.
      */
     @RequestMapping(method = RequestMethod.GET)
