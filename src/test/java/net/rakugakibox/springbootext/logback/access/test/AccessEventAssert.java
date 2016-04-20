@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.api.Assertions;
+import org.springframework.http.HttpMethod;
 
 /**
  * The assertion of {@link IAccessEvent}.
@@ -42,6 +43,17 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
         LocalDateTime timestamp = LocalDateTime.ofInstant(
                 Instant.ofEpochMilli(actual.getTimeStamp()), ZoneId.systemDefault());
         Assertions.assertThat(timestamp).isAfterOrEqualTo(start).isBeforeOrEqualTo(end);
+        return myself;
+    }
+
+    /**
+     * Verifies that the method is equal to the given one.
+     *
+     * @param expected the expected method.
+     * @return this instance.
+     */
+    public S hasMethod(HttpMethod expected) {
+        Assertions.assertThat(actual.getMethod()).isEqualTo(expected.name());
         return myself;
     }
 

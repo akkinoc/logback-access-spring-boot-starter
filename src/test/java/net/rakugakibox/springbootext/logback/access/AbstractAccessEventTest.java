@@ -17,6 +17,7 @@ import org.springframework.boot.test.TestRestTemplate;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 
@@ -66,6 +67,7 @@ public abstract class AbstractAccessEventTest {
 
         assertThat(event)
                 .hasTimestamp(startTime, endTime)
+                .hasMethod(HttpMethod.POST)
                 .hasContentLength("POSTPOST".getBytes().length);
 
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
@@ -88,6 +90,7 @@ public abstract class AbstractAccessEventTest {
 
         assertThat(event)
                 .hasTimestamp(startTime, endTime)
+                .hasMethod(HttpMethod.GET)
                 .hasContentLength("GET".getBytes().length);
 
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
@@ -107,6 +110,7 @@ public abstract class AbstractAccessEventTest {
 
         assertThat(event)
                 .hasTimestamp(startTime, endTime)
+                .hasMethod(HttpMethod.PUT)
                 .hasContentLength("PUT".getBytes().length);
 
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
@@ -125,7 +129,8 @@ public abstract class AbstractAccessEventTest {
         LocalDateTime endTime = LocalDateTime.now();
 
         assertThat(event)
-                .hasTimestamp(startTime, endTime);
+                .hasTimestamp(startTime, endTime)
+                .hasMethod(HttpMethod.DELETE);
                 // TODO: .hasContentLength(0);
 
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
