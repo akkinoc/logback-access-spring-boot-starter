@@ -18,6 +18,7 @@ import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -84,6 +85,7 @@ public abstract class AbstractAccessEventTest {
                 .hasRemoteAddr("127.0.0.1")
                 .hasRemoteHost("127.0.0.1")
                 .hasRemoteUser(null)
+                .hasStatusCode(HttpStatus.CREATED)
                 .hasContentLength("TEXT-POST-TEXT".getBytes().length);
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
@@ -111,6 +113,7 @@ public abstract class AbstractAccessEventTest {
                 .hasRemoteAddr("127.0.0.1")
                 .hasRemoteHost("127.0.0.1")
                 .hasRemoteUser(null)
+                .hasStatusCode(HttpStatus.OK)
                 .hasContentLength("TEXT-GET-TEXT".getBytes().length);
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
@@ -135,7 +138,8 @@ public abstract class AbstractAccessEventTest {
                 .hasRequestUrl(HttpMethod.PUT, TextRestController.PATH, "HTTP/1.1")
                 .hasRemoteAddr("127.0.0.1")
                 .hasRemoteHost("127.0.0.1")
-                .hasRemoteUser(null);
+                .hasRemoteUser(null)
+                .hasStatusCode(HttpStatus.NO_CONTENT);
                 // TODO: .hasContentLength(0);
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
@@ -160,7 +164,8 @@ public abstract class AbstractAccessEventTest {
                 .hasRequestUrl(HttpMethod.DELETE, TextRestController.PATH, "HTTP/1.1")
                 .hasRemoteAddr("127.0.0.1")
                 .hasRemoteHost("127.0.0.1")
-                .hasRemoteUser(null);
+                .hasRemoteUser(null)
+                .hasStatusCode(HttpStatus.NO_CONTENT);
                 // TODO: .hasContentLength(0);
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 

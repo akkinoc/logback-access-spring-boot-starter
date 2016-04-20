@@ -7,6 +7,7 @@ import java.time.ZoneId;
 import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.api.Assertions;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 
 /**
  * The assertion of {@link IAccessEvent}.
@@ -93,13 +94,13 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
     /**
      * Verifies that the request URL (first line of the request) is equal to the given one.
      *
-     * @param method the HTTP method.
+     * @param method the method.
      * @param uri the request URI.
-     * @param version the HTTP version.
+     * @param protocol the protocol.
      * @return this instance.
      */
-    public S hasRequestUrl(HttpMethod method, String uri, String version) {
-        Assertions.assertThat(actual.getRequestURL()).isEqualTo(method.name() + " " + uri + " " + version);
+    public S hasRequestUrl(HttpMethod method, String uri, String protocol) {
+        Assertions.assertThat(actual.getRequestURL()).isEqualTo(method.name() + " " + uri + " " + protocol);
         return myself;
     }
 
@@ -133,6 +134,18 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
      */
     public S hasRemoteUser(String expected) {
         Assertions.assertThat(actual.getRemoteUser()).isEqualTo(expected);
+        return myself;
+    }
+
+    /**
+     * Verifies that the status code is equal to the given one.
+     *
+     * @param expected the expected status.
+     * @return this instance.
+     */
+    public S hasStatusCode(HttpStatus expected) {
+        HttpStatus status = HttpStatus.valueOf(actual.getStatusCode());
+        Assertions.assertThat(status).isEqualTo(expected);
         return myself;
     }
 
