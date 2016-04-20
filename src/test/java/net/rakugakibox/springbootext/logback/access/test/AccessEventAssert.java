@@ -38,7 +38,7 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
      * @param end the end value of range (inclusive).
      * @return this instance.
      */
-    public S hasTimestampOfBetween(LocalDateTime start, LocalDateTime end) {
+    public S hasTimestamp(LocalDateTime start, LocalDateTime end) {
         LocalDateTime timestamp = LocalDateTime.ofInstant(
                 Instant.ofEpochMilli(actual.getTimeStamp()), ZoneId.systemDefault());
         Assertions.assertThat(timestamp).isAfterOrEqualTo(start).isBeforeOrEqualTo(end);
@@ -53,16 +53,6 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
      */
     public S hasContentLength(long expected) {
         Assertions.assertThat(actual.getContentLength()).isEqualTo(expected);
-        return myself;
-    }
-
-    /**
-     * Verifies that the event does not have content length.
-     *
-     * @return this instance.
-     */
-    public S doesNotHaveContentLength() {
-        Assertions.assertThat(actual.getContentLength()).isLessThan(0);
         return myself;
     }
 

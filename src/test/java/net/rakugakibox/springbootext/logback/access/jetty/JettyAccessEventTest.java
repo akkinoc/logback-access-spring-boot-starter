@@ -1,4 +1,4 @@
-package net.rakugakibox.springbootext.logback.access.tomcat;
+package net.rakugakibox.springbootext.logback.access.jetty;
 
 import net.rakugakibox.springbootext.logback.access.AbstractAccessEventTest;
 import org.springframework.boot.autoconfigure.web.EmbeddedServletContainerAutoConfiguration;
@@ -7,16 +7,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 /**
- * The test of the Tomcat access event.
+ * The test of the Jetty access event.
  */
 @SpringApplicationConfiguration
-public class TomcatAccessEventTest extends AbstractAccessEventTest {
+public class JettyAccessEventTest extends AbstractAccessEventTest {
 
     /**
      * The context configuration.
      */
     @Configuration
-    @Import(EmbeddedServletContainerAutoConfiguration.EmbeddedTomcat.class)
+    @Import(EmbeddedServletContainerAutoConfiguration.EmbeddedJetty.class)
     public static class TestContextConfiguration {
     }
 
