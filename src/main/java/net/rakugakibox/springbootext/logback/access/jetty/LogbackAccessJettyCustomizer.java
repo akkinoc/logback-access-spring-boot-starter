@@ -19,7 +19,7 @@ import org.springframework.boot.context.embedded.jetty.JettyServerCustomizer;
 public class LogbackAccessJettyCustomizer implements EmbeddedServletContainerCustomizer {
 
     /**
-     * The configurator of Logback-access.
+     * The Logback-access configurator.
      */
     @Getter
     @Setter

@@ -30,9 +30,9 @@ public class LogbackAccessAutoConfiguration {
     public static class ForTomcat {
 
         /**
-         * Creates a configurator of Logback-access.
+         * Creates a Logback-access configurator.
          *
-         * @return a configurator of Logback-access.
+         * @return a Logback-access configurator.
          */
         @Bean
         @ConditionalOnMissingBean
@@ -64,9 +64,9 @@ public class LogbackAccessAutoConfiguration {
     public static class ForJetty {
 
         /**
-         * Creates a configurator of Logback-access.
+         * Creates a Logback-access configurator.
          *
-         * @return a configurator of Logback-access.
+         * @return a Logback-access configurator.
          */
         @Bean
         @ConditionalOnMissingBean

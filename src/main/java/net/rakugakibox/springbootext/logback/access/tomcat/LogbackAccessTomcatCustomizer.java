@@ -18,7 +18,7 @@ import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletCon
 public class LogbackAccessTomcatCustomizer implements EmbeddedServletContainerCustomizer {
 
     /**
-     * The configurator of Logback-access.
+     * The Logback-access configurator.
      */
     @Getter
     @Setter

@@ -16,7 +16,7 @@ import org.springframework.util.ResourceUtils;
 import org.springframework.util.StringUtils;
 
 /**
- * The configurator of Logback-access.
+ * The Logback-access configurator.
  */
 @ConfigurationProperties(prefix = "logback.access")
 @Slf4j
