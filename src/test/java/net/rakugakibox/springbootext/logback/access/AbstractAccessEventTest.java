@@ -20,6 +20,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * The base class to test of access event.
@@ -48,7 +49,14 @@ public abstract class AbstractAccessEventTest {
      */
     @Before
     public void setup() {
+
+        // Initializes the event queue.
         SingletonQueueAppender.clear();
+
+        // Initializes the text resource.
+        restTemplate.put(url(TextRestController.PATH).build().toUri(), "TEXT");
+        SingletonQueueAppender.pop();
+
     }
 
     /**
@@ -57,20 +65,20 @@ public abstract class AbstractAccessEventTest {
     @Test
     public void postText() {
 
-        restTemplate.put(baseUrl.resolve(TextRestController.PATH), "POST-TEXT");
-        SingletonQueueAppender.pop();
-
         LocalDateTime startTime = LocalDateTime.now();
-        restTemplate.postForObject(baseUrl.resolve(TextRestController.PATH), "-TEXT", String.class);
+        String response = restTemplate.postForObject(
+                url(TextRestController.PATH).build().toUri(), "-POST-TEXT", String.class);
         IAccessEvent event = SingletonQueueAppender.pop();
         LocalDateTime endTime = LocalDateTime.now();
 
+        assertThat(response).isEqualTo("TEXT-POST-TEXT");
         assertThat(event)
                 .hasTimestamp(startTime, endTime)
-                .hasHttpProtocol()
+                .hasProtocol("HTTP/1.1")
                 .hasMethod(HttpMethod.POST)
-                .hasContentLength("POST-TEXT-TEXT".getBytes().length);
-
+                .hasRequestUri(TextRestController.PATH)
+                .hasRequestUrl(HttpMethod.POST, TextRestController.PATH, "HTTP/1.1")
+                .hasContentLength("TEXT-POST-TEXT".getBytes().length);
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
     }
@@ -81,20 +89,20 @@ public abstract class AbstractAccessEventTest {
     @Test
     public void getText() {
 
-        restTemplate.put(baseUrl.resolve(TextRestController.PATH), "GET-TEXT");
-        SingletonQueueAppender.pop();
-
         LocalDateTime startTime = LocalDateTime.now();
-        restTemplate.getForObject(baseUrl.resolve(TextRestController.PATH), String.class);
+        String response = restTemplate.getForObject(
+                url(TextRestController.PATH).queryParam("addition", "-GET-TEXT").build().toUri(), String.class);
         IAccessEvent event = SingletonQueueAppender.pop();
         LocalDateTime endTime = LocalDateTime.now();
 
+        assertThat(response).isEqualTo("TEXT-GET-TEXT");
         assertThat(event)
                 .hasTimestamp(startTime, endTime)
-                .hasHttpProtocol()
+                .hasProtocol("HTTP/1.1")
                 .hasMethod(HttpMethod.GET)
-                .hasContentLength("GET-TEXT".getBytes().length);
-
+                .hasRequestUri(TextRestController.PATH)
+                .hasRequestUrl(HttpMethod.GET, TextRestController.PATH + "?addition=-GET-TEXT", "HTTP/1.1")
+                .hasContentLength("TEXT-GET-TEXT".getBytes().length);
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
     }
@@ -106,16 +114,17 @@ public abstract class AbstractAccessEventTest {
     public void putText() {
 
         LocalDateTime startTime = LocalDateTime.now();
-        restTemplate.put(baseUrl.resolve(TextRestController.PATH), "PUT-TEXT");
+        restTemplate.put(url(TextRestController.PATH).build().toUri(), "PUT-TEXT");
         IAccessEvent event = SingletonQueueAppender.pop();
         LocalDateTime endTime = LocalDateTime.now();
 
         assertThat(event)
                 .hasTimestamp(startTime, endTime)
-                .hasHttpProtocol()
+                .hasProtocol("HTTP/1.1")
                 .hasMethod(HttpMethod.PUT)
-                .hasContentLength("PUT-TEXT".getBytes().length);
-
+                .hasRequestUri(TextRestController.PATH)
+                .hasRequestUrl(HttpMethod.PUT, TextRestController.PATH, "HTTP/1.1");
+                // TODO: .hasContentLength(0);
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
     }
@@ -127,18 +136,29 @@ public abstract class AbstractAccessEventTest {
     public void deleteText() {
 
         LocalDateTime startTime = LocalDateTime.now();
-        restTemplate.delete(baseUrl.resolve(TextRestController.PATH));
+        restTemplate.delete(url(TextRestController.PATH).build().toUri());
         IAccessEvent event = SingletonQueueAppender.pop();
         LocalDateTime endTime = LocalDateTime.now();
 
         assertThat(event)
                 .hasTimestamp(startTime, endTime)
-                .hasHttpProtocol()
-                .hasMethod(HttpMethod.DELETE);
+                .hasProtocol("HTTP/1.1")
+                .hasMethod(HttpMethod.DELETE)
+                .hasRequestUri(TextRestController.PATH)
+                .hasRequestUrl(HttpMethod.DELETE, TextRestController.PATH, "HTTP/1.1");
                 // TODO: .hasContentLength(0);
-
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
+    }
+
+    /**
+     * Starts building the URL.
+     *
+     * @param The path of URL.
+     * @return a URI components builder.
+     */
+    private UriComponentsBuilder url(String path) {
+        return UriComponentsBuilder.fromUri(baseUrl).path(path);
     }
 
     /**

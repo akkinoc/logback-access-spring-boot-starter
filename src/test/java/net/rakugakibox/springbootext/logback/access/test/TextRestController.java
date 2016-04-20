@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,20 +45,19 @@ public class TextRestController {
      * @return the text.
      */
     @RequestMapping(method = RequestMethod.GET)
-    public String get() {
-        return resource.get();
+    public String get(@RequestParam(required = false, defaultValue = "") String addition) {
+        return resource.get() + addition;
     }
 
     /**
      * Puts the text.
      *
      * @param text the text.
-     * @return the text.
      */
     @RequestMapping(method = RequestMethod.PUT)
-    public String put(@RequestBody String text) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void put(@RequestBody String text) {
         resource.set(text);
-        return text;
     }
 
     /**

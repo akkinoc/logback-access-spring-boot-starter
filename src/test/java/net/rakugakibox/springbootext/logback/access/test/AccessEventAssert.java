@@ -47,12 +47,13 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
     }
 
     /**
-     * Verifies that the protocol is HTTP.
+     * Verifies that the protocol is equal to the given one.
      *
+     * @param expected the expected protocol.
      * @return this instance.
      */
-    public S hasHttpProtocol() {
-        Assertions.assertThat(actual.getProtocol()).startsWith("HTTP/");
+    public S hasProtocol(String expected) {
+        Assertions.assertThat(actual.getProtocol()).isEqualTo(expected);
         return myself;
     }
 
@@ -64,6 +65,41 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
      */
     public S hasMethod(HttpMethod expected) {
         Assertions.assertThat(actual.getMethod()).isEqualTo(expected.name());
+        return myself;
+    }
+
+    /**
+     * Verifies that the request URI is equal to the given one.
+     *
+     * @param expected the expected request URI.
+     * @return this instance.
+     */
+    public S hasRequestUri(String expected) {
+        Assertions.assertThat(actual.getRequestURI()).isEqualTo(expected);
+        return myself;
+    }
+
+    /**
+     * Verifies that the request URL (first line of the request) is equal to the given one.
+     *
+     * @param expected the expected request URL (first line of the request).
+     * @return this instance.
+     */
+    public S hasRequestUrl(String expected) {
+        Assertions.assertThat(actual.getRequestURL()).isEqualTo(expected);
+        return myself;
+    }
+
+    /**
+     * Verifies that the request URL (first line of the request) is equal to the given one.
+     *
+     * @param method the HTTP method.
+     * @param uri the request URI.
+     * @param version the HTTP version.
+     * @return this instance.
+     */
+    public S hasRequestUrl(HttpMethod method, String uri, String version) {
+        Assertions.assertThat(actual.getRequestURL()).isEqualTo(method.name() + " " + uri + " " + version);
         return myself;
     }
 
