@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.rakugakibox.springbootext.logback.access.LogbackAccessConfigurator;
 import org.apache.catalina.AccessLog;
+import org.apache.catalina.Globals;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.connector.Request;
 import org.apache.catalina.connector.Response;
@@ -98,10 +99,55 @@ public class LogbackAccessValve extends ValveBase implements AccessLog {
     public void log(Request request, Response response, long time) {
 
         // Calls Logback-access appenders.
-        TomcatServerAdapter adapter = new TomcatServerAdapter(request, response);
+        CustomizedTomcatServerAdapter adapter = new CustomizedTomcatServerAdapter(request, response);
         IAccessEvent accessEvent = new AccessEvent(request, response, adapter);
         if (context.getFilterChainDecision(accessEvent) != FilterReply.DENY) {
             context.callAppenders(accessEvent);
+        }
+
+    }
+
+    /**
+     * The customized tomcat server adapter.
+     */
+    private class CustomizedTomcatServerAdapter extends TomcatServerAdapter {
+
+        /**
+         * The tomcat request.
+         */
+        private final Request request;
+
+        /**
+         * The tomcat response.
+         */
+        private final Response response;
+
+        /**
+         * Constructs an instance.
+         *
+         * @param request the tomcat request.
+         * @param response the tomcat response.
+         */
+        public CustomizedTomcatServerAdapter(Request request, Response response) {
+            super(request, response);
+            this.request = request;
+            this.response = response;
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public long getContentLength() {
+            long length = response.getBytesWritten(false);
+            if (length <= 0) {
+                Object start = request.getAttribute(Globals.SENDFILE_FILE_START_ATTR);
+                Object end = request.getAttribute(Globals.SENDFILE_FILE_END_ATTR);
+                if (start instanceof Long && end instanceof Long) {
+                    Long startAsLong = (Long) start;
+                    Long endAsLong = (Long) end;
+                    length = endAsLong - startAsLong;
+                }
+            }
+            return length;
         }
 
     }

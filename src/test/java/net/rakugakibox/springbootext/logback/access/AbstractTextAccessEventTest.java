@@ -150,8 +150,8 @@ public abstract class AbstractTextAccessEventTest {
                 .hasRemoteAddr("127.0.0.1")
                 .hasRemoteHost("127.0.0.1")
                 .hasRemoteUser(null)
-                .hasStatusCode(HttpStatus.NO_CONTENT);
-                // TODO: .hasContentLength(0);
+                .hasStatusCode(HttpStatus.NO_CONTENT)
+                .hasContentLength(0);
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
     }
@@ -176,8 +176,8 @@ public abstract class AbstractTextAccessEventTest {
                 .hasRemoteAddr("127.0.0.1")
                 .hasRemoteHost("127.0.0.1")
                 .hasRemoteUser(null)
-                .hasStatusCode(HttpStatus.NO_CONTENT);
-                // TODO: .hasContentLength(0);
+                .hasStatusCode(HttpStatus.NO_CONTENT)
+                .hasContentLength(0);
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
     }
