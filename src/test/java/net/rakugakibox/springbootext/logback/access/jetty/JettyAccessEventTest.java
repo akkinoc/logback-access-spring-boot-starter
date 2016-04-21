@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 /**
- * The test of the Jetty access event.
+ * The test of access event on Jetty.
  */
 @SpringApplicationConfiguration
 public class JettyAccessEventTest extends AbstractAccessEventTest {

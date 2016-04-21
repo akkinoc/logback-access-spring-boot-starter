@@ -1,6 +1,5 @@
 package net.rakugakibox.springbootext.logback.access.test;
 
-import java.util.concurrent.atomic.AtomicReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * The REST Controller of text resource.
  */
 @RestController
-@RequestMapping(value = TextRestController.PATH, produces = MediaType.TEXT_PLAIN_VALUE)
+@RequestMapping(TextRestController.PATH)
 public class TextRestController {
 
     /**
@@ -25,40 +24,45 @@ public class TextRestController {
     /**
      * The text resource.
      */
-    private static final AtomicReference<String> resource = new AtomicReference<>();
+    private static String resource = "";
 
     /**
      * Posts (appends) the text.
      *
-     * @param text the text.
+     * @param addition the text to append.
      * @return the text.
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(
+            method = RequestMethod.POST,
+            consumes = MediaType.TEXT_PLAIN_VALUE,
+            produces = MediaType.TEXT_PLAIN_VALUE
+    )
     @ResponseStatus(HttpStatus.CREATED)
-    public String post(@RequestBody String text) {
-        return resource.accumulateAndGet(text, String::concat);
+    public synchronized String post(@RequestBody String addition) {
+        resource += addition;
+        return resource;
     }
 
     /**
      * Gets the text.
      *
-     * @param addition the additional text.
+     * @param addition the text to append.
      * @return the text.
      */
-    @RequestMapping(method = RequestMethod.GET)
-    public String get(@RequestParam(required = false, defaultValue = "") String addition) {
-        return resource.get() + addition;
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
+    public synchronized String get(@RequestParam String addition) {
+        return resource + addition;
     }
 
     /**
      * Puts the text.
      *
-     * @param text the text.
+     * @param replacement the text to replace.
      */
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.TEXT_PLAIN_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void put(@RequestBody String text) {
-        resource.set(text);
+    public synchronized void put(@RequestBody String replacement) {
+        resource = replacement;
     }
 
     /**
@@ -66,8 +70,8 @@ public class TextRestController {
      */
     @RequestMapping(method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete() {
-        resource.set(null);
+    public synchronized void delete() {
+        resource = "";
     }
 
 }

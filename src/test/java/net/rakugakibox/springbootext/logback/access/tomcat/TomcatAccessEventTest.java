@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 /**
- * The test of the Tomcat access event.
+ * The test of access event on Tomcat.
  */
 @SpringApplicationConfiguration
 public class TomcatAccessEventTest extends AbstractAccessEventTest {
