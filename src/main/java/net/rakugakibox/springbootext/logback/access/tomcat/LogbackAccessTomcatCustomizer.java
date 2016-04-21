@@ -54,8 +54,8 @@ public class LogbackAccessTomcatCustomizer implements EmbeddedServletContainerCu
         /** {@inheritDoc} */
         @Override
         public void customize(Context context) {
-            ReconfigurableLogbackValve valve = new ReconfigurableLogbackValve();
-            valve.setReconfigurator(configurator);
+            LogbackAccessValve valve = new LogbackAccessValve();
+            valve.setConfigurator(configurator);
             context.getPipeline().addValve(valve);
             log.debug("Added the Tomcat valve: valve=[{}] to context=[{}]", valve, context);
         }
