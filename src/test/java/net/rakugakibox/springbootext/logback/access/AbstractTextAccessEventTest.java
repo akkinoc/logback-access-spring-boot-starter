@@ -5,7 +5,7 @@ import java.net.URI;
 import java.time.LocalDateTime;
 import static net.rakugakibox.springbootext.logback.access.test.AccessEventAssert.assertThat;
 import net.rakugakibox.springbootext.logback.access.test.SingletonQueueAppender;
-import net.rakugakibox.springbootext.logback.access.test.TextRestController;
+import net.rakugakibox.springbootext.logback.access.test.TextController;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +24,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 /**
- * The base class to test of access event.
+ * The base class to test of text resource access event.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration
@@ -32,7 +32,7 @@ import org.springframework.web.util.UriComponentsBuilder;
         value = "logback.access.config=classpath:logback-access-test.singleton-queue.xml",
         randomPort = true
 )
-public abstract class AbstractAccessEventTest {
+public abstract class AbstractTextAccessEventTest {
 
     /**
      * The base URL.
@@ -58,75 +58,86 @@ public abstract class AbstractAccessEventTest {
         SingletonQueueAppender.clear();
 
         // Initializes the text resource.
-        rest.put(url(TextRestController.PATH).build().toUri(), "TEXT");
+        rest.put(url(TextController.PATH).build().toUri(), "TEXT");
         SingletonQueueAppender.pop();
 
     }
 
     /**
-     * Tests the case to POST the text.
+     * Tests the case to POST.
      */
     @Test
-    public void postText() {
+    public void post() {
 
         LocalDateTime startTime = LocalDateTime.now();
         String response = rest.postForObject(
-                url(TextRestController.PATH).build().toUri(), "-POST-TEXT", String.class);
+                url(TextController.PATH).build().toUri(),
+                "-POST",
+                String.class
+        );
         IAccessEvent event = SingletonQueueAppender.pop();
         LocalDateTime endTime = LocalDateTime.now();
 
-        assertThat(response).isEqualTo("TEXT-POST-TEXT");
+        assertThat(response).isEqualTo("TEXT-POST");
         assertThat(event)
                 .hasTimestamp(startTime, endTime)
                 .hasProtocol("HTTP/1.1")
                 .hasMethod(HttpMethod.POST)
-                .hasRequestUri(TextRestController.PATH)
-                .hasRequestUrl(HttpMethod.POST, TextRestController.PATH, "HTTP/1.1")
+                .hasRequestUri(TextController.PATH)
+                .hasRequestUrl(HttpMethod.POST, TextController.PATH, "HTTP/1.1")
                 .hasRemoteAddr("127.0.0.1")
                 .hasRemoteHost("127.0.0.1")
                 .hasRemoteUser(null)
                 .hasStatusCode(HttpStatus.CREATED)
-                .hasContentLength("TEXT-POST-TEXT".getBytes().length);
+                .hasContentLength(response.getBytes().length);
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
     }
 
     /**
-     * Tests the case to GET the text.
+     * Tests the case to GET.
      */
     @Test
-    public void getText() {
+    public void get() {
 
         LocalDateTime startTime = LocalDateTime.now();
         String response = rest.getForObject(
-                url(TextRestController.PATH).queryParam("addition", "-GET-TEXT").build().toUri(), String.class);
+                url(TextController.PATH)
+                        .queryParam("addition", "-GET")
+                        .build()
+                        .toUri(),
+                String.class
+        );
         IAccessEvent event = SingletonQueueAppender.pop();
         LocalDateTime endTime = LocalDateTime.now();
 
-        assertThat(response).isEqualTo("TEXT-GET-TEXT");
+        assertThat(response).isEqualTo("TEXT-GET");
         assertThat(event)
                 .hasTimestamp(startTime, endTime)
                 .hasProtocol("HTTP/1.1")
                 .hasMethod(HttpMethod.GET)
-                .hasRequestUri(TextRestController.PATH)
-                .hasRequestUrl(HttpMethod.GET, TextRestController.PATH + "?addition=-GET-TEXT", "HTTP/1.1")
+                .hasRequestUri(TextController.PATH)
+                .hasRequestUrl(HttpMethod.GET, TextController.PATH + "?addition=-GET", "HTTP/1.1")
                 .hasRemoteAddr("127.0.0.1")
                 .hasRemoteHost("127.0.0.1")
                 .hasRemoteUser(null)
                 .hasStatusCode(HttpStatus.OK)
-                .hasContentLength("TEXT-GET-TEXT".getBytes().length);
+                .hasContentLength(response.getBytes().length);
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
     }
 
     /**
-     * Tests the case to PUT the text.
+     * Tests the case to PUT.
      */
     @Test
-    public void putText() {
+    public void put() {
 
         LocalDateTime startTime = LocalDateTime.now();
-        rest.put(url(TextRestController.PATH).build().toUri(), "PUT-TEXT");
+        rest.put(
+                url(TextController.PATH).build().toUri(),
+                "PUT"
+        );
         IAccessEvent event = SingletonQueueAppender.pop();
         LocalDateTime endTime = LocalDateTime.now();
 
@@ -134,8 +145,8 @@ public abstract class AbstractAccessEventTest {
                 .hasTimestamp(startTime, endTime)
                 .hasProtocol("HTTP/1.1")
                 .hasMethod(HttpMethod.PUT)
-                .hasRequestUri(TextRestController.PATH)
-                .hasRequestUrl(HttpMethod.PUT, TextRestController.PATH, "HTTP/1.1")
+                .hasRequestUri(TextController.PATH)
+                .hasRequestUrl(HttpMethod.PUT, TextController.PATH, "HTTP/1.1")
                 .hasRemoteAddr("127.0.0.1")
                 .hasRemoteHost("127.0.0.1")
                 .hasRemoteUser(null)
@@ -146,13 +157,13 @@ public abstract class AbstractAccessEventTest {
     }
 
     /**
-     * Tests the case to DELETE the text.
+     * Tests the case to DELETE.
      */
     @Test
-    public void deleteText() {
+    public void delete() {
 
         LocalDateTime startTime = LocalDateTime.now();
-        rest.delete(url(TextRestController.PATH).build().toUri());
+        rest.delete(url(TextController.PATH).build().toUri());
         IAccessEvent event = SingletonQueueAppender.pop();
         LocalDateTime endTime = LocalDateTime.now();
 
@@ -160,8 +171,8 @@ public abstract class AbstractAccessEventTest {
                 .hasTimestamp(startTime, endTime)
                 .hasProtocol("HTTP/1.1")
                 .hasMethod(HttpMethod.DELETE)
-                .hasRequestUri(TextRestController.PATH)
-                .hasRequestUrl(HttpMethod.DELETE, TextRestController.PATH, "HTTP/1.1")
+                .hasRequestUri(TextController.PATH)
+                .hasRequestUrl(HttpMethod.DELETE, TextController.PATH, "HTTP/1.1")
                 .hasRemoteAddr("127.0.0.1")
                 .hasRemoteHost("127.0.0.1")
                 .hasRemoteUser(null)
@@ -189,13 +200,13 @@ public abstract class AbstractAccessEventTest {
     public static class TestContextConfiguration {
 
         /**
-         * Creates a REST controller of text resource.
+         * Creates a controller of text resource.
          *
-         * @return a REST controller of text resource.
+         * @return a controller of text resource.
          */
         @Bean
-        public TextRestController textRestController() {
-            return new TextRestController();
+        public TextController textController() {
+            return new TextController();
         }
 
     }

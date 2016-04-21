@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * The REST Controller of text resource.
+ * The controller of text resource.
  */
 @RestController
-@RequestMapping(TextRestController.PATH)
-public class TextRestController {
+@RequestMapping(TextController.PATH)
+public class TextController {
 
     /**
      * The path of URL.
