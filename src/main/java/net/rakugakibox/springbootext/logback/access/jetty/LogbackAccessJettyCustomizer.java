@@ -55,8 +55,8 @@ public class LogbackAccessJettyCustomizer implements EmbeddedServletContainerCus
         /** {@inheritDoc} */
         @Override
         public void customize(Server server) {
-            ReconfigurableRequestLog requestLog = new ReconfigurableRequestLog();
-            requestLog.setReconfigurator(configurator);
+            LogbackAccessRequestLog requestLog = new LogbackAccessRequestLog();
+            requestLog.setConfigurator(configurator);
             RequestLogHandler requestLogHandler = new RequestLogHandler();
             requestLogHandler.setHandler(server.getHandler());
             requestLogHandler.setRequestLog(requestLog);
