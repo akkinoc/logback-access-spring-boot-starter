@@ -150,13 +150,13 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
     }
 
     /**
-     * Verifies that the content length is equal to the given one.
+     * Verifies that the content length is greater than or equal to the given one.
      *
-     * @param expected the expected content length.
+     * @param expected the expected minimal content length.
      * @return this instance.
      */
     public S hasContentLength(long expected) {
-        Assertions.assertThat(actual.getContentLength()).isEqualTo(expected);
+        Assertions.assertThat(actual.getContentLength()).isGreaterThanOrEqualTo(expected);
         return myself;
     }
 
