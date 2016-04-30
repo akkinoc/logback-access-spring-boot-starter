@@ -54,6 +54,12 @@ logback.access:
 
 See Also: [HTTP-access logs with logback-access, Jetty and Tomcat - Logback-access](http://logback.qos.ch/access.html)
 
+Related articles
+----------------
+
+* [Provide auto-configuration for logback-access - Issue #2609 - spring-projects/spring-boot - GitHub](https://github.com/spring-projects/spring-boot/issues/2609)
+* [Spring Boot: Logback-access が使いやすくなる自動設定を作って公開した - rakugakibox.net](http://blog.rakugakibox.net/entry/2015/12/25/spring-boot-ext-logback-access)
+
 License
 -------
 
