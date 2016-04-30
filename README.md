@@ -52,7 +52,7 @@ logback.access:
 </configuration>
 ```
 
-See Also: [HTTP-access logs with logback-access, Jetty and Tomcat - Logback-access](http://logback.qos.ch/access.html)
+See Also: [Logback-access configuration - Logback-access](http://logback.qos.ch/access.html#configuration)
 
 Related articles
 ----------------
