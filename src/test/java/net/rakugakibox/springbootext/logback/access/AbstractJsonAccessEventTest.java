@@ -107,7 +107,8 @@ public abstract class AbstractJsonAccessEventTest {
                 .hasRemoteHost("127.0.0.1")
                 .hasRemoteUser(null)
                 .hasStatusCode(HttpStatus.CREATED)
-                .hasContentLength(mapper.writeValueAsBytes(response).length);
+                .hasContentLength(mapper.writeValueAsBytes(response).length)
+                .hasThreadName();
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
     }
@@ -151,7 +152,8 @@ public abstract class AbstractJsonAccessEventTest {
                 .hasRemoteHost("127.0.0.1")
                 .hasRemoteUser(null)
                 .hasStatusCode(HttpStatus.OK)
-                .hasContentLength(mapper.writeValueAsBytes(response).length);
+                .hasContentLength(mapper.writeValueAsBytes(response).length)
+                .hasThreadName();
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
     }
@@ -180,7 +182,8 @@ public abstract class AbstractJsonAccessEventTest {
                 .hasRemoteHost("127.0.0.1")
                 .hasRemoteUser(null)
                 .hasStatusCode(HttpStatus.NO_CONTENT)
-                .hasContentLength(0);
+                .hasContentLength(0)
+                .hasThreadName();
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
     }
@@ -206,7 +209,8 @@ public abstract class AbstractJsonAccessEventTest {
                 .hasRemoteHost("127.0.0.1")
                 .hasRemoteUser(null)
                 .hasStatusCode(HttpStatus.NO_CONTENT)
-                .hasContentLength(0);
+                .hasContentLength(0)
+                .hasThreadName();
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
     }

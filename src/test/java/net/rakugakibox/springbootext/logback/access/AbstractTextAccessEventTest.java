@@ -89,7 +89,8 @@ public abstract class AbstractTextAccessEventTest {
                 .hasRemoteHost("127.0.0.1")
                 .hasRemoteUser(null)
                 .hasStatusCode(HttpStatus.CREATED)
-                .hasContentLength(response.getBytes().length);
+                .hasContentLength(response.getBytes().length)
+                .hasThreadName();
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
     }
@@ -122,7 +123,8 @@ public abstract class AbstractTextAccessEventTest {
                 .hasRemoteHost("127.0.0.1")
                 .hasRemoteUser(null)
                 .hasStatusCode(HttpStatus.OK)
-                .hasContentLength(response.getBytes().length);
+                .hasContentLength(response.getBytes().length)
+                .hasThreadName();
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
     }
@@ -151,7 +153,8 @@ public abstract class AbstractTextAccessEventTest {
                 .hasRemoteHost("127.0.0.1")
                 .hasRemoteUser(null)
                 .hasStatusCode(HttpStatus.NO_CONTENT)
-                .hasContentLength(0);
+                .hasContentLength(0)
+                .hasThreadName();
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
     }
@@ -177,7 +180,8 @@ public abstract class AbstractTextAccessEventTest {
                 .hasRemoteHost("127.0.0.1")
                 .hasRemoteUser(null)
                 .hasStatusCode(HttpStatus.NO_CONTENT)
-                .hasContentLength(0);
+                .hasContentLength(0)
+                .hasThreadName();
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
     }

@@ -196,6 +196,19 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
     }
 
     /**
+     * Verifies that the thread name is available.
+     *
+     * @return this instance.
+     */
+    public S hasThreadName() {
+        String actualThreadName = actual.getThreadName();
+        Assertions.assertThat(actualThreadName)
+                .isNotEqualTo(IAccessEvent.NA)
+                .isNotEmpty();
+        return myself;
+    }
+
+    /**
      * Starts the assertion.
      *
      * @param <A> the actual event type.
