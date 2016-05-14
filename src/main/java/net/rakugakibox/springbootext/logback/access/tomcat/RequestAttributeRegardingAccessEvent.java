@@ -12,39 +12,62 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class RequestAttributeRegardingAccessEvent extends AccessEvent {
 
+    private String remoteAddress;
+    private String remoteHost;
+    private String protocol;
+
     public RequestAttributeRegardingAccessEvent(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
                                                 ServerAdapter adapter) {
         super(httpRequest, httpResponse, adapter);
+        prepareForDeferredProcessing();
     }
 
     @Override
     public String getRemoteAddr() {
-        HttpServletRequest request = getRequest();
-        Object remoteAddress = request.getAttribute(AccessLog.REMOTE_ADDR_ATTRIBUTE);
         if (remoteAddress == null) {
-            remoteAddress = request.getRemoteAddr();
+            HttpServletRequest request = getRequest();
+            if (request != null) {
+                remoteAddress = (String) request.getAttribute(AccessLog.REMOTE_ADDR_ATTRIBUTE);
+                if (remoteAddress == null) {
+                    remoteAddress = request.getRemoteAddr();
+                }
+            } else {
+                remoteAddress = NA;
+            }
         }
-        return remoteAddress == null ? NA : remoteAddress.toString();
+        return remoteAddress;
     }
 
     @Override
     public String getRemoteHost() {
-        HttpServletRequest request = getRequest();
-        Object remoteHost = request.getAttribute(AccessLog.REMOTE_HOST_ATTRIBUTE);
         if (remoteHost == null) {
-            remoteHost = request.getRemoteHost();
+            HttpServletRequest request = getRequest();
+            if (request != null) {
+                remoteHost = (String) request.getAttribute(AccessLog.REMOTE_HOST_ATTRIBUTE);
+                if (remoteHost == null) {
+                    remoteHost = request.getRemoteHost();
+                }
+            } else {
+                remoteHost = NA;
+            }
         }
-        return remoteHost == null ? NA : remoteHost.toString();
+        return remoteHost;
     }
 
     @Override
     public String getProtocol() {
-        HttpServletRequest request = getRequest();
-        Object protocol = request.getAttribute(AccessLog.PROTOCOL_ATTRIBUTE);
         if (protocol == null) {
-            protocol = request.getProtocol();
+            HttpServletRequest request = getRequest();
+            if (request != null) {
+                protocol = (String) request.getAttribute(AccessLog.PROTOCOL_ATTRIBUTE);
+                if (protocol == null) {
+                    protocol = request.getProtocol();
+                }
+            } else {
+                protocol = NA;
+            }
         }
-        return protocol == null ? NA : protocol.toString();
+        return protocol;
     }
 
 }
