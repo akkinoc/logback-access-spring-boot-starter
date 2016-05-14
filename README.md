@@ -12,9 +12,9 @@ Requirements
 * Java 8+
 * Spring Boot 1.3.0+ (web application)
 * Any of the following servlet containers:
-    * Embedded Tomcat v8.0.28+
-    * Embedded Jetty v9.2.14.v20151106+
-* Logback-access v1.1.6+
+    * Embedded Tomcat 8.0.28+
+    * Embedded Jetty 9.2.14+
+* Logback-access 1.1.6+
 
 Usage
 -----
