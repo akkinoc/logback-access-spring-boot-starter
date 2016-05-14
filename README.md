@@ -24,7 +24,7 @@ Usage
 <dependency>
     <groupId>net.rakugakibox.springbootext</groupId>
     <artifactId>spring-boot-ext-logback-access</artifactId>
-    <version>1.2</version>
+    <version>1.3</version>
 </dependency>
 ```
 

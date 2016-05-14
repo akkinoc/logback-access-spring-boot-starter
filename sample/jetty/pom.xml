@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.rakugakibox.springbootext</groupId>
     <artifactId>spring-boot-ext-logback-access-sample-jetty</artifactId>
-    <version>1.3</version>
+    <version>1.4-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>spring-boot-ext-logback-access-sample-jetty</name>
@@ -41,7 +41,7 @@
         <dependency>
             <groupId>net.rakugakibox.springbootext</groupId>
             <artifactId>spring-boot-ext-logback-access</artifactId>
-            <version>1.3</version>
+            <version>1.4-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
