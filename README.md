@@ -1,7 +1,7 @@
 spring-boot-ext-logback-access
 ==============================
 
-Spring Boot Extension: Logback-access Auto Configuration.
+Spring Boot Extension: Logback-access Auto Configuration.  
 
 Status
 ------
@@ -53,6 +53,14 @@ logback.access:
 ```
 
 See Also: [Logback-access configuration - Logback-access](http://logback.qos.ch/access.html#configuration)
+
+### Output example:
+
+```
+192.168.35.1 - - [14/5/2016:17:59:54 +0900] "GET / HTTP/1.1" 200 241
+192.168.35.1 - - [14/5/2016:18:00:32 +0900] "GET /favicon.ico HTTP/1.1" 200 946
+192.168.35.1 - - [14/5/2016:18:01:21 +0900] "GET / HTTP/1.1" 304 0
+```
 
 Related articles
 ----------------
