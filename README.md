@@ -1,13 +1,10 @@
 spring-boot-ext-logback-access
 ==============================
 
-Spring Boot Extension: Logback-access Auto Configuration.  
-
-Status
-------
-
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.rakugakibox.springbootext/spring-boot-ext-logback-access/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.rakugakibox.springbootext/spring-boot-ext-logback-access)
 [![Circle CI](https://circleci.com/gh/akihyro/spring-boot-ext-logback-access.svg?style=shield)](https://circleci.com/gh/akihyro/spring-boot-ext-logback-access)
+
+Spring Boot Extension: Logback-access Auto Configuration.  
 
 Supported servlet containers
 ----------------------------
@@ -68,7 +65,12 @@ Related articles
 * [Provide auto-configuration for logback-access - Issue #2609 - spring-projects/spring-boot - GitHub](https://github.com/spring-projects/spring-boot/issues/2609)
 * [Spring Boot: Logback-access が使いやすくなる自動設定を作って公開した - rakugakibox.net](http://blog.rakugakibox.net/entry/2015/12/25/spring-boot-ext-logback-access)
 
+Contributing
+------------
+
+Bug reports and pull requests are welcome :)  
+
 License
 -------
 
-Licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
+Licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).  
