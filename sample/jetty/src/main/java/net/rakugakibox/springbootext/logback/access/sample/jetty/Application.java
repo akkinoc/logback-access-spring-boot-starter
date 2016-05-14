@@ -4,15 +4,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * Sample Application for Jetty.
+ * The sample application for Jetty.
  */
 @SpringBootApplication
 public class Application {
 
     /**
-     * Application entry point.
+     * The entry point of application.
      *
-     * @param args Unused.
+     * @param args unused.
      */
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
