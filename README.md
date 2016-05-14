@@ -6,11 +6,15 @@ spring-boot-ext-logback-access
 
 Spring Boot Extension: Logback-access Auto Configuration.  
 
-Supported servlet containers
-----------------------------
+Requirements
+------------
 
-* Embedded Tomcat
-* Embedded Jetty
+* Java 8+
+* Spring Boot 1.3.0+ (web application)
+* Any of the following servlet containers:
+    * Embedded Tomcat v8.0.28+
+    * Embedded Jetty v9.2.14.v20151106+
+* Logback-access v1.1.6+
 
 Usage
 -----
@@ -49,7 +53,7 @@ logback.access:
 </configuration>
 ```
 
-See Also: [Logback-access configuration - Logback-access](http://logback.qos.ch/access.html#configuration)
+See Also: [Logback-access configuration - Logback-access](http://logback.qos.ch/access.html#configuration)  
 
 ### Output example:
 
