@@ -102,6 +102,7 @@ public abstract class AbstractJsonAccessEventTest {
                 .hasProtocol("HTTP/1.1")
                 .hasMethod(HttpMethod.POST)
                 .hasRequestUri(JsonController.PATH)
+                .doesNotHaveQueryString()
                 .hasRequestUrl(HttpMethod.POST, JsonController.PATH, "HTTP/1.1")
                 .hasRemoteAddr("127.0.0.1")
                 .hasRemoteHost("127.0.0.1")
@@ -142,6 +143,7 @@ public abstract class AbstractJsonAccessEventTest {
                 .hasProtocol("HTTP/1.1")
                 .hasMethod(HttpMethod.GET)
                 .hasRequestUri(JsonController.PATH)
+                .hasQueryString("additionalKey=GET-KEY&additionalValue=GET-VALUE")
                 .hasRequestUrl(
                         HttpMethod.GET,
                         JsonController.PATH,
@@ -177,6 +179,7 @@ public abstract class AbstractJsonAccessEventTest {
                 .hasProtocol("HTTP/1.1")
                 .hasMethod(HttpMethod.PUT)
                 .hasRequestUri(JsonController.PATH)
+                .doesNotHaveQueryString()
                 .hasRequestUrl(HttpMethod.PUT, JsonController.PATH, "HTTP/1.1")
                 .hasRemoteAddr("127.0.0.1")
                 .hasRemoteHost("127.0.0.1")
@@ -204,6 +207,7 @@ public abstract class AbstractJsonAccessEventTest {
                 .hasProtocol("HTTP/1.1")
                 .hasMethod(HttpMethod.DELETE)
                 .hasRequestUri(JsonController.PATH)
+                .doesNotHaveQueryString()
                 .hasRequestUrl(HttpMethod.DELETE, JsonController.PATH, "HTTP/1.1")
                 .hasRemoteAddr("127.0.0.1")
                 .hasRemoteHost("127.0.0.1")

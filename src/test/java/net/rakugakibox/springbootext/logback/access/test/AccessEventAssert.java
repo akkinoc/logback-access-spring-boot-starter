@@ -97,6 +97,33 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
     }
 
     /**
+     * Verifies that the query string is equal to the given one.
+     *
+     * @param query the query string.
+     * @return this instance.
+     */
+    public S hasQueryString(String query) {
+        String actualQueryString = actual.getQueryString();
+        Assertions.assertThat(actualQueryString)
+                .isNotEqualTo(NA)
+                .isEqualTo("?" + query);
+        return myself;
+    }
+
+    /**
+     * Verifies that the query string is empty.
+     *
+     * @return this instance.
+     */
+    public S doesNotHaveQueryString() {
+        String actualQueryString = actual.getQueryString();
+        Assertions.assertThat(actualQueryString)
+                .isNotEqualTo(NA)
+                .isEmpty();
+        return myself;
+    }
+
+    /**
      * Verifies that the request URL (first line of the request) is equal to the given one.
      *
      * @param method the method.
@@ -196,7 +223,7 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
     }
 
     /**
-     * Verifies that the thread name is available.
+     * Verifies that the thread name is not empty.
      *
      * @return this instance.
      */
