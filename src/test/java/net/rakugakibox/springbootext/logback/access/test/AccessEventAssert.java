@@ -1,6 +1,8 @@
 package net.rakugakibox.springbootext.logback.access.test;
 
 import ch.qos.logback.access.spi.IAccessEvent;
+import static ch.qos.logback.access.spi.IAccessEvent.NA;
+import static ch.qos.logback.access.spi.IAccessEvent.SENTINEL;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -41,53 +43,56 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
      * @return this instance.
      */
     public S hasTimestamp(LocalDateTime start, LocalDateTime end) {
-        LocalDateTime timestamp = LocalDateTime.ofInstant(
-                Instant.ofEpochMilli(actual.getTimeStamp()), ZoneId.systemDefault());
-        Assertions.assertThat(timestamp).isAfterOrEqualTo(start).isBeforeOrEqualTo(end);
+        long actualTimestampAsLong = actual.getTimeStamp();
+        Assertions.assertThat(actualTimestampAsLong)
+                .isNotEqualTo(SENTINEL);
+        LocalDateTime actualTimestamp = LocalDateTime.ofInstant(
+                Instant.ofEpochMilli(actualTimestampAsLong), ZoneId.systemDefault());
+        Assertions.assertThat(actualTimestamp)
+                .isAfterOrEqualTo(start)
+                .isBeforeOrEqualTo(end);
         return myself;
     }
 
     /**
      * Verifies that the protocol is equal to the given one.
      *
-     * @param expected the expected protocol.
+     * @param protocol the protocol.
      * @return this instance.
      */
-    public S hasProtocol(String expected) {
-        Assertions.assertThat(actual.getProtocol()).isEqualTo(expected);
+    public S hasProtocol(String protocol) {
+        String actualProtocol = actual.getProtocol();
+        Assertions.assertThat(actualProtocol)
+                .isNotEqualTo(NA)
+                .isEqualTo(protocol);
         return myself;
     }
 
     /**
      * Verifies that the method is equal to the given one.
      *
-     * @param expected the expected method.
+     * @param method the method.
      * @return this instance.
      */
-    public S hasMethod(HttpMethod expected) {
-        Assertions.assertThat(actual.getMethod()).isEqualTo(expected.name());
+    public S hasMethod(HttpMethod method) {
+        String actualMethod = actual.getMethod();
+        Assertions.assertThat(actualMethod)
+                .isNotEqualTo(NA)
+                .isEqualTo(method.name());
         return myself;
     }
 
     /**
      * Verifies that the request URI is equal to the given one.
      *
-     * @param expected the expected request URI.
+     * @param requestUri the request URI.
      * @return this instance.
      */
-    public S hasRequestUri(String expected) {
-        Assertions.assertThat(actual.getRequestURI()).isEqualTo(expected);
-        return myself;
-    }
-
-    /**
-     * Verifies that the request URL (first line of the request) is equal to the given one.
-     *
-     * @param expected the expected request URL (first line of the request).
-     * @return this instance.
-     */
-    public S hasRequestUrl(String expected) {
-        Assertions.assertThat(actual.getRequestURL()).isEqualTo(expected);
+    public S hasRequestUri(String requestUri) {
+        String actualRequestUri = actual.getRequestURI();
+        Assertions.assertThat(actualRequestUri)
+                .isNotEqualTo(NA)
+                .isEqualTo(requestUri);
         return myself;
     }
 
@@ -95,68 +100,98 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
      * Verifies that the request URL (first line of the request) is equal to the given one.
      *
      * @param method the method.
-     * @param uri the request URI.
+     * @param requestUri the request URI.
      * @param protocol the protocol.
      * @return this instance.
      */
-    public S hasRequestUrl(HttpMethod method, String uri, String protocol) {
-        Assertions.assertThat(actual.getRequestURL()).isEqualTo(method.name() + " " + uri + " " + protocol);
+    public S hasRequestUrl(HttpMethod method, String requestUri, String protocol) {
+        return hasRequestUrl(method, requestUri, null, protocol);
+    }
+
+    /**
+     * Verifies that the request URL (first line of the request) is equal to the given one.
+     *
+     * @param method the method.
+     * @param requestUri the request URI.
+     * @param query the query string.
+     * @param protocol the protocol.
+     * @return this instance.
+     */
+    public S hasRequestUrl(HttpMethod method, String requestUri, String query, String protocol) {
+        String actualRequestUrl = actual.getRequestURL();
+        Assertions.assertThat(actualRequestUrl)
+                .isNotEqualTo(NA)
+                .isEqualTo(method.name() + " " + requestUri + (query != null ? "?" + query : "") + " " + protocol);
         return myself;
     }
 
     /**
      * Verifies that the remote address is equal to the given one.
      *
-     * @param expected the expected remote address.
+     * @param remoteAddr the remote address.
      * @return this instance.
      */
-    public S hasRemoteAddr(String expected) {
-        Assertions.assertThat(actual.getRemoteAddr()).isEqualTo(expected);
+    public S hasRemoteAddr(String remoteAddr) {
+        String actualRemoteAddr = actual.getRemoteAddr();
+        Assertions.assertThat(actualRemoteAddr)
+                .isNotEqualTo(NA)
+                .isEqualTo(remoteAddr);
         return myself;
     }
 
     /**
      * Verifies that the remote host is equal to the given one.
      *
-     * @param expected the expected remote host.
+     * @param remoteHost the remote host.
      * @return this instance.
      */
-    public S hasRemoteHost(String expected) {
-        Assertions.assertThat(actual.getRemoteHost()).isEqualTo(expected);
+    public S hasRemoteHost(String remoteHost) {
+        String actualRemoteHost = actual.getRemoteHost();
+        Assertions.assertThat(actualRemoteHost)
+                .isNotEqualTo(NA)
+                .isEqualTo(remoteHost);
         return myself;
     }
 
     /**
      * Verifies that the remote user is equal to the given one.
      *
-     * @param expected the expected remote user.
+     * @param remoteUser the remote user.
      * @return this instance.
      */
-    public S hasRemoteUser(String expected) {
-        Assertions.assertThat(actual.getRemoteUser()).isEqualTo(expected);
+    public S hasRemoteUser(String remoteUser) {
+        String actualRemoteUser = actual.getRemoteUser();
+        Assertions.assertThat(actualRemoteUser)
+                .isNotEqualTo(NA)
+                .isEqualTo(remoteUser);
         return myself;
     }
 
     /**
      * Verifies that the status code is equal to the given one.
      *
-     * @param expected the expected status.
+     * @param status the status.
      * @return this instance.
      */
-    public S hasStatusCode(HttpStatus expected) {
-        HttpStatus status = HttpStatus.valueOf(actual.getStatusCode());
-        Assertions.assertThat(status).isEqualTo(expected);
+    public S hasStatusCode(HttpStatus status) {
+        int actualStatusCode = actual.getStatusCode();
+        Assertions.assertThat(actualStatusCode)
+                .isNotEqualTo(SENTINEL)
+                .isEqualTo(status.value());
         return myself;
     }
 
     /**
      * Verifies that the content length is greater than or equal to the given one.
      *
-     * @param expected the expected minimal content length.
+     * @param contentLength the minimal content length.
      * @return this instance.
      */
-    public S hasContentLength(long expected) {
-        Assertions.assertThat(actual.getContentLength()).isGreaterThanOrEqualTo(expected);
+    public S hasContentLength(long contentLength) {
+        long actualContentLength = actual.getContentLength();
+        Assertions.assertThat(actualContentLength)
+                .isNotEqualTo(SENTINEL)
+                .isGreaterThanOrEqualTo(contentLength);
         return myself;
     }
 

@@ -143,7 +143,8 @@ public abstract class AbstractJsonAccessEventTest {
                 .hasRequestUri(JsonController.PATH)
                 .hasRequestUrl(
                         HttpMethod.GET,
-                        JsonController.PATH + "?additionalKey=GET-KEY&additionalValue=GET-VALUE",
+                        JsonController.PATH,
+                        "additionalKey=GET-KEY&additionalValue=GET-VALUE",
                         "HTTP/1.1"
                 )
                 .hasRemoteAddr("127.0.0.1")

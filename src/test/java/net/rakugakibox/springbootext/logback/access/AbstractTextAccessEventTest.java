@@ -117,7 +117,7 @@ public abstract class AbstractTextAccessEventTest {
                 .hasProtocol("HTTP/1.1")
                 .hasMethod(HttpMethod.GET)
                 .hasRequestUri(TextController.PATH)
-                .hasRequestUrl(HttpMethod.GET, TextController.PATH + "?addition=-GET", "HTTP/1.1")
+                .hasRequestUrl(HttpMethod.GET, TextController.PATH, "addition=-GET", "HTTP/1.1")
                 .hasRemoteAddr("127.0.0.1")
                 .hasRemoteHost("127.0.0.1")
                 .hasRemoteUser(null)
