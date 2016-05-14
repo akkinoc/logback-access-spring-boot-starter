@@ -4,7 +4,6 @@ import ch.qos.logback.access.jetty.JettyServerAdapter;
 import ch.qos.logback.access.jetty.RequestLogImpl;
 import ch.qos.logback.access.spi.AccessContext;
 import ch.qos.logback.access.spi.AccessEvent;
-import ch.qos.logback.access.spi.IAccessEvent;
 import ch.qos.logback.core.spi.FilterReply;
 import lombok.Getter;
 import lombok.Setter;
@@ -73,9 +72,12 @@ public class LogbackAccessRequestLog extends AbstractLifeCycle implements Reques
     @Override
     public void log(Request request, Response response) {
 
-        // Calls Logback-access appenders.
+        // Creates a access event.
         JettyServerAdapter adapter = new JettyServerAdapter(request, response);
-        IAccessEvent accessEvent = new AccessEvent(request, response, adapter);
+        AccessEvent accessEvent = new AccessEvent(request, response, adapter);
+        accessEvent.setThreadName(Thread.currentThread().getName());
+
+        // Calls appenders.
         if (context.getFilterChainDecision(accessEvent) != FilterReply.DENY) {
             context.callAppenders(accessEvent);
         }

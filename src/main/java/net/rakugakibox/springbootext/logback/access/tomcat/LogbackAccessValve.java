@@ -2,7 +2,6 @@ package net.rakugakibox.springbootext.logback.access.tomcat;
 
 import ch.qos.logback.access.spi.AccessContext;
 import ch.qos.logback.access.spi.AccessEvent;
-import ch.qos.logback.access.spi.IAccessEvent;
 import ch.qos.logback.access.tomcat.LogbackValve;
 import ch.qos.logback.access.tomcat.TomcatServerAdapter;
 import ch.qos.logback.core.spi.FilterReply;
@@ -98,9 +97,12 @@ public class LogbackAccessValve extends ValveBase implements AccessLog {
     @Override
     public void log(Request request, Response response, long time) {
 
-        // Calls Logback-access appenders.
+        // Creates a access event.
         CustomizedTomcatServerAdapter adapter = new CustomizedTomcatServerAdapter(request, response);
-        IAccessEvent accessEvent = new AccessEvent(request, response, adapter);
+        AccessEvent accessEvent = new AccessEvent(request, response, adapter);
+        accessEvent.setThreadName(Thread.currentThread().getName());
+
+        // Calls appenders.
         if (context.getFilterChainDecision(accessEvent) != FilterReply.DENY) {
             context.callAppenders(accessEvent);
         }
