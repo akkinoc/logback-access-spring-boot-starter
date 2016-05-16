@@ -34,11 +34,10 @@ logback.access:
     #   => "classpath:logback-access-test.xml"
     #   => "classpath:logback-access.xml"
     #   => "classpath:net/rakugakibox/springbootext/logback/access/logback-access.xml"
-  # Enable request attributes to work with the RemoteIPValve enabled with
-  # server:
-  #   useForwardHeaders: true
-  # Defaults to false
-  enableRequestAttributes: true
+  tomcat:
+    # Enable request attributes to work with the RemoteIpValve enabled with server.useForwardHeaders.
+    # Defaults to the the presence of the RemoteIpValve.
+    enableRequestAttributes: true
 ```
 
 ### Logback-access configuration example (logback-access.xml):

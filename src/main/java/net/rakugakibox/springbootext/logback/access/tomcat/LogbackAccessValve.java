@@ -37,8 +37,6 @@ public class LogbackAccessValve extends ValveBase implements AccessLog {
     @Setter
     private LogbackAccessConfigurator configurator;
 
-    private boolean requestAttributesEnabled;
-
     /**
      * Constructs an instance.
      */
@@ -86,13 +84,13 @@ public class LogbackAccessValve extends ValveBase implements AccessLog {
     /** {@inheritDoc} */
     @Override
     public boolean getRequestAttributesEnabled() {
-        return this.requestAttributesEnabled;
+        return configurator.getTomcat().getOrDeduceEnableRequestAttributes();
     }
 
     /** {@inheritDoc} */
     @Override
     public void setRequestAttributesEnabled(boolean requestAttributesEnabled) {
-        this.requestAttributesEnabled = requestAttributesEnabled;
+        throw new UnsupportedOperationException("Use the application properties to configure this setting!");
     }
 
     /** {@inheritDoc} */
@@ -103,7 +101,7 @@ public class LogbackAccessValve extends ValveBase implements AccessLog {
         CustomizedTomcatServerAdapter adapter = new CustomizedTomcatServerAdapter(request, response);
 
         AccessEvent accessEvent;
-        if (requestAttributesEnabled) {
+        if (getRequestAttributesEnabled()) {
             accessEvent = new RequestAttributeRegardingAccessEvent(request, response, adapter);
         } else {
             accessEvent = new AccessEvent(request, response, adapter);

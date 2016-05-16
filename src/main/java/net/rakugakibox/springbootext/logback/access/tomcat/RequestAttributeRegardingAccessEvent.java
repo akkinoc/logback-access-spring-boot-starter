@@ -15,6 +15,7 @@ public class RequestAttributeRegardingAccessEvent extends AccessEvent {
     private String remoteAddress;
     private String remoteHost;
     private String protocol;
+    private Integer localPort;
 
     public RequestAttributeRegardingAccessEvent(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
                                                 ServerAdapter adapter) {
@@ -69,5 +70,22 @@ public class RequestAttributeRegardingAccessEvent extends AccessEvent {
         }
         return protocol;
     }
+
+    @Override
+    public int getLocalPort() {
+        if (localPort == null) {
+            HttpServletRequest request = getRequest();
+            if (request != null) {
+                localPort = (Integer) request.getAttribute(AccessLog.SERVER_PORT_ATTRIBUTE);
+                if (localPort == null) {
+                    localPort = request.getLocalPort();
+                }
+            } else {
+                localPort = SENTINEL;
+            }
+        }
+        return localPort;
+    }
+
 
 }
