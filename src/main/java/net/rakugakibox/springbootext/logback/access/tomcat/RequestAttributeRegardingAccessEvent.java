@@ -20,7 +20,6 @@ public class RequestAttributeRegardingAccessEvent extends AccessEvent {
     public RequestAttributeRegardingAccessEvent(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
                                                 ServerAdapter adapter) {
         super(httpRequest, httpResponse, adapter);
-        prepareForDeferredProcessing();
     }
 
     @Override
