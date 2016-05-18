@@ -84,13 +84,13 @@ public class LogbackAccessValve extends ValveBase implements AccessLog {
     /** {@inheritDoc} */
     @Override
     public boolean getRequestAttributesEnabled() {
-        throw new UnsupportedOperationException("getRequestAttributesEnabled() method is unsupported: " + this);
+        return configurator.getTomcat().getOrDeduceEnableRequestAttributes();
     }
 
     /** {@inheritDoc} */
     @Override
     public void setRequestAttributesEnabled(boolean requestAttributesEnabled) {
-        throw new UnsupportedOperationException("setRequestAttributesEnabled(boolean) method is unsupported: " + this);
+        throw new UnsupportedOperationException("Use the application properties to configure this setting!");
     }
 
     /** {@inheritDoc} */
@@ -99,7 +99,14 @@ public class LogbackAccessValve extends ValveBase implements AccessLog {
 
         // Creates a access event.
         CustomizedTomcatServerAdapter adapter = new CustomizedTomcatServerAdapter(request, response);
-        AccessEvent accessEvent = new AccessEvent(request, response, adapter);
+
+        AccessEvent accessEvent;
+        if (getRequestAttributesEnabled()) {
+            accessEvent = new RequestAttributeRegardingAccessEvent(request, response, adapter);
+        } else {
+            accessEvent = new AccessEvent(request, response, adapter);
+        }
+
         accessEvent.setThreadName(Thread.currentThread().getName());
 
         // Calls appenders.

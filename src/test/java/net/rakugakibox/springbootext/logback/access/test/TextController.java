@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * The controller of text resource.
  */
@@ -20,6 +22,7 @@ public class TextController {
      * The path of URL.
      */
     public static final String PATH = "/text";
+    public static final String SECURE_PATH = "/secure";
 
     /**
      * The text resource.
@@ -52,6 +55,11 @@ public class TextController {
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
     public synchronized String get(@RequestParam String addition) {
         return resource + addition;
+    }
+
+    @RequestMapping(value = TextController.SECURE_PATH, method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
+    public synchronized String secure(HttpServletRequest request) {
+        return String.valueOf(request.isSecure());
     }
 
     /**

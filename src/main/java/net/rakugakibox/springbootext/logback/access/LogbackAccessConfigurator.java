@@ -10,6 +10,9 @@ import lombok.Cleanup;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.valves.RemoteIpValve;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.ResourceUtils;
@@ -36,12 +39,41 @@ public class LogbackAccessConfigurator {
     private static final String FALLBACK_CONFIG = "classpath:"
             + ClassUtils.addResourcePathToPackagePath(LogbackAccessConfigurator.class, "logback-access.xml");
 
+    @Autowired(required = false)
+    private TomcatEmbeddedServletContainerFactory servletFactory;
+
     /**
      * The location of the configuration file.
      */
     @Getter
     @Setter
     private String config;
+
+    @Getter
+    @Setter
+    private TomcatConfigurator tomcat = new TomcatConfigurator();
+
+    public class TomcatConfigurator {
+
+        /**
+         * Enable requestAttributes in the Tomcat Valve. Defaults to false.
+         */
+        @Setter
+        private Boolean enableRequestAttributes;
+
+        public boolean getOrDeduceEnableRequestAttributes() {
+            if (this.enableRequestAttributes != null) {
+                return this.enableRequestAttributes;
+            } else {
+                // Deduce the value from the presence of the RemoteIpValve.
+                this.enableRequestAttributes = servletFactory.getValves()
+                        .stream()
+                        .anyMatch(valve -> RemoteIpValve.class.isAssignableFrom(valve.getClass()));
+            }
+            return this.enableRequestAttributes;
+        }
+
+    }
 
     /**
      * Configures the Logback-access.
