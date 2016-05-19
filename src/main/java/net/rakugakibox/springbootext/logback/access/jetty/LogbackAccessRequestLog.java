@@ -15,7 +15,7 @@ import org.eclipse.jetty.server.Response;
 import org.eclipse.jetty.util.component.AbstractLifeCycle;
 
 /**
- * The Jetty request-log for Logback-access.
+ * The Jetty request-log.
  * This class is own implementation from scratch, based on {@link RequestLogImpl} and {@link NCSARequestLog}.
  */
 public class LogbackAccessRequestLog extends AbstractLifeCycle implements RequestLog {
@@ -27,7 +27,7 @@ public class LogbackAccessRequestLog extends AbstractLifeCycle implements Reques
     private final AccessContext context;
 
     /**
-     * The Logback-access configurator.
+     * The configurator.
      */
     @Getter
     @Setter

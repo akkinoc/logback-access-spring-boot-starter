@@ -33,11 +33,12 @@ Usage
 
 ```yml
 logback.access:
+  # The location of the configuration file.
+  # Auto-detected by default:
+  #   => "classpath:logback-access-test.xml"
+  #   => "classpath:logback-access.xml"
+  #   => "classpath:net/rakugakibox/springbootext/logback/access/logback-access.xml"
   config: "classpath:your-logback-access.xml"
-    # Auto-detected by default.
-    #   => "classpath:logback-access-test.xml"
-    #   => "classpath:logback-access.xml"
-    #   => "classpath:net/rakugakibox/springbootext/logback/access/logback-access.xml"
   tomcat:
     # Enable request attributes to work with the RemoteIpValve enabled with server.useForwardHeaders.
     # Defaults to the the presence of the RemoteIpValve.

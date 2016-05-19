@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.rakugakibox.springbootext.logback.access.LogbackAccessConfigurator;
+import net.rakugakibox.springbootext.logback.access.LogbackAccessProperties;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.RequestLogHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +14,21 @@ import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletConta
 import org.springframework.boot.context.embedded.jetty.JettyServerCustomizer;
 
 /**
- * The Jetty customizer for Logback-access.
+ * The Jetty customizer.
  */
 @Slf4j
 public class LogbackAccessJettyCustomizer implements EmbeddedServletContainerCustomizer {
 
     /**
-     * The Logback-access configurator.
+     * The configuration properties.
+     */
+    @Getter
+    @Setter
+    @Autowired
+    private LogbackAccessProperties properties;
+
+    /**
+     * The configurator.
      */
     @Getter
     @Setter

@@ -1,10 +1,13 @@
 package net.rakugakibox.springbootext.logback.access.tomcat;
 
+import java.util.stream.Stream;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.rakugakibox.springbootext.logback.access.LogbackAccessConfigurator;
+import net.rakugakibox.springbootext.logback.access.LogbackAccessProperties;
 import org.apache.catalina.Context;
+import org.apache.catalina.valves.RemoteIpValve;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
@@ -12,13 +15,21 @@ import org.springframework.boot.context.embedded.tomcat.TomcatContextCustomizer;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 
 /**
- * The Tomcat customizer for Logback-access.
+ * The Tomcat customizer.
  */
 @Slf4j
 public class LogbackAccessTomcatCustomizer implements EmbeddedServletContainerCustomizer {
 
     /**
-     * The Logback-access configurator.
+     * The configuration properties.
+     */
+    @Getter
+    @Setter
+    @Autowired
+    private LogbackAccessProperties properties;
+
+    /**
+     * The configurator.
      */
     @Getter
     @Setter
@@ -56,8 +67,27 @@ public class LogbackAccessTomcatCustomizer implements EmbeddedServletContainerCu
         public void customize(Context context) {
             LogbackAccessValve valve = new LogbackAccessValve();
             valve.setConfigurator(configurator);
+            valve.setRequestAttributesEnabled(getOrDeduceRequestAttributesEnabled(context));
             context.getPipeline().addValve(valve);
             log.debug("Added the Tomcat valve: valve=[{}] to context=[{}]", valve, context);
+        }
+
+        /**
+         * Returns whether request attributes is enabled,
+         * or deduce the value from the presence of the {@link RemoteIpValve}.
+         *
+         * @param context the Tomcat context.
+         * @return {@code true} if request attributes is enabled, {@code false} otherwise.
+         */
+        private boolean getOrDeduceRequestAttributesEnabled(Context context) {
+            Boolean enableRequestAttributes = properties.getTomcat().getEnableRequestAttributes();
+            if (enableRequestAttributes != null) {
+                return enableRequestAttributes;
+            }
+            // Deduce the value from the presence of the RemoteIpValve.
+            return Stream.of(context.getPipeline().getValves())
+                    .map(Object::getClass)
+                    .anyMatch(RemoteIpValve.class::isAssignableFrom);
         }
 
     }

@@ -38,9 +38,9 @@ public class SingletonQueueAppender extends AppenderBase<IAccessEvent> {
     }
 
     /**
-     * Returns {@code true} if the event queue is empty.
+     * Returns whether the event queue is empty.
      *
-     * @return {@code true} if the event queue is empty.
+     * @return {@code true} if the event queue is empty, {@code false} otherwise.
      */
     public static boolean isEmpty() {
         return queue.isEmpty();

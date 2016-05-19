@@ -10,18 +10,14 @@ import lombok.Cleanup;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.valves.RemoteIpValve;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.ResourceUtils;
 import org.springframework.util.StringUtils;
 
 /**
- * The Logback-access configurator.
+ * The configurator.
  */
-@ConfigurationProperties(prefix = "logback.access")
 @Slf4j
 public class LogbackAccessConfigurator {
 
@@ -39,41 +35,13 @@ public class LogbackAccessConfigurator {
     private static final String FALLBACK_CONFIG = "classpath:"
             + ClassUtils.addResourcePathToPackagePath(LogbackAccessConfigurator.class, "logback-access.xml");
 
-    @Autowired(required = false)
-    private TomcatEmbeddedServletContainerFactory servletFactory;
-
     /**
-     * The location of the configuration file.
+     * The configuration properties.
      */
     @Getter
     @Setter
-    private String config;
-
-    @Getter
-    @Setter
-    private TomcatConfigurator tomcat = new TomcatConfigurator();
-
-    public class TomcatConfigurator {
-
-        /**
-         * Enable requestAttributes in the Tomcat Valve. Defaults to false.
-         */
-        @Setter
-        private Boolean enableRequestAttributes;
-
-        public boolean getOrDeduceEnableRequestAttributes() {
-            if (this.enableRequestAttributes != null) {
-                return this.enableRequestAttributes;
-            } else {
-                // Deduce the value from the presence of the RemoteIpValve.
-                this.enableRequestAttributes = servletFactory.getValves()
-                        .stream()
-                        .anyMatch(valve -> RemoteIpValve.class.isAssignableFrom(valve.getClass()));
-            }
-            return this.enableRequestAttributes;
-        }
-
-    }
+    @Autowired
+    private LogbackAccessProperties properties;
 
     /**
      * Configures the Logback-access.
@@ -82,6 +50,7 @@ public class LogbackAccessConfigurator {
      */
     public void configure(Context context) {
 
+        String config = properties.getConfig();
         if (StringUtils.hasLength(config)) {
             try {
                 configure(context, config);
@@ -97,7 +66,7 @@ public class LogbackAccessConfigurator {
                 return;
             } catch (IOException exc) {
                 // The default configuration files is optional.
-                log.debug("Skipped a default configuration file: config=[{}] with exc=[{}]", defaultConfig, exc);
+                log.debug("Skipped a default configuration file: config=[{}] with exception=[{}]", defaultConfig, exc);
             } catch (JoranException exc) {
                 throw createException(context, defaultConfig, exc);
             }

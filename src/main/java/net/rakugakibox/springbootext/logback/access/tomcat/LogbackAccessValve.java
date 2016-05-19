@@ -19,7 +19,7 @@ import org.apache.catalina.valves.AccessLogValve;
 import org.apache.catalina.valves.ValveBase;
 
 /**
- * The Tomcat valve for Logback-access.
+ * The Tomcat valve.
  * This class is own implementation from scratch, based on {@link LogbackValve} and {@link AccessLogValve}.
  */
 public class LogbackAccessValve extends ValveBase implements AccessLog {
@@ -31,11 +31,16 @@ public class LogbackAccessValve extends ValveBase implements AccessLog {
     private final AccessContext context;
 
     /**
-     * The Logback-access configurator.
+     * The configurator.
      */
     @Getter
     @Setter
     private LogbackAccessConfigurator configurator;
+
+    /**
+     * Whether request attributes is enabled.
+     */
+    private boolean requestAttributesEnabled;
 
     /**
      * Constructs an instance.
@@ -49,6 +54,18 @@ public class LogbackAccessValve extends ValveBase implements AccessLog {
         context = new AccessContext();
         context.setName(toString());
 
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean getRequestAttributesEnabled() {
+        return requestAttributesEnabled;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setRequestAttributesEnabled(boolean requestAttributesEnabled) {
+        this.requestAttributesEnabled = requestAttributesEnabled;
     }
 
     /** {@inheritDoc} */
@@ -83,25 +100,13 @@ public class LogbackAccessValve extends ValveBase implements AccessLog {
 
     /** {@inheritDoc} */
     @Override
-    public boolean getRequestAttributesEnabled() {
-        return configurator.getTomcat().getOrDeduceEnableRequestAttributes();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void setRequestAttributesEnabled(boolean requestAttributesEnabled) {
-        throw new UnsupportedOperationException("Use the application properties to configure this setting!");
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void log(Request request, Response response, long time) {
 
         // Creates a access event.
         CustomizedTomcatServerAdapter adapter = new CustomizedTomcatServerAdapter(request, response);
 
         AccessEvent accessEvent;
-        if (getRequestAttributesEnabled()) {
+        if (requestAttributesEnabled) {
             accessEvent = new RequestAttributeRegardingAccessEvent(request, response, adapter);
         } else {
             accessEvent = new AccessEvent(request, response, adapter);
