@@ -5,6 +5,7 @@ import net.rakugakibox.springbootext.logback.access.jetty.LogbackAccessJettyCust
 import net.rakugakibox.springbootext.logback.access.tomcat.LogbackAccessTomcatCustomizer;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainerFactory;
@@ -19,6 +20,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableConfigurationProperties
 @ConditionalOnWebApplication
+@ConditionalOnProperty(name = "logback.access.enabled", matchIfMissing = true)
 @Slf4j
 public class LogbackAccessAutoConfiguration {
 
