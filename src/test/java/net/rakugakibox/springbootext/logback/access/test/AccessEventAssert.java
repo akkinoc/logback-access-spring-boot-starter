@@ -3,6 +3,7 @@ package net.rakugakibox.springbootext.logback.access.test;
 import ch.qos.logback.access.spi.IAccessEvent;
 import static ch.qos.logback.access.spi.IAccessEvent.NA;
 import static ch.qos.logback.access.spi.IAccessEvent.SENTINEL;
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -247,6 +248,42 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
         Assertions.assertThat(actualContentLength)
                 .isNotEqualTo(SENTINEL)
                 .isGreaterThanOrEqualTo(contentLength);
+        return myself;
+    }
+
+    /**
+     * Verifies that the elapsed time is in given range.
+     *
+     * @param start the start value of range (inclusive).
+     * @param end the end value of range (exclusive).
+     * @return this instance.
+     */
+    public S hasElapsedTime(LocalDateTime start, LocalDateTime end) {
+        long actualElapsedTimeAsLong = actual.getElapsedTime();
+        Assertions.assertThat(actualElapsedTimeAsLong)
+                .isNotEqualTo(SENTINEL);
+        Duration actualElapsedSeconds = Duration.ofMillis(actualElapsedTimeAsLong);
+        Assertions.assertThat(actualElapsedSeconds)
+                .isGreaterThanOrEqualTo(Duration.ofMillis(0L))
+                .isLessThanOrEqualTo(Duration.between(start, end));
+        return myself;
+    }
+
+    /**
+     * Verifies that the elapsed seconds is in given range.
+     *
+     * @param start the start value of range (inclusive).
+     * @param end the end value of range (exclusive).
+     * @return this instance.
+     */
+    public S hasElapsedSeconds(LocalDateTime start, LocalDateTime end) {
+        long actualElapsedSecondsAsLong = actual.getElapsedSeconds();
+        Assertions.assertThat(actualElapsedSecondsAsLong)
+                .isNotEqualTo(SENTINEL);
+        Duration actualElapsedSeconds = Duration.ofSeconds(actualElapsedSecondsAsLong);
+        Assertions.assertThat(actualElapsedSeconds)
+                .isGreaterThanOrEqualTo(Duration.ofSeconds(0L))
+                .isLessThanOrEqualTo(Duration.between(start, end));
         return myself;
     }
 

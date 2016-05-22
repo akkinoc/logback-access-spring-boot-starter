@@ -92,6 +92,8 @@ public abstract class AbstractTextAccessEventTest {
                 .hasRemoteUser(null)
                 .hasStatusCode(HttpStatus.CREATED)
                 .hasContentLength(response.getBytes().length)
+                .hasElapsedTime(startTime, endTime)
+                .hasElapsedSeconds(startTime, endTime)
                 .hasThreadName();
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
@@ -129,6 +131,8 @@ public abstract class AbstractTextAccessEventTest {
                 .hasRemoteUser(null)
                 .hasStatusCode(HttpStatus.OK)
                 .hasContentLength(response.getBytes().length)
+                .hasElapsedTime(startTime, endTime)
+                .hasElapsedSeconds(startTime, endTime)
                 .hasThreadName();
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
@@ -162,6 +166,8 @@ public abstract class AbstractTextAccessEventTest {
                 .hasRemoteUser(null)
                 .hasStatusCode(HttpStatus.NO_CONTENT)
                 .hasContentLength(0)
+                .hasElapsedTime(startTime, endTime)
+                .hasElapsedSeconds(startTime, endTime)
                 .hasThreadName();
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
@@ -192,6 +198,8 @@ public abstract class AbstractTextAccessEventTest {
                 .hasRemoteUser(null)
                 .hasStatusCode(HttpStatus.NO_CONTENT)
                 .hasContentLength(0)
+                .hasElapsedTime(startTime, endTime)
+                .hasElapsedSeconds(startTime, endTime)
                 .hasThreadName();
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 

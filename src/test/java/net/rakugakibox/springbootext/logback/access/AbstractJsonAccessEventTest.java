@@ -110,6 +110,8 @@ public abstract class AbstractJsonAccessEventTest {
                 .hasRemoteUser(null)
                 .hasStatusCode(HttpStatus.CREATED)
                 .hasContentLength(mapper.writeValueAsBytes(response).length)
+                .hasElapsedTime(startTime, endTime)
+                .hasElapsedSeconds(startTime, endTime)
                 .hasThreadName();
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
@@ -158,6 +160,8 @@ public abstract class AbstractJsonAccessEventTest {
                 .hasRemoteUser(null)
                 .hasStatusCode(HttpStatus.OK)
                 .hasContentLength(mapper.writeValueAsBytes(response).length)
+                .hasElapsedTime(startTime, endTime)
+                .hasElapsedSeconds(startTime, endTime)
                 .hasThreadName();
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
@@ -191,6 +195,8 @@ public abstract class AbstractJsonAccessEventTest {
                 .hasRemoteUser(null)
                 .hasStatusCode(HttpStatus.NO_CONTENT)
                 .hasContentLength(0)
+                .hasElapsedTime(startTime, endTime)
+                .hasElapsedSeconds(startTime, endTime)
                 .hasThreadName();
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
@@ -221,6 +227,8 @@ public abstract class AbstractJsonAccessEventTest {
                 .hasRemoteUser(null)
                 .hasStatusCode(HttpStatus.NO_CONTENT)
                 .hasContentLength(0)
+                .hasElapsedTime(startTime, endTime)
+                .hasElapsedSeconds(startTime, endTime)
                 .hasThreadName();
         assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
