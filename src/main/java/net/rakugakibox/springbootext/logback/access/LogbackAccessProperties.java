@@ -12,6 +12,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class LogbackAccessProperties {
 
     /**
+     * Enable Logback-access Auto Configuration.
+     * Defaults to {@code true}.
+     */
+    private Boolean enabled = true;
+
+    /**
      * The location of the configuration file.
      * Auto-detected by default:
      *  {@code classpath:logback-access-test.xml},
