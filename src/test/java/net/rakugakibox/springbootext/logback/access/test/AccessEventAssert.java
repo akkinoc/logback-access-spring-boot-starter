@@ -135,20 +135,7 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
         String actualQueryString = actual.getQueryString();
         Assertions.assertThat(actualQueryString)
                 .isNotEqualTo(NA)
-                .isEqualTo("?" + query);
-        return myself;
-    }
-
-    /**
-     * Verifies that the query string is empty.
-     *
-     * @return this instance.
-     */
-    public S doesNotHaveQueryString() {
-        String actualQueryString = actual.getQueryString();
-        Assertions.assertThat(actualQueryString)
-                .isNotEqualTo(NA)
-                .isEmpty();
+                .isEqualTo(query);
         return myself;
     }
 
@@ -161,23 +148,10 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
      * @return this instance.
      */
     public S hasRequestUrl(HttpMethod method, String requestUri, String protocol) {
-        return hasRequestUrl(method, requestUri, null, protocol);
-    }
-
-    /**
-     * Verifies that the request URL (first line of the request) is equal to the given one.
-     *
-     * @param method the method.
-     * @param requestUri the request URI.
-     * @param query the query string.
-     * @param protocol the protocol.
-     * @return this instance.
-     */
-    public S hasRequestUrl(HttpMethod method, String requestUri, String query, String protocol) {
         String actualRequestUrl = actual.getRequestURL();
         Assertions.assertThat(actualRequestUrl)
                 .isNotEqualTo(NA)
-                .isEqualTo(method.name() + " " + requestUri + (query != null ? "?" + query : "") + " " + protocol);
+                .isEqualTo(method.name() + " " + requestUri + " " + protocol);
         return myself;
     }
 
