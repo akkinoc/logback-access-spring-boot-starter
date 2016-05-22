@@ -1,7 +1,6 @@
 package net.rakugakibox.springbootext.logback.access;
 
 import ch.qos.logback.access.spi.IAccessEvent;
-import java.net.URI;
 import java.time.LocalDateTime;
 import static net.rakugakibox.springbootext.logback.access.test.AccessEventAssert.assertThat;
 import net.rakugakibox.springbootext.logback.access.test.SingletonQueueAppender;
@@ -35,10 +34,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 public abstract class AbstractTextAccessEventTest {
 
     /**
-     * The base URL.
+     * The server port.
      */
-    @Value("http://localhost:${local.server.port}/")
-    private URI baseUrl;
+    @Value("${local.server.port}")
+    private int port;
 
     /**
      * The REST template.
@@ -81,6 +80,7 @@ public abstract class AbstractTextAccessEventTest {
         assertThat(response).isEqualTo("TEXT-POST");
         assertThat(event)
                 .hasTimestamp(startTime, endTime)
+                .hasLocalPort(port)
                 .hasProtocol("HTTP/1.1")
                 .hasMethod(HttpMethod.POST)
                 .hasRequestUri(TextController.PATH)
@@ -116,6 +116,7 @@ public abstract class AbstractTextAccessEventTest {
         assertThat(response).isEqualTo("TEXT-GET");
         assertThat(event)
                 .hasTimestamp(startTime, endTime)
+                .hasLocalPort(port)
                 .hasProtocol("HTTP/1.1")
                 .hasMethod(HttpMethod.GET)
                 .hasRequestUri(TextController.PATH)
@@ -147,6 +148,7 @@ public abstract class AbstractTextAccessEventTest {
 
         assertThat(event)
                 .hasTimestamp(startTime, endTime)
+                .hasLocalPort(port)
                 .hasProtocol("HTTP/1.1")
                 .hasMethod(HttpMethod.PUT)
                 .hasRequestUri(TextController.PATH)
@@ -175,6 +177,7 @@ public abstract class AbstractTextAccessEventTest {
 
         assertThat(event)
                 .hasTimestamp(startTime, endTime)
+                .hasLocalPort(port)
                 .hasProtocol("HTTP/1.1")
                 .hasMethod(HttpMethod.DELETE)
                 .hasRequestUri(TextController.PATH)
@@ -197,7 +200,11 @@ public abstract class AbstractTextAccessEventTest {
      * @return a URI components builder.
      */
     private UriComponentsBuilder url(String path) {
-        return UriComponentsBuilder.fromUri(baseUrl).path(path);
+        return UriComponentsBuilder.newInstance()
+                .scheme("http")
+                .host("localhost")
+                .port(port)
+                .path(path);
     }
 
     /**

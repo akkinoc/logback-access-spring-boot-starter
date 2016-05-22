@@ -55,6 +55,20 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
     }
 
     /**
+     * Verifies that the local port is equal to the given one.
+     *
+     * @param localPort the local port.
+     * @return this instance.
+     */
+    public S hasLocalPort(int localPort) {
+        int actualLocalPort = actual.getLocalPort();
+        Assertions.assertThat(actualLocalPort)
+                .isNotEqualTo(SENTINEL)
+                .isEqualTo(localPort);
+        return myself;
+    }
+
+    /**
      * Verifies that the protocol is equal to the given one.
      *
      * @param protocol the protocol.
@@ -163,20 +177,6 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
         Assertions.assertThat(actualRemoteAddr)
                 .isNotEqualTo(NA)
                 .isEqualTo(remoteAddr);
-        return myself;
-    }
-
-    /**
-     * Verifies that the local port is equal to the given one.
-     *
-     * @param localPort the local port.
-     * @return this instance.
-     */
-    public S hasLocalPort(int localPort) {
-        int actualLocalPort = actual.getLocalPort();
-        Assertions.assertThat(actualLocalPort)
-                .isNotEqualTo(SENTINEL)
-                .isEqualTo(localPort);
         return myself;
     }
 

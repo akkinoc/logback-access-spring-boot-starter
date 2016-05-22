@@ -3,7 +3,6 @@ package net.rakugakibox.springbootext.logback.access;
 import ch.qos.logback.access.spi.IAccessEvent;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
-import java.net.URI;
 import java.time.LocalDateTime;
 import static java.util.Arrays.asList;
 import java.util.HashMap;
@@ -42,10 +41,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 public abstract class AbstractJsonAccessEventTest {
 
     /**
-     * The base URL.
+     * The server port.
      */
-    @Value("http://localhost:${local.server.port}/")
-    private URI baseUrl;
+    @Value("${local.server.port}")
+    private int port;
 
     /**
      * The JSON mapper.
@@ -99,6 +98,7 @@ public abstract class AbstractJsonAccessEventTest {
                 .containsEntry("POST-KEY", "POST-VALUE");
         assertThat(event)
                 .hasTimestamp(startTime, endTime)
+                .hasLocalPort(port)
                 .hasProtocol("HTTP/1.1")
                 .hasMethod(HttpMethod.POST)
                 .hasRequestUri(JsonController.PATH)
@@ -140,6 +140,7 @@ public abstract class AbstractJsonAccessEventTest {
                 .containsEntry("GET-KEY", "GET-VALUE");
         assertThat(event)
                 .hasTimestamp(startTime, endTime)
+                .hasLocalPort(port)
                 .hasProtocol("HTTP/1.1")
                 .hasMethod(HttpMethod.GET)
                 .hasRequestUri(JsonController.PATH)
@@ -176,6 +177,7 @@ public abstract class AbstractJsonAccessEventTest {
 
         assertThat(event)
                 .hasTimestamp(startTime, endTime)
+                .hasLocalPort(port)
                 .hasProtocol("HTTP/1.1")
                 .hasMethod(HttpMethod.PUT)
                 .hasRequestUri(JsonController.PATH)
@@ -204,6 +206,7 @@ public abstract class AbstractJsonAccessEventTest {
 
         assertThat(event)
                 .hasTimestamp(startTime, endTime)
+                .hasLocalPort(port)
                 .hasProtocol("HTTP/1.1")
                 .hasMethod(HttpMethod.DELETE)
                 .hasRequestUri(JsonController.PATH)
@@ -226,7 +229,11 @@ public abstract class AbstractJsonAccessEventTest {
      * @return a URI components builder.
      */
     private UriComponentsBuilder url(String path) {
-        return UriComponentsBuilder.fromUri(baseUrl).path(path);
+        return UriComponentsBuilder.newInstance()
+                .scheme("http")
+                .host("localhost")
+                .port(port)
+                .path(path);
     }
 
     /**
