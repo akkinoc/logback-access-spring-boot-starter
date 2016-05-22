@@ -1,5 +1,7 @@
 package net.rakugakibox.springbootext.logback.access;
 
+import ch.qos.logback.access.spi.IAccessEvent;
+import javax.servlet.http.HttpServletRequest;
 import lombok.Data;
 import org.apache.catalina.valves.RemoteIpValve;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -25,6 +27,14 @@ public class LogbackAccessProperties {
      *  {@code classpath:net/rakugakibox/springbootext/logback/access/logback-access.xml}
      */
     private String config;
+
+    /**
+     * Use the server port ({@link HttpServletRequest#getServerPort()})
+     * instead of the local port ({@link HttpServletRequest#getLocalPort()}),
+     * in {@link IAccessEvent#getLocalPort()}.
+     * Defaults to {@code true}.
+     */
+    private Boolean useServerPortInsteadOfLocalPort = true;
 
     /**
      * The configuration properties for if Tomcat is being used.

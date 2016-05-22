@@ -82,6 +82,10 @@ logback.access:
   #   => "classpath:logback-access.xml"
   #   => "classpath:net/rakugakibox/springbootext/logback/access/logback-access.xml"
   config: "classpath:your-logback-access.xml"
+  # Use the server port (HttpServletRequest#getServerPort())
+  # instead of the local port (HttpServletRequest#getLocalPort()), in IAccessEvent#getLocalPort().
+  # Defaults to true.
+  useServerPortInsteadOfLocalPort: true
   # for Tomcat.
   tomcat:
     # Enable request attributes to work with the RemoteIpValve enabled with server.useForwardHeaders.

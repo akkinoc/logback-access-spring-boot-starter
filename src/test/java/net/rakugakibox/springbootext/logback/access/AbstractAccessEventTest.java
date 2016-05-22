@@ -6,10 +6,13 @@ import java.util.HashMap;
 import java.util.Map;
 import static net.rakugakibox.springbootext.logback.access.test.AccessEventAssert.assertThat;
 import net.rakugakibox.springbootext.logback.access.test.SingletonQueueAppender;
+import net.rakugakibox.springbootext.logback.access.test.SingletonQueueAppenderRule;
 import static org.assertj.core.api.Assertions.assertThat;
-import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -50,24 +53,21 @@ public abstract class AbstractAccessEventTest {
     /**
      * The REST template.
      */
+    @Autowired
     private RestTemplate rest;
 
     /**
-     * Sets up resources.
+     * Creates a test rule.
+     *
+     * @return a test rule.
      */
-    @Before
-    public void setup() {
-
-        // Initializes the REST template.
-        rest = new TestRestTemplate();
-
-        // Initializes the event queue.
-        SingletonQueueAppender.clear();
-
+    @Rule
+    public TestRule rule() {
+        return new SingletonQueueAppenderRule();
     }
 
     /**
-     * Tests the basic attributes of access event.
+     * Tests the basic attributes.
      */
     @Test
     public void basicAttributes() {
@@ -81,7 +81,9 @@ public abstract class AbstractAccessEventTest {
         IAccessEvent event = SingletonQueueAppender.pop();
         LocalDateTime endTime = LocalDateTime.now();
 
-        assertThat(response.getBody()).isEqualTo("text");
+        assertThat(response.getBody())
+                .isEqualTo("text");
+
         assertThat(event)
                 .hasTimestamp(startTime, endTime)
                 .hasServerName("localhost")
@@ -99,12 +101,11 @@ public abstract class AbstractAccessEventTest {
                 .hasElapsedTime(startTime, endTime)
                 .hasElapsedSeconds(startTime, endTime)
                 .hasThreadName();
-        assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
     }
 
     /**
-     * Tests the query string of access event.
+     * Tests the query string.
      */
     @Test
     public void queryString() {
@@ -116,19 +117,21 @@ public abstract class AbstractAccessEventTest {
         ResponseEntity<String> response = rest.exchange(request, String.class);
         IAccessEvent event = SingletonQueueAppender.pop();
 
-        assertThat(response.getBody()).isEqualTo("text");
+        assertThat(response.getBody())
+                .isEqualTo("text");
+
         assertThat(event)
                 .hasQueryString("?query")
                 .hasRequestUrl(HttpMethod.GET, "/text?query", "HTTP/1.1");
-        assertThat(SingletonQueueAppender.isEmpty()).isTrue();
 
     }
 
     /**
-     * Tests the content length of access event.
+     * Tests the content length.
+     * The case that contains the "Content-Length" response header.
      */
     @Test
-    public void contentLength_withHeader() {
+    public void contentLength_containsHeader() {
 
         RequestEntity<Void> request = RequestEntity
                 .get(url("/text").build().toUri())
@@ -137,18 +140,22 @@ public abstract class AbstractAccessEventTest {
         ResponseEntity<String> response = rest.exchange(request, String.class);
         IAccessEvent event = SingletonQueueAppender.pop();
 
-        assertThat(response.getHeaders()).containsKey(HttpHeaders.CONTENT_LENGTH);
-        assertThat(response.getBody()).isEqualTo("text");
-        assertThat(event).hasContentLength(response.getBody().getBytes().length);
-        assertThat(SingletonQueueAppender.isEmpty()).isTrue();
+        assertThat(response.getHeaders())
+                .containsKey(HttpHeaders.CONTENT_LENGTH);
+        assertThat(response.getBody())
+                .isEqualTo("text");
+
+        assertThat(event)
+                .hasContentLength(response.getBody().getBytes().length);
 
     }
 
     /**
-     * Tests the content length of access event.
+     * Tests the content length.
+     * The case that does not contain the "Content-Length" response header.
      */
     @Test
-    public void contentLength_withoutHeader() {
+    public void contentLength_doesNotContainHeader() {
 
         RequestEntity<Void> request = RequestEntity
                 .get(url("/json").build().toUri())
@@ -157,10 +164,13 @@ public abstract class AbstractAccessEventTest {
         ResponseEntity<String> response = rest.exchange(request, String.class);
         IAccessEvent event = SingletonQueueAppender.pop();
 
-        assertThat(response.getHeaders()).doesNotContainKey(HttpHeaders.CONTENT_LENGTH);
-        assertThat(response.getBody()).isEqualTo("{\"json-key\":\"json-value\"}");
-        assertThat(event).hasContentLength(response.getBody().getBytes().length);
-        assertThat(SingletonQueueAppender.isEmpty()).isTrue();
+        assertThat(response.getHeaders())
+                .doesNotContainKey(HttpHeaders.CONTENT_LENGTH);
+        assertThat(response.getBody())
+                .containsSequence("json-key", ":", "json-value");
+
+        assertThat(event)
+                .hasContentLength(response.getBody().getBytes().length);
 
     }
 
@@ -186,6 +196,16 @@ public abstract class AbstractAccessEventTest {
     public static class TestContextConfiguration {
 
         /**
+         * Creates a REST template.
+         *
+         * @return a REST template.
+         */
+        @Bean
+        public RestTemplate testRestTemplate() {
+            return new TestRestTemplate();
+        }
+
+        /**
          * Creates a controller.
          *
          * @return a controller.
@@ -204,7 +224,7 @@ public abstract class AbstractAccessEventTest {
     public static class TestController {
 
         /**
-         * Gets the text.
+         * Returns the text.
          *
          * @return the text.
          */
@@ -214,13 +234,13 @@ public abstract class AbstractAccessEventTest {
         }
 
         /**
-         * Gets the JSON.
+         * Returns the JSON.
          *
          * @return the JSON.
          */
         @RequestMapping(path = "/json", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-        public Map<String, String> getJson() {
-            Map<String, String> map = new HashMap<>();
+        public Map<String, Object> getJson() {
+            Map<String, Object> map = new HashMap<>();
             map.put("json-key", "json-value");
             return map;
         }
