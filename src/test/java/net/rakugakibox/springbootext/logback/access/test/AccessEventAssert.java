@@ -55,6 +55,20 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
     }
 
     /**
+     * Verifies that the server name is equal to the given one.
+     *
+     * @param serverName the server name.
+     * @return this instance.
+     */
+    public S hasServerName(String serverName) {
+        String actualServerName = actual.getServerName();
+        Assertions.assertThat(actualServerName)
+                .isNotEqualTo(NA)
+                .isEqualTo(serverName);
+        return myself;
+    }
+
+    /**
      * Verifies that the local port is equal to the given one.
      *
      * @param localPort the local port.

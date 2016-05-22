@@ -98,6 +98,7 @@ public abstract class AbstractJsonAccessEventTest {
                 .containsEntry("POST-KEY", "POST-VALUE");
         assertThat(event)
                 .hasTimestamp(startTime, endTime)
+                .hasServerName("localhost")
                 .hasLocalPort(port)
                 .hasProtocol("HTTP/1.1")
                 .hasMethod(HttpMethod.POST)
@@ -140,6 +141,7 @@ public abstract class AbstractJsonAccessEventTest {
                 .containsEntry("GET-KEY", "GET-VALUE");
         assertThat(event)
                 .hasTimestamp(startTime, endTime)
+                .hasServerName("localhost")
                 .hasLocalPort(port)
                 .hasProtocol("HTTP/1.1")
                 .hasMethod(HttpMethod.GET)
@@ -177,6 +179,7 @@ public abstract class AbstractJsonAccessEventTest {
 
         assertThat(event)
                 .hasTimestamp(startTime, endTime)
+                .hasServerName("localhost")
                 .hasLocalPort(port)
                 .hasProtocol("HTTP/1.1")
                 .hasMethod(HttpMethod.PUT)
@@ -206,6 +209,7 @@ public abstract class AbstractJsonAccessEventTest {
 
         assertThat(event)
                 .hasTimestamp(startTime, endTime)
+                .hasServerName("localhost")
                 .hasLocalPort(port)
                 .hasProtocol("HTTP/1.1")
                 .hasMethod(HttpMethod.DELETE)
