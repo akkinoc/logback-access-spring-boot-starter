@@ -1,13 +1,12 @@
 package net.rakugakibox.springbootext.logback.access.jetty;
 
-import ch.qos.logback.access.jetty.JettyServerAdapter;
 import ch.qos.logback.access.jetty.RequestLogImpl;
 import ch.qos.logback.access.spi.AccessContext;
-import ch.qos.logback.access.spi.AccessEvent;
 import ch.qos.logback.core.spi.FilterReply;
 import lombok.Getter;
 import lombok.Setter;
 import net.rakugakibox.springbootext.logback.access.LogbackAccessConfigurator;
+import net.rakugakibox.springbootext.logback.access.LogbackAccessProperties;
 import org.eclipse.jetty.server.NCSARequestLog;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.RequestLog;
@@ -25,6 +24,13 @@ public class LogbackAccessRequestLog extends AbstractLifeCycle implements Reques
      */
     @Getter
     private final AccessContext context;
+
+    /**
+     * The configuration properties.
+     */
+    @Getter
+    @Setter
+    private LogbackAccessProperties properties;
 
     /**
      * The configurator.
@@ -73,9 +79,9 @@ public class LogbackAccessRequestLog extends AbstractLifeCycle implements Reques
     public void log(Request request, Response response) {
 
         // Creates a access event.
-        JettyServerAdapter adapter = new JettyServerAdapter(request, response);
-        AccessEvent accessEvent = new AccessEvent(request, response, adapter);
+        JettyAccessEvent accessEvent = new JettyAccessEvent(request, response);
         accessEvent.setThreadName(Thread.currentThread().getName());
+        accessEvent.setUseServerPortInsteadOfLocalPort(properties.getUseServerPortInsteadOfLocalPort());
 
         // Calls appenders.
         if (context.getFilterChainDecision(accessEvent) != FilterReply.DENY) {

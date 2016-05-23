@@ -1,21 +1,21 @@
 package net.rakugakibox.springbootext.logback.access.tomcat;
 
 import ch.qos.logback.access.spi.AccessContext;
-import ch.qos.logback.access.spi.AccessEvent;
 import ch.qos.logback.access.tomcat.LogbackValve;
-import ch.qos.logback.access.tomcat.TomcatServerAdapter;
 import ch.qos.logback.core.spi.FilterReply;
 import java.io.IOException;
+import java.util.stream.Stream;
 import javax.servlet.ServletException;
 import lombok.Getter;
 import lombok.Setter;
 import net.rakugakibox.springbootext.logback.access.LogbackAccessConfigurator;
+import net.rakugakibox.springbootext.logback.access.LogbackAccessProperties;
 import org.apache.catalina.AccessLog;
-import org.apache.catalina.Globals;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.connector.Request;
 import org.apache.catalina.connector.Response;
 import org.apache.catalina.valves.AccessLogValve;
+import org.apache.catalina.valves.RemoteIpValve;
 import org.apache.catalina.valves.ValveBase;
 
 /**
@@ -31,6 +31,13 @@ public class LogbackAccessValve extends ValveBase implements AccessLog {
     private final AccessContext context;
 
     /**
+     * The configuration properties.
+     */
+    @Getter
+    @Setter
+    private LogbackAccessProperties properties;
+
+    /**
      * The configurator.
      */
     @Getter
@@ -40,7 +47,7 @@ public class LogbackAccessValve extends ValveBase implements AccessLog {
     /**
      * Whether request attributes is enabled.
      */
-    private boolean requestAttributesEnabled;
+    private Boolean requestAttributesEnabled;
 
     /**
      * Constructs an instance.
@@ -71,6 +78,17 @@ public class LogbackAccessValve extends ValveBase implements AccessLog {
     /** {@inheritDoc} */
     @Override
     protected void startInternal() throws LifecycleException {
+
+        // Initializes whether request attributes is enabled.
+        if (requestAttributesEnabled == null) {
+            requestAttributesEnabled = properties.getTomcat().getEnableRequestAttributes();
+        }
+        if (requestAttributesEnabled == null) {
+            // Deduce the value from the presence of the RemoteIpValve.
+            requestAttributesEnabled = Stream.of(getContainer().getPipeline().getValves())
+                    .map(Object::getClass)
+                    .anyMatch(RemoteIpValve.class::isAssignableFrom);
+        }
 
         // Configures and starts the Logback-access context.
         configurator.configure(context);
@@ -103,65 +121,14 @@ public class LogbackAccessValve extends ValveBase implements AccessLog {
     public void log(Request request, Response response, long time) {
 
         // Creates a access event.
-        CustomizedTomcatServerAdapter adapter = new CustomizedTomcatServerAdapter(request, response);
-
-        AccessEvent accessEvent;
-        if (requestAttributesEnabled) {
-            accessEvent = new RequestAttributeRegardingAccessEvent(request, response, adapter);
-        } else {
-            accessEvent = new AccessEvent(request, response, adapter);
-        }
-
+        TomcatAccessEvent accessEvent = new TomcatAccessEvent(request, response);
         accessEvent.setThreadName(Thread.currentThread().getName());
+        accessEvent.setUseServerPortInsteadOfLocalPort(properties.getUseServerPortInsteadOfLocalPort());
+        accessEvent.setRequestAttributesEnabled(requestAttributesEnabled);
 
         // Calls appenders.
         if (context.getFilterChainDecision(accessEvent) != FilterReply.DENY) {
             context.callAppenders(accessEvent);
-        }
-
-    }
-
-    /**
-     * The customized tomcat server adapter.
-     */
-    private class CustomizedTomcatServerAdapter extends TomcatServerAdapter {
-
-        /**
-         * The tomcat request.
-         */
-        private final Request request;
-
-        /**
-         * The tomcat response.
-         */
-        private final Response response;
-
-        /**
-         * Constructs an instance.
-         *
-         * @param request the tomcat request.
-         * @param response the tomcat response.
-         */
-        public CustomizedTomcatServerAdapter(Request request, Response response) {
-            super(request, response);
-            this.request = request;
-            this.response = response;
-        }
-
-        /** {@inheritDoc} */
-        @Override
-        public long getContentLength() {
-            long length = response.getBytesWritten(false);
-            if (length <= 0) {
-                Object start = request.getAttribute(Globals.SENDFILE_FILE_START_ATTR);
-                Object end = request.getAttribute(Globals.SENDFILE_FILE_END_ATTR);
-                if (start instanceof Long && end instanceof Long) {
-                    Long startAsLong = (Long) start;
-                    Long endAsLong = (Long) end;
-                    length = endAsLong - startAsLong;
-                }
-            }
-            return length;
         }
 
     }
