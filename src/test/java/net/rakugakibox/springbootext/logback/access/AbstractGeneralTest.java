@@ -4,6 +4,7 @@ import ch.qos.logback.access.spi.IAccessEvent;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import javax.servlet.http.HttpServletResponse;
 import static net.rakugakibox.springbootext.logback.access.test.AccessEventAssert.assertThat;
 import net.rakugakibox.springbootext.logback.access.test.SingletonQueueAppender;
 import net.rakugakibox.springbootext.logback.access.test.SingletonQueueAppenderRule;
@@ -217,6 +218,27 @@ public abstract class AbstractGeneralTest {
     }
 
     /**
+     * Tests the response header.
+     */
+    @Test
+    public void testResponseHeader() {
+
+        RequestEntity<Void> request = RequestEntity
+                .get(url("/text-with-header").build().toUri())
+                .build();
+
+        ResponseEntity<String> response = rest.exchange(request, String.class);
+        IAccessEvent event = SingletonQueueAppender.pop();
+
+        assertThat(response.getBody())
+                .isEqualTo("text");
+
+        assertThat(event)
+                .hasResponseHeader("X-Test-Header", "header");
+
+    }
+
+    /**
      * Starts building the URL.
      *
      * @param path the path of URL.
@@ -285,6 +307,18 @@ public abstract class AbstractGeneralTest {
             Map<String, Object> map = new HashMap<>();
             map.put("json-key", "json-value");
             return map;
+        }
+
+        /**
+         * Gets the text with header.
+         *
+         * @param response the HTTP response.
+         * @return the text with header.
+         */
+        @RequestMapping(path = "/text-with-header", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
+        public String getTextWithHeader(HttpServletResponse response) {
+            response.addHeader("X-Test-Header", "header");
+            return getText();
         }
 
     }

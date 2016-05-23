@@ -255,6 +255,20 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
     }
 
     /**
+     * Verifies that the response header is equal to the given one.
+     *
+     * @param name the response header name.
+     * @param value the response header value.
+     * @return this instance.
+     */
+    public S hasResponseHeader(String name, String value) {
+        Map<String, String> actualResponseHeaderMap = actual.getResponseHeaderMap();
+        Assertions.assertThat(actualResponseHeaderMap)
+                .containsEntry(name, value);
+        return myself;
+    }
+
+    /**
      * Verifies that the elapsed time is in given range.
      *
      * @param start the start value of range (inclusive).
