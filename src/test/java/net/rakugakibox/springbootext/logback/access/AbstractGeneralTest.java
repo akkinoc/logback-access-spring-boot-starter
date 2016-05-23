@@ -4,6 +4,7 @@ import ch.qos.logback.access.spi.IAccessEvent;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
 import javax.servlet.http.HttpServletResponse;
 import static net.rakugakibox.springbootext.logback.access.test.AccessEventAssert.assertThat;
 import net.rakugakibox.springbootext.logback.access.test.SingletonQueueAppender;
@@ -89,13 +90,52 @@ public abstract class AbstractGeneralTest {
                 .hasTimestamp(startTime, endTime)
                 .hasServerName("localhost")
                 .hasLocalPort(port)
-                .hasProtocol("HTTP/1.1")
-                .hasMethod(HttpMethod.GET)
-                .hasRequestUri("/text")
-                .hasRequestUrl(HttpMethod.GET, "/text", "HTTP/1.1")
                 .hasRemoteAddr("127.0.0.1")
                 .hasRemoteHost("127.0.0.1")
                 .hasRemoteUser(null)
+                .hasProtocol("HTTP/1.1")
+                .hasMethod(HttpMethod.GET)
+                .hasRequestUri("/text")
+                .hasQueryString("")
+                .hasRequestUrl(HttpMethod.GET, "/text", "HTTP/1.1")
+                .hasStatusCode(HttpStatus.OK)
+                .hasContentLength(response.getBody().getBytes().length)
+                .hasElapsedTime(startTime, endTime)
+                .hasElapsedSeconds(startTime, endTime)
+                .hasThreadName();
+
+    }
+
+    /**
+     * Tests the basic attributes (async).
+     */
+    @Test
+    public void testBasicAttributesAsync() {
+
+        RequestEntity<Void> request = RequestEntity
+                .get(url("/text-async").build().toUri())
+                .build();
+
+        LocalDateTime startTime = LocalDateTime.now();
+        ResponseEntity<String> response = rest.exchange(request, String.class);
+        IAccessEvent event = SingletonQueueAppender.pop();
+        LocalDateTime endTime = LocalDateTime.now();
+
+        assertThat(response.getBody())
+                .isEqualTo("text");
+
+        assertThat(event)
+                .hasTimestamp(startTime, endTime)
+                .hasServerName("localhost")
+                .hasLocalPort(port)
+                .hasRemoteAddr("127.0.0.1")
+                .hasRemoteHost("127.0.0.1")
+                .hasRemoteUser(null)
+                .hasProtocol("HTTP/1.1")
+                .hasMethod(HttpMethod.GET)
+                .hasRequestUri("/text-async")
+                .hasQueryString("")
+                .hasRequestUrl(HttpMethod.GET, "/text-async", "HTTP/1.1")
                 .hasStatusCode(HttpStatus.OK)
                 .hasContentLength(response.getBody().getBytes().length)
                 .hasElapsedTime(startTime, endTime)
@@ -298,15 +338,13 @@ public abstract class AbstractGeneralTest {
         }
 
         /**
-         * Gets the JSON.
+         * Gets the text (async).
          *
-         * @return the JSON.
+         * @return the text.
          */
-        @RequestMapping(path = "/json", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-        public Map<String, Object> getJson() {
-            Map<String, Object> map = new HashMap<>();
-            map.put("json-key", "json-value");
-            return map;
+        @RequestMapping(path = "/text-async", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
+        public Callable<String> getTextAsync() {
+            return this::getText;
         }
 
         /**
@@ -319,6 +357,18 @@ public abstract class AbstractGeneralTest {
         public String getTextWithHeader(HttpServletResponse response) {
             response.addHeader("X-Test-Header", "header");
             return getText();
+        }
+
+        /**
+         * Gets the JSON.
+         *
+         * @return the JSON.
+         */
+        @RequestMapping(path = "/json", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+        public Map<String, Object> getJson() {
+            Map<String, Object> map = new HashMap<>();
+            map.put("json-key", "json-value");
+            return map;
         }
 
     }

@@ -78,7 +78,8 @@ public class TomcatForwardHeadersUsingTest {
     @Test
     public void testAffectedAttributesByForwardedHeaders() {
 
-        RequestEntity<Void> request = RequestEntity.get(url("/attributes").build().toUri())
+        RequestEntity<Void> request = RequestEntity
+                .get(url("/attributes").build().toUri())
                 .header("X-Forwarded-Port", "5432")
                 .header("X-Forwarded-Proto", "https")
                 .header("X-Forwarded-For", "1.2.3.4")

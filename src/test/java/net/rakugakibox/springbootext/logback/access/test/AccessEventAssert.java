@@ -85,6 +85,48 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
     }
 
     /**
+     * Verifies that the remote address is equal to the given one.
+     *
+     * @param remoteAddr the remote address.
+     * @return this instance.
+     */
+    public S hasRemoteAddr(String remoteAddr) {
+        String actualRemoteAddr = actual.getRemoteAddr();
+        Assertions.assertThat(actualRemoteAddr)
+                .isNotEqualTo(NA)
+                .isEqualTo(remoteAddr);
+        return myself;
+    }
+
+    /**
+     * Verifies that the remote host is equal to the given one.
+     *
+     * @param remoteHost the remote host.
+     * @return this instance.
+     */
+    public S hasRemoteHost(String remoteHost) {
+        String actualRemoteHost = actual.getRemoteHost();
+        Assertions.assertThat(actualRemoteHost)
+                .isNotEqualTo(NA)
+                .isEqualTo(remoteHost);
+        return myself;
+    }
+
+    /**
+     * Verifies that the remote user is equal to the given one.
+     *
+     * @param remoteUser the remote user.
+     * @return this instance.
+     */
+    public S hasRemoteUser(String remoteUser) {
+        String actualRemoteUser = actual.getRemoteUser();
+        Assertions.assertThat(actualRemoteUser)
+                .isNotEqualTo(NA)
+                .isEqualTo(remoteUser);
+        return myself;
+    }
+
+    /**
      * Verifies that the protocol is equal to the given one.
      *
      * @param protocol the protocol.
@@ -181,48 +223,6 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
         Map<String, String[]> actualRequestParameterMap = actual.getRequestParameterMap();
         Assertions.assertThat(actualRequestParameterMap)
                 .containsEntry(name, values);
-        return myself;
-    }
-
-    /**
-     * Verifies that the remote address is equal to the given one.
-     *
-     * @param remoteAddr the remote address.
-     * @return this instance.
-     */
-    public S hasRemoteAddr(String remoteAddr) {
-        String actualRemoteAddr = actual.getRemoteAddr();
-        Assertions.assertThat(actualRemoteAddr)
-                .isNotEqualTo(NA)
-                .isEqualTo(remoteAddr);
-        return myself;
-    }
-
-    /**
-     * Verifies that the remote host is equal to the given one.
-     *
-     * @param remoteHost the remote host.
-     * @return this instance.
-     */
-    public S hasRemoteHost(String remoteHost) {
-        String actualRemoteHost = actual.getRemoteHost();
-        Assertions.assertThat(actualRemoteHost)
-                .isNotEqualTo(NA)
-                .isEqualTo(remoteHost);
-        return myself;
-    }
-
-    /**
-     * Verifies that the remote user is equal to the given one.
-     *
-     * @param remoteUser the remote user.
-     * @return this instance.
-     */
-    public S hasRemoteUser(String remoteUser) {
-        String actualRemoteUser = actual.getRemoteUser();
-        Assertions.assertThat(actualRemoteUser)
-                .isNotEqualTo(NA)
-                .isEqualTo(remoteUser);
         return myself;
     }
 
