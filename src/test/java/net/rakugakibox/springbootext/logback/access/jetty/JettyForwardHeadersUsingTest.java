@@ -148,7 +148,7 @@ public class JettyForwardHeadersUsingTest {
     public static class TestController {
 
         /**
-         * Returns the attributes.
+         * Gets the attributes.
          *
          * @param request the HTTP request.
          * @return the attributes.

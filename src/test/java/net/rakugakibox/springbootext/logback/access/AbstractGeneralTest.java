@@ -126,6 +126,28 @@ public abstract class AbstractGeneralTest {
     }
 
     /**
+     * Tests the request header.
+     */
+    @Test
+    public void testRequestHeader() {
+
+        RequestEntity<Void> request = RequestEntity
+                .get(url("/text").build().toUri())
+                .header("X-Test-Header", "header")
+                .build();
+
+        ResponseEntity<String> response = rest.exchange(request, String.class);
+        IAccessEvent event = SingletonQueueAppender.pop();
+
+        assertThat(response.getBody())
+                .isEqualTo("text");
+
+        assertThat(event)
+                .hasRequestHeader("X-Test-Header", "header");
+
+    }
+
+    /**
      * Tests the request parameter.
      */
     @Test
@@ -244,7 +266,7 @@ public abstract class AbstractGeneralTest {
     public static class TestController {
 
         /**
-         * Returns the text.
+         * Gets the text.
          *
          * @return the text.
          */
@@ -254,7 +276,7 @@ public abstract class AbstractGeneralTest {
         }
 
         /**
-         * Returns the JSON.
+         * Gets the JSON.
          *
          * @return the JSON.
          */

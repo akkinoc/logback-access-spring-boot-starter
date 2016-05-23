@@ -157,10 +157,24 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
     }
 
     /**
+     * Verifies that the request header is equal to the given one.
+     *
+     * @param name the request header name.
+     * @param value the request header value.
+     * @return this instance.
+     */
+    public S hasRequestHeader(String name, String value) {
+        Map<String, String> actualRequestHeaderMap = actual.getRequestHeaderMap();
+        Assertions.assertThat(actualRequestHeaderMap)
+                .containsEntry(name, value);
+        return myself;
+    }
+
+    /**
      * Verifies that the request parameter is equal to the given one.
      *
-     * @param name the parameter name.
-     * @param values the parameter values.
+     * @param name the request parameter name.
+     * @param values the request parameter values.
      * @return this instance.
      */
     public S hasRequestParameter(String name, String... values) {
