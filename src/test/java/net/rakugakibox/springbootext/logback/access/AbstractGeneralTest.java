@@ -34,7 +34,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 /**
- * The base class to test of access event.
+ * The base class to test general cases.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration
@@ -42,7 +42,7 @@ import org.springframework.web.util.UriComponentsBuilder;
         value = "logback.access.config=classpath:logback-access-test.singleton-queue.xml",
         randomPort = true
 )
-public abstract class AbstractAccessEventTest {
+public abstract class AbstractGeneralTest {
 
     /**
      * The server port.
@@ -70,7 +70,7 @@ public abstract class AbstractAccessEventTest {
      * Tests the basic attributes.
      */
     @Test
-    public void basicAttributes() {
+    public void testBasicAttributes() {
 
         RequestEntity<Void> request = RequestEntity
                 .get(url("/text").build().toUri())
@@ -108,7 +108,7 @@ public abstract class AbstractAccessEventTest {
      * Tests the query string.
      */
     @Test
-    public void queryString() {
+    public void testQueryString() {
 
         RequestEntity<Void> request = RequestEntity
                 .get(url("/text").query("query").build().toUri())
@@ -127,11 +127,10 @@ public abstract class AbstractAccessEventTest {
     }
 
     /**
-     * Tests the content length.
-     * The case that contains the "Content-Length" response header.
+     * Tests the content length when "Content-Length" response header is contained.
      */
     @Test
-    public void contentLength_containsHeader() {
+    public void testContentLengthWhenHeaderIsContained() {
 
         RequestEntity<Void> request = RequestEntity
                 .get(url("/text").build().toUri())
@@ -151,11 +150,10 @@ public abstract class AbstractAccessEventTest {
     }
 
     /**
-     * Tests the content length.
-     * The case that does not contain the "Content-Length" response header.
+     * Tests the content length when "Content-Length" response header is not contained.
      */
     @Test
-    public void contentLength_doesNotContainHeader() {
+    public void testContentLengthWhenHeaderIsNotContained() {
 
         RequestEntity<Void> request = RequestEntity
                 .get(url("/json").build().toUri())

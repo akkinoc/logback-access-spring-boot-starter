@@ -72,7 +72,7 @@ public class JettyForwardHeadersUsingTest {
      * Tests the affected attributes by forwarded headers.
      */
     @Test
-    public void affectedAttributesByForwardedHeaders() {
+    public void testAffectedAttributesByForwardedHeaders() {
 
         RequestEntity<Void> request = RequestEntity.get(url("/attributes").build().toUri())
                 .header("X-Forwarded-Host", "forwarded-host:5432")

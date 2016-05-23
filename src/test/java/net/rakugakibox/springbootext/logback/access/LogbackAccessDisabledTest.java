@@ -54,7 +54,7 @@ public class LogbackAccessDisabledTest {
      * Tests that the components is not created.
      */
     @Test
-    public void components() {
+    public void testComponents() {
         assertThat(autoConfiguration).isNull();
         assertThat(properties).isNull();
         assertThat(configurator).isNull();
