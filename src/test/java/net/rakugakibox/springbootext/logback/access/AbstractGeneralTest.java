@@ -91,7 +91,6 @@ public abstract class AbstractGeneralTest {
                 .hasProtocol("HTTP/1.1")
                 .hasMethod(HttpMethod.GET)
                 .hasRequestUri("/text")
-                .hasQueryString("")
                 .hasRequestUrl(HttpMethod.GET, "/text", "HTTP/1.1")
                 .hasRemoteAddr("127.0.0.1")
                 .hasRemoteHost("127.0.0.1")
@@ -123,6 +122,29 @@ public abstract class AbstractGeneralTest {
         assertThat(event)
                 .hasQueryString("?query")
                 .hasRequestUrl(HttpMethod.GET, "/text?query", "HTTP/1.1");
+
+    }
+
+    /**
+     * Tests the request parameter.
+     */
+    @Test
+    public void testRequestParameter() {
+
+        RequestEntity<Void> request = RequestEntity
+                .get(url("/text").queryParam("param", "value1", "value2").build().toUri())
+                .build();
+
+        ResponseEntity<String> response = rest.exchange(request, String.class);
+        IAccessEvent event = SingletonQueueAppender.pop();
+
+        assertThat(response.getBody())
+                .isEqualTo("text");
+
+        assertThat(event)
+                .hasQueryString("?param=value1&param=value2")
+                .hasRequestUrl(HttpMethod.GET, "/text?param=value1&param=value2", "HTTP/1.1")
+                .hasRequestParameter("param", "value1", "value2");
 
     }
 

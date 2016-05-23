@@ -7,6 +7,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Map;
 import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.api.Assertions;
 import org.springframework.http.HttpMethod;
@@ -152,6 +153,20 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
         Assertions.assertThat(actualRequestUrl)
                 .isNotEqualTo(NA)
                 .isEqualTo(method.name() + " " + requestUri + " " + protocol);
+        return myself;
+    }
+
+    /**
+     * Verifies that the request parameter is equal to the given one.
+     *
+     * @param name the parameter name.
+     * @param values the parameter values.
+     * @return this instance.
+     */
+    public S hasRequestParameter(String name, String... values) {
+        Map<String, String[]> actualRequestParameterMap = actual.getRequestParameterMap();
+        Assertions.assertThat(actualRequestParameterMap)
+                .containsEntry(name, values);
         return myself;
     }
 
