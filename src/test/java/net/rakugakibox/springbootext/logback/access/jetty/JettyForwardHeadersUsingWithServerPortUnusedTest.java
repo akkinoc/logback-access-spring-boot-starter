@@ -1,4 +1,4 @@
-package net.rakugakibox.springbootext.logback.access.tomcat;
+package net.rakugakibox.springbootext.logback.access.jetty;
 
 import ch.qos.logback.access.spi.IAccessEvent;
 import java.util.HashMap;
@@ -34,24 +34,20 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 /**
- * The test using {@code X-Forwarded-*} headers on Tomcat.
- * Tests the case that set {@link LogbackAccessProperties.Tomcat#getEnableRequestAttributes()} to {@code false}.
+ * The test using {@code X-Forwarded-*} headers on Jetty.
+ * Tests the case that set {@link LogbackAccessProperties#getUseServerPortInsteadOfLocalPort()} to {@code false}.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration
 @WebIntegrationTest(
         value = {
             "logback.access.config=classpath:logback-access-test.singleton-queue.xml",
-            "logback.access.tomcat.enableRequestAttributes=false",
+            "logback.access.useServerPortInsteadOfLocalPort=false",
             "server.useForwardHeaders=true",
-            // The Port and Proto Header must be explicitly set to work.
-            "server.tomcat.portHeader=X-Forwarded-Port",
-            "server.tomcat.protocolHeader=X-Forwarded-Proto",
-            "server.tomcat.protocolHeaderHttpsValue=https",
         },
         randomPort = true
 )
-public class TomcatForwardHeadersUsingWithRequestAttributesDisabledTest {
+public class JettyForwardHeadersUsingWithServerPortUnusedTest {
 
     /**
      * The server port.
@@ -82,7 +78,7 @@ public class TomcatForwardHeadersUsingWithRequestAttributesDisabledTest {
     public void testAffectedAttributesByForwardedHeaders() {
 
         RequestEntity<Void> request = RequestEntity.get(url("/attributes").build().toUri())
-                .header("X-Forwarded-Port", "5432")
+                .header("X-Forwarded-Host", "forwarded-host:5432")
                 .header("X-Forwarded-Proto", "https")
                 .header("X-Forwarded-For", "1.2.3.4")
                 .build();
@@ -90,16 +86,17 @@ public class TomcatForwardHeadersUsingWithRequestAttributesDisabledTest {
         ResponseEntity<String> response = rest.exchange(request, String.class);
         IAccessEvent accessEvent = SingletonQueueAppender.pop();
 
-        // The RemoteIpValve doesn't actually set the X-Forwarded-Proto as the Protocol,
-        // but treats the request as secure if it matches the server.tomcat.protocolHeaderHttpsValue.
+        // The ForwardedRequestCustomizer doesn't actually set the X-Forwarded-Proto as the Protocol,
+        // but treats the request as secure if it matches the ForwardedRequestCustomizer#getForwardedProtoHeader().
         // So we check that just to be sure.
         assertThat(response.getBody())
                 .containsSequence("secure", ":", "true");
 
         assertThat(accessEvent)
+                .hasServerName("forwarded-host")
                 .hasLocalPort(port)
-                .hasRemoteAddr("127.0.0.1")
-                .hasRemoteHost("127.0.0.1");
+                .hasRemoteAddr("1.2.3.4")
+                .hasRemoteHost("1.2.3.4");
 
     }
 
@@ -122,7 +119,7 @@ public class TomcatForwardHeadersUsingWithRequestAttributesDisabledTest {
      */
     @Configuration
     @EnableAutoConfiguration
-    @Import(EmbeddedServletContainerAutoConfiguration.EmbeddedTomcat.class)
+    @Import(EmbeddedServletContainerAutoConfiguration.EmbeddedJetty.class)
     public static class TestContextConfiguration {
 
         /**

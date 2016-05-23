@@ -35,14 +35,14 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * The test using {@code X-Forwarded-*} headers on Tomcat.
- * Tests the case that set {@link LogbackAccessProperties.Tomcat#getEnableRequestAttributes()} to {@code false}.
+ * Tests the case that set {@link LogbackAccessProperties#getUseServerPortInsteadOfLocalPort()} to {@code false}.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration
 @WebIntegrationTest(
         value = {
             "logback.access.config=classpath:logback-access-test.singleton-queue.xml",
-            "logback.access.tomcat.enableRequestAttributes=false",
+            "logback.access.useServerPortInsteadOfLocalPort=false",
             "server.useForwardHeaders=true",
             // The Port and Proto Header must be explicitly set to work.
             "server.tomcat.portHeader=X-Forwarded-Port",
@@ -51,7 +51,7 @@ import org.springframework.web.util.UriComponentsBuilder;
         },
         randomPort = true
 )
-public class TomcatForwardHeadersUsingWithRequestAttributesDisabledTest {
+public class TomcatForwardHeadersUsingWithServerPortUnusedTest {
 
     /**
      * The server port.
@@ -98,8 +98,8 @@ public class TomcatForwardHeadersUsingWithRequestAttributesDisabledTest {
 
         assertThat(accessEvent)
                 .hasLocalPort(port)
-                .hasRemoteAddr("127.0.0.1")
-                .hasRemoteHost("127.0.0.1");
+                .hasRemoteAddr("1.2.3.4")
+                .hasRemoteHost("1.2.3.4");
 
     }
 
