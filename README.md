@@ -33,7 +33,7 @@ To use this extension on Maven-based projects, use following dependency.
 <dependency>
     <groupId>net.rakugakibox.springbootext</groupId>
     <artifactId>spring-boot-ext-logback-access</artifactId>
-    <version>1.4</version>
+    <version>1.5</version>
 </dependency>
 ```
 

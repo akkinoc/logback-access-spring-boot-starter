@@ -1,6 +1,15 @@
 Change Log
 ----------
 
+## [v1.5] / 2016-05-27
+
+* Adds "enabled" property support ([#16])
+* Support for forwarded port by "X-Forwarded-Host" request header (Jetty) ([#17])
+
+[v1.5]: https://github.com/akihyro/spring-boot-ext-logback-access/releases/tag/v1.5
+[#16]: https://github.com/akihyro/spring-boot-ext-logback-access/pull/16
+[#17]: https://github.com/akihyro/spring-boot-ext-logback-access/pull/17
+
 ## [v1.4] / 2016-05-18
 
 * Support for request attributes set by the RemoteIpValve (Tomcat) ([#12], [#14])
