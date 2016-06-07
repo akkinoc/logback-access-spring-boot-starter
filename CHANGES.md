@@ -1,6 +1,13 @@
 Change Log
 ----------
 
+## [v1.6] / 2016-06-07
+
+* Fixed the error caused by excluding `spring-boot-starter-tomcat` ([#19])
+
+[v1.6]: https://github.com/akihyro/spring-boot-ext-logback-access/releases/tag/v1.6
+[#19]: https://github.com/akihyro/spring-boot-ext-logback-access/pull/19
+
 ## [v1.5] / 2016-05-27
 
 * Adds "enabled" property support ([#16])
