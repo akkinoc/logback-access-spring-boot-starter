@@ -39,7 +39,7 @@ public class LogbackAccessProperties {
     /**
      * The configuration properties for if Tomcat is being used.
      */
-    private Tomcat tomcat = new Tomcat();
+    private final Tomcat tomcat = new Tomcat();
 
     /**
      * The configuration properties for if Tomcat is being used.
