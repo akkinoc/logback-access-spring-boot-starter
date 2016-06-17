@@ -30,10 +30,14 @@ public class SingletonQueueAppender extends AppenderBase<IAccessEvent> {
      */
     public static IAccessEvent pop() {
         try {
-            return queue.poll(1, TimeUnit.MINUTES);
+            IAccessEvent event = queue.poll(1, TimeUnit.MINUTES);
+            if (event == null) {
+                throw new IllegalStateException("Could not pop an event.");
+            }
+            return event;
         } catch (InterruptedException exc) {
             Thread.currentThread().interrupt();
-            throw new IllegalStateException("Events was not added to the queue.", exc);
+            throw new IllegalStateException("Could not pop an event: " + exc.getMessage(), exc);
         }
     }
 
@@ -51,7 +55,9 @@ public class SingletonQueueAppender extends AppenderBase<IAccessEvent> {
     protected void append(IAccessEvent event) {
         event.prepareForDeferredProcessing();
         try {
-            queue.offer(event, 1, TimeUnit.MINUTES);
+            if (!queue.offer(event, 1, TimeUnit.MINUTES)) {
+                throw new IllegalStateException("Could not add the event: event=[" + event + "]");
+            }
         } catch (InterruptedException exc) {
             Thread.currentThread().interrupt();
             throw new IllegalStateException("Could not add the event: event=[" + event + "]", exc);
