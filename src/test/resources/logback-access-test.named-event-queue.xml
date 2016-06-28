@@ -1,5 +1,5 @@
 <configuration>
     <appender name="NAMED_EVENT_QUEUE"
-        class="net.rakugakibox.springbootext.logback.access.test.NamedEventQueueAppender" />
+            class="net.rakugakibox.springbootext.logback.access.test.NamedEventQueueAppender" />
     <appender-ref ref="NAMED_EVENT_QUEUE" />
 </configuration>

@@ -3,6 +3,7 @@ package net.rakugakibox.springbootext.logback.access;
 import ch.qos.logback.access.joran.JoranConfigurator;
 import ch.qos.logback.core.Context;
 import ch.qos.logback.core.joran.spi.JoranException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -64,10 +65,10 @@ public class LogbackAccessConfigurator {
             try {
                 configure(context, defaultConfig);
                 return;
-            } catch (IOException exc) {
+            } catch (FileNotFoundException exc) {
                 // The default configuration files is optional.
-                log.debug("Skipped a default configuration file: config=[{}] with exception=[{}]", defaultConfig, exc);
-            } catch (JoranException exc) {
+                log.debug("Skipped a default configuration file: config=[{}]", defaultConfig, exc);
+            } catch (IOException | JoranException exc) {
                 throw createException(context, defaultConfig, exc);
             }
         }
