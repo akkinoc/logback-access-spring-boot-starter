@@ -5,23 +5,23 @@ import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 
 /**
- * The test rule for using {@link SingletonQueueAppender}.
+ * The test rule for using {@link NamedEventQueues}.
  */
-public class SingletonQueueAppenderRule extends TestWatcher {
+public class NamedEventQueuesRule extends TestWatcher {
 
     /** {@inheritDoc} */
     @Override
     protected void starting(Description description) {
-        // Initializes the event queue.
-        SingletonQueueAppender.clear();
+        // Initializes the named event queues.
+        NamedEventQueues.clear();
     }
 
     /** {@inheritDoc} */
     @Override
     protected void succeeded(Description description) {
-        // Verifies the event queue is all poped.
-        assertThat(SingletonQueueAppender.isEmpty())
-                .as("Verifies SingletonQueueAppender is all poped")
+        // Verifies the named event queues is all poped.
+        assertThat(NamedEventQueues.isAllEmpty())
+                .as("Verifies the named event queues is all poped")
                 .isTrue();
     }
 

@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import static net.rakugakibox.springbootext.logback.access.test.AccessEventAssert.assertThat;
-import net.rakugakibox.springbootext.logback.access.test.SingletonQueueAppender;
-import net.rakugakibox.springbootext.logback.access.test.SingletonQueueAppenderRule;
+import net.rakugakibox.springbootext.logback.access.test.NamedEventQueues;
+import net.rakugakibox.springbootext.logback.access.test.NamedEventQueuesRule;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Rule;
 import org.junit.Test;
@@ -39,7 +39,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @SpringApplicationConfiguration
 @WebIntegrationTest(
         value = {
-            "logback.access.config=classpath:logback-access-test.singleton-queue.xml",
+            "logback.access.config=classpath:logback-access-test.named-event-queue.xml",
             "server.useForwardHeaders=true",
             // The Port and Proto Header must be explicitly set to work.
             "server.tomcat.portHeader=X-Forwarded-Port",
@@ -69,7 +69,7 @@ public class TomcatForwardHeadersUsingTest {
      */
     @Rule
     public TestRule rule() {
-        return new SingletonQueueAppenderRule();
+        return new NamedEventQueuesRule();
     }
 
     /**
@@ -86,7 +86,7 @@ public class TomcatForwardHeadersUsingTest {
                 .build();
 
         ResponseEntity<String> response = rest.exchange(request, String.class);
-        IAccessEvent accessEvent = SingletonQueueAppender.pop();
+        IAccessEvent accessEvent = NamedEventQueues.pop();
 
         // The RemoteIpValve doesn't actually set the X-Forwarded-Proto as the Protocol,
         // but treats the request as secure if it matches the server.tomcat.protocolHeaderHttpsValue.

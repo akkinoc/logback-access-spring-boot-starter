@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import javax.servlet.http.HttpServletResponse;
 import static net.rakugakibox.springbootext.logback.access.test.AccessEventAssert.assertThat;
-import net.rakugakibox.springbootext.logback.access.test.SingletonQueueAppender;
-import net.rakugakibox.springbootext.logback.access.test.SingletonQueueAppenderRule;
+import net.rakugakibox.springbootext.logback.access.test.NamedEventQueues;
+import net.rakugakibox.springbootext.logback.access.test.NamedEventQueuesRule;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Rule;
 import org.junit.Test;
@@ -41,7 +41,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration
 @WebIntegrationTest(
-        value = "logback.access.config=classpath:logback-access-test.singleton-queue.xml",
+        value = "logback.access.config=classpath:logback-access-test.named-event-queue.xml",
         randomPort = true
 )
 public abstract class AbstractGeneralTest {
@@ -65,7 +65,7 @@ public abstract class AbstractGeneralTest {
      */
     @Rule
     public TestRule rule() {
-        return new SingletonQueueAppenderRule();
+        return new NamedEventQueuesRule();
     }
 
     /**
@@ -80,7 +80,7 @@ public abstract class AbstractGeneralTest {
 
         LocalDateTime startTime = LocalDateTime.now();
         ResponseEntity<String> response = rest.exchange(request, String.class);
-        IAccessEvent event = SingletonQueueAppender.pop();
+        IAccessEvent event = NamedEventQueues.pop();
         LocalDateTime endTime = LocalDateTime.now();
 
         assertThat(response.getBody())
@@ -118,7 +118,7 @@ public abstract class AbstractGeneralTest {
 
         LocalDateTime startTime = LocalDateTime.now();
         ResponseEntity<String> response = rest.exchange(request, String.class);
-        IAccessEvent event = SingletonQueueAppender.pop();
+        IAccessEvent event = NamedEventQueues.pop();
         LocalDateTime endTime = LocalDateTime.now();
 
         assertThat(response.getBody())
@@ -155,7 +155,7 @@ public abstract class AbstractGeneralTest {
                 .build();
 
         ResponseEntity<String> response = rest.exchange(request, String.class);
-        IAccessEvent event = SingletonQueueAppender.pop();
+        IAccessEvent event = NamedEventQueues.pop();
 
         assertThat(response.getBody())
                 .isEqualTo("text");
@@ -178,7 +178,7 @@ public abstract class AbstractGeneralTest {
                 .build();
 
         ResponseEntity<String> response = rest.exchange(request, String.class);
-        IAccessEvent event = SingletonQueueAppender.pop();
+        IAccessEvent event = NamedEventQueues.pop();
 
         assertThat(response.getBody())
                 .isEqualTo("text");
@@ -199,7 +199,7 @@ public abstract class AbstractGeneralTest {
                 .build();
 
         ResponseEntity<String> response = rest.exchange(request, String.class);
-        IAccessEvent event = SingletonQueueAppender.pop();
+        IAccessEvent event = NamedEventQueues.pop();
 
         assertThat(response.getBody())
                 .isEqualTo("text");
@@ -222,7 +222,7 @@ public abstract class AbstractGeneralTest {
                 .build();
 
         ResponseEntity<String> response = rest.exchange(request, String.class);
-        IAccessEvent event = SingletonQueueAppender.pop();
+        IAccessEvent event = NamedEventQueues.pop();
 
         assertThat(response.getHeaders())
                 .containsKey(HttpHeaders.CONTENT_LENGTH);
@@ -245,7 +245,7 @@ public abstract class AbstractGeneralTest {
                 .build();
 
         ResponseEntity<String> response = rest.exchange(request, String.class);
-        IAccessEvent event = SingletonQueueAppender.pop();
+        IAccessEvent event = NamedEventQueues.pop();
 
         assertThat(response.getHeaders())
                 .doesNotContainKey(HttpHeaders.CONTENT_LENGTH);
@@ -268,7 +268,7 @@ public abstract class AbstractGeneralTest {
                 .build();
 
         ResponseEntity<String> response = rest.exchange(request, String.class);
-        IAccessEvent event = SingletonQueueAppender.pop();
+        IAccessEvent event = NamedEventQueues.pop();
 
         assertThat(response.getBody())
                 .isEqualTo("text");

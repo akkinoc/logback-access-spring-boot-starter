@@ -1,4 +1,0 @@
-<configuration>
-    <appender name="SINGLETON_QUEUE" class="net.rakugakibox.springbootext.logback.access.test.SingletonQueueAppender" />
-    <appender-ref ref="SINGLETON_QUEUE" />
-</configuration>
