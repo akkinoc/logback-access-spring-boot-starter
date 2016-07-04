@@ -30,11 +30,23 @@ This artifacts are in the Maven central repository.
 To use this extension on Maven-based projects, use following dependency.  
 
 ```xml
-<dependency>
-    <groupId>net.rakugakibox.springbootext</groupId>
-    <artifactId>spring-boot-ext-logback-access</artifactId>
-    <version>1.6</version>
-</dependency>
+<dependencies>
+    <dependency>
+        <groupId>net.rakugakibox.springbootext</groupId>
+        <artifactId>spring-boot-ext-logback-access</artifactId>
+        <version>1.6</version>
+    </dependency>
+</dependencies>
+```
+
+This extension requires Logback-access version 1.1.6 or higher.  
+If you use Spring Boot version 1.3.0 - 1.3.3, specify the version of Logback-access.  
+For example on Maven-based projects:  
+
+```xml
+<properties>
+    <logback.version>1.1.7</logback.version>
+</properties>
 ```
 
 ### Logback-access configuration
