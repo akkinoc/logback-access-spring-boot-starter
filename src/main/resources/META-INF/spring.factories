@@ -1,3 +1,0 @@
-# Spring Boot Auto Configuration
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-net.rakugakibox.springbootext.logback.access.LogbackAccessAutoConfiguration

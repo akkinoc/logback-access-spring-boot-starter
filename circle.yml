@@ -4,17 +4,27 @@ machine:
 
 dependencies:
   override:
-    - "mvn --batch-mode dependency:go-offline"
+    - "mvn --batch-mode dependency:go-offline":
+        pwd: "logback-access-spring-boot-starter"
   cache_directories:
     - "~/.m2"
 
 test:
   override:
-    - "mvn --batch-mode clean install site"
-    - "mvn --batch-mode --file sample/tomcat clean install"
-    - "mvn --batch-mode --file sample/jetty clean install"
-
-general:
-  artifacts:
-    - "target/*.jar"
-    - "target/site"
+    - "mvn --batch-mode clean install":
+        pwd: "logback-access-spring-boot-starter"
+    - "mvn --batch-mode clean install":
+        pwd: "logback-access-spring-boot-starter-sample-jetty"
+    - "mvn --batch-mode clean install":
+        pwd: "logback-access-spring-boot-starter-sample-tomcat"
+  post:
+    - "mkdir --parents logback-access-spring-boot-starter/target/{site,surefire-reports}"
+    - "mkdir --parents ${CIRCLE_ARTIFACTS}/site"
+    - "mkdir --parents ${CIRCLE_TEST_REPORTS}/junit"
+    - "find -maxdepth 1 -type f -name \\*.jar -exec cp --parents {} ${CIRCLE_ARTIFACTS} \\;":
+        pwd: "logback-access-spring-boot-starter/target"
+    - "find -type f -exec cp --parents {} ${CIRCLE_ARTIFACTS}/site \\;":
+        pwd: "logback-access-spring-boot-starter/target/site"
+    - "find -type f -name \\*.xml -exec cp --parents {} ${CIRCLE_TEST_REPORTS}/junit \\;":
+        pwd: "logback-access-spring-boot-starter/target/surefire-reports"
+    - "bash <(curl -s https://codecov.io/bash)"

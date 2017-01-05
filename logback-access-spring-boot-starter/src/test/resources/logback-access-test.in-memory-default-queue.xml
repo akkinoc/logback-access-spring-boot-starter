@@ -1,0 +1,8 @@
+<!DOCTYPE configuration>
+
+<configuration>
+    <appender
+        name="IN_MEMORY_QUEUE"
+        class="net.rakugakibox.spring.boot.logback.access.test.InMemoryLogbackAccessEventQueueAppender" />
+    <appender-ref ref="IN_MEMORY_QUEUE" />
+</configuration>
