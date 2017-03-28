@@ -1,57 +1,62 @@
-spring-boot-ext-logback-access
-==============================
+# logback-access-spring-boot-starter
 
 [![Maven Central][Maven Central Badge]][Maven Central]
+[![javadoc.io][javadoc.io Badge]][javadoc.io]
 [![CircleCI][CircleCI Badge]][CircleCI]
+[![Codecov][Codecov Badge]][Codecov]
+[![License][License Badge]][License]
 
-[Maven Central Badge]: https://maven-badges.herokuapp.com/maven-central/net.rakugakibox.springbootext/spring-boot-ext-logback-access/badge.svg
-[Maven Central]: https://maven-badges.herokuapp.com/maven-central/net.rakugakibox.springbootext/spring-boot-ext-logback-access
-[CircleCI Badge]: https://circleci.com/gh/akihyro/spring-boot-ext-logback-access.svg?style=shield
-[CircleCI]: https://circleci.com/gh/akihyro/spring-boot-ext-logback-access
+[Maven Central Badge]: https://maven-badges.herokuapp.com/maven-central/net.rakugakibox.spring.boot/logback-access-spring-boot-starter/badge.svg
+[Maven Central]: https://maven-badges.herokuapp.com/maven-central/net.rakugakibox.spring.boot/logback-access-spring-boot-starter
+[javadoc.io Badge]: https://www.javadoc.io/badge/net.rakugakibox.spring.boot/logback-access-spring-boot-starter.svg
+[javadoc.io]: https://www.javadoc.io/doc/net.rakugakibox.spring.boot/logback-access-spring-boot-starter
+[CircleCI Badge]: https://circleci.com/gh/akihyro/logback-access-spring-boot-starter.svg?style=shield
+[CircleCI]: https://circleci.com/gh/akihyro/logback-access-spring-boot-starter
+[Codecov Badge]: https://codecov.io/gh/akihyro/logback-access-spring-boot-starter/branch/master/graph/badge.svg
+[Codecov]: https://codecov.io/gh/akihyro/logback-access-spring-boot-starter
+[License Badge]: https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg
+[License]: LICENSE.txt
 
-Spring Boot Extension: Logback-access Auto Configuration.  
+[Spring Boot] Starter for [Logback-access].  
 
-Requirements
-------------
+[Spring Boot]: https://projects.spring.io/spring-boot/
+[Logback-access]: http://logback.qos.ch/access.html
 
-* Java 8+
-* Spring Boot 1.3.0+ (web application)
-* Any of the following servlet containers:
-    * Embedded Tomcat 8.0.28+
-    * Embedded Jetty 9.2.14+
-* Logback-access 1.1.6+
+Note: This artifact name was changed in [v2.0.0]. The old name is "spring-boot-ext-logback-access".  
 
-Usage
------
+[v2.0.0]: https://github.com/akihyro/logback-access-spring-boot-starter/releases/tag/v2.0.0
 
-### Maven dependency
+## Supported versions
 
-This artifacts are in the Maven central repository.  
-To use this extension on Maven-based projects, use following dependency.  
+"logback-access-spring-boot-starter" supports the following versions.  
+Older versions might also work, but we have not tested it.  
+
+* Java 8
+* Spring Boot 1.5.2 or higher
+* Embedded Tomcat 8.5.11 or higher
+* Embedded Jetty 9.4.2 or higher
+* Logback-access 1.1.11 or higher
+
+## Usage
+
+### Adding the dependency
+
+"logback-access-spring-boot-starter" is published on maven central repository.  
+If you are using maven, add the following dependency.  
 
 ```xml
-<dependencies>
-    <dependency>
-        <groupId>net.rakugakibox.springbootext</groupId>
-        <artifactId>spring-boot-ext-logback-access</artifactId>
-        <version>1.6</version>
-    </dependency>
-</dependencies>
+<dependency>
+    <groupId>net.rakugakibox.spring.boot</groupId>
+    <artifactId>logback-access-spring-boot-starter</artifactId>
+    <version>2.0.0</version>
+</dependency>
 ```
 
-This extension requires Logback-access version 1.1.6 or higher.  
-If you use Spring Boot version 1.3.0 - 1.3.3, specify the version of Logback-access.  
-For example on Maven-based projects:  
+### Configuring the Logback-access
 
-```xml
-<properties>
-    <logback.version>1.1.7</logback.version>
-</properties>
-```
+Create a Logback-access configuration file "logback-access.xml" (or "logback-access-test.xml")
+in the root of classpath.  
 
-### Logback-access configuration
-
-Create a Logback-access configuration file to `classpath:logback-access.xml`.  
 For example:  
 
 ```xml
@@ -65,13 +70,25 @@ For example:
 </configuration>
 ```
 
-See Also: [Logback-access configuration - Logback-access]  
+"logback-access-spring-boot-starter" will look for the configuration file in the following order.  
+The first found configuration file will be used.  
 
-[Logback-access configuration - Logback-access]: http://logback.qos.ch/access.html#configuration
+1. "logback-access-test.xml" in the root of classpath.
+2. "logback-access.xml" in the root of classpath.
+3. [fallback configuration file (appends to standard output with common pattern)].
+
+[fallback configuration file (appends to standard output with common pattern)]: logback-access-spring-boot-starter/src/main/resources/net/rakugakibox/spring/boot/logback/access/logback-access.xml
+
+See also the Logback official documents:  
+
+* [Logback-access configuration]
+
+[Logback-access configuration]: http://logback.qos.ch/access.html#configuration
 
 ### Access logging
 
-When access the WEB application, it is logged.  
+When access the web application, it is logged.  
+
 For example:  
 
 ```
@@ -80,45 +97,55 @@ For example:
 192.168.35.1 - - [14/5/2016:18:01:21 +0900] "GET / HTTP/1.1" 304 0
 ```
 
-Configuration properties
-------------------------
+## Configuration properties
+
+"logback-access-spring-boot-starter" provides the following configuration properties.  
+These can configure by your "application.yml" / "application.properties".  
 
 ```yml
 logback.access:
-  # Enable Logback-access Auto Configuration.
+  # Whether to enable auto-configuration.
   # Defaults to true.
   enabled: true
   # The location of the configuration file.
   # Auto-detected by default:
-  #   => "classpath:logback-access-test.xml"
-  #   => "classpath:logback-access.xml"
-  #   => "classpath:net/rakugakibox/springbootext/logback/access/logback-access.xml"
+  #   1. "classpath:logback-access-test.xml"
+  #   2. "classpath:logback-access.xml"
+  #   3. "classpath:net/rakugakibox/spring/boot/logback/access/logback-access.xml"
   config: "classpath:your-logback-access.xml"
-  # Use the server port (HttpServletRequest#getServerPort())
-  # instead of the local port (HttpServletRequest#getLocalPort()), in IAccessEvent#getLocalPort().
+  # Whether to use the server port (HttpServletRequest#getServerPort())
+  # instead of the local port (HttpServletRequest#getLocalPort())
+  # within IAccessEvent#getLocalPort().
   # Defaults to true.
   useServerPortInsteadOfLocalPort: true
   # for Tomcat.
   tomcat:
-    # Enable request attributes to work with the RemoteIpValve enabled with server.useForwardHeaders.
-    # Defaults to the the presence of the RemoteIpValve.
+    # Whether to enable request attributes to work with the RemoteIpValve enabled
+    # with "server.useForwardHeaders".
+    # Defaults to the presence of the RemoteIpValve.
     enableRequestAttributes: true
 ```
 
-Related articles
-----------------
+## Release notes
 
-* [Provide auto-configuration for logback-access - Issue #2609 - spring-projects/spring-boot - GitHub](https://github.com/spring-projects/spring-boot/issues/2609)
-* [Spring Boot: Logback-access が使いやすくなる自動設定を作って公開した - rakugakibox.net](http://blog.rakugakibox.net/entry/2015/12/25/spring-boot-ext-logback-access)
+Please refer to the "[Releases]" page.  
 
-Contributing
-------------
+[Releases]: https://github.com/akihyro/logback-access-spring-boot-starter/releases
+
+## Related articles
+
+* [Issue #2609 Provide auto-configuration for logback-access - GitHub spring-projects/spring-boot]
+* [Spring Boot: Logback-access が使いやすくなる自動設定を作って公開した - rakugakibox.net]
+
+[Issue #2609 Provide auto-configuration for logback-access - GitHub spring-projects/spring-boot]: https://github.com/spring-projects/spring-boot/issues/2609
+[Spring Boot: Logback-access が使いやすくなる自動設定を作って公開した - rakugakibox.net]: http://blog.rakugakibox.net/entry/2015/12/25/spring-boot-ext-logback-access
+
+## Contributing
 
 Bug reports and pull requests are welcome :)  
 
-License
--------
+## License
 
 Licensed under the [Apache License, Version 2.0].  
 
-[Apache License, Version 2.0]: http://www.apache.org/licenses/LICENSE-2.0
+[Apache License, Version 2.0]: LICENSE.txt

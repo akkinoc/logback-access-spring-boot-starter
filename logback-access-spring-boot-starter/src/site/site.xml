@@ -1,0 +1,34 @@
+<project
+        name="${project.name}"
+        xmlns="http://maven.apache.org/DECORATION/1.7.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/DECORATION/1.7.0 http://maven.apache.org/xsd/decoration-1.7.0.xsd">
+
+    <skin>
+        <groupId>org.apache.maven.skins</groupId>
+        <artifactId>maven-fluido-skin</artifactId>
+        <version>1.6</version>
+    </skin>
+
+    <version position="right" />
+    <publishDate position="right" format="yyyy-MM-dd'T'HH:mm:ss.SSSXXX" />
+
+    <body>
+        <breadcrumbs>
+            <item name="${project.name}" href="index.html" />
+        </breadcrumbs>
+        <menu ref="reports" />
+    </body>
+
+    <custom>
+        <fluidoSkin>
+            <sourceLineNumbersEnabled>true</sourceLineNumbersEnabled>
+            <gitHub>
+                <projectId>akihyro/logback-access-spring-boot-starter</projectId>
+                <ribbonOrientation>right</ribbonOrientation>
+                <ribbonColor>orange</ribbonColor>
+            </gitHub>
+        </fluidoSkin>
+    </custom>
+
+</project>
