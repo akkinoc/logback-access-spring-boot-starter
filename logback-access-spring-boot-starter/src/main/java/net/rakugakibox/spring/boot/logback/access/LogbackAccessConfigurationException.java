@@ -3,7 +3,8 @@ package net.rakugakibox.spring.boot.logback.access;
 import ch.qos.logback.core.Context;
 
 /**
- * The exception that occurred in the configuration of Logback-access.
+ * The Logback-access configuration exception.
+ * Thrown to indicate that Logback-access could not be configured.
  */
 public class LogbackAccessConfigurationException extends RuntimeException {
 
