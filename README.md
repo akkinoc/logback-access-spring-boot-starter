@@ -100,7 +100,7 @@ For example:
 ## Configuration properties
 
 "logback-access-spring-boot-starter" provides the following configuration properties.  
-These can configure by your "application.yml" / "application.properties".  
+These can be configure by your "application.yml" / "application.properties".  
 
 ```yml
 logback.access:
