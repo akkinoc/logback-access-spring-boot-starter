@@ -193,6 +193,22 @@ public abstract class AbstractLogbackAccessEventsTest {
     }
 
     /**
+     * Tests a Logback-access event to get empty text.
+     */
+    @Test
+    public void logbackAccessEventToGetEmptyText() {
+
+        ResponseEntity<String> response = rest.getForEntity("/test/empty-text", String.class);
+        IAccessEvent event = InMemoryLogbackAccessEventQueues.pop();
+
+        assertThat(response)
+                .hasStatusCode(HttpStatus.OK)
+                .hasContentLengthHeader(0);
+        assertThat(event).hasContentLength(0);
+
+    }
+
+    /**
      * Tests a Logback-access event without a response header of content length.
      */
     @Test
@@ -265,6 +281,16 @@ public abstract class AbstractLogbackAccessEventsTest {
         @GetMapping(value = "/text-asynchronously", produces = MediaType.TEXT_PLAIN_VALUE)
         public Callable<String> getTextAsynchronously() {
             return this::getText;
+        }
+
+        /**
+         * Gets the empty text.
+         *
+         * @return the empty text.
+         */
+        @GetMapping(value = "/empty-text", produces = MediaType.TEXT_PLAIN_VALUE)
+        public String getEmptyText() {
+            return "";
         }
 
         /**
