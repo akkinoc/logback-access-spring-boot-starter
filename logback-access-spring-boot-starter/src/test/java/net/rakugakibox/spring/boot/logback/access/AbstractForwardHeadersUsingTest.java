@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootTest(
         value = {
                 "server.useForwardHeaders=true",
-                "logback.access.config=classpath:logback-access-test.in-memory-default-queue.xml",
+                "logback.access.config=classpath:logback-access.in-memory-queue.xml",
         },
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )

@@ -1,6 +1,7 @@
-package net.rakugakibox.spring.boot.logback.access.tomcat;
+package net.rakugakibox.spring.boot.logback.access;
 
 import ch.qos.logback.access.spi.IAccessEvent;
+import ch.qos.logback.core.spi.FilterReply;
 import net.rakugakibox.spring.boot.logback.access.test.InMemoryLogbackAccessEventQueues;
 import net.rakugakibox.spring.boot.logback.access.test.InMemoryLogbackAccessEventQueuesRule;
 import org.junit.Rule;
@@ -9,13 +10,9 @@ import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.web.EmbeddedServletContainerAutoConfiguration;
-import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -28,30 +25,20 @@ import static net.rakugakibox.spring.boot.logback.access.test.AccessEventAssert.
 import static net.rakugakibox.spring.boot.logback.access.test.ResponseEntityAssert.assertThat;
 
 /**
- * The test to disable the request attributes for Tomcat.
+ * The base class for testing to filter Logback-access events.
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(
-        value = {
-                "server.useForwardHeaders=true",
-                "logback.access.config=classpath:logback-access.in-memory-queue.xml",
-                "logback.access.tomcat.enableRequestAttributes=false",
-        },
+        value = "logback.access.config=classpath:logback-access.request-header-driven-filtered.in-memory-queue.xml",
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
-public class TomcatRequestAttributesDisablingTest {
+public abstract class AbstractLogbackAccessFilteringTest {
 
     /**
      * The REST template.
      */
     @Autowired
     protected TestRestTemplate rest;
-
-    /**
-     * The server port.
-     */
-    @LocalServerPort
-    protected int port;
 
     /**
      * Creates a test rule.
@@ -64,37 +51,62 @@ public class TomcatRequestAttributesDisablingTest {
     }
 
     /**
-     * Tests a Logback-access event.
+     * Tests an accepted Logback-access event.
      */
     @Test
-    public void logbackAccessEvent() {
+    public void acceptedLogbackAccessEvent() {
 
         RequestEntity<Void> request = RequestEntity
                 .get(rest.getRestTemplate().getUriTemplateHandler().expand("/test/text"))
-                .header("X-Forwarded-Port", "12345")
-                .header("X-Forwarded-For", "1.2.3.4")
-                .header("X-Forwarded-Proto", "https")
+                .header("X-Filter-Reply", FilterReply.ACCEPT.name())
                 .build();
         ResponseEntity<String> response = rest.exchange(request, String.class);
         IAccessEvent event = InMemoryLogbackAccessEventQueues.pop();
 
         assertThat(response).hasStatusCode(HttpStatus.OK);
-        assertThat(event)
-                .hasServerName("localhost")
-                .hasLocalPort(port)
-                .hasRemoteAddr("127.0.0.1")
-                .hasRemoteHost("127.0.0.1")
-                .hasProtocol("HTTP/1.1");
+        assertThat(event).isNotNull();
 
     }
 
     /**
-     * The context configuration.
+     * Tests an neutral Logback-access event.
      */
-    @Configuration
+    @Test
+    public void neutralLogbackAccessEvent() {
+
+        RequestEntity<Void> request = RequestEntity
+                .get(rest.getRestTemplate().getUriTemplateHandler().expand("/test/text"))
+                .header("X-Filter-Reply", FilterReply.NEUTRAL.name())
+                .build();
+        ResponseEntity<String> response = rest.exchange(request, String.class);
+        IAccessEvent event = InMemoryLogbackAccessEventQueues.pop();
+
+        assertThat(response).hasStatusCode(HttpStatus.OK);
+        assertThat(event).isNotNull();
+
+    }
+
+    /**
+     * Tests a denied Logback-access event.
+     */
+    @Test
+    public void deniedLogbackAccessEvent() {
+
+        RequestEntity<Void> request = RequestEntity
+                .get(rest.getRestTemplate().getUriTemplateHandler().expand("/test/text"))
+                .header("X-Filter-Reply", FilterReply.DENY.name())
+                .build();
+        ResponseEntity<String> response = rest.exchange(request, String.class);
+
+        assertThat(response).hasStatusCode(HttpStatus.OK);
+
+    }
+
+    /**
+     * The base class of context configuration.
+     */
     @EnableAutoConfiguration
-    @Import(EmbeddedServletContainerAutoConfiguration.EmbeddedTomcat.class)
-    public static class ContextConfiguration {
+    public static abstract class AbstractContextConfiguration {
 
         /**
          * Creates a controller.

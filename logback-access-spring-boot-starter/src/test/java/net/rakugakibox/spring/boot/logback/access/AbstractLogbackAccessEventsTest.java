@@ -37,7 +37,7 @@ import static net.rakugakibox.spring.boot.logback.access.test.ResponseEntityAsse
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(
-        value = "logback.access.config=classpath:logback-access-test.in-memory-default-queue.xml",
+        value = "logback.access.config=classpath:logback-access.in-memory-queue.xml",
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
 )
 public abstract class AbstractLogbackAccessEventsTest {

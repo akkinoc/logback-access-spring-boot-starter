@@ -4,13 +4,11 @@ import ch.qos.logback.access.spi.IAccessEvent;
 import ch.qos.logback.core.AppenderBase;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.SerializationUtils;
 
 /**
  * The Logback-access appender to add to {@link InMemoryLogbackAccessEventQueues}.
  */
-@Slf4j
 public class InMemoryLogbackAccessEventQueueAppender extends AppenderBase<IAccessEvent> {
 
     /**
@@ -26,7 +24,6 @@ public class InMemoryLogbackAccessEventQueueAppender extends AppenderBase<IAcces
         event.prepareForDeferredProcessing();
         event = (IAccessEvent) SerializationUtils.deserialize(SerializationUtils.serialize(event));
         InMemoryLogbackAccessEventQueues.push(queueName, event);
-        log.debug("Appended an event: queueName=[{}], event=[{}]", queueName, event);
     }
 
 }

@@ -40,7 +40,7 @@ public class InMemoryLogbackAccessEventQueuesRule extends TestWatcher {
      */
     private void verifyNamedEventQueues() {
         assertThat(InMemoryLogbackAccessEventQueues.isEmpty())
-                .as("Verifies the InMemoryLogbackAccessEventQueues is all poped")
+                .as("Verifies that the InMemoryLogbackAccessEventQueues is all poped")
                 .isTrue();
         log.debug("Verifyed the InMemoryLogbackAccessEventQueues");
     }
