@@ -6,10 +6,10 @@ import org.junit.runner.Description;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * The test rule for using {@link LogbackAccessEventQueueAppender}.
+ * The test rule for using {@link LogbackAccessEventQueuingAppender}.
  */
 @Slf4j
-public class LogbackAccessEventQueueAppenderRule extends TestWatcher {
+public class LogbackAccessEventQueuingAppenderRule extends TestWatcher {
 
     /**
      * {@inheritDoc}
@@ -28,21 +28,21 @@ public class LogbackAccessEventQueueAppenderRule extends TestWatcher {
     }
 
     /**
-     * Initializes the queues of {@link LogbackAccessEventQueueAppender}.
+     * Initializes the queues of {@link LogbackAccessEventQueuingAppender}.
      */
     private void initializeLogbackAccessEventQueues() {
-        LogbackAccessEventQueueAppender.appendedEventQueue.clear();
-        log.debug("Initialized the queues of LogbackAccessEventQueueAppender");
+        LogbackAccessEventQueuingAppender.appendedEventQueue.clear();
+        log.debug("Initialized the queues of LogbackAccessEventQueuingAppender");
     }
 
     /**
-     * Verifies the queues of {@link LogbackAccessEventQueueAppender}.
+     * Verifies the queues of {@link LogbackAccessEventQueuingAppender}.
      */
     private void verifyLogbackAccessEventQueues() {
-        assertThat(LogbackAccessEventQueueAppender.appendedEventQueue.isEmpty())
-                .as("Verifies that the LogbackAccessEventQueueAppender.appendedEventQueue is empty")
+        assertThat(LogbackAccessEventQueuingAppender.appendedEventQueue.isEmpty())
+                .as("Verifies that the LogbackAccessEventQueuingAppender.appendedEventQueue is empty")
                 .isTrue();
-        log.debug("Verifyed the queues of LogbackAccessEventQueueAppender");
+        log.debug("Verifyed the queues of LogbackAccessEventQueuingAppender");
     }
 
 }

@@ -1,8 +1,8 @@
 package net.rakugakibox.spring.boot.logback.access.tomcat;
 
 import ch.qos.logback.access.spi.IAccessEvent;
-import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueueAppender;
-import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueueAppenderRule;
+import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingAppender;
+import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingAppenderRule;
 import net.rakugakibox.spring.boot.logback.access.test.TestControllerConfiguration;
 import org.junit.Rule;
 import org.junit.Test;
@@ -56,7 +56,7 @@ public class TomcatRequestAttributesDisablingTest {
      */
     @Rule
     public TestRule rule() {
-        return new LogbackAccessEventQueueAppenderRule();
+        return new LogbackAccessEventQueuingAppenderRule();
     }
 
     /**
@@ -72,7 +72,7 @@ public class TomcatRequestAttributesDisablingTest {
                 .header("X-Forwarded-Proto", "https")
                 .build();
         ResponseEntity<String> response = rest.exchange(request, String.class);
-        IAccessEvent event = LogbackAccessEventQueueAppender.appendedEventQueue.pop();
+        IAccessEvent event = LogbackAccessEventQueuingAppender.appendedEventQueue.pop();
 
         assertThat(response).hasStatusCode(HttpStatus.OK);
         assertThat(event)

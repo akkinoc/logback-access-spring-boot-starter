@@ -1,6 +1,6 @@
 package net.rakugakibox.spring.boot.logback.access;
 
-import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueueAppenderRule;
+import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingAppenderRule;
 import net.rakugakibox.spring.boot.logback.access.test.TestControllerConfiguration;
 import org.junit.Rule;
 import org.junit.Test;
@@ -39,7 +39,7 @@ public abstract class AbstractForwardHeadersUsingTest {
      */
     @Rule
     public TestRule rule() {
-        return new LogbackAccessEventQueueAppenderRule();
+        return new LogbackAccessEventQueuingAppenderRule();
     }
 
     /**

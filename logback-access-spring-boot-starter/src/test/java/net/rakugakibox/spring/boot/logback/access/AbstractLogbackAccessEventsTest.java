@@ -4,8 +4,8 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 
 import ch.qos.logback.access.spi.IAccessEvent;
-import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueueAppender;
-import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueueAppenderRule;
+import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingAppender;
+import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingAppenderRule;
 import net.rakugakibox.spring.boot.logback.access.test.TestControllerConfiguration;
 import org.junit.Rule;
 import org.junit.Test;
@@ -54,7 +54,7 @@ public abstract class AbstractLogbackAccessEventsTest {
      */
     @Rule
     public TestRule rule() {
-        return new LogbackAccessEventQueueAppenderRule();
+        return new LogbackAccessEventQueuingAppenderRule();
     }
 
     /**
@@ -65,7 +65,7 @@ public abstract class AbstractLogbackAccessEventsTest {
 
         LocalDateTime startTime = LocalDateTime.now();
         ResponseEntity<String> response = rest.getForEntity("/test/text", String.class);
-        IAccessEvent event = LogbackAccessEventQueueAppender.appendedEventQueue.pop();
+        IAccessEvent event = LogbackAccessEventQueuingAppender.appendedEventQueue.pop();
         LocalDateTime endTime = LocalDateTime.now();
 
         assertThat(response)
@@ -107,7 +107,7 @@ public abstract class AbstractLogbackAccessEventsTest {
     public void logbackAccessEventWithQueryString() {
 
         ResponseEntity<String> response = rest.getForEntity("/test/text?query", String.class);
-        IAccessEvent event = LogbackAccessEventQueueAppender.appendedEventQueue.pop();
+        IAccessEvent event = LogbackAccessEventQueuingAppender.appendedEventQueue.pop();
 
         assertThat(response).hasStatusCode(HttpStatus.OK);
         assertThat(event)
@@ -128,7 +128,7 @@ public abstract class AbstractLogbackAccessEventsTest {
                 .header("X-Test-Header", "TEST-HEADER")
                 .build();
         ResponseEntity<String> response = rest.exchange(request, String.class);
-        IAccessEvent event = LogbackAccessEventQueueAppender.appendedEventQueue.pop();
+        IAccessEvent event = LogbackAccessEventQueuingAppender.appendedEventQueue.pop();
 
         assertThat(response).hasStatusCode(HttpStatus.OK);
         assertThat(event)
@@ -145,7 +145,7 @@ public abstract class AbstractLogbackAccessEventsTest {
     public void logbackAccessEventWithRequestParameter() {
 
         ResponseEntity<String> response = rest.getForEntity("/test/text?test-parameter=TEST-PARAMETER", String.class);
-        IAccessEvent event = LogbackAccessEventQueueAppender.appendedEventQueue.pop();
+        IAccessEvent event = LogbackAccessEventQueuingAppender.appendedEventQueue.pop();
 
         assertThat(response).hasStatusCode(HttpStatus.OK);
         assertThat(event)
@@ -161,7 +161,7 @@ public abstract class AbstractLogbackAccessEventsTest {
     public void logbackAccessEventWithResponseHeader() {
 
         ResponseEntity<String> response = rest.getForEntity("/test/text-with-header", String.class);
-        IAccessEvent event = LogbackAccessEventQueueAppender.appendedEventQueue.pop();
+        IAccessEvent event = LogbackAccessEventQueuingAppender.appendedEventQueue.pop();
 
         assertThat(response).hasStatusCode(HttpStatus.OK);
         assertThat(event)
@@ -178,7 +178,7 @@ public abstract class AbstractLogbackAccessEventsTest {
     public void logbackAccessEventAsynchronously() {
 
         ResponseEntity<String> response = rest.getForEntity("/test/text-asynchronously", String.class);
-        IAccessEvent event = LogbackAccessEventQueueAppender.appendedEventQueue.pop();
+        IAccessEvent event = LogbackAccessEventQueuingAppender.appendedEventQueue.pop();
 
         assertThat(response).hasStatusCode(HttpStatus.OK);
         assertThat(event).hasThreadName();
@@ -192,7 +192,7 @@ public abstract class AbstractLogbackAccessEventsTest {
     public void logbackAccessEventToGetEmptyText() {
 
         ResponseEntity<String> response = rest.getForEntity("/test/empty-text", String.class);
-        IAccessEvent event = LogbackAccessEventQueueAppender.appendedEventQueue.pop();
+        IAccessEvent event = LogbackAccessEventQueuingAppender.appendedEventQueue.pop();
 
         assertThat(response)
                 .hasStatusCode(HttpStatus.OK)
@@ -208,7 +208,7 @@ public abstract class AbstractLogbackAccessEventsTest {
     public void logbackAccessEventWithoutContentLengthResponseHeader() {
 
         ResponseEntity<String> response = rest.getForEntity("/test/json", String.class);
-        IAccessEvent event = LogbackAccessEventQueueAppender.appendedEventQueue.pop();
+        IAccessEvent event = LogbackAccessEventQueuingAppender.appendedEventQueue.pop();
 
         assertThat(response)
                 .hasStatusCode(HttpStatus.OK)

@@ -6,9 +6,9 @@ import static org.springframework.util.SerializationUtils.deserialize;
 import static org.springframework.util.SerializationUtils.serialize;
 
 /**
- * The Logback-access appender that adds to static {@link LogbackAccessEventQueue}.
+ * The Logback-access appender that pushes to static {@link LogbackAccessEventQueue}.
  */
-public class LogbackAccessEventQueueAppender extends AppenderBase<IAccessEvent> {
+public class LogbackAccessEventQueuingAppender extends AppenderBase<IAccessEvent> {
 
     /**
      * The queue of appended Logback-access event.
