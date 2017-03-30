@@ -8,13 +8,13 @@ import java.util.concurrent.TimeUnit;
 import ch.qos.logback.access.spi.IAccessEvent;
 
 /**
- * The queue of Logback-access event that stores in memory.
- * This class is thread-safe.
+ * The queue of Logback-access event.
+ * This class is thread safe.
  */
-public class InMemoryLogbackAccessEventQueue {
+public class LogbackAccessEventQueue {
 
     /**
-     * The timeout for queue access.
+     * The timeout for accessing the queue.
      */
     public static final Duration TIMEOUT_FOR_QUEUE_ACCESS = Duration.ofMinutes(1L);
 
@@ -60,16 +60,16 @@ public class InMemoryLogbackAccessEventQueue {
     }
 
     /**
-     * Returns whether the queue is empty.
+     * Returns whether there is no Logback-access events.
      *
-     * @return {@code true} if the queue is empty, {@code false} otherwise.
+     * @return {@code true} if there is no Logback-access events, {@code false} otherwise.
      */
     public boolean isEmpty() {
         return queue.isEmpty();
     }
 
     /**
-     * Removes all Logback-access events from queue.
+     * Removes all Logback-access events.
      */
     public void clear() {
         queue.clear();

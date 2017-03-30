@@ -6,21 +6,21 @@ import static org.springframework.util.SerializationUtils.deserialize;
 import static org.springframework.util.SerializationUtils.serialize;
 
 /**
- * The Logback-access appender that adds to static {@link InMemoryLogbackAccessEventQueue}.
+ * The Logback-access appender that adds to static {@link LogbackAccessEventQueue}.
  */
-public class InMemoryLogbackAccessEventQueueAppender extends AppenderBase<IAccessEvent> {
+public class LogbackAccessEventQueueAppender extends AppenderBase<IAccessEvent> {
 
     /**
-     * The queue of Logback-access event.
+     * The queue of appended Logback-access event.
      */
-    public static final InMemoryLogbackAccessEventQueue queue = new InMemoryLogbackAccessEventQueue();
+    public static final LogbackAccessEventQueue appendedEventQueue = new LogbackAccessEventQueue();
 
     /** {@inheritDoc} */
     @Override
     protected void append(IAccessEvent event) {
         event.prepareForDeferredProcessing();
         event = (IAccessEvent) deserialize(serialize(event));
-        queue.push(event);
+        appendedEventQueue.push(event);
     }
 
 }

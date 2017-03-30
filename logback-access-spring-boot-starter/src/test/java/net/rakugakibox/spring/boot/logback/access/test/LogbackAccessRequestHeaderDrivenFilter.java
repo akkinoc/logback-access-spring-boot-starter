@@ -11,7 +11,7 @@ import lombok.Setter;
 /**
  * The Logback-access filter driven by request header.
  */
-public class RequestHeaderDrivenLogbackAccessFilter extends Filter<IAccessEvent> {
+public class LogbackAccessRequestHeaderDrivenFilter extends Filter<IAccessEvent> {
 
     /**
      * The header name of filter reply.

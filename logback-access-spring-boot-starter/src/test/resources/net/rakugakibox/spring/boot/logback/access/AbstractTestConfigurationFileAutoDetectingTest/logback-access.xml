@@ -1,3 +1,5 @@
 <!DOCTYPE configuration>
 
-<configuration />
+<configuration>
+    <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />
+</configuration>

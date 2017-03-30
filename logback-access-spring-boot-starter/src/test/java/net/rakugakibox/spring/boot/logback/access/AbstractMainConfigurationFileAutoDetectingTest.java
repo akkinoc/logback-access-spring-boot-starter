@@ -2,8 +2,8 @@ package net.rakugakibox.spring.boot.logback.access;
 
 import ch.qos.logback.access.spi.IAccessEvent;
 import net.rakugakibox.spring.boot.logback.access.test.ClassPathRule;
-import net.rakugakibox.spring.boot.logback.access.test.InMemoryLogbackAccessEventQueueAppender;
-import net.rakugakibox.spring.boot.logback.access.test.InMemoryLogbackAccessEventQueueAppenderRule;
+import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueueAppender;
+import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueueAppenderRule;
 import net.rakugakibox.spring.boot.logback.access.test.TestControllerConfiguration;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -51,7 +51,7 @@ public abstract class AbstractMainConfigurationFileAutoDetectingTest {
      */
     @Rule
     public TestRule rule() {
-        return new InMemoryLogbackAccessEventQueueAppenderRule();
+        return new LogbackAccessEventQueueAppenderRule();
     }
 
     /**
@@ -61,7 +61,7 @@ public abstract class AbstractMainConfigurationFileAutoDetectingTest {
     public void logbackAccessEvent() {
 
         ResponseEntity<String> response = rest.getForEntity("/test/text", String.class);
-        IAccessEvent event = InMemoryLogbackAccessEventQueueAppender.queue.pop();
+        IAccessEvent event = LogbackAccessEventQueueAppender.appendedEventQueue.pop();
 
         assertThat(response).hasStatusCode(HttpStatus.OK);
         assertThat(event).isNotNull();

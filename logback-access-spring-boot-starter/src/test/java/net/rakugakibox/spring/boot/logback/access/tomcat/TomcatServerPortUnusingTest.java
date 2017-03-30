@@ -2,7 +2,7 @@ package net.rakugakibox.spring.boot.logback.access.tomcat;
 
 import ch.qos.logback.access.spi.IAccessEvent;
 import net.rakugakibox.spring.boot.logback.access.AbstractServerPortUnusingTest;
-import net.rakugakibox.spring.boot.logback.access.test.InMemoryLogbackAccessEventQueueAppender;
+import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueueAppender;
 import org.springframework.boot.autoconfigure.web.EmbeddedServletContainerAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -26,7 +26,7 @@ public class TomcatServerPortUnusingTest extends AbstractServerPortUnusingTest {
                 .header("X-Forwarded-Port", "12345")
                 .build();
         ResponseEntity<String> response = rest.exchange(request, String.class);
-        IAccessEvent event = InMemoryLogbackAccessEventQueueAppender.queue.pop();
+        IAccessEvent event = LogbackAccessEventQueueAppender.appendedEventQueue.pop();
 
         assertThat(response).hasStatusCode(HttpStatus.OK);
         assertThat(event).hasLocalPort(port);

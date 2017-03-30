@@ -1,8 +1,8 @@
 package net.rakugakibox.spring.boot.logback.access.tomcat;
 
 import ch.qos.logback.access.spi.IAccessEvent;
-import net.rakugakibox.spring.boot.logback.access.test.InMemoryLogbackAccessEventQueueAppender;
-import net.rakugakibox.spring.boot.logback.access.test.InMemoryLogbackAccessEventQueueAppenderRule;
+import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueueAppender;
+import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueueAppenderRule;
 import net.rakugakibox.spring.boot.logback.access.test.TestControllerConfiguration;
 import org.junit.Rule;
 import org.junit.Test;
@@ -30,7 +30,7 @@ import static net.rakugakibox.spring.boot.logback.access.test.ResponseEntityAsse
 @SpringBootTest(
         value = {
                 "server.useForwardHeaders=true",
-                "logback.access.config=classpath:logback-access.in-memory-queue.xml",
+                "logback.access.config=classpath:logback-access.queue.xml",
                 "logback.access.tomcat.enableRequestAttributes=false",
         },
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
@@ -56,7 +56,7 @@ public class TomcatRequestAttributesDisablingTest {
      */
     @Rule
     public TestRule rule() {
-        return new InMemoryLogbackAccessEventQueueAppenderRule();
+        return new LogbackAccessEventQueueAppenderRule();
     }
 
     /**
@@ -72,7 +72,7 @@ public class TomcatRequestAttributesDisablingTest {
                 .header("X-Forwarded-Proto", "https")
                 .build();
         ResponseEntity<String> response = rest.exchange(request, String.class);
-        IAccessEvent event = InMemoryLogbackAccessEventQueueAppender.queue.pop();
+        IAccessEvent event = LogbackAccessEventQueueAppender.appendedEventQueue.pop();
 
         assertThat(response).hasStatusCode(HttpStatus.OK);
         assertThat(event)

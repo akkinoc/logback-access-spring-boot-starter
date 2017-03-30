@@ -1,6 +1,6 @@
 package net.rakugakibox.spring.boot.logback.access;
 
-import net.rakugakibox.spring.boot.logback.access.test.InMemoryLogbackAccessEventQueueAppenderRule;
+import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueueAppenderRule;
 import net.rakugakibox.spring.boot.logback.access.test.TestControllerConfiguration;
 import org.junit.Rule;
 import org.junit.Test;
@@ -21,7 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(
         value = {
                 "server.useForwardHeaders=true",
-                "logback.access.config=classpath:logback-access.in-memory-queue.xml",
+                "logback.access.config=classpath:logback-access.queue.xml",
                 "logback.access.useServerPortInsteadOfLocalPort=false",
         },
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
@@ -47,7 +47,7 @@ public abstract class AbstractServerPortUnusingTest {
      */
     @Rule
     public TestRule rule() {
-        return new InMemoryLogbackAccessEventQueueAppenderRule();
+        return new LogbackAccessEventQueueAppenderRule();
     }
 
     /**
