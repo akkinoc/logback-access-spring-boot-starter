@@ -24,7 +24,7 @@ public class LogbackAccessEventQueueAppenderRule extends TestWatcher {
      */
     @Override
     protected void succeeded(Description description) {
-        verifyinitializeLogbackAccessEventQueues();
+        verifyLogbackAccessEventQueues();
     }
 
     /**
@@ -38,7 +38,7 @@ public class LogbackAccessEventQueueAppenderRule extends TestWatcher {
     /**
      * Verifies the queues of {@link LogbackAccessEventQueueAppender}.
      */
-    private void verifyinitializeLogbackAccessEventQueues() {
+    private void verifyLogbackAccessEventQueues() {
         assertThat(LogbackAccessEventQueueAppender.appendedEventQueue.isEmpty())
                 .as("Verifies that the LogbackAccessEventQueueAppender.appendedEventQueue is empty")
                 .isTrue();
