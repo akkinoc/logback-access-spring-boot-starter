@@ -12,7 +12,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * The base class that represents a Logback-access event.
+ * The base class of Logback-access events.
  */
 public abstract class AbstractLogbackAccessEvent extends AccessEvent {
 
@@ -24,13 +24,13 @@ public abstract class AbstractLogbackAccessEvent extends AccessEvent {
     private boolean useServerPortInsteadOfLocalPort;
 
     /**
-     * The supplier of the local port.
+     * The supplier that takes the local port.
      * The result will be cached.
      */
     private IntSupplier localPort = (IntSupplier & Serializable) () -> {
-        int value = takeLocalPort();
-        localPort = (IntSupplier & Serializable) () -> value;
-        return value;
+        int localPort = takeLocalPort();
+        this.localPort = (IntSupplier & Serializable) () -> localPort;
+        return localPort;
     };
 
     /**
@@ -42,6 +42,7 @@ public abstract class AbstractLogbackAccessEvent extends AccessEvent {
      */
     public AbstractLogbackAccessEvent(HttpServletRequest request, HttpServletResponse response, ServerAdapter adapter) {
         super(request, response, adapter);
+        setThreadName(Thread.currentThread().getName());
     }
 
     /** {@inheritDoc} */

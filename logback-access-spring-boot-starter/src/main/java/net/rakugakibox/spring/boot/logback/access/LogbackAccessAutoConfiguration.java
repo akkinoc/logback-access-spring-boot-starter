@@ -1,5 +1,6 @@
 package net.rakugakibox.spring.boot.logback.access;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.rakugakibox.spring.boot.logback.access.jetty.JettyLogbackAccessInstaller;
 import net.rakugakibox.spring.boot.logback.access.tomcat.TomcatLogbackAccessInstaller;
@@ -24,39 +25,27 @@ import org.springframework.context.annotation.Configuration;
 public class LogbackAccessAutoConfiguration {
 
     /**
-     * Creates a configurer of Logback-access.
-     *
-     * @param logbackAccessProperties the configuration properties for Logback-access.
-     * @return a configurer of Logback-access.
-     */
-    @Bean
-    @ConditionalOnMissingBean
-    public LogbackAccessConfigurer logbackAccessConfigurer(LogbackAccessProperties logbackAccessProperties) {
-        LogbackAccessConfigurer configurer = new LogbackAccessConfigurer(logbackAccessProperties);
-        log.debug("Created a LogbackAccessConfigurer: [{}]", configurer);
-        return configurer;
-    }
-
-    /**
-     * for Tomcat.
+     * For Tomcat.
      */
     @Configuration
     @ConditionalOnBean(value = TomcatEmbeddedServletContainerFactory.class)
+    @RequiredArgsConstructor
     public static class Tomcat {
+
+        /**
+         * The configuration properties for Logback-access.
+         */
+        private final LogbackAccessProperties logbackAccessProperties;
 
         /**
          * Creates a Logback-access installer.
          *
-         * @param logbackAccessProperties the configuration properties for Logback-access.
-         * @param logbackAccessConfigurer the configurer of Logback-access.
          * @return a Logback-access installer.
          */
         @Bean
         @ConditionalOnMissingBean
-        public TomcatLogbackAccessInstaller tomcatLogbackAccessInstaller(
-                LogbackAccessProperties logbackAccessProperties, LogbackAccessConfigurer logbackAccessConfigurer) {
-            TomcatLogbackAccessInstaller installer =
-                    new TomcatLogbackAccessInstaller(logbackAccessProperties, logbackAccessConfigurer);
+        public TomcatLogbackAccessInstaller tomcatLogbackAccessInstaller() {
+            TomcatLogbackAccessInstaller installer = new TomcatLogbackAccessInstaller(logbackAccessProperties);
             log.debug("Created a TomcatLogbackAccessInstaller: [{}]", installer);
             return installer;
         }
@@ -64,25 +53,27 @@ public class LogbackAccessAutoConfiguration {
     }
 
     /**
-     * for Jetty.
+     * For Jetty.
      */
     @Configuration
     @ConditionalOnBean(value = JettyEmbeddedServletContainerFactory.class)
+    @RequiredArgsConstructor
     public static class Jetty {
+
+        /**
+         * The configuration properties for Logback-access.
+         */
+        private final LogbackAccessProperties logbackAccessProperties;
 
         /**
          * Creates a Logback-access installer.
          *
-         * @param logbackAccessProperties the configuration properties for Logback-access.
-         * @param logbackAccessConfigurer the configurer of Logback-access.
          * @return a Logback-access installer.
          */
         @Bean
         @ConditionalOnMissingBean
-        public JettyLogbackAccessInstaller jettyLogbackAccessInstaller(
-                LogbackAccessProperties logbackAccessProperties, LogbackAccessConfigurer logbackAccessConfigurer) {
-            JettyLogbackAccessInstaller installer =
-                    new JettyLogbackAccessInstaller(logbackAccessProperties, logbackAccessConfigurer);
+        public JettyLogbackAccessInstaller jettyLogbackAccessInstaller() {
+            JettyLogbackAccessInstaller installer = new JettyLogbackAccessInstaller(logbackAccessProperties);
             log.debug("Created a JettyLogbackAccessInstaller: [{}]", installer);
             return installer;
         }

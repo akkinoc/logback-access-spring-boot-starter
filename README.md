@@ -55,7 +55,7 @@ If you are using maven, add the following dependency.
 ### Configuring the Logback-access
 
 Create a Logback-access configuration file "logback-access.xml" (or "logback-access-test.xml")
-in the root of classpath.  
+in the root of the classpath.  
 
 For example:  
 
@@ -73,8 +73,8 @@ For example:
 "logback-access-spring-boot-starter" will look for the configuration file in the following order.  
 The first found configuration file will be used.  
 
-1. "logback-access-test.xml" in the root of classpath.
-2. "logback-access.xml" in the root of classpath.
+1. "logback-access-test.xml" in the root of the classpath.
+2. "logback-access.xml" in the root of the classpath.
 3. [fallback configuration file (appends to standard output with common pattern)].
 
 [fallback configuration file (appends to standard output with common pattern)]: logback-access-spring-boot-starter/src/main/resources/net/rakugakibox/spring/boot/logback/access/logback-access.xml

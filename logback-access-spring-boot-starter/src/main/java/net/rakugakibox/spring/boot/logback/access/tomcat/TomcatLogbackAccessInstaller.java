@@ -2,7 +2,6 @@ package net.rakugakibox.spring.boot.logback.access.tomcat;
 
 import lombok.extern.slf4j.Slf4j;
 import net.rakugakibox.spring.boot.logback.access.AbstractLogbackAccessInstaller;
-import net.rakugakibox.spring.boot.logback.access.LogbackAccessConfigurer;
 import net.rakugakibox.spring.boot.logback.access.LogbackAccessProperties;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 
@@ -17,18 +16,15 @@ public class TomcatLogbackAccessInstaller
      * Constructs an instance.
      *
      * @param logbackAccessProperties the configuration properties for Logback-access.
-     * @param logbackAccessConfigurer the configurer of Logback-access.
      */
-    public TomcatLogbackAccessInstaller(
-            LogbackAccessProperties logbackAccessProperties, LogbackAccessConfigurer logbackAccessConfigurer) {
-        super(TomcatEmbeddedServletContainerFactory.class, logbackAccessProperties, logbackAccessConfigurer);
+    public TomcatLogbackAccessInstaller(LogbackAccessProperties logbackAccessProperties) {
+        super(TomcatEmbeddedServletContainerFactory.class, logbackAccessProperties);
     }
 
     /** {@inheritDoc} */
     @Override
-    public void install(TomcatEmbeddedServletContainerFactory container) {
-        LogbackAccessTomcatValve valve =
-                new LogbackAccessTomcatValve(getLogbackAccessProperties(), getLogbackAccessConfigurer());
+    public void installLogbackAccess(TomcatEmbeddedServletContainerFactory container) {
+        LogbackAccessTomcatValve valve = new LogbackAccessTomcatValve(logbackAccessProperties);
         container.addEngineValves(valve);
         log.debug("Installed Logback-access: container=[{}], valve=[{}]", container, valve);
     }

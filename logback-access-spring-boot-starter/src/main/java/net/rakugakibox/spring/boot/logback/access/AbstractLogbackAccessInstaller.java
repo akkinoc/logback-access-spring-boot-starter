@@ -1,12 +1,11 @@
 package net.rakugakibox.spring.boot.logback.access;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 
 /**
- * The base class for installing Logback-access.
+ * The base class of Logback-access installers.
  *
  * @param <T> the type of the servlet container.
  */
@@ -17,24 +16,17 @@ public abstract class AbstractLogbackAccessInstaller<T extends ConfigurableEmbed
     /**
      * The class of the servlet container.
      */
-    private final Class<T> containerClass;
+    protected final Class<T> containerClass;
 
     /**
      * The configuration properties for Logback-access.
      */
-    @Getter
-    private final LogbackAccessProperties logbackAccessProperties;
-
-    /**
-     * The configurer of Logback-access.
-     */
-    @Getter
-    private final LogbackAccessConfigurer logbackAccessConfigurer;
+    protected final LogbackAccessProperties logbackAccessProperties;
 
     /** {@inheritDoc} */
     @Override
     public void customize(ConfigurableEmbeddedServletContainer container) {
-        install(containerClass.cast(container));
+        installLogbackAccess(containerClass.cast(container));
     }
 
     /**
@@ -42,6 +34,6 @@ public abstract class AbstractLogbackAccessInstaller<T extends ConfigurableEmbed
      *
      * @param container the servlet container.
      */
-    public abstract void install(T container);
+    public abstract void installLogbackAccess(T container);
 
 }

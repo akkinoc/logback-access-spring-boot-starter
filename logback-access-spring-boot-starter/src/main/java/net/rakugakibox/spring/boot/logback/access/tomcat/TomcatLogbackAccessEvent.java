@@ -30,43 +30,43 @@ public class TomcatLogbackAccessEvent extends AbstractLogbackAccessEvent {
     private boolean requestAttributesEnabled;
 
     /**
-     * The supplier of the local port.
+     * The supplier that takes the local port.
      * The result will be cached.
      */
     private IntSupplier localPort = (IntSupplier & Serializable) () -> {
-        int value = takeLocalPortOrServerPort();
-        localPort = (IntSupplier & Serializable) () -> value;
-        return value;
+        int localPort = takeLocalPort();
+        this.localPort = (IntSupplier & Serializable) () -> localPort;
+        return localPort;
     };
 
     /**
-     * The supplier of the remote address.
+     * The supplier that takes the remote address.
      * The result will be cached.
      */
     private Supplier<String> remoteAddr = (Supplier<String> & Serializable) () -> {
-        String value = takeRemoteAddr();
-        remoteAddr = (Supplier<String> & Serializable) () -> value;
-        return value;
+        String remoteAddr = takeRemoteAddr();
+        this.remoteAddr = (Supplier<String> & Serializable) () -> remoteAddr;
+        return remoteAddr;
     };
 
     /**
-     * The supplier of the remote host.
+     * The supplier that takes the remote host.
      * The result will be cached.
      */
     private Supplier<String> remoteHost = (Supplier<String> & Serializable) () -> {
-        String value = takeRemoteHost();
-        remoteHost = (Supplier<String> & Serializable) () -> value;
-        return value;
+        String remoteHost = takeRemoteHost();
+        this.remoteHost = (Supplier<String> & Serializable) () -> remoteHost;
+        return remoteHost;
     };
 
     /**
-     * The supplier of the protocol.
+     * The supplier that takes the protocol.
      * The result will be cached.
      */
     private Supplier<String> protocol = (Supplier<String> & Serializable) () -> {
-        String value = takeProtocol();
-        protocol = (Supplier<String> & Serializable) () -> value;
-        return value;
+        String protocol = takeProtocol();
+        this.protocol = (Supplier<String> & Serializable) () -> protocol;
+        return protocol;
     };
 
     /**
@@ -91,7 +91,7 @@ public class TomcatLogbackAccessEvent extends AbstractLogbackAccessEvent {
      *
      * @return the local port.
      */
-    private int takeLocalPortOrServerPort() {
+    private int takeLocalPort() {
         return Optional.of(this)
                 .filter(AbstractLogbackAccessEvent::isUseServerPortInsteadOfLocalPort)
                 .filter(TomcatLogbackAccessEvent::isRequestAttributesEnabled)
