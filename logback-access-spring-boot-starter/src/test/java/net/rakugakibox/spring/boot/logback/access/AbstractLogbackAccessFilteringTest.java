@@ -2,8 +2,8 @@ package net.rakugakibox.spring.boot.logback.access;
 
 import ch.qos.logback.access.spi.IAccessEvent;
 import ch.qos.logback.core.spi.FilterReply;
-import net.rakugakibox.spring.boot.logback.access.test.InMemoryLogbackAccessEventQueues;
-import net.rakugakibox.spring.boot.logback.access.test.InMemoryLogbackAccessEventQueuesRule;
+import net.rakugakibox.spring.boot.logback.access.test.InMemoryLogbackAccessEventQueueAppender;
+import net.rakugakibox.spring.boot.logback.access.test.InMemoryLogbackAccessEventQueueAppenderRule;
 import net.rakugakibox.spring.boot.logback.access.test.TestControllerConfiguration;
 import org.junit.Rule;
 import org.junit.Test;
@@ -44,7 +44,7 @@ public abstract class AbstractLogbackAccessFilteringTest {
      */
     @Rule
     public TestRule rule() {
-        return new InMemoryLogbackAccessEventQueuesRule();
+        return new InMemoryLogbackAccessEventQueueAppenderRule();
     }
 
     /**
@@ -58,7 +58,7 @@ public abstract class AbstractLogbackAccessFilteringTest {
                 .header("X-Filter-Reply", FilterReply.ACCEPT.name())
                 .build();
         ResponseEntity<String> response = rest.exchange(request, String.class);
-        IAccessEvent event = InMemoryLogbackAccessEventQueues.pop();
+        IAccessEvent event = InMemoryLogbackAccessEventQueueAppender.queue.pop();
 
         assertThat(response).hasStatusCode(HttpStatus.OK);
         assertThat(event).isNotNull();
@@ -76,7 +76,7 @@ public abstract class AbstractLogbackAccessFilteringTest {
                 .header("X-Filter-Reply", FilterReply.NEUTRAL.name())
                 .build();
         ResponseEntity<String> response = rest.exchange(request, String.class);
-        IAccessEvent event = InMemoryLogbackAccessEventQueues.pop();
+        IAccessEvent event = InMemoryLogbackAccessEventQueueAppender.queue.pop();
 
         assertThat(response).hasStatusCode(HttpStatus.OK);
         assertThat(event).isNotNull();

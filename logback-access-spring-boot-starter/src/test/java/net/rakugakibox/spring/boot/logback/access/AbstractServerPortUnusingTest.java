@@ -1,6 +1,6 @@
 package net.rakugakibox.spring.boot.logback.access;
 
-import net.rakugakibox.spring.boot.logback.access.test.InMemoryLogbackAccessEventQueuesRule;
+import net.rakugakibox.spring.boot.logback.access.test.InMemoryLogbackAccessEventQueueAppenderRule;
 import net.rakugakibox.spring.boot.logback.access.test.TestControllerConfiguration;
 import org.junit.Rule;
 import org.junit.Test;
@@ -47,7 +47,7 @@ public abstract class AbstractServerPortUnusingTest {
      */
     @Rule
     public TestRule rule() {
-        return new InMemoryLogbackAccessEventQueuesRule();
+        return new InMemoryLogbackAccessEventQueueAppenderRule();
     }
 
     /**

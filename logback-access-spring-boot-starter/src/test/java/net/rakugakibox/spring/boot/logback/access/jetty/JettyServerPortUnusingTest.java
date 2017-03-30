@@ -2,7 +2,7 @@ package net.rakugakibox.spring.boot.logback.access.jetty;
 
 import ch.qos.logback.access.spi.IAccessEvent;
 import net.rakugakibox.spring.boot.logback.access.AbstractServerPortUnusingTest;
-import net.rakugakibox.spring.boot.logback.access.test.InMemoryLogbackAccessEventQueues;
+import net.rakugakibox.spring.boot.logback.access.test.InMemoryLogbackAccessEventQueueAppender;
 import org.springframework.boot.autoconfigure.web.EmbeddedServletContainerAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -26,7 +26,7 @@ public class JettyServerPortUnusingTest extends AbstractServerPortUnusingTest {
                 .header("X-Forwarded-Host", "forwarded-host:12345")
                 .build();
         ResponseEntity<String> response = rest.exchange(request, String.class);
-        IAccessEvent event = InMemoryLogbackAccessEventQueues.pop();
+        IAccessEvent event = InMemoryLogbackAccessEventQueueAppender.queue.pop();
 
         assertThat(response).hasStatusCode(HttpStatus.OK);
         assertThat(event).hasLocalPort(port);

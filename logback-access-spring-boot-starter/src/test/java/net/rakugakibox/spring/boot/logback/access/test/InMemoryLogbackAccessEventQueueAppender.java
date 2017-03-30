@@ -2,28 +2,25 @@ package net.rakugakibox.spring.boot.logback.access.test;
 
 import ch.qos.logback.access.spi.IAccessEvent;
 import ch.qos.logback.core.AppenderBase;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.util.SerializationUtils;
+import static org.springframework.util.SerializationUtils.deserialize;
+import static org.springframework.util.SerializationUtils.serialize;
 
 /**
- * The Logback-access appender to add to {@link InMemoryLogbackAccessEventQueues}.
+ * The Logback-access appender that adds to static {@link InMemoryLogbackAccessEventQueue}.
  */
 public class InMemoryLogbackAccessEventQueueAppender extends AppenderBase<IAccessEvent> {
 
     /**
-     * The name of event queue.
+     * The queue of Logback-access event.
      */
-    @Getter
-    @Setter
-    private String queueName = InMemoryLogbackAccessEventQueues.DEFAULT_QUEUE_NAME;
+    public static final InMemoryLogbackAccessEventQueue queue = new InMemoryLogbackAccessEventQueue();
 
     /** {@inheritDoc} */
     @Override
     protected void append(IAccessEvent event) {
         event.prepareForDeferredProcessing();
-        event = (IAccessEvent) SerializationUtils.deserialize(SerializationUtils.serialize(event));
-        InMemoryLogbackAccessEventQueues.push(queueName, event);
+        event = (IAccessEvent) deserialize(serialize(event));
+        queue.push(event);
     }
 
 }
