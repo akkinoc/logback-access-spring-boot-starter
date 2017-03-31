@@ -1,13 +1,16 @@
 package net.rakugakibox.spring.boot.logback.access;
 
-import ch.qos.logback.access.spi.IAccessEvent;
 import net.rakugakibox.spring.boot.logback.access.test.ClassPathRule;
 import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingAppender;
 import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingAppenderRule;
+import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingListener;
+import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingListenerConfiguration;
+import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingListenerRule;
 import net.rakugakibox.spring.boot.logback.access.test.TestControllerConfiguration;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.RuleChain;
 import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +21,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-import static net.rakugakibox.spring.boot.logback.access.test.AccessEventAssert.assertThat;
 import static net.rakugakibox.spring.boot.logback.access.test.ResponseEntityAssert.assertThat;
 
 /**
@@ -51,7 +53,9 @@ public abstract class AbstractMainConfigurationFileAutoDetectingTest {
      */
     @Rule
     public TestRule rule() {
-        return new LogbackAccessEventQueuingAppenderRule();
+        return RuleChain
+                .outerRule(new LogbackAccessEventQueuingAppenderRule())
+                .around(new LogbackAccessEventQueuingListenerRule());
     }
 
     /**
@@ -61,10 +65,10 @@ public abstract class AbstractMainConfigurationFileAutoDetectingTest {
     public void logbackAccessEvent() {
 
         ResponseEntity<String> response = rest.getForEntity("/test/text", String.class);
-        IAccessEvent event = LogbackAccessEventQueuingAppender.appendedEventQueue.pop();
+        LogbackAccessEventQueuingAppender.appendedEventQueue.pop();
+        LogbackAccessEventQueuingListener.appendedEventQueue.pop();
 
         assertThat(response).hasStatusCode(HttpStatus.OK);
-        assertThat(event).isNotNull();
 
     }
 
@@ -72,7 +76,7 @@ public abstract class AbstractMainConfigurationFileAutoDetectingTest {
      * The base class of context configuration.
      */
     @EnableAutoConfiguration
-    @Import(TestControllerConfiguration.class)
+    @Import({LogbackAccessEventQueuingListenerConfiguration.class, TestControllerConfiguration.class})
     public static abstract class AbstractContextConfiguration {
     }
 

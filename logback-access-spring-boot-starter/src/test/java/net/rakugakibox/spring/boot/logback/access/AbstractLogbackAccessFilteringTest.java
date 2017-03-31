@@ -1,12 +1,15 @@
 package net.rakugakibox.spring.boot.logback.access;
 
-import ch.qos.logback.access.spi.IAccessEvent;
 import ch.qos.logback.core.spi.FilterReply;
 import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingAppender;
 import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingAppenderRule;
+import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingListener;
+import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingListenerConfiguration;
+import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingListenerRule;
 import net.rakugakibox.spring.boot.logback.access.test.TestControllerConfiguration;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.RuleChain;
 import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +21,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-import static net.rakugakibox.spring.boot.logback.access.test.AccessEventAssert.assertThat;
 import static net.rakugakibox.spring.boot.logback.access.test.ResponseEntityAssert.assertThat;
 
 /**
@@ -44,7 +46,9 @@ public abstract class AbstractLogbackAccessFilteringTest {
      */
     @Rule
     public TestRule rule() {
-        return new LogbackAccessEventQueuingAppenderRule();
+        return RuleChain
+                .outerRule(new LogbackAccessEventQueuingAppenderRule())
+                .around(new LogbackAccessEventQueuingListenerRule());
     }
 
     /**
@@ -58,10 +62,10 @@ public abstract class AbstractLogbackAccessFilteringTest {
                 .header("X-Filter-Reply", FilterReply.ACCEPT.name())
                 .build();
         ResponseEntity<String> response = rest.exchange(request, String.class);
-        IAccessEvent event = LogbackAccessEventQueuingAppender.appendedEventQueue.pop();
+        LogbackAccessEventQueuingAppender.appendedEventQueue.pop();
+        LogbackAccessEventQueuingListener.appendedEventQueue.pop();
 
         assertThat(response).hasStatusCode(HttpStatus.OK);
-        assertThat(event).isNotNull();
 
     }
 
@@ -76,10 +80,10 @@ public abstract class AbstractLogbackAccessFilteringTest {
                 .header("X-Filter-Reply", FilterReply.NEUTRAL.name())
                 .build();
         ResponseEntity<String> response = rest.exchange(request, String.class);
-        IAccessEvent event = LogbackAccessEventQueuingAppender.appendedEventQueue.pop();
+        LogbackAccessEventQueuingAppender.appendedEventQueue.pop();
+        LogbackAccessEventQueuingListener.appendedEventQueue.pop();
 
         assertThat(response).hasStatusCode(HttpStatus.OK);
-        assertThat(event).isNotNull();
 
     }
 
@@ -94,6 +98,7 @@ public abstract class AbstractLogbackAccessFilteringTest {
                 .header("X-Filter-Reply", FilterReply.DENY.name())
                 .build();
         ResponseEntity<String> response = rest.exchange(request, String.class);
+        LogbackAccessEventQueuingListener.deniedEventQueue.pop();
 
         assertThat(response).hasStatusCode(HttpStatus.OK);
 
@@ -103,7 +108,7 @@ public abstract class AbstractLogbackAccessFilteringTest {
      * The base class of context configuration.
      */
     @EnableAutoConfiguration
-    @Import(TestControllerConfiguration.class)
+    @Import({LogbackAccessEventQueuingListenerConfiguration.class, TestControllerConfiguration.class})
     public static abstract class AbstractContextConfiguration {
     }
 

@@ -3,9 +3,13 @@ package net.rakugakibox.spring.boot.logback.access.tomcat;
 import ch.qos.logback.access.spi.IAccessEvent;
 import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingAppender;
 import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingAppenderRule;
+import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingListener;
+import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingListenerConfiguration;
+import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingListenerRule;
 import net.rakugakibox.spring.boot.logback.access.test.TestControllerConfiguration;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.RuleChain;
 import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +60,9 @@ public class TomcatRequestAttributesDisablingTest {
      */
     @Rule
     public TestRule rule() {
-        return new LogbackAccessEventQueuingAppenderRule();
+        return RuleChain
+                .outerRule(new LogbackAccessEventQueuingAppenderRule())
+                .around(new LogbackAccessEventQueuingListenerRule());
     }
 
     /**
@@ -73,6 +79,7 @@ public class TomcatRequestAttributesDisablingTest {
                 .build();
         ResponseEntity<String> response = rest.exchange(request, String.class);
         IAccessEvent event = LogbackAccessEventQueuingAppender.appendedEventQueue.pop();
+        LogbackAccessEventQueuingListener.appendedEventQueue.pop();
 
         assertThat(response).hasStatusCode(HttpStatus.OK);
         assertThat(event)
@@ -89,7 +96,11 @@ public class TomcatRequestAttributesDisablingTest {
      */
     @Configuration
     @EnableAutoConfiguration
-    @Import({EmbeddedServletContainerAutoConfiguration.EmbeddedTomcat.class, TestControllerConfiguration.class})
+    @Import({
+            EmbeddedServletContainerAutoConfiguration.EmbeddedTomcat.class,
+            LogbackAccessEventQueuingListenerConfiguration.class,
+            TestControllerConfiguration.class,
+    })
     public static class ContextConfiguration {
     }
 

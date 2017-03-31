@@ -6,6 +6,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 import ch.qos.logback.access.spi.IAccessEvent;
+import static org.springframework.util.SerializationUtils.deserialize;
+import static org.springframework.util.SerializationUtils.serialize;
 
 /**
  * The queue of Logback-access event.
@@ -26,10 +28,13 @@ public class LogbackAccessEventQueue {
     /**
      * Adds the Logback-access event.
      * Waits a moment for space becomes available if necessary.
+     * If it times out, throws an exception.
      *
      * @param event the Logback-access event.
      */
     public void push(IAccessEvent event) {
+        event.prepareForDeferredProcessing();
+        event = (IAccessEvent) deserialize(serialize(event));
         try {
             if (!queue.offer(event, TIMEOUT_FOR_QUEUE_ACCESS.getSeconds(), TimeUnit.SECONDS)) {
                 throw new IllegalStateException("Could not push a Logback-access event: event=[" + event + "]");
@@ -43,6 +48,7 @@ public class LogbackAccessEventQueue {
     /**
      * Removes and returns a head Logback-access event.
      * Waits a moment for a Logback-access event becomes available if necessary.
+     * If it times out, throws an exception.
      *
      * @return a Logback-access event.
      */
