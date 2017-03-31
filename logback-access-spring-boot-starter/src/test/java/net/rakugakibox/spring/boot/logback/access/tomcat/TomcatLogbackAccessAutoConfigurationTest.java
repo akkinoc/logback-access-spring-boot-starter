@@ -21,7 +21,7 @@ public class TomcatLogbackAccessAutoConfigurationTest extends AbstractLogbackAcc
     /** {@inheritDoc} */
     @Override
     public void jettyLogbackAccessInstaller() {
-        assertThat(jettyLogbackAccessInstaller).isNotPresent();
+        assertThat(jettyLogbackAccessInstaller).isEmpty();
     }
 
     /**

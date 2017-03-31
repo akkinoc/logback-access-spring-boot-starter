@@ -3,6 +3,7 @@ package net.rakugakibox.spring.boot.logback.access.tomcat;
 import ch.qos.logback.access.spi.IAccessEvent;
 import net.rakugakibox.spring.boot.logback.access.AbstractForwardHeadersUsingTest;
 import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingAppender;
+import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingListener;
 import org.springframework.boot.autoconfigure.web.EmbeddedServletContainerAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -29,6 +30,7 @@ public class TomcatForwardHeadersUsingTest extends AbstractForwardHeadersUsingTe
                 .build();
         ResponseEntity<String> response = rest.exchange(request, String.class);
         IAccessEvent event = LogbackAccessEventQueuingAppender.appendedEventQueue.pop();
+        LogbackAccessEventQueuingListener.appendedEventQueue.pop();
 
         assertThat(response).hasStatusCode(HttpStatus.OK);
         assertThat(event)

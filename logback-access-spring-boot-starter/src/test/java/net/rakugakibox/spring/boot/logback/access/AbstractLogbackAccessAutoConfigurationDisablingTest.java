@@ -42,7 +42,7 @@ public abstract class AbstractLogbackAccessAutoConfigurationDisablingTest {
      */
     @Test
     public void logbackAccessProperties() {
-        assertThat(logbackAccessProperties).isNotPresent();
+        assertThat(logbackAccessProperties).isEmpty();
     }
 
     /**
@@ -50,7 +50,7 @@ public abstract class AbstractLogbackAccessAutoConfigurationDisablingTest {
      */
     @Test
     public void tomcatLogbackAccessInstaller() {
-        assertThat(tomcatLogbackAccessInstaller).isNotPresent();
+        assertThat(tomcatLogbackAccessInstaller).isEmpty();
     }
 
     /**
@@ -58,7 +58,7 @@ public abstract class AbstractLogbackAccessAutoConfigurationDisablingTest {
      */
     @Test
     public void jettyLogbackAccessInstaller() {
-        assertThat(jettyLogbackAccessInstaller).isNotPresent();
+        assertThat(jettyLogbackAccessInstaller).isEmpty();
     }
 
     /**

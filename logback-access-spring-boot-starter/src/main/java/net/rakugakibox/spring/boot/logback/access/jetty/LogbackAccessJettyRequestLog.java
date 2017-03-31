@@ -1,7 +1,10 @@
 package net.rakugakibox.spring.boot.logback.access.jetty;
 
+import java.util.List;
+
 import ch.qos.logback.access.jetty.RequestLogImpl;
 import net.rakugakibox.spring.boot.logback.access.LogbackAccessContext;
+import net.rakugakibox.spring.boot.logback.access.LogbackAccessListener;
 import net.rakugakibox.spring.boot.logback.access.LogbackAccessProperties;
 import org.eclipse.jetty.server.NCSARequestLog;
 import org.eclipse.jetty.server.Request;
@@ -28,9 +31,11 @@ public class LogbackAccessJettyRequestLog extends AbstractLifeCycle implements R
      * Constructs an instance.
      *
      * @param logbackAccessProperties the configuration properties for Logback-access.
+     * @param logbackAccessListeners the listeners for Logback-access.
      */
-    public LogbackAccessJettyRequestLog(LogbackAccessProperties logbackAccessProperties) {
-        this.logbackAccessContext = new LogbackAccessContext(logbackAccessProperties);
+    public LogbackAccessJettyRequestLog(
+            LogbackAccessProperties logbackAccessProperties, List<LogbackAccessListener> logbackAccessListeners) {
+        this.logbackAccessContext = new LogbackAccessContext(logbackAccessProperties, logbackAccessListeners);
     }
 
     /** {@inheritDoc} */

@@ -4,15 +4,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * The configuration to use the test controller.
+ * The configuration for using {@link TestController}.
  */
 @Configuration
 public class TestControllerConfiguration {
 
     /**
-     * Creates a test controller.
+     * Creates a {@link TestController}.
      *
-     * @return a test controller.
+     * @return a {@link TestController}.
      */
     @Bean
     public TestController testController() {

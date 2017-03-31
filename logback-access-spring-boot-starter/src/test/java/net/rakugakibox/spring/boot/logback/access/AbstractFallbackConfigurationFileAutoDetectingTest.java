@@ -1,13 +1,10 @@
 package net.rakugakibox.spring.boot.logback.access;
 
-import net.rakugakibox.spring.boot.logback.access.test.ClassPathRule;
-import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingAppender;
 import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingAppenderRule;
 import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingListener;
 import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingListenerConfiguration;
 import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingListenerRule;
 import net.rakugakibox.spring.boot.logback.access.test.TestControllerConfiguration;
-import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
@@ -16,35 +13,32 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.rule.OutputCapture;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import static net.rakugakibox.spring.boot.logback.access.test.ResponseEntityAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * The base class for testing to auto detect main configuration file.
+ * The base class for testing to auto detect fallback configuration file.
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public abstract class AbstractMainConfigurationFileAutoDetectingTest {
+public abstract class AbstractFallbackConfigurationFileAutoDetectingTest {
+
+    /**
+     * The output capture rule.
+     */
+    private final OutputCapture outputCapture = new OutputCapture();
 
     /**
      * The REST template.
      */
     @Autowired
     protected TestRestTemplate rest;
-
-    /**
-     * Creates a class test rule.
-     *
-     * @return a class test rule.
-     */
-    @ClassRule
-    public static TestRule classRule() {
-        return new ClassPathRule(AbstractMainConfigurationFileAutoDetectingTest.class);
-    }
 
     /**
      * Creates a test rule.
@@ -55,7 +49,8 @@ public abstract class AbstractMainConfigurationFileAutoDetectingTest {
     public TestRule rule() {
         return RuleChain
                 .outerRule(new LogbackAccessEventQueuingAppenderRule())
-                .around(new LogbackAccessEventQueuingListenerRule());
+                .around(new LogbackAccessEventQueuingListenerRule())
+                .around(outputCapture);
     }
 
     /**
@@ -65,10 +60,10 @@ public abstract class AbstractMainConfigurationFileAutoDetectingTest {
     public void logbackAccessEvent() {
 
         ResponseEntity<String> response = rest.getForEntity("/test/text", String.class);
-        LogbackAccessEventQueuingAppender.appendedEventQueue.pop();
         LogbackAccessEventQueuingListener.appendedEventQueue.pop();
 
         assertThat(response).hasStatusCode(HttpStatus.OK);
+        assertThat(outputCapture.toString()).containsSequence("127.0.0.1", "GET", "/test/text", "HTTP/1.1", "200");
 
     }
 

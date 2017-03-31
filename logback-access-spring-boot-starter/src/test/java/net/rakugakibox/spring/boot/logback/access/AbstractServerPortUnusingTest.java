@@ -1,9 +1,12 @@
 package net.rakugakibox.spring.boot.logback.access;
 
 import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingAppenderRule;
+import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingListenerConfiguration;
+import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingListenerRule;
 import net.rakugakibox.spring.boot.logback.access.test.TestControllerConfiguration;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.RuleChain;
 import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +50,9 @@ public abstract class AbstractServerPortUnusingTest {
      */
     @Rule
     public TestRule rule() {
-        return new LogbackAccessEventQueuingAppenderRule();
+        return RuleChain
+                .outerRule(new LogbackAccessEventQueuingAppenderRule())
+                .around(new LogbackAccessEventQueuingListenerRule());
     }
 
     /**
@@ -60,7 +65,7 @@ public abstract class AbstractServerPortUnusingTest {
      * The base class of context configuration.
      */
     @EnableAutoConfiguration
-    @Import(TestControllerConfiguration.class)
+    @Import({LogbackAccessEventQueuingListenerConfiguration.class, TestControllerConfiguration.class})
     public static abstract class AbstractContextConfiguration {
     }
 
