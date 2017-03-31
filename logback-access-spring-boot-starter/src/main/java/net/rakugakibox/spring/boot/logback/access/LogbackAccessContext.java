@@ -44,12 +44,20 @@ public class LogbackAccessContext extends AccessContext {
     private final LogbackAccessProperties logbackAccessProperties;
 
     /**
+     * The listeners for Logback-access.
+     */
+    private final List<LogbackAccessListener> logbackAccessListeners;
+
+    /**
      * Constructs an instance.
      *
      * @param logbackAccessProperties the configuration properties for Logback-access.
+     * @param logbackAccessListeners the listeners for Logback-access.
      */
-    public LogbackAccessContext(LogbackAccessProperties logbackAccessProperties) {
+    public LogbackAccessContext(
+            LogbackAccessProperties logbackAccessProperties, List<LogbackAccessListener> logbackAccessListeners) {
         this.logbackAccessProperties = logbackAccessProperties;
+        this.logbackAccessListeners = logbackAccessListeners;
         setName(CoreConstants.DEFAULT_CONTEXT_NAME);
     }
 
@@ -158,6 +166,9 @@ public class LogbackAccessContext extends AccessContext {
         event.setUseServerPortInsteadOfLocalPort(logbackAccessProperties.getUseServerPortInsteadOfLocalPort());
         if (getFilterChainDecision(event) != FilterReply.DENY) {
             callAppenders(event);
+            logbackAccessListeners.forEach(listener -> listener.onCalledAppenders(event));
+        } else {
+            logbackAccessListeners.forEach(listener -> listener.onDeniedByFilterChainDecision(event));
         }
     }
 

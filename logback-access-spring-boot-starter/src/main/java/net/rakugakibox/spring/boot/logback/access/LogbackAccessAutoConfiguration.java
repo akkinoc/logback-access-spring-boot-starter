@@ -1,5 +1,9 @@
 package net.rakugakibox.spring.boot.logback.access;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.rakugakibox.spring.boot.logback.access.jetty.JettyLogbackAccessInstaller;
@@ -38,6 +42,11 @@ public class LogbackAccessAutoConfiguration {
         private final LogbackAccessProperties logbackAccessProperties;
 
         /**
+         * The listeners for Logback-access.
+         */
+        private final Optional<List<LogbackAccessListener>> logbackAccessListeners;
+
+        /**
          * Creates a Logback-access installer.
          *
          * @return a Logback-access installer.
@@ -45,7 +54,8 @@ public class LogbackAccessAutoConfiguration {
         @Bean
         @ConditionalOnMissingBean
         public TomcatLogbackAccessInstaller tomcatLogbackAccessInstaller() {
-            TomcatLogbackAccessInstaller installer = new TomcatLogbackAccessInstaller(logbackAccessProperties);
+            TomcatLogbackAccessInstaller installer = new TomcatLogbackAccessInstaller(
+                    logbackAccessProperties, logbackAccessListeners.orElseGet(Collections::emptyList));
             log.debug("Created a TomcatLogbackAccessInstaller: [{}]", installer);
             return installer;
         }
@@ -66,6 +76,11 @@ public class LogbackAccessAutoConfiguration {
         private final LogbackAccessProperties logbackAccessProperties;
 
         /**
+         * The listeners for Logback-access.
+         */
+        private final Optional<List<LogbackAccessListener>> logbackAccessListeners;
+
+        /**
          * Creates a Logback-access installer.
          *
          * @return a Logback-access installer.
@@ -73,7 +88,8 @@ public class LogbackAccessAutoConfiguration {
         @Bean
         @ConditionalOnMissingBean
         public JettyLogbackAccessInstaller jettyLogbackAccessInstaller() {
-            JettyLogbackAccessInstaller installer = new JettyLogbackAccessInstaller(logbackAccessProperties);
+            JettyLogbackAccessInstaller installer = new JettyLogbackAccessInstaller(
+                    logbackAccessProperties, logbackAccessListeners.orElseGet(Collections::emptyList));
             log.debug("Created a JettyLogbackAccessInstaller: [{}]", installer);
             return installer;
         }
