@@ -34,7 +34,7 @@ public class LogbackAccessAutoConfiguration {
     @Configuration
     @ConditionalOnBean(value = TomcatEmbeddedServletContainerFactory.class)
     @RequiredArgsConstructor
-    public static class Tomcat {
+    public static class ForTomcat {
 
         /**
          * The configuration properties for Logback-access.
@@ -68,7 +68,7 @@ public class LogbackAccessAutoConfiguration {
     @Configuration
     @ConditionalOnBean(value = JettyEmbeddedServletContainerFactory.class)
     @RequiredArgsConstructor
-    public static class Jetty {
+    public static class ForJetty {
 
         /**
          * The configuration properties for Logback-access.
