@@ -28,7 +28,7 @@ public class TomcatLogbackAccessInstaller
 
     /** {@inheritDoc} */
     @Override
-    public void installLogbackAccess(TomcatEmbeddedServletContainerFactory container) {
+    protected void installLogbackAccess(TomcatEmbeddedServletContainerFactory container) {
         LogbackAccessTomcatValve valve = new LogbackAccessTomcatValve(logbackAccessProperties, logbackAccessListeners);
         container.addEngineValves(valve);
         log.debug("Installed Logback-access: container=[{}], valve=[{}]", container, valve);

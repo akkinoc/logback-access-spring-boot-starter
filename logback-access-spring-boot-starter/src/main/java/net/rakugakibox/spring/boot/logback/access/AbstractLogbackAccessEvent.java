@@ -2,7 +2,6 @@ package net.rakugakibox.spring.boot.logback.access;
 
 import java.io.Serializable;
 import java.util.Optional;
-import java.util.function.IntSupplier;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,14 +23,9 @@ public abstract class AbstractLogbackAccessEvent extends AccessEvent {
     private boolean useServerPortInsteadOfLocalPort;
 
     /**
-     * The supplier that takes the local port.
-     * The result will be cached.
+     * The local port.
      */
-    private IntSupplier localPort = (IntSupplier & Serializable) () -> {
-        int localPort = takeLocalPort();
-        this.localPort = (IntSupplier & Serializable) () -> localPort;
-        return localPort;
-    };
+    private LocalPort localPort = new LocalPort();
 
     /**
      * Constructs an instance.
@@ -48,21 +42,78 @@ public abstract class AbstractLogbackAccessEvent extends AccessEvent {
     /** {@inheritDoc} */
     @Override
     public int getLocalPort() {
-        return localPort.getAsInt();
+        return localPort.get();
     }
 
     /**
-     * Takes the local port.
-     * Returns the server port if necessary.
+     * The base class that indicates the overridden attribute.
+     * The value is optional and it is lazily evaluated.
+     * If the evaluated value is present, caches it. Otherwise, returns the original value.
      *
-     * @return the local port.
+     * @param <T> the type of value.
      */
-    private int takeLocalPort() {
-        return Optional.of(this)
-                .filter(AbstractLogbackAccessEvent::isUseServerPortInsteadOfLocalPort)
-                .map(AccessEvent::getRequest)
-                .map(HttpServletRequest::getServerPort)
-                .orElseGet(super::getLocalPort);
+    protected static abstract class AbstractOverridenAttribute<T extends Serializable> implements Serializable {
+
+        /**
+         * Whether was evaluated.
+         */
+        private boolean evaluated;
+
+        /**
+         * The evaluated value.
+         */
+        private T value;
+
+        /**
+         * Returns the value.
+         *
+         * @return the value.
+         */
+        public T get() {
+            if (!evaluated) {
+                value = evaluateValueToOverride().orElse(null);
+                evaluated = true;
+            }
+            return Optional.ofNullable(value).orElseGet(this::getOriginalValue);
+        }
+
+        /**
+         * Evaluates the value to override.
+         *
+         * @return the value to override.
+         */
+        protected abstract Optional<T> evaluateValueToOverride();
+
+        /**
+         * Returns the original value.
+         *
+         * @return the original value.
+         */
+        protected abstract T getOriginalValue();
+
+    }
+
+    /**
+     * The local port.
+     * Takes the server port if necessary.
+     */
+    private class LocalPort extends AbstractOverridenAttribute<Integer> {
+
+        /** {@inheritDoc} */
+        @Override
+        protected Optional<Integer> evaluateValueToOverride() {
+            return Optional.of(AbstractLogbackAccessEvent.this)
+                    .filter(AbstractLogbackAccessEvent::isUseServerPortInsteadOfLocalPort)
+                    .map(AccessEvent::getRequest)
+                    .map(HttpServletRequest::getServerPort);
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        protected Integer getOriginalValue() {
+            return AbstractLogbackAccessEvent.super.getLocalPort();
+        }
+
     }
 
 }

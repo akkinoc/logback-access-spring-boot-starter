@@ -41,6 +41,6 @@ public abstract class AbstractLogbackAccessInstaller<T extends ConfigurableEmbed
      *
      * @param container the servlet container.
      */
-    public abstract void installLogbackAccess(T container);
+    protected abstract void installLogbackAccess(T container);
 
 }

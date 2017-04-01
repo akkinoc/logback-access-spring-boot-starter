@@ -1,9 +1,6 @@
 package net.rakugakibox.spring.boot.logback.access.tomcat;
 
-import java.io.Serializable;
 import java.util.Optional;
-import java.util.function.IntSupplier;
-import java.util.function.Supplier;
 
 import ch.qos.logback.access.spi.AccessEvent;
 import ch.qos.logback.access.tomcat.TomcatServerAdapter;
@@ -30,44 +27,24 @@ public class TomcatLogbackAccessEvent extends AbstractLogbackAccessEvent {
     private boolean requestAttributesEnabled;
 
     /**
-     * The supplier that takes the local port.
-     * The result will be cached.
+     * The local port.
      */
-    private IntSupplier localPort = (IntSupplier & Serializable) () -> {
-        int localPort = takeLocalPort();
-        this.localPort = (IntSupplier & Serializable) () -> localPort;
-        return localPort;
-    };
+    private LocalPort localPort = new LocalPort();
 
     /**
-     * The supplier that takes the remote address.
-     * The result will be cached.
+     * The remote address.
      */
-    private Supplier<String> remoteAddr = (Supplier<String> & Serializable) () -> {
-        String remoteAddr = takeRemoteAddr();
-        this.remoteAddr = (Supplier<String> & Serializable) () -> remoteAddr;
-        return remoteAddr;
-    };
+    private RemoteAddr remoteAddr = new RemoteAddr();
 
     /**
-     * The supplier that takes the remote host.
-     * The result will be cached.
+     * The remote host.
      */
-    private Supplier<String> remoteHost = (Supplier<String> & Serializable) () -> {
-        String remoteHost = takeRemoteHost();
-        this.remoteHost = (Supplier<String> & Serializable) () -> remoteHost;
-        return remoteHost;
-    };
+    private RemoteHost remoteHost = new RemoteHost();
 
     /**
-     * The supplier that takes the protocol.
-     * The result will be cached.
+     * The protocol.
      */
-    private Supplier<String> protocol = (Supplier<String> & Serializable) () -> {
-        String protocol = takeProtocol();
-        this.protocol = (Supplier<String> & Serializable) () -> protocol;
-        return protocol;
-    };
+    private Protocol protocol = new Protocol();
 
     /**
      * Constructs an instance.
@@ -82,22 +59,7 @@ public class TomcatLogbackAccessEvent extends AbstractLogbackAccessEvent {
     /** {@inheritDoc} */
     @Override
     public int getLocalPort() {
-        return localPort.getAsInt();
-    }
-
-    /**
-     * Takes the local port.
-     * Returns the server port in the same way as {@link AbstractAccessLogValve.PortElement} if necessary.
-     *
-     * @return the local port.
-     */
-    private int takeLocalPort() {
-        return Optional.of(this)
-                .filter(AbstractLogbackAccessEvent::isUseServerPortInsteadOfLocalPort)
-                .filter(TomcatLogbackAccessEvent::isRequestAttributesEnabled)
-                .map(AccessEvent::getRequest)
-                .map(request -> (Integer) request.getAttribute(AccessLog.SERVER_PORT_ATTRIBUTE))
-                .orElseGet(super::getLocalPort);
+        return localPort.get();
     }
 
     /** {@inheritDoc} */
@@ -106,36 +68,10 @@ public class TomcatLogbackAccessEvent extends AbstractLogbackAccessEvent {
         return remoteAddr.get();
     }
 
-    /**
-     * Takes the remote address in the same way as {@link AbstractAccessLogValve.RemoteAddrElement}.
-     *
-     * @return the remote address.
-     */
-    private String takeRemoteAddr() {
-        return Optional.of(this)
-                .filter(TomcatLogbackAccessEvent::isRequestAttributesEnabled)
-                .map(AccessEvent::getRequest)
-                .map(request -> (String) request.getAttribute(AccessLog.REMOTE_ADDR_ATTRIBUTE))
-                .orElseGet(super::getRemoteAddr);
-    }
-
     /** {@inheritDoc} */
     @Override
     public String getRemoteHost() {
         return remoteHost.get();
-    }
-
-    /**
-     * Takes the remote host in the same way as {@link AbstractAccessLogValve.HostElement}.
-     *
-     * @return the remote host.
-     */
-    private String takeRemoteHost() {
-        return Optional.of(this)
-                .filter(TomcatLogbackAccessEvent::isRequestAttributesEnabled)
-                .map(AccessEvent::getRequest)
-                .map(request -> (String) request.getAttribute(AccessLog.REMOTE_HOST_ATTRIBUTE))
-                .orElseGet(super::getRemoteHost);
     }
 
     /** {@inheritDoc} */
@@ -145,22 +81,103 @@ public class TomcatLogbackAccessEvent extends AbstractLogbackAccessEvent {
     }
 
     /**
-     * Takes the protocol in the same way as {@link AbstractAccessLogValve.ProtocolElement}.
-     *
-     * @return the protocol.
+     * The local port.
+     * Takes the server port in the same way as {@link AbstractAccessLogValve} if necessary.
      */
-    private String takeProtocol() {
-        return Optional.of(this)
-                .filter(TomcatLogbackAccessEvent::isRequestAttributesEnabled)
-                .map(AccessEvent::getRequest)
-                .map(request -> (String) request.getAttribute(AccessLog.PROTOCOL_ATTRIBUTE))
-                .orElseGet(super::getProtocol);
+    private class LocalPort extends AbstractOverridenAttribute<Integer> {
+
+        /** {@inheritDoc} */
+        @Override
+        protected Optional<Integer> evaluateValueToOverride() {
+            return Optional.of(TomcatLogbackAccessEvent.this)
+                    .filter(AbstractLogbackAccessEvent::isUseServerPortInsteadOfLocalPort)
+                    .filter(TomcatLogbackAccessEvent::isRequestAttributesEnabled)
+                    .map(AccessEvent::getRequest)
+                    .map(request -> (Integer) request.getAttribute(AccessLog.SERVER_PORT_ATTRIBUTE));
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        protected Integer getOriginalValue() {
+            return TomcatLogbackAccessEvent.super.getLocalPort();
+        }
+
+    }
+
+    /**
+     * The remote address.
+     * Takes in the same way as {@link AbstractAccessLogValve}.
+     */
+    private class RemoteAddr extends AbstractOverridenAttribute<String> {
+
+        /** {@inheritDoc} */
+        @Override
+        protected Optional<String> evaluateValueToOverride() {
+            return Optional.of(TomcatLogbackAccessEvent.this)
+                    .filter(TomcatLogbackAccessEvent::isRequestAttributesEnabled)
+                    .map(AccessEvent::getRequest)
+                    .map(request -> (String) request.getAttribute(AccessLog.REMOTE_ADDR_ATTRIBUTE));
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        protected String getOriginalValue() {
+            return TomcatLogbackAccessEvent.super.getRemoteAddr();
+        }
+
+    }
+
+    /**
+     * The remote host.
+     * Takes in the same way as {@link AbstractAccessLogValve}.
+     */
+    private class RemoteHost extends AbstractOverridenAttribute<String> {
+
+        /** {@inheritDoc} */
+        @Override
+        protected Optional<String> evaluateValueToOverride() {
+            return Optional.of(TomcatLogbackAccessEvent.this)
+                    .filter(TomcatLogbackAccessEvent::isRequestAttributesEnabled)
+                    .map(AccessEvent::getRequest)
+                    .map(request -> (String) request.getAttribute(AccessLog.REMOTE_HOST_ATTRIBUTE));
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        protected String getOriginalValue() {
+            return TomcatLogbackAccessEvent.super.getRemoteHost();
+        }
+
+    }
+
+    /**
+     * The protocol.
+     * Takes in the same way as {@link AbstractAccessLogValve}.
+     */
+    private class Protocol extends AbstractOverridenAttribute<String> {
+
+        /** {@inheritDoc} */
+        @Override
+        protected Optional<String> evaluateValueToOverride() {
+            return Optional.of(TomcatLogbackAccessEvent.this)
+                    .filter(TomcatLogbackAccessEvent::isRequestAttributesEnabled)
+                    .map(AccessEvent::getRequest)
+                    .map(request -> (String) request.getAttribute(AccessLog.PROTOCOL_ATTRIBUTE));
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        protected String getOriginalValue() {
+            return TomcatLogbackAccessEvent.super.getProtocol();
+        }
+
     }
 
     /**
      * The server adapter.
+     * Takes the content length in the same way as {@link AbstractAccessLogValve}.
      */
-    public static class ServerAdapter extends TomcatServerAdapter {
+    private static class ServerAdapter extends TomcatServerAdapter {
 
         /**
          * The HTTP request.
@@ -187,15 +204,6 @@ public class TomcatLogbackAccessEvent extends AbstractLogbackAccessEvent {
         /** {@inheritDoc} */
         @Override
         public long getContentLength() {
-            return takeContentLength();
-        }
-
-        /**
-         * Takes the content length in the same way as {@link AbstractAccessLogValve.ByteSentElement}.
-         *
-         * @return the content length.
-         */
-        private long takeContentLength() {
             long length = response.getBytesWritten(false);
             if (length > 0) {
                 return length;

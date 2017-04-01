@@ -35,10 +35,12 @@ public class LogbackAccessTomcatValve extends ValveBase implements AccessLog {
 
     /**
      * The supplier that takes whether to enable request attributes.
-     * The result will be cached.
+     * Returns and cache the presence of the {@link RemoteIpValve} by default.
      */
     private BooleanSupplier requestAttributesEnabled = () -> {
-        boolean requestAttributesEnabled = takeRequestAttributesEnabled();
+        boolean requestAttributesEnabled = Stream
+                .of(getContainer().getPipeline().getValves())
+                .anyMatch(RemoteIpValve.class::isInstance);
         this.requestAttributesEnabled = () -> requestAttributesEnabled;
         return requestAttributesEnabled;
     };
@@ -66,16 +68,6 @@ public class LogbackAccessTomcatValve extends ValveBase implements AccessLog {
     @Override
     public void setRequestAttributesEnabled(boolean requestAttributesEnabled) {
         this.requestAttributesEnabled = () -> requestAttributesEnabled;
-    }
-
-    /**
-     * Takes whether to enable request attributes.
-     * Returns the presence of the {@link RemoteIpValve}.
-     *
-     * @return {@code true} if request attributes is enabled, {@code false} otherwise.
-     */
-    private boolean takeRequestAttributesEnabled() {
-        return Stream.of(getContainer().getPipeline().getValves()).anyMatch(RemoteIpValve.class::isInstance);
     }
 
     /** {@inheritDoc} */

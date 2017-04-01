@@ -29,7 +29,7 @@ public class JettyLogbackAccessInstaller
 
     /** {@inheritDoc} */
     @Override
-    public void installLogbackAccess(JettyEmbeddedServletContainerFactory container) {
+    protected void installLogbackAccess(JettyEmbeddedServletContainerFactory container) {
         LogbackAccessJettyRequestLog requestLog =
                 new LogbackAccessJettyRequestLog(logbackAccessProperties, logbackAccessListeners);
         container.addServerCustomizers(server -> {

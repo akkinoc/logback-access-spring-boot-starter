@@ -23,7 +23,7 @@ public class JettyLogbackAccessEvent extends AbstractLogbackAccessEvent {
     /**
      * The server adapter.
      */
-    public static class ServerAdapter extends JettyServerAdapter {
+    private static class ServerAdapter extends JettyServerAdapter {
 
         /**
          * Constructs an instance.
