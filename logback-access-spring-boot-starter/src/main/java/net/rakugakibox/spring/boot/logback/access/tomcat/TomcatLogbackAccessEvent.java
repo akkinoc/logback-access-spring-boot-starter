@@ -34,17 +34,17 @@ public class TomcatLogbackAccessEvent extends AbstractLogbackAccessEvent {
     /**
      * The remote address.
      */
-    private RemoteAddr remoteAddr = new RemoteAddr();
+    private final RemoteAddr remoteAddr = new RemoteAddr();
 
     /**
      * The remote host.
      */
-    private RemoteHost remoteHost = new RemoteHost();
+    private final RemoteHost remoteHost = new RemoteHost();
 
     /**
      * The protocol.
      */
-    private Protocol protocol = new Protocol();
+    private final Protocol protocol = new Protocol();
 
     /**
      * Constructs an instance.

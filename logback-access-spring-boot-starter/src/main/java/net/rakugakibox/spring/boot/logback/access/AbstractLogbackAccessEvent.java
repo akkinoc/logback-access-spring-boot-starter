@@ -25,7 +25,7 @@ public abstract class AbstractLogbackAccessEvent extends AccessEvent {
     /**
      * The local port.
      */
-    private LocalPort localPort = new LocalPort();
+    private final LocalPort localPort = new LocalPort();
 
     /**
      * Constructs an instance.
