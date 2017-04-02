@@ -29,7 +29,7 @@ public class TomcatLogbackAccessEvent extends AbstractLogbackAccessEvent {
     /**
      * The local port.
      */
-    private LocalPort localPort = new LocalPort();
+    private final LocalPort localPort = new LocalPort();
 
     /**
      * The remote address.
