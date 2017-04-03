@@ -114,6 +114,19 @@ public class AccessEventAssert<S extends AccessEventAssert<S, A>, A extends IAcc
     }
 
     /**
+     * Verifies that the remote user is equal to the given one.
+     *
+     * @param remoteUser the remote user.
+     * @return this instance.
+     * @see IAccessEvent#getRemoteUser()
+     */
+    public S hasRemoteUser(String remoteUser) {
+        String actualRemoteUser = actual.getRemoteUser();
+        Assertions.assertThat(actualRemoteUser).isEqualTo(remoteUser);
+        return myself;
+    }
+
+    /**
      * Verifies that the remote user is N/A.
      *
      * @return this instance.

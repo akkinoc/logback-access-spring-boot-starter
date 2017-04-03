@@ -9,14 +9,17 @@ import lombok.extern.slf4j.Slf4j;
 import net.rakugakibox.spring.boot.logback.access.jetty.JettyLogbackAccessInstaller;
 import net.rakugakibox.spring.boot.logback.access.tomcat.TomcatLogbackAccessInstaller;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainerFactory;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 
 /**
  * The auto-configuration for Logback-access.
@@ -92,6 +95,30 @@ public class LogbackAccessAutoConfiguration {
                     logbackAccessProperties, logbackAccessListeners.orElseGet(Collections::emptyList));
             log.debug("Created a JettyLogbackAccessInstaller: [{}]", installer);
             return installer;
+        }
+
+    }
+
+    /**
+     * For Spring Security.
+     */
+    @Configuration
+    @ConditionalOnClass(AbstractSecurityWebApplicationInitializer.class)
+    @RequiredArgsConstructor
+    public static class ForSpringSecurity {
+
+        /**
+         * Creates a filter that saves Spring Security attributes for Logback-access.
+         *
+         * @return a filter that saves Spring Security attributes for Logback-access.
+         */
+        @Bean("logbackAccessSecurityAttributesSaveFilter")
+        @ConditionalOnMissingBean(name = "logbackAccessSecurityAttributesSaveFilter")
+        public FilterRegistrationBean logbackAccessSecurityAttributesSaveFilter() {
+            LogbackAccessSecurityAttributesSaveFilter filter = new LogbackAccessSecurityAttributesSaveFilter();
+            FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean(filter);
+            log.debug("Created a LogbackAccessSecurityAttributesSaveFilter: [{}]", filter);
+            return filterRegistrationBean;
         }
 
     }
