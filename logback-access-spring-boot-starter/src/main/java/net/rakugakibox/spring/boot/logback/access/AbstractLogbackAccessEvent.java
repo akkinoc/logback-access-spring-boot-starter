@@ -28,6 +28,11 @@ public abstract class AbstractLogbackAccessEvent extends AccessEvent {
     private final LocalPort localPort = new LocalPort();
 
     /**
+     * The remote user.
+     */
+    private final RemoteUser remoteUser = new RemoteUser();
+
+    /**
      * Constructs an instance.
      *
      * @param request the HTTP request.
@@ -43,6 +48,12 @@ public abstract class AbstractLogbackAccessEvent extends AccessEvent {
     @Override
     public int getLocalPort() {
         return localPort.get();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public String getRemoteUser() {
+        return remoteUser.get();
     }
 
     /**
@@ -112,6 +123,29 @@ public abstract class AbstractLogbackAccessEvent extends AccessEvent {
         @Override
         protected Integer getOriginalValue() {
             return AbstractLogbackAccessEvent.super.getLocalPort();
+        }
+
+    }
+
+    /**
+     * The remote user.
+     * Takes the remote user provided by Spring Security if necessary.
+     */
+    private class RemoteUser extends AbstractOverridenAttribute<String> {
+
+        /** {@inheritDoc} */
+        @Override
+        protected Optional<String> evaluateValueToOverride() {
+            return Optional.of(AbstractLogbackAccessEvent.this)
+                    .map(AccessEvent::getRequest)
+                    .map(request -> (String) request.getAttribute(
+                            LogbackAccessSecurityAttributesSaveFilter.REMOTE_USER_ATTRIBUTE_NAME));
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        protected String getOriginalValue() {
+            return AbstractLogbackAccessEvent.super.getRemoteUser();
         }
 
     }
