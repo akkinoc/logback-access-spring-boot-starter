@@ -31,7 +31,7 @@ public class TomcatLogbackAccessInstaller
     protected void installLogbackAccess(TomcatEmbeddedServletContainerFactory container) {
         LogbackAccessTomcatValve valve = new LogbackAccessTomcatValve(logbackAccessProperties, logbackAccessListeners);
         container.addEngineValves(valve);
-        log.debug("Installed Logback-access: container=[{}], valve=[{}]", container, valve);
+        log.debug("Installed Logback-access: container=[{}]", container);
     }
 
 }
