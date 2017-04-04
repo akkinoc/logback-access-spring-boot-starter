@@ -29,14 +29,14 @@ Note: This artifact name was changed in [v2.0.0]. The old name is "spring-boot-e
 ## Supported versions
 
 "logback-access-spring-boot-starter" supports the following versions.  
-Older versions might also work, but we have not tested it.  
+Other versions might also work, but we have not tested it.  
 
 * Java 8
-* Spring Boot 1.5.2 or higher
-* Embedded Tomcat 8.5.11 or higher
-* Embedded Jetty 9.4.2 or higher
-* Embedded Undertow 1.4.11 or higher
-* Logback-access 1.1.11 or higher
+* Spring Boot 1.5.2
+* Embedded Tomcat 8.5.11
+* Embedded Jetty 9.4.2
+* Embedded Undertow 1.4.11
+* Logback-access 1.1.11
 
 ## Usage
 
