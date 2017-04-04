@@ -19,9 +19,9 @@ import org.apache.catalina.valves.RemoteIpValve;
 import org.apache.catalina.valves.ValveBase;
 
 /**
- * The Tomcat valve that appends Logback-access events.
+ * The Tomcat valve that emits Logback-access events.
  * This class is own implementation from scratch, based on {@link LogbackValve} and {@link AccessLogValve}.
- * Because appends an own customized access event ({@link TomcatLogbackAccessEvent}) to the Logback-access appenders.
+ * Because emits an own customized access event ({@link TomcatLogbackAccessEvent}).
  *
  * @see LogbackValve
  * @see AccessLogValve

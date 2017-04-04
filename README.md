@@ -35,6 +35,7 @@ Older versions might also work, but we have not tested it.
 * Spring Boot 1.5.2 or higher
 * Embedded Tomcat 8.5.11 or higher
 * Embedded Jetty 9.4.2 or higher
+* Embedded Undertow 1.4.11 or higher
 * Logback-access 1.1.11 or higher
 
 ## Usage

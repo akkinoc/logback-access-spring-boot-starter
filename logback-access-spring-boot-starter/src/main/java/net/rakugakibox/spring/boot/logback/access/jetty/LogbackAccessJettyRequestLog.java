@@ -13,9 +13,9 @@ import org.eclipse.jetty.server.Response;
 import org.eclipse.jetty.util.component.AbstractLifeCycle;
 
 /**
- * The Jetty request-log that appends Logback-access events.
+ * The Jetty request-log that emits Logback-access events.
  * This class is own implementation from scratch, based on {@link RequestLogImpl} and {@link NCSARequestLog}.
- * Because appends an own customized access event ({@link JettyLogbackAccessEvent}) to the Logback-access appenders.
+ * Because emits an own customized access event ({@link JettyLogbackAccessEvent}).
  *
  * @see RequestLogImpl
  * @see NCSARequestLog
