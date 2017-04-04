@@ -195,7 +195,7 @@ public class TomcatLogbackAccessEvent extends AbstractLogbackAccessEvent {
          * @param request the HTTP request.
          * @param response the HTTP response.
          */
-        public ServerAdapter(Request request, Response response) {
+        private ServerAdapter(Request request, Response response) {
             super(request, response);
             this.request = request;
             this.response = response;

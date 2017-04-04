@@ -4,11 +4,14 @@ import java.util.Optional;
 
 import net.rakugakibox.spring.boot.logback.access.jetty.JettyLogbackAccessInstaller;
 import net.rakugakibox.spring.boot.logback.access.tomcat.TomcatLogbackAccessInstaller;
+import net.rakugakibox.spring.boot.logback.access.undertow.UndertowLogbackAccessInstaller;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -38,6 +41,19 @@ public abstract class AbstractLogbackAccessAutoConfigurationTest {
     protected Optional<JettyLogbackAccessInstaller> jettyLogbackAccessInstaller;
 
     /**
+     * The Logback-access installer for Undertow.
+     */
+    @Autowired
+    protected Optional<UndertowLogbackAccessInstaller> undertowLogbackAccessInstaller;
+
+    /**
+     * The filter that saves Spring Security attributes for Logback-access.
+     */
+    @Autowired
+    @Qualifier("logbackAccessSecurityAttributesSaveFilter")
+    protected Optional<FilterRegistrationBean> logbackAccessSecurityAttributesSaveFilter;
+
+    /**
      * Tests the configuration properties for Logback-access.
      */
     @Test
@@ -56,6 +72,20 @@ public abstract class AbstractLogbackAccessAutoConfigurationTest {
      */
     @Test
     public abstract void jettyLogbackAccessInstaller();
+
+    /**
+     * Tests the Logback-access installer for Undertow.
+     */
+    @Test
+    public abstract void undertowLogbackAccessInstaller();
+
+    /**
+     * Tests the filter that saves Spring Security attributes for Logback-access.
+     */
+    @Test
+    public void logbackAccessSecurityAttributesSaveFilter() {
+        assertThat(logbackAccessSecurityAttributesSaveFilter).isPresent();
+    }
 
     /**
      * The base class of context configuration.

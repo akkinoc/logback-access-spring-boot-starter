@@ -1,4 +1,4 @@
-package net.rakugakibox.spring.boot.logback.access.jetty;
+package net.rakugakibox.spring.boot.logback.access.undertow;
 
 import net.rakugakibox.spring.boot.logback.access.AbstractLogbackAccessAutoConfigurationTest;
 import net.rakugakibox.spring.boot.logback.access.LogbackAccessAutoConfiguration;
@@ -8,9 +8,9 @@ import org.springframework.context.annotation.Import;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * The test of {@link LogbackAccessAutoConfiguration} for Jetty.
+ * The test of {@link LogbackAccessAutoConfiguration} for Undertow.
  */
-public class JettyLogbackAccessAutoConfigurationTest extends AbstractLogbackAccessAutoConfigurationTest {
+public class UndertowLogbackAccessAutoConfigurationTest extends AbstractLogbackAccessAutoConfigurationTest {
 
     /** {@inheritDoc} */
     @Override
@@ -21,20 +21,20 @@ public class JettyLogbackAccessAutoConfigurationTest extends AbstractLogbackAcce
     /** {@inheritDoc} */
     @Override
     public void jettyLogbackAccessInstaller() {
-        assertThat(jettyLogbackAccessInstaller).isPresent();
+        assertThat(jettyLogbackAccessInstaller).isEmpty();
     }
 
     /** {@inheritDoc} */
     @Override
     public void undertowLogbackAccessInstaller() {
-        assertThat(undertowLogbackAccessInstaller).isEmpty();
+        assertThat(undertowLogbackAccessInstaller).isPresent();
     }
 
     /**
      * The context configuration.
      */
     @Configuration
-    @Import(EmbeddedServletContainerAutoConfiguration.EmbeddedJetty.class)
+    @Import(EmbeddedServletContainerAutoConfiguration.EmbeddedUndertow.class)
     public static class ContextConfiguration extends AbstractContextConfiguration {
     }
 

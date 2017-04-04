@@ -24,6 +24,12 @@ public class TomcatLogbackAccessAutoConfigurationTest extends AbstractLogbackAcc
         assertThat(jettyLogbackAccessInstaller).isEmpty();
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public void undertowLogbackAccessInstaller() {
+        assertThat(undertowLogbackAccessInstaller).isEmpty();
+    }
+
     /**
      * The context configuration.
      */
