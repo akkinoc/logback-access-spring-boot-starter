@@ -150,6 +150,9 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.7.9</version>
+                <configuration>
+                    <append>false</append>
+                </configuration>
                 <executions>
                     <execution>
                         <id>prepare-agent</id>
@@ -158,9 +161,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <append>false</append>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>pl.project13.maven</groupId>
@@ -220,6 +220,10 @@
             </plugin>
             <plugin>
                 <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <locale>en</locale>
+                    <quiet>true</quiet>
+                </configuration>
                 <executions>
                     <execution>
                         <id>jar</id>
@@ -234,13 +238,12 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <locale>en</locale>
-                    <quiet>true</quiet>
-                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-site-plugin</artifactId>
+                <configuration>
+                    <locales>en</locales>
+                </configuration>
                 <executions>
                     <execution>
                         <id>jar</id>
@@ -249,9 +252,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <locales>en</locales>
-                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-install-plugin</artifactId>
@@ -267,6 +267,10 @@
             <plugin>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
                 <version>2.9</version>
+                <configuration>
+                    <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
+                    <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+                </configuration>
                 <reportSets>
                     <reportSet>
                         <reports>
@@ -281,10 +285,6 @@
                         </reports>
                     </reportSet>
                 </reportSets>
-                <configuration>
-                    <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
-                    <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
-                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-jxr-plugin</artifactId>
@@ -312,6 +312,12 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.7.9</version>
+                <configuration>
+                    <excludes>
+                        <exclude>net/rakugakibox/spring/boot/logback/access/LogbackAccessProperties.class</exclude>
+                        <exclude>net/rakugakibox/spring/boot/logback/access/LogbackAccessProperties$*.class</exclude>
+                    </excludes>
+                </configuration>
                 <reportSets>
                     <reportSet>
                         <reports>
@@ -319,12 +325,6 @@
                         </reports>
                     </reportSet>
                 </reportSets>
-                <configuration>
-                    <excludes>
-                        <exclude>net/rakugakibox/spring/boot/logback/access/LogbackAccessProperties.class</exclude>
-                        <exclude>net/rakugakibox/spring/boot/logback/access/LogbackAccessProperties$*.class</exclude>
-                    </excludes>
-                </configuration>
             </plugin>
         </plugins>
     </reporting>
