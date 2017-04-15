@@ -80,6 +80,7 @@
                         <version>1.6</version>
                         <executions>
                             <execution>
+                                <id>sign</id>
                                 <goals>
                                     <goal>sign</goal>
                                 </goals>
@@ -151,6 +152,7 @@
                 <version>0.7.9</version>
                 <executions>
                     <execution>
+                        <id>prepare-agent</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
@@ -192,6 +194,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <executions>
                     <execution>
+                        <id>test-jar</id>
                         <goals>
                             <goal>test-jar</goal>
                         </goals>
@@ -202,8 +205,14 @@
                 <artifactId>maven-source-plugin</artifactId>
                 <executions>
                     <execution>
+                        <id>jar</id>
                         <goals>
                             <goal>jar</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>test-jar</id>
+                        <goals>
                             <goal>test-jar</goal>
                         </goals>
                     </execution>
@@ -213,8 +222,14 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <executions>
                     <execution>
+                        <id>jar</id>
                         <goals>
                             <goal>jar</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>test-jar</id>
+                        <goals>
                             <goal>test-jar</goal>
                         </goals>
                     </execution>
@@ -228,6 +243,7 @@
                 <artifactId>maven-site-plugin</artifactId>
                 <executions>
                     <execution>
+                        <id>jar</id>
                         <goals>
                             <goal>jar</goal>
                         </goals>
