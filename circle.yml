@@ -4,18 +4,18 @@ machine:
 
 dependencies:
   override:
-    - "mvn --batch-mode dependency:go-offline":
+    - "./mvnw --batch-mode dependency:go-offline":
         pwd: "logback-access-spring-boot-starter"
   cache_directories:
     - "~/.m2"
 
 test:
   override:
-    - "mvn --batch-mode clean install":
+    - "./mvnw --batch-mode clean install":
         pwd: "logback-access-spring-boot-starter"
-    - "mvn --batch-mode clean install":
+    - "./mvnw --batch-mode clean install":
         pwd: "logback-access-spring-boot-starter-sample-jetty"
-    - "mvn --batch-mode clean install":
+    - "./mvnw --batch-mode clean install":
         pwd: "logback-access-spring-boot-starter-sample-tomcat"
   post:
     - "mkdir --parents logback-access-spring-boot-starter/target/{site,surefire-reports}"
