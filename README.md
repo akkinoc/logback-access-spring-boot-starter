@@ -80,6 +80,14 @@ The first found configuration file will be used.
 
 [fallback configuration file (appends to standard output with common pattern)]: logback-access-spring-boot-starter/src/main/resources/net/rakugakibox/spring/boot/logback/access/logback-access.xml
 
+If you are using Maven and place "logback-access-test.xml" under the "src/test/resources" folder,
+Maven does not include it in the artifact.  
+Thus, you can use a different configuration file "logback-access-test.xml" during testing
+and another file "logback-access.xml" in production.  
+This is the same concept as [Logback configuration ("logback.xml" and "logback-test.xml")].  
+
+[Logback configuration ("logback.xml" and "logback-test.xml")]: https://logback.qos.ch/manual/configuration.html#auto_configuration
+
 See also the Logback official documents:  
 
 * [Logback-access configuration]
