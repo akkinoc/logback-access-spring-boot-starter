@@ -1,12 +1,13 @@
 package net.rakugakibox.spring.boot.logback.access.test;
 
-import ch.qos.logback.access.spi.IAccessEvent;
-import net.rakugakibox.spring.boot.logback.access.LogbackAccessListener;
+import net.rakugakibox.spring.boot.logback.access.LogbackAccessAppendedEvent;
+import net.rakugakibox.spring.boot.logback.access.LogbackAccessDeniedEvent;
+import org.springframework.context.event.EventListener;
 
 /**
  * The Logback-access listener that pushes to static {@link LogbackAccessEventQueue}.
  */
-public class LogbackAccessEventQueuingListener implements LogbackAccessListener {
+public class LogbackAccessEventQueuingListener {
 
     /**
      * The queue of appended Logback-access event.
@@ -18,16 +19,24 @@ public class LogbackAccessEventQueuingListener implements LogbackAccessListener 
      */
     public static final LogbackAccessEventQueue deniedEventQueue = new LogbackAccessEventQueue();
 
-    /** {@inheritDoc} */
-    @Override
-    public void onCalledAppenders(IAccessEvent event) {
-        appendedEventQueue.push(event);
+    /**
+     * Pushes appended Logback-access event to the queue.
+     *
+     * @param event an application event indicating that Logback-access event was appended.
+     */
+    @EventListener
+    public void onAppended(LogbackAccessAppendedEvent event) {
+        appendedEventQueue.push(event.getEvent());
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public void onDeniedByFilterChainDecision(IAccessEvent event) {
-        deniedEventQueue.push(event);
+    /**
+     * Pushes denied Logback-access event to the queue.
+     *
+     * @param event an application event indicating that Logback-access event was denied.
+     */
+    @EventListener
+    public void onDenied(LogbackAccessDeniedEvent event) {
+        deniedEventQueue.push(event.getEvent());
     }
 
 }

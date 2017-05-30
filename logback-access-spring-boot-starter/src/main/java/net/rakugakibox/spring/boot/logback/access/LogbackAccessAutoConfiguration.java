@@ -1,9 +1,5 @@
 package net.rakugakibox.spring.boot.logback.access;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.rakugakibox.spring.boot.logback.access.jetty.JettyLogbackAccessInstaller;
@@ -19,6 +15,7 @@ import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletCon
 import org.springframework.boot.context.embedded.undertow.UndertowEmbeddedServletContainerFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
@@ -47,9 +44,9 @@ public class LogbackAccessAutoConfiguration {
         private final LogbackAccessProperties logbackAccessProperties;
 
         /**
-         * The listeners for Logback-access.
+         * The application event publisher.
          */
-        private final Optional<List<LogbackAccessListener>> logbackAccessListeners;
+        private final ApplicationEventPublisher applicationEventPublisher;
 
         /**
          * Creates a Logback-access installer.
@@ -59,8 +56,8 @@ public class LogbackAccessAutoConfiguration {
         @Bean
         @ConditionalOnMissingBean
         public TomcatLogbackAccessInstaller tomcatLogbackAccessInstaller() {
-            TomcatLogbackAccessInstaller installer = new TomcatLogbackAccessInstaller(
-                    logbackAccessProperties, logbackAccessListeners.orElseGet(Collections::emptyList));
+            TomcatLogbackAccessInstaller installer =
+                    new TomcatLogbackAccessInstaller(logbackAccessProperties, applicationEventPublisher);
             log.debug("Created a TomcatLogbackAccessInstaller: [{}]", installer);
             return installer;
         }
@@ -81,9 +78,9 @@ public class LogbackAccessAutoConfiguration {
         private final LogbackAccessProperties logbackAccessProperties;
 
         /**
-         * The listeners for Logback-access.
+         * The application event publisher.
          */
-        private final Optional<List<LogbackAccessListener>> logbackAccessListeners;
+        private final ApplicationEventPublisher applicationEventPublisher;
 
         /**
          * Creates a Logback-access installer.
@@ -93,8 +90,8 @@ public class LogbackAccessAutoConfiguration {
         @Bean
         @ConditionalOnMissingBean
         public JettyLogbackAccessInstaller jettyLogbackAccessInstaller() {
-            JettyLogbackAccessInstaller installer = new JettyLogbackAccessInstaller(
-                    logbackAccessProperties, logbackAccessListeners.orElseGet(Collections::emptyList));
+            JettyLogbackAccessInstaller installer =
+                    new JettyLogbackAccessInstaller(logbackAccessProperties, applicationEventPublisher);
             log.debug("Created a JettyLogbackAccessInstaller: [{}]", installer);
             return installer;
         }
@@ -115,9 +112,9 @@ public class LogbackAccessAutoConfiguration {
         private final LogbackAccessProperties logbackAccessProperties;
 
         /**
-         * The listeners for Logback-access.
+         * The application event publisher.
          */
-        private final Optional<List<LogbackAccessListener>> logbackAccessListeners;
+        private final ApplicationEventPublisher applicationEventPublisher;
 
         /**
          * Creates a Logback-access installer.
@@ -127,8 +124,8 @@ public class LogbackAccessAutoConfiguration {
         @Bean
         @ConditionalOnMissingBean
         public UndertowLogbackAccessInstaller undertowLogbackAccessInstaller() {
-            UndertowLogbackAccessInstaller installer = new UndertowLogbackAccessInstaller(
-                    logbackAccessProperties, logbackAccessListeners.orElseGet(Collections::emptyList));
+            UndertowLogbackAccessInstaller installer =
+                    new UndertowLogbackAccessInstaller(logbackAccessProperties, applicationEventPublisher);
             log.debug("Created a UndertowLogbackAccessInstaller: [{}]", installer);
             return installer;
         }

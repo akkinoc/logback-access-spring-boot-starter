@@ -1,14 +1,12 @@
 package net.rakugakibox.spring.boot.logback.access.jetty;
 
-import java.util.List;
-
 import lombok.extern.slf4j.Slf4j;
 import net.rakugakibox.spring.boot.logback.access.AbstractLogbackAccessInstaller;
-import net.rakugakibox.spring.boot.logback.access.LogbackAccessListener;
 import net.rakugakibox.spring.boot.logback.access.LogbackAccessProperties;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.RequestLogHandler;
 import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainerFactory;
+import org.springframework.context.ApplicationEventPublisher;
 
 /**
  * The Logback-access installer for Jetty.
@@ -21,11 +19,11 @@ public class JettyLogbackAccessInstaller
      * Constructs an instance.
      *
      * @param logbackAccessProperties the configuration properties for Logback-access.
-     * @param logbackAccessListeners the listeners for Logback-access.
+     * @param applicationEventPublisher the application event publisher.
      */
     public JettyLogbackAccessInstaller(
-            LogbackAccessProperties logbackAccessProperties, List<LogbackAccessListener> logbackAccessListeners) {
-        super(JettyEmbeddedServletContainerFactory.class, logbackAccessProperties, logbackAccessListeners);
+            LogbackAccessProperties logbackAccessProperties, ApplicationEventPublisher applicationEventPublisher) {
+        super(JettyEmbeddedServletContainerFactory.class, logbackAccessProperties, applicationEventPublisher);
     }
 
     /** {@inheritDoc} */
@@ -42,7 +40,7 @@ public class JettyLogbackAccessInstaller
      */
     private void wrapJettyHandler(Server server) {
         LogbackAccessJettyRequestLog requestLog =
-                new LogbackAccessJettyRequestLog(logbackAccessProperties, logbackAccessListeners);
+                new LogbackAccessJettyRequestLog(logbackAccessProperties, applicationEventPublisher);
         RequestLogHandler requestLogHandler = new RequestLogHandler();
         requestLogHandler.setHandler(server.getHandler());
         requestLogHandler.setRequestLog(requestLog);

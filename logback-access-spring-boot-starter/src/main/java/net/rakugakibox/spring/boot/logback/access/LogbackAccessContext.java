@@ -15,6 +15,7 @@ import ch.qos.logback.core.joran.spi.JoranException;
 import ch.qos.logback.core.spi.FilterReply;
 import lombok.Cleanup;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.util.ResourceUtils;
 import static org.springframework.util.ClassUtils.addResourcePathToPackagePath;
 
@@ -44,20 +45,20 @@ public class LogbackAccessContext extends AccessContext {
     private final LogbackAccessProperties logbackAccessProperties;
 
     /**
-     * The listeners for Logback-access.
+     * The application event publisher.
      */
-    private final List<LogbackAccessListener> logbackAccessListeners;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     /**
      * Constructs an instance.
      *
      * @param logbackAccessProperties the configuration properties for Logback-access.
-     * @param logbackAccessListeners the listeners for Logback-access.
+     * @param applicationEventPublisher the application event publisher.
      */
     public LogbackAccessContext(
-            LogbackAccessProperties logbackAccessProperties, List<LogbackAccessListener> logbackAccessListeners) {
+            LogbackAccessProperties logbackAccessProperties, ApplicationEventPublisher applicationEventPublisher) {
         this.logbackAccessProperties = logbackAccessProperties;
-        this.logbackAccessListeners = logbackAccessListeners;
+        this.applicationEventPublisher = applicationEventPublisher;
         setName(CoreConstants.DEFAULT_CONTEXT_NAME);
     }
 
@@ -144,9 +145,9 @@ public class LogbackAccessContext extends AccessContext {
         event.setUseServerPortInsteadOfLocalPort(logbackAccessProperties.getUseServerPortInsteadOfLocalPort());
         if (getFilterChainDecision(event) != FilterReply.DENY) {
             callAppenders(event);
-            logbackAccessListeners.forEach(listener -> listener.onCalledAppenders(event));
+            applicationEventPublisher.publishEvent(new LogbackAccessAppendedEvent(this, event));
         } else {
-            logbackAccessListeners.forEach(listener -> listener.onDeniedByFilterChainDecision(event));
+            applicationEventPublisher.publishEvent(new LogbackAccessDeniedEvent(this, event));
         }
     }
 

@@ -1,16 +1,14 @@
 package net.rakugakibox.spring.boot.logback.access.undertow;
 
-import java.util.List;
-
 import io.undertow.Undertow;
 import io.undertow.UndertowOptions;
 import io.undertow.server.HttpHandler;
 import io.undertow.servlet.api.DeploymentInfo;
 import lombok.extern.slf4j.Slf4j;
 import net.rakugakibox.spring.boot.logback.access.AbstractLogbackAccessInstaller;
-import net.rakugakibox.spring.boot.logback.access.LogbackAccessListener;
 import net.rakugakibox.spring.boot.logback.access.LogbackAccessProperties;
 import org.springframework.boot.context.embedded.undertow.UndertowEmbeddedServletContainerFactory;
+import org.springframework.context.ApplicationEventPublisher;
 
 /**
  * The Logback-access installer for Undertow.
@@ -23,11 +21,11 @@ public class UndertowLogbackAccessInstaller
      * Constructs an instance.
      *
      * @param logbackAccessProperties the configuration properties for Logback-access.
-     * @param logbackAccessListeners the listeners for Logback-access.
+     * @param applicationEventPublisher the application event publisher.
      */
     public UndertowLogbackAccessInstaller(
-            LogbackAccessProperties logbackAccessProperties, List<LogbackAccessListener> logbackAccessListeners) {
-        super(UndertowEmbeddedServletContainerFactory.class, logbackAccessProperties, logbackAccessListeners);
+            LogbackAccessProperties logbackAccessProperties, ApplicationEventPublisher applicationEventPublisher) {
+        super(UndertowEmbeddedServletContainerFactory.class, logbackAccessProperties, applicationEventPublisher);
     }
 
     /** {@inheritDoc} */
@@ -62,7 +60,7 @@ public class UndertowLogbackAccessInstaller
      * @param handler the Undertow HTTP handler.
      */
     private HttpHandler wrapUndertowHttpHandler(HttpHandler handler) {
-        return new LogbackAccessUndertowHttpHandler(logbackAccessProperties, logbackAccessListeners, handler);
+        return new LogbackAccessUndertowHttpHandler(logbackAccessProperties, applicationEventPublisher, handler);
     }
 
 }

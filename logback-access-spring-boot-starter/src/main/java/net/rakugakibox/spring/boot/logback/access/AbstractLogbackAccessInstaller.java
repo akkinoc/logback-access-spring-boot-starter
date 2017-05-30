@@ -1,10 +1,9 @@
 package net.rakugakibox.spring.boot.logback.access;
 
-import java.util.List;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
+import org.springframework.context.ApplicationEventPublisher;
 
 /**
  * The base class of Logback-access installers.
@@ -26,9 +25,9 @@ public abstract class AbstractLogbackAccessInstaller<T extends ConfigurableEmbed
     protected final LogbackAccessProperties logbackAccessProperties;
 
     /**
-     * The listeners for Logback-access.
+     * The application event publisher.
      */
-    protected final List<LogbackAccessListener> logbackAccessListeners;
+    protected final ApplicationEventPublisher applicationEventPublisher;
 
     /** {@inheritDoc} */
     @Override
