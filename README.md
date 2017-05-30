@@ -26,6 +26,12 @@ Note: This artifact name was changed in [v2.0.0]. The old name is "spring-boot-e
 
 [v2.0.0]: https://github.com/akihyro/logback-access-spring-boot-starter/releases/tag/v2.0.0
 
+## Features
+
+* Automatically detects your configuration file and configures Logback-access.
+* Supports configuration files on the classpath.
+* Supports `X-Forwarded-*` HTTP headers.
+
 ## Supported versions
 
 "logback-access-spring-boot-starter" supports the following versions.  
