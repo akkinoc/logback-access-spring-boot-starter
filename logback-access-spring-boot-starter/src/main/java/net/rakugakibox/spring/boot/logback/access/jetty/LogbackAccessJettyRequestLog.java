@@ -41,15 +41,9 @@ public class LogbackAccessJettyRequestLog extends AbstractLifeCycle implements R
     /** {@inheritDoc} */
     @Override
     protected void doStart() throws Exception {
+        logbackAccessContext.configure();
         logbackAccessContext.start();
         super.doStart();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    protected void doStop() throws Exception {
-        super.doStop();
-        logbackAccessContext.stop();
     }
 
     /** {@inheritDoc} */

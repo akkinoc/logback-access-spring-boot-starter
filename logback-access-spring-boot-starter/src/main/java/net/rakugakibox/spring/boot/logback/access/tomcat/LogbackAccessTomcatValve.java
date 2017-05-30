@@ -73,15 +73,9 @@ public class LogbackAccessTomcatValve extends ValveBase implements AccessLog {
     /** {@inheritDoc} */
     @Override
     protected void startInternal() throws LifecycleException {
+        logbackAccessContext.configure();
         logbackAccessContext.start();
         super.startInternal();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    protected void stopInternal() throws LifecycleException {
-        super.stopInternal();
-        logbackAccessContext.stop();
     }
 
     /** {@inheritDoc} */

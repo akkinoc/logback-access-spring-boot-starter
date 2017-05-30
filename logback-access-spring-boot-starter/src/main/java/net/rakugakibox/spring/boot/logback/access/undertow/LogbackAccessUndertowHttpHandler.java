@@ -43,6 +43,7 @@ public class LogbackAccessUndertowHttpHandler implements HttpHandler {
     ) {
         this.logbackAccessContext = new LogbackAccessContext(logbackAccessProperties, logbackAccessListeners);
         this.nextHandler = nextHandler;
+        this.logbackAccessContext.configure();
         this.logbackAccessContext.start();
     }
 

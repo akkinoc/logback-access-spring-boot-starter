@@ -61,28 +61,6 @@ public class LogbackAccessContext extends AccessContext {
         setName(CoreConstants.DEFAULT_CONTEXT_NAME);
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public void start() {
-        configure();
-        super.start();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void stop() {
-        super.stop();
-        reset();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void reset() {
-        detachAndStopAllAppenders();
-        clearAllFilters();
-        super.reset();
-    }
-
     /**
      * Configures by the configuration files.
      * Cause exceptions is wrapped with {@link LogbackAccessConfigurationException}.
@@ -90,7 +68,7 @@ public class LogbackAccessContext extends AccessContext {
      *
      * @throws LogbackAccessConfigurationException if an exception occurs.
      */
-    private void configure() throws LogbackAccessConfigurationException {
+    public void configure() throws LogbackAccessConfigurationException {
         if (logbackAccessProperties.getConfig().isPresent()) {
             configure(logbackAccessProperties.getConfig().get());
             return;
