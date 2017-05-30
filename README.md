@@ -153,6 +153,15 @@ Please refer to the "[Releases]" page.
 
 Bug reports and pull requests are welcome :)  
 
+## Building and testing
+
+To build and test, you can run:  
+
+```sh
+$ cd logback-access-spring-boot-starter
+$ ./mvnw clean install
+```
+
 ## License
 
 Licensed under the [Apache License, Version 2.0].  
