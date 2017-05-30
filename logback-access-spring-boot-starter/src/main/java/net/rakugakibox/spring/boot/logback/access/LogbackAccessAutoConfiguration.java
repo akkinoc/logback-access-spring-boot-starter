@@ -23,19 +23,19 @@ import org.springframework.security.web.context.AbstractSecurityWebApplicationIn
 /**
  * The auto-configuration for Logback-access.
  */
-@Configuration
-@ConditionalOnWebApplication
-@ConditionalOnProperty(name = "logback.access.enabled", matchIfMissing = true)
-@EnableConfigurationProperties(LogbackAccessProperties.class)
 @Slf4j
+@ConditionalOnProperty(name = "logback.access.enabled", matchIfMissing = true)
+@ConditionalOnWebApplication
+@EnableConfigurationProperties(LogbackAccessProperties.class)
+@Configuration
 public class LogbackAccessAutoConfiguration {
 
     /**
      * For Tomcat.
      */
-    @Configuration
-    @ConditionalOnBean(value = TomcatEmbeddedServletContainerFactory.class)
     @RequiredArgsConstructor
+    @ConditionalOnBean(value = TomcatEmbeddedServletContainerFactory.class)
+    @Configuration
     public static class ForTomcat {
 
         /**
@@ -53,8 +53,8 @@ public class LogbackAccessAutoConfiguration {
          *
          * @return a Logback-access installer.
          */
-        @Bean
         @ConditionalOnMissingBean
+        @Bean
         public TomcatLogbackAccessInstaller tomcatLogbackAccessInstaller() {
             TomcatLogbackAccessInstaller installer =
                     new TomcatLogbackAccessInstaller(logbackAccessProperties, applicationEventPublisher);
@@ -67,9 +67,9 @@ public class LogbackAccessAutoConfiguration {
     /**
      * For Jetty.
      */
-    @Configuration
-    @ConditionalOnBean(value = JettyEmbeddedServletContainerFactory.class)
     @RequiredArgsConstructor
+    @ConditionalOnBean(value = JettyEmbeddedServletContainerFactory.class)
+    @Configuration
     public static class ForJetty {
 
         /**
@@ -87,8 +87,8 @@ public class LogbackAccessAutoConfiguration {
          *
          * @return a Logback-access installer.
          */
-        @Bean
         @ConditionalOnMissingBean
+        @Bean
         public JettyLogbackAccessInstaller jettyLogbackAccessInstaller() {
             JettyLogbackAccessInstaller installer =
                     new JettyLogbackAccessInstaller(logbackAccessProperties, applicationEventPublisher);
@@ -101,9 +101,9 @@ public class LogbackAccessAutoConfiguration {
     /**
      * For Undertow.
      */
-    @Configuration
-    @ConditionalOnBean(value = UndertowEmbeddedServletContainerFactory.class)
     @RequiredArgsConstructor
+    @ConditionalOnBean(value = UndertowEmbeddedServletContainerFactory.class)
+    @Configuration
     public static class ForUndertow {
 
         /**
@@ -121,8 +121,8 @@ public class LogbackAccessAutoConfiguration {
          *
          * @return a Logback-access installer.
          */
-        @Bean
         @ConditionalOnMissingBean
+        @Bean
         public UndertowLogbackAccessInstaller undertowLogbackAccessInstaller() {
             UndertowLogbackAccessInstaller installer =
                     new UndertowLogbackAccessInstaller(logbackAccessProperties, applicationEventPublisher);
@@ -135,9 +135,9 @@ public class LogbackAccessAutoConfiguration {
     /**
      * For Spring Security.
      */
-    @Configuration
-    @ConditionalOnClass(AbstractSecurityWebApplicationInitializer.class)
     @RequiredArgsConstructor
+    @ConditionalOnClass(AbstractSecurityWebApplicationInitializer.class)
+    @Configuration
     public static class ForSpringSecurity {
 
         /**
@@ -145,8 +145,8 @@ public class LogbackAccessAutoConfiguration {
          *
          * @return a filter that saves Spring Security attributes for Logback-access.
          */
-        @Bean("logbackAccessSecurityAttributesSaveFilter")
         @ConditionalOnMissingBean(name = "logbackAccessSecurityAttributesSaveFilter")
+        @Bean("logbackAccessSecurityAttributesSaveFilter")
         public FilterRegistrationBean logbackAccessSecurityAttributesSaveFilter() {
             LogbackAccessSecurityAttributesSaveFilter filter = new LogbackAccessSecurityAttributesSaveFilter();
             FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean(filter);

@@ -94,8 +94,8 @@ public class TomcatRequestAttributesDisablingTest {
     /**
      * The context configuration.
      */
-    @Configuration
     @EnableAutoConfiguration
+    @Configuration
     @Import({
             EmbeddedServletContainerAutoConfiguration.EmbeddedTomcat.class,
             LogbackAccessEventQueuingListenerConfiguration.class,

@@ -11,8 +11,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 /**
  * The configuration properties for Logback-access.
  */
-@ConfigurationProperties("logback.access")
 @Data
+@ConfigurationProperties("logback.access")
 public class LogbackAccessProperties {
 
     /**
