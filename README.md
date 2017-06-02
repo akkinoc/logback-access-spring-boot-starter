@@ -28,7 +28,7 @@ Note: This artifact name was changed in [v2.0.0]. The old name is "spring-boot-e
 
 ## Features
 
-* Automatically detects your configuration file and configures Logback-access.
+* Auto-detects your configuration file and configures Logback-access.
 * Supports configuration files on the classpath.
 * Supports `X-Forwarded-*` HTTP headers.
 
@@ -61,8 +61,7 @@ If you are using Maven, add the following dependency.
 
 ### Configuring the Logback-access
 
-Create a Logback-access configuration file "logback-access.xml" (or "logback-access-test.xml")
-in the root of the classpath.  
+Create a Logback-access configuration file "logback-access.xml" in the root of the classpath.  
 
 For example:  
 
@@ -76,23 +75,6 @@ For example:
     <appender-ref ref="CONSOLE" />
 </configuration>
 ```
-
-"logback-access-spring-boot-starter" will look for the configuration file in the following order.  
-The first found configuration file will be used.  
-
-1. "logback-access-test.xml" in the root of the classpath.
-2. "logback-access.xml" in the root of the classpath.
-3. [fallback configuration file (appends to standard output with common pattern)].
-
-[fallback configuration file (appends to standard output with common pattern)]: logback-access-spring-boot-starter/src/main/resources/net/rakugakibox/spring/boot/logback/access/logback-access.xml
-
-If you are using Maven and place "logback-access-test.xml" under the "src/test/resources" folder,
-Maven does not include it in the artifact.  
-Thus, you can use a different configuration file "logback-access-test.xml" during testing
-and another file "logback-access.xml" in production.  
-This is the same concept as [Logback configuration ("logback.xml" and "logback-test.xml")].  
-
-[Logback configuration ("logback.xml" and "logback-test.xml")]: https://logback.qos.ch/manual/configuration.html#auto_configuration
 
 See also the Logback official documents:  
 
@@ -111,6 +93,29 @@ For example:
 192.168.35.1 - - [14/5/2016:18:00:32 +0900] "GET /favicon.ico HTTP/1.1" 200 946
 192.168.35.1 - - [14/5/2016:18:01:21 +0900] "GET / HTTP/1.1" 304 0
 ```
+
+## Auto-detection of configuration file
+
+### Priority order
+
+"logback-access-spring-boot-starter" will look for the configuration file in the following order.  
+The first found configuration file will be used.  
+
+1. "logback-access-test.xml" in the root of the classpath.
+2. "logback-access.xml" in the root of the classpath.
+3. [fallback configuration file (appends to standard output with common pattern)].
+
+[fallback configuration file (appends to standard output with common pattern)]: logback-access-spring-boot-starter/src/main/resources/net/rakugakibox/spring/boot/logback/access/logback-access.xml
+
+### Separation for testing
+
+If you are using Maven and place "logback-access-test.xml" under the "src/test/resources" folder,
+Maven does not include it in the artifact.  
+Thus, you can use a different configuration file "logback-access-test.xml" during testing
+and another file "logback-access.xml" in production.  
+This is the same concept as [Logback configuration ("logback.xml" and "logback-test.xml")].  
+
+[Logback configuration ("logback.xml" and "logback-test.xml")]: https://logback.qos.ch/manual/configuration.html#auto_configuration
 
 ## Configuration properties
 
