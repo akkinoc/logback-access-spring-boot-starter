@@ -38,10 +38,10 @@ Note: This artifact name was changed in [v2.0.0]. The old name is "spring-boot-e
 Other versions might also work, but we have not tested it.  
 
 * Java 8
-* Spring Boot 1.5.3
-* Embedded Tomcat 8.5.14
-* Embedded Jetty 9.4.4
-* Embedded Undertow 1.4.13
+* Spring Boot 1.5.4
+* Embedded Tomcat 8.5.15
+* Embedded Jetty 9.4.5
+* Embedded Undertow 1.4.15
 * Logback-access 1.1.11
 
 ## Usage
