@@ -70,8 +70,8 @@ public class LogbackAccessContext extends AccessContext {
      * @throws LogbackAccessConfigurationException if an exception occurs.
      */
     public void configure() throws LogbackAccessConfigurationException {
-        if (logbackAccessProperties.getConfig().isPresent()) {
-            configure(logbackAccessProperties.getConfig().get());
+        if (logbackAccessProperties.getConfig() != null) {
+            configure(logbackAccessProperties.getConfig());
             return;
         }
         for (String config : DEFAULT_CONFIGS) {
@@ -142,7 +142,7 @@ public class LogbackAccessContext extends AccessContext {
      * @param event the Logback-access event.
      */
     public void emit(AbstractLogbackAccessEvent event) {
-        event.setUseServerPortInsteadOfLocalPort(logbackAccessProperties.getUseServerPortInsteadOfLocalPort());
+        event.setUseServerPortInsteadOfLocalPort(logbackAccessProperties.isUseServerPortInsteadOfLocalPort());
         if (getFilterChainDecision(event) != FilterReply.DENY) {
             callAppenders(event);
             applicationEventPublisher.publishEvent(new LogbackAccessAppendedEvent(this, event));

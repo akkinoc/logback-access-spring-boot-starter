@@ -1,11 +1,6 @@
 package net.rakugakibox.spring.boot.logback.access;
 
-import java.util.Optional;
-import javax.servlet.http.HttpServletRequest;
-
-import ch.qos.logback.access.spi.IAccessEvent;
 import lombok.Data;
-import org.apache.catalina.valves.RemoteIpValve;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -17,9 +12,8 @@ public class LogbackAccessProperties {
 
     /**
      * Whether to enable auto-configuration.
-     * Defaults to {@code true}.
      */
-    private Boolean enabled = true;
+    private boolean enabled = true;
 
     /**
      * The location of the configuration file.
@@ -28,15 +22,13 @@ public class LogbackAccessProperties {
      *   2. "classpath:logback-access.xml"
      *   3. "classpath:net/rakugakibox/spring/boot/logback/access/logback-access.xml"
      */
-    private Optional<String> config = Optional.empty();
+    private String config;
 
     /**
-     * Whether to use the server port ({@link HttpServletRequest#getServerPort()})
-     * instead of the local port ({@link HttpServletRequest#getLocalPort()})
-     * within {@link IAccessEvent#getLocalPort()}.
-     * Defaults to {@code true}.
+     * Whether to use the server port (HttpServletRequest#getServerPort())
+     * instead of the local port (HttpServletRequest#getLocalPort()) within IAccessEvent#getLocalPort().
      */
-    private Boolean useServerPortInsteadOfLocalPort = true;
+    private boolean useServerPortInsteadOfLocalPort = true;
 
     /**
      * for Tomcat.
@@ -50,11 +42,10 @@ public class LogbackAccessProperties {
     public static class Tomcat {
 
         /**
-         * Whether to enable request attributes to work with the {@link RemoteIpValve} enabled
-         * with "{@code server.useForwardHeaders}".
-         * Defaults to the presence of the {@link RemoteIpValve}.
+         * Whether to enable request attributes to work with the RemoteIpValve enabled with "server.useForwardHeaders".
+         * Defaults to the presence of the RemoteIpValve.
          */
-        private Optional<Boolean> enableRequestAttributes = Optional.empty();
+        private Boolean enableRequestAttributes;
 
     }
 

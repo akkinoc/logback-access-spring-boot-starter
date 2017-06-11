@@ -54,7 +54,9 @@ public class LogbackAccessTomcatValve extends ValveBase implements AccessLog {
             LogbackAccessProperties logbackAccessProperties, ApplicationEventPublisher applicationEventPublisher) {
         this.logbackAccessContext = new LogbackAccessContext(logbackAccessProperties, applicationEventPublisher);
         setAsyncSupported(true);
-        logbackAccessProperties.getTomcat().getEnableRequestAttributes().ifPresent(this::setRequestAttributesEnabled);
+        if (logbackAccessProperties.getTomcat().getEnableRequestAttributes() != null) {
+            setRequestAttributesEnabled(logbackAccessProperties.getTomcat().getEnableRequestAttributes());
+        }
     }
 
     /** {@inheritDoc} */
