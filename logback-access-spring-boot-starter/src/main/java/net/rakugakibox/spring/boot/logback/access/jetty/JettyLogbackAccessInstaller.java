@@ -7,6 +7,7 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.RequestLogHandler;
 import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainerFactory;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.core.env.Environment;
 
 /**
  * The Logback-access installer for Jetty.
@@ -19,11 +20,16 @@ public class JettyLogbackAccessInstaller
      * Constructs an instance.
      *
      * @param logbackAccessProperties the configuration properties for Logback-access.
+     * @param environment the environment.
      * @param applicationEventPublisher the application event publisher.
      */
     public JettyLogbackAccessInstaller(
-            LogbackAccessProperties logbackAccessProperties, ApplicationEventPublisher applicationEventPublisher) {
-        super(JettyEmbeddedServletContainerFactory.class, logbackAccessProperties, applicationEventPublisher);
+            LogbackAccessProperties logbackAccessProperties,
+            Environment environment,
+            ApplicationEventPublisher applicationEventPublisher
+    ) {
+        super(JettyEmbeddedServletContainerFactory.class,
+                logbackAccessProperties, environment, applicationEventPublisher);
     }
 
     /** {@inheritDoc} */
@@ -39,8 +45,8 @@ public class JettyLogbackAccessInstaller
      * @param server the Jetty server.
      */
     private void wrapJettyHandler(Server server) {
-        LogbackAccessJettyRequestLog requestLog =
-                new LogbackAccessJettyRequestLog(logbackAccessProperties, applicationEventPublisher);
+        LogbackAccessJettyRequestLog requestLog = new LogbackAccessJettyRequestLog(
+                logbackAccessProperties, environment, applicationEventPublisher);
         RequestLogHandler requestLogHandler = new RequestLogHandler();
         requestLogHandler.setHandler(server.getHandler());
         requestLogHandler.setRequestLog(requestLog);

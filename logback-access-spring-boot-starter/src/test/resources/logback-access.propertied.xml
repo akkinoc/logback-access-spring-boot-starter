@@ -1,0 +1,22 @@
+<!DOCTYPE configuration>
+
+<configuration>
+    <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />
+    <springProperty
+            name="CONSOLE_PATTERN_PREFIX"
+            source="logback.access.test.console.pattern.prefix" />
+    <springProperty
+            name="CONSOLE_PATTERN_BODY"
+            source="logback.access.test.console.pattern.body"
+            defaultValue="%h %l %u [%t] &quot;%r&quot; %s %b" />
+    <springProperty
+            name="CONSOLE_PATTERN_SUFFIX"
+            source="logback.access.test.console.pattern.suffix"
+            defaultValue=";" />
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_PATTERN_PREFIX}${CONSOLE_PATTERN_BODY}${CONSOLE_PATTERN_SUFFIX}</pattern>
+        </encoder>
+    </appender>
+    <appender-ref ref="CONSOLE" />
+</configuration>

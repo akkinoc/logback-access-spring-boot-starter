@@ -18,6 +18,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 
 /**
@@ -44,6 +45,11 @@ public class LogbackAccessAutoConfiguration {
         private final LogbackAccessProperties logbackAccessProperties;
 
         /**
+         * The environment.
+         */
+        private final Environment environment;
+
+        /**
          * The application event publisher.
          */
         private final ApplicationEventPublisher applicationEventPublisher;
@@ -56,8 +62,8 @@ public class LogbackAccessAutoConfiguration {
         @ConditionalOnMissingBean
         @Bean
         public TomcatLogbackAccessInstaller tomcatLogbackAccessInstaller() {
-            TomcatLogbackAccessInstaller installer =
-                    new TomcatLogbackAccessInstaller(logbackAccessProperties, applicationEventPublisher);
+            TomcatLogbackAccessInstaller installer = new TomcatLogbackAccessInstaller(
+                    logbackAccessProperties, environment, applicationEventPublisher);
             log.debug("Created a TomcatLogbackAccessInstaller: [{}]", installer);
             return installer;
         }
@@ -78,6 +84,11 @@ public class LogbackAccessAutoConfiguration {
         private final LogbackAccessProperties logbackAccessProperties;
 
         /**
+         * The environment.
+         */
+        private final Environment environment;
+
+        /**
          * The application event publisher.
          */
         private final ApplicationEventPublisher applicationEventPublisher;
@@ -90,8 +101,8 @@ public class LogbackAccessAutoConfiguration {
         @ConditionalOnMissingBean
         @Bean
         public JettyLogbackAccessInstaller jettyLogbackAccessInstaller() {
-            JettyLogbackAccessInstaller installer =
-                    new JettyLogbackAccessInstaller(logbackAccessProperties, applicationEventPublisher);
+            JettyLogbackAccessInstaller installer = new JettyLogbackAccessInstaller(
+                    logbackAccessProperties, environment, applicationEventPublisher);
             log.debug("Created a JettyLogbackAccessInstaller: [{}]", installer);
             return installer;
         }
@@ -112,6 +123,11 @@ public class LogbackAccessAutoConfiguration {
         private final LogbackAccessProperties logbackAccessProperties;
 
         /**
+         * The environment.
+         */
+        private final Environment environment;
+
+        /**
          * The application event publisher.
          */
         private final ApplicationEventPublisher applicationEventPublisher;
@@ -124,8 +140,8 @@ public class LogbackAccessAutoConfiguration {
         @ConditionalOnMissingBean
         @Bean
         public UndertowLogbackAccessInstaller undertowLogbackAccessInstaller() {
-            UndertowLogbackAccessInstaller installer =
-                    new UndertowLogbackAccessInstaller(logbackAccessProperties, applicationEventPublisher);
+            UndertowLogbackAccessInstaller installer = new UndertowLogbackAccessInstaller(
+                    logbackAccessProperties, environment, applicationEventPublisher);
             log.debug("Created a UndertowLogbackAccessInstaller: [{}]", installer);
             return installer;
         }

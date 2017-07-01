@@ -16,6 +16,7 @@ import ch.qos.logback.core.spi.FilterReply;
 import lombok.Cleanup;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.core.env.Environment;
 import org.springframework.util.ResourceUtils;
 import static org.springframework.util.ClassUtils.addResourcePathToPackagePath;
 
@@ -45,6 +46,11 @@ public class LogbackAccessContext extends AccessContext {
     private final LogbackAccessProperties logbackAccessProperties;
 
     /**
+     * The environment.
+     */
+    private final Environment environment;
+
+    /**
      * The application event publisher.
      */
     private final ApplicationEventPublisher applicationEventPublisher;
@@ -53,11 +59,16 @@ public class LogbackAccessContext extends AccessContext {
      * Constructs an instance.
      *
      * @param logbackAccessProperties the configuration properties for Logback-access.
+     * @param environment the environment.
      * @param applicationEventPublisher the application event publisher.
      */
     public LogbackAccessContext(
-            LogbackAccessProperties logbackAccessProperties, ApplicationEventPublisher applicationEventPublisher) {
+            LogbackAccessProperties logbackAccessProperties,
+            Environment environment,
+            ApplicationEventPublisher applicationEventPublisher
+    ) {
         this.logbackAccessProperties = logbackAccessProperties;
+        this.environment = environment;
         this.applicationEventPublisher = applicationEventPublisher;
         setName(CoreConstants.DEFAULT_CONTEXT_NAME);
     }
@@ -130,7 +141,7 @@ public class LogbackAccessContext extends AccessContext {
     private void configureWithCauseThrowing(String config) throws IOException, JoranException {
         URL url = ResourceUtils.getURL(config);
         @Cleanup InputStream stream = url.openStream();
-        JoranConfigurator configurator = new JoranConfigurator();
+        LogbackAccessJoranConfigurator configurator = new LogbackAccessJoranConfigurator(environment);
         configurator.setContext(this);
         configurator.doConfigure(stream);
         log.info("Configured the Logback-access: context=[{}], config=[{}]", this, config);

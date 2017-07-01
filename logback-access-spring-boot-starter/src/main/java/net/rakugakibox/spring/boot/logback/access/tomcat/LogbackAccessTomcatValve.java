@@ -16,6 +16,7 @@ import org.apache.catalina.valves.AccessLogValve;
 import org.apache.catalina.valves.RemoteIpValve;
 import org.apache.catalina.valves.ValveBase;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.core.env.Environment;
 
 /**
  * The Tomcat valve that emits Logback-access events.
@@ -48,11 +49,16 @@ public class LogbackAccessTomcatValve extends ValveBase implements AccessLog {
      * Constructs an instance.
      *
      * @param logbackAccessProperties the configuration properties for Logback-access.
+     * @param environment the environment.
      * @param applicationEventPublisher the application event publisher.
      */
     public LogbackAccessTomcatValve(
-            LogbackAccessProperties logbackAccessProperties, ApplicationEventPublisher applicationEventPublisher) {
-        this.logbackAccessContext = new LogbackAccessContext(logbackAccessProperties, applicationEventPublisher);
+            LogbackAccessProperties logbackAccessProperties,
+            Environment environment,
+            ApplicationEventPublisher applicationEventPublisher
+    ) {
+        this.logbackAccessContext = new LogbackAccessContext(
+                logbackAccessProperties, environment, applicationEventPublisher);
         setAsyncSupported(true);
         if (logbackAccessProperties.getTomcat().getEnableRequestAttributes() != null) {
             setRequestAttributesEnabled(logbackAccessProperties.getTomcat().getEnableRequestAttributes());
