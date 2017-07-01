@@ -31,6 +31,7 @@ Note: This artifact name was changed in [v2.0.0]. The old name is "spring-boot-e
 * Auto-detects your configuration file and configures Logback-access.
 * Supports configuration files on the classpath.
 * Supports `X-Forwarded-*` HTTP headers.
+* Supports `HttpServletRequest#getRemoteUser()` provided by Spring Security.
 * Provides extensions of configuration file.
     * `<springProfile>` tag.
     * `<springProperty>` tag.
