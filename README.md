@@ -106,9 +106,11 @@ The first found configuration file will be used.
 
 1. "logback-access-test.xml" in the root of the classpath.
 2. "logback-access.xml" in the root of the classpath.
-3. [fallback configuration file (appends to standard output with common pattern)].
+3. "logback-access-test-spring.xml" in the root of the classpath.
+4. "logback-access-spring.xml" in the root of the classpath.
+5. [fallback configuration file (appends to standard output with common pattern)].
 
-[fallback configuration file (appends to standard output with common pattern)]: logback-access-spring-boot-starter/src/main/resources/net/rakugakibox/spring/boot/logback/access/logback-access.xml
+[fallback configuration file (appends to standard output with common pattern)]: logback-access-spring-boot-starter/src/main/resources/net/rakugakibox/spring/boot/logback/access/logback-access-spring.xml
 
 ### Separation for testing
 
@@ -172,7 +174,9 @@ logback.access:
   # Auto-detected by default:
   #   1. "classpath:logback-access-test.xml"
   #   2. "classpath:logback-access.xml"
-  #   3. "classpath:net/rakugakibox/spring/boot/logback/access/logback-access.xml"
+  #   3. "classpath:logback-access-test-spring.xml"
+  #   4. "classpath:logback-access-spring.xml"
+  #   5. "classpath:net/rakugakibox/spring/boot/logback/access/logback-access-spring.xml"
   config: "classpath:your-logback-access.xml"
   # Whether to use the server port (HttpServletRequest#getServerPort())
   # instead of the local port (HttpServletRequest#getLocalPort()) within IAccessEvent#getLocalPort().
