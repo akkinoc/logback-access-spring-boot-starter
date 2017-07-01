@@ -58,7 +58,7 @@ If you are using Maven, add the following dependency.
 <dependency>
     <groupId>net.rakugakibox.spring.boot</groupId>
     <artifactId>logback-access-spring-boot-starter</artifactId>
-    <version>2.4.0</version>
+    <version>2.5.0</version>
 </dependency>
 ```
 
