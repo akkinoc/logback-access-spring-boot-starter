@@ -7,6 +7,7 @@ import io.undertow.server.handlers.accesslog.AccessLogHandler;
 import net.rakugakibox.spring.boot.logback.access.LogbackAccessContext;
 import net.rakugakibox.spring.boot.logback.access.LogbackAccessProperties;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.core.env.Environment;
 
 /**
  * The Undertow HTTP handler that emits Logback-access events.
@@ -31,15 +32,18 @@ public class LogbackAccessUndertowHttpHandler implements HttpHandler {
      * Constructs an instance.
      *
      * @param logbackAccessProperties the configuration properties for Logback-access.
+     * @param environment the environment.
      * @param applicationEventPublisher the application event publisher.
      * @param nextHandler the next HTTP handler.
      */
     public LogbackAccessUndertowHttpHandler(
             LogbackAccessProperties logbackAccessProperties,
+            Environment environment,
             ApplicationEventPublisher applicationEventPublisher,
             HttpHandler nextHandler
     ) {
-        this.logbackAccessContext = new LogbackAccessContext(logbackAccessProperties, applicationEventPublisher);
+        this.logbackAccessContext = new LogbackAccessContext(
+                logbackAccessProperties, environment, applicationEventPublisher);
         this.nextHandler = nextHandler;
         this.logbackAccessContext.configure();
         this.logbackAccessContext.start();

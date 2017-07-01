@@ -9,6 +9,7 @@ import org.eclipse.jetty.server.RequestLog;
 import org.eclipse.jetty.server.Response;
 import org.eclipse.jetty.util.component.AbstractLifeCycle;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.core.env.Environment;
 
 /**
  * The Jetty request-log that emits Logback-access events.
@@ -29,11 +30,16 @@ public class LogbackAccessJettyRequestLog extends AbstractLifeCycle implements R
      * Constructs an instance.
      *
      * @param logbackAccessProperties the configuration properties for Logback-access.
+     * @param environment the environment.
      * @param applicationEventPublisher the application event publisher.
      */
     public LogbackAccessJettyRequestLog(
-            LogbackAccessProperties logbackAccessProperties, ApplicationEventPublisher applicationEventPublisher) {
-        this.logbackAccessContext = new LogbackAccessContext(logbackAccessProperties, applicationEventPublisher);
+            LogbackAccessProperties logbackAccessProperties,
+            Environment environment,
+            ApplicationEventPublisher applicationEventPublisher
+    ) {
+        this.logbackAccessContext = new LogbackAccessContext(
+                logbackAccessProperties, environment, applicationEventPublisher);
     }
 
     /** {@inheritDoc} */

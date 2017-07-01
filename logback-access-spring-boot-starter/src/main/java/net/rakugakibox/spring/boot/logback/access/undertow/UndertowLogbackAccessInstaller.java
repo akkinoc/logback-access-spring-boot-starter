@@ -9,6 +9,7 @@ import net.rakugakibox.spring.boot.logback.access.AbstractLogbackAccessInstaller
 import net.rakugakibox.spring.boot.logback.access.LogbackAccessProperties;
 import org.springframework.boot.context.embedded.undertow.UndertowEmbeddedServletContainerFactory;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.core.env.Environment;
 
 /**
  * The Logback-access installer for Undertow.
@@ -21,11 +22,16 @@ public class UndertowLogbackAccessInstaller
      * Constructs an instance.
      *
      * @param logbackAccessProperties the configuration properties for Logback-access.
+     * @param environment the environment.
      * @param applicationEventPublisher the application event publisher.
      */
     public UndertowLogbackAccessInstaller(
-            LogbackAccessProperties logbackAccessProperties, ApplicationEventPublisher applicationEventPublisher) {
-        super(UndertowEmbeddedServletContainerFactory.class, logbackAccessProperties, applicationEventPublisher);
+            LogbackAccessProperties logbackAccessProperties,
+            Environment environment,
+            ApplicationEventPublisher applicationEventPublisher
+    ) {
+        super(UndertowEmbeddedServletContainerFactory.class,
+                logbackAccessProperties, environment, applicationEventPublisher);
     }
 
     /** {@inheritDoc} */
@@ -60,7 +66,8 @@ public class UndertowLogbackAccessInstaller
      * @param handler the Undertow HTTP handler.
      */
     private HttpHandler wrapUndertowHttpHandler(HttpHandler handler) {
-        return new LogbackAccessUndertowHttpHandler(logbackAccessProperties, applicationEventPublisher, handler);
+        return new LogbackAccessUndertowHttpHandler(
+                logbackAccessProperties, environment, applicationEventPublisher, handler);
     }
 
 }

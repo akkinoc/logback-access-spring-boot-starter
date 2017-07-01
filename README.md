@@ -31,6 +31,9 @@ Note: This artifact name was changed in [v2.0.0]. The old name is "spring-boot-e
 * Auto-detects your configuration file and configures Logback-access.
 * Supports configuration files on the classpath.
 * Supports `X-Forwarded-*` HTTP headers.
+* Provides extensions of configuration file.
+    * `<springProfile>` tag.
+    * `<springProperty>` tag.
 
 ## Supported versions
 
@@ -116,6 +119,44 @@ and another file "logback-access.xml" in production.
 This is the same concept as [Logback configuration ("logback.xml" and "logback-test.xml")].  
 
 [Logback configuration ("logback.xml" and "logback-test.xml")]: https://logback.qos.ch/manual/configuration.html#auto_configuration
+
+## Extensions of configuration file
+
+### `<springProfile>` tag: Profile-specific configuration
+
+The `<springProfile>` tag allows you to optionally include or exclude sections of configuration based on the active Spring profiles.  
+Usage of this extension follows [Spring Boot Logback extension "Profile-specific configuration"].  
+
+> ```xml
+> <springProfile name="staging">
+>     <!-- configuration to be enabled when the "staging" profile is active -->
+> </springProfile>
+> 
+> <springProfile name="dev, staging">
+>     <!-- configuration to be enabled when the "dev" or "staging" profiles are active -->
+> </springProfile>
+> 
+> <springProfile name="!production">
+>     <!-- configuration to be enabled when the "production" profile is not active -->
+> </springProfile>
+> ```
+
+[Spring Boot Logback extension "Profile-specific configuration"]: http://docs.spring.io/spring-boot/docs/1.5.4.RELEASE/reference/htmlsingle/#_profile_specific_configuration
+
+### `<springProperty>` tag: Environment properties
+
+The `<springProperty>` tag allows you to surface properties from the Spring `Environment`.  
+Usage of this extension follows [Spring Boot Logback extension "Environment properties"].  
+
+> ```xml
+> <springProperty scope="context" name="fluentHost" source="myapp.fluentd.host" defaultValue="localhost" />
+> <appender name="FLUENT" class="ch.qos.logback.more.appenders.DataFluentAppender">
+>     <remoteHost>${fluentHost}</remoteHost>
+>     ...
+> </appender>
+> ```
+
+[Spring Boot Logback extension "Environment properties"]: http://docs.spring.io/spring-boot/docs/1.5.4.RELEASE/reference/htmlsingle/#_environment_properties
 
 ## Configuration properties
 

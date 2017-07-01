@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.core.env.Environment;
 
 /**
  * The base class of Logback-access installers.
@@ -23,6 +24,11 @@ public abstract class AbstractLogbackAccessInstaller<T extends ConfigurableEmbed
      * The configuration properties for Logback-access.
      */
     protected final LogbackAccessProperties logbackAccessProperties;
+
+    /**
+     * The environment.
+     */
+    protected final Environment environment;
 
     /**
      * The application event publisher.
