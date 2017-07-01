@@ -30,14 +30,16 @@ public class LogbackAccessContext extends AccessContext {
      */
     private static final List<String> DEFAULT_CONFIGS = unmodifiableList(asList(
             "classpath:logback-access-test.xml",
-            "classpath:logback-access.xml"
+            "classpath:logback-access.xml",
+            "classpath:logback-access-test-spring.xml",
+            "classpath:logback-access-spring.xml"
     ));
 
     /**
      * The fallback location of the configuration file.
      */
     private static final String FALLBACK_CONFIG =
-            "classpath:" + addResourcePathToPackagePath(LogbackAccessContext.class, "logback-access.xml");
+            "classpath:" + addResourcePathToPackagePath(LogbackAccessContext.class, "logback-access-spring.xml");
 
     /**
      * The configuration properties for Logback-access.

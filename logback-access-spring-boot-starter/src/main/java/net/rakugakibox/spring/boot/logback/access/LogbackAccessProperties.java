@@ -20,7 +20,9 @@ public class LogbackAccessProperties {
      * Auto-detected by default:
      *   1. "classpath:logback-access-test.xml"
      *   2. "classpath:logback-access.xml"
-     *   3. "classpath:net/rakugakibox/spring/boot/logback/access/logback-access.xml"
+     *   3. "classpath:logback-access-test-spring.xml"
+     *   4. "classpath:logback-access-spring.xml"
+     *   5. "classpath:net/rakugakibox/spring/boot/logback/access/logback-access-spring.xml"
      */
     private String config;
 
