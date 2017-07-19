@@ -1,0 +1,45 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: "circleci/openjdk:8"
+    steps:
+      - checkout
+      - restore_cache:
+          key: 'dependencies-{{ checksum "logback-access-spring-boot-starter/pom.xml" }}'
+      - run:
+          name: "Building logback-access-spring-boot-starter"
+          command: "./mvnw --batch-mode clean install"
+          working_directory: "logback-access-spring-boot-starter"
+      - run:
+          name: "Building logback-access-spring-boot-starter-sample-jetty"
+          command: "./mvnw --batch-mode clean install"
+          working_directory: "logback-access-spring-boot-starter-sample-jetty"
+      - run:
+          name: "Building logback-access-spring-boot-starter-sample-tomcat"
+          command: "./mvnw --batch-mode clean install"
+          working_directory: "logback-access-spring-boot-starter-sample-tomcat"
+      - run:
+          name: "Building logback-access-spring-boot-starter-sample-undertow"
+          command: "./mvnw --batch-mode clean install"
+          working_directory: "logback-access-spring-boot-starter-sample-undertow"
+      - save_cache:
+          key: 'dependencies-{{ checksum "logback-access-spring-boot-starter/pom.xml" }}'
+          paths:
+            - "~/.m2"
+      - store_test_results:
+          path: "logback-access-spring-boot-starter/target/surefire-reports"
+      - run:
+          name: "Upload Codecov reports"
+          command: "curl --silent https://codecov.io/bash | bash"
+      - run:
+          name: "Collecting logback-access-spring-boot-starter artifacts"
+          command: |
+            mkdir --parents /tmp/logback-access-spring-boot-starter-artifacts
+            cp --preserve *.jar /tmp/logback-access-spring-boot-starter-artifacts ||:
+            cp --preserve --recursive site /tmp/logback-access-spring-boot-starter-artifacts ||:
+          working_directory: "logback-access-spring-boot-starter/target"
+          when: "always"
+      - store_artifacts:
+          path: "/tmp/logback-access-spring-boot-starter-artifacts"
+          destination: "/"
