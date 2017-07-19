@@ -1,45 +1,110 @@
 version: 2
 jobs:
-  build:
+  build-and-test-logback-access-spring-boot-starter:
     docker:
       - image: "circleci/openjdk:8"
+    environment:
+        _JAVA_OPTIONS: "-Xmx1g"
+    working_directory: "~/logback-access-spring-boot-starter/logback-access-spring-boot-starter"
     steps:
-      - checkout
+      - checkout:
+          path: "~/logback-access-spring-boot-starter"
       - restore_cache:
-          key: 'dependencies-{{ checksum "logback-access-spring-boot-starter/pom.xml" }}'
+          key: 'logback-access-spring-boot-starter-dependencies-{{ checksum "pom.xml" }}'
       - run:
-          name: "Building logback-access-spring-boot-starter"
+          name: "Building and testing"
           command: "./mvnw --batch-mode clean install"
-          working_directory: "logback-access-spring-boot-starter"
-      - run:
-          name: "Building logback-access-spring-boot-starter-sample-jetty"
-          command: "./mvnw --batch-mode clean install"
-          working_directory: "logback-access-spring-boot-starter-sample-jetty"
-      - run:
-          name: "Building logback-access-spring-boot-starter-sample-tomcat"
-          command: "./mvnw --batch-mode clean install"
-          working_directory: "logback-access-spring-boot-starter-sample-tomcat"
-      - run:
-          name: "Building logback-access-spring-boot-starter-sample-undertow"
-          command: "./mvnw --batch-mode clean install"
-          working_directory: "logback-access-spring-boot-starter-sample-undertow"
       - save_cache:
-          key: 'dependencies-{{ checksum "logback-access-spring-boot-starter/pom.xml" }}'
+          key: 'logback-access-spring-boot-starter-dependencies-{{ checksum "pom.xml" }}'
           paths:
             - "~/.m2"
       - store_test_results:
-          path: "logback-access-spring-boot-starter/target/surefire-reports"
+          path: "target/surefire-reports"
       - run:
           name: "Upload Codecov reports"
           command: "curl --silent https://codecov.io/bash | bash"
-      - run:
-          name: "Collecting logback-access-spring-boot-starter artifacts"
-          command: |
-            mkdir --parents /tmp/logback-access-spring-boot-starter-artifacts
-            cp --preserve *.jar /tmp/logback-access-spring-boot-starter-artifacts ||:
-            cp --preserve --recursive site /tmp/logback-access-spring-boot-starter-artifacts ||:
-          working_directory: "logback-access-spring-boot-starter/target"
-          when: "always"
       - store_artifacts:
-          path: "/tmp/logback-access-spring-boot-starter-artifacts"
-          destination: "/"
+          path: "~/.m2/repository/net/rakugakibox/spring/boot/logback-access-spring-boot-starter"
+          destination: "/artifacts"
+      - store_artifacts:
+          path: "target/site"
+          destination: "/site"
+      - persist_to_workspace:
+          root: "~/.m2/repository/net/rakugakibox/spring/boot/logback-access-spring-boot-starter"
+          paths:
+            - "*"
+            - "*/*"
+  build-logback-access-spring-boot-starter-sample-jetty:
+    docker:
+      - image: "circleci/openjdk:8"
+    environment:
+        _JAVA_OPTIONS: "-Xmx1g"
+    working_directory: "~/logback-access-spring-boot-starter/logback-access-spring-boot-starter-sample-jetty"
+    steps:
+      - checkout:
+          path: "~/logback-access-spring-boot-starter"
+      - restore_cache:
+          key: 'logback-access-spring-boot-starter-sample-jetty-dependencies-{{ checksum "pom.xml" }}'
+      - attach_workspace:
+          at: "~/.m2/repository/net/rakugakibox/spring/boot/logback-access-spring-boot-starter"
+      - run:
+          name: "Building"
+          command: "./mvnw --batch-mode clean install"
+      - save_cache:
+          key: 'logback-access-spring-boot-starter-sample-jetty-dependencies-{{ checksum "pom.xml" }}'
+          paths:
+            - "~/.m2"
+  build-logback-access-spring-boot-starter-sample-tomcat:
+    docker:
+      - image: "circleci/openjdk:8"
+    environment:
+        _JAVA_OPTIONS: "-Xmx1g"
+    working_directory: "~/logback-access-spring-boot-starter/logback-access-spring-boot-starter-sample-tomcat"
+    steps:
+      - checkout:
+          path: "~/logback-access-spring-boot-starter"
+      - restore_cache:
+          key: 'logback-access-spring-boot-starter-sample-tomcat-dependencies-{{ checksum "pom.xml" }}'
+      - attach_workspace:
+          at: "~/.m2/repository/net/rakugakibox/spring/boot/logback-access-spring-boot-starter"
+      - run:
+          name: "Building"
+          command: "./mvnw --batch-mode clean install"
+      - save_cache:
+          key: 'logback-access-spring-boot-starter-sample-tomcat-dependencies-{{ checksum "pom.xml" }}'
+          paths:
+            - "~/.m2"
+  build-logback-access-spring-boot-starter-sample-undertow:
+    docker:
+      - image: "circleci/openjdk:8"
+    environment:
+        _JAVA_OPTIONS: "-Xmx1g"
+    working_directory: "~/logback-access-spring-boot-starter/logback-access-spring-boot-starter-sample-undertow"
+    steps:
+      - checkout:
+          path: "~/logback-access-spring-boot-starter"
+      - restore_cache:
+          key: 'logback-access-spring-boot-starter-sample-undertow-dependencies-{{ checksum "pom.xml" }}'
+      - attach_workspace:
+          at: "~/.m2/repository/net/rakugakibox/spring/boot/logback-access-spring-boot-starter"
+      - run:
+          name: "Building"
+          command: "./mvnw --batch-mode clean install"
+      - save_cache:
+          key: 'logback-access-spring-boot-starter-sample-undertow-dependencies-{{ checksum "pom.xml" }}'
+          paths:
+            - "~/.m2"
+workflows:
+  version: 2
+  build-and-test:
+    jobs:
+      - build-and-test-logback-access-spring-boot-starter
+      - build-logback-access-spring-boot-starter-sample-jetty:
+          requires:
+            - build-and-test-logback-access-spring-boot-starter
+      - build-logback-access-spring-boot-starter-sample-tomcat:
+          requires:
+            - build-and-test-logback-access-spring-boot-starter
+      - build-logback-access-spring-boot-starter-sample-undertow:
+          requires:
+            - build-and-test-logback-access-spring-boot-starter
