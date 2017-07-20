@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: "circleci/openjdk:8"
     environment:
-        _JAVA_OPTIONS: "-Xmx1g"
+        _JAVA_OPTIONS: "-Xmx1536m"
     working_directory: "~/logback-access-spring-boot-starter/logback-access-spring-boot-starter"
     steps:
       - checkout:
@@ -38,7 +38,7 @@ jobs:
     docker:
       - image: "circleci/openjdk:8"
     environment:
-        _JAVA_OPTIONS: "-Xmx1g"
+        _JAVA_OPTIONS: "-Xmx1536m"
     working_directory: "~/logback-access-spring-boot-starter/logback-access-spring-boot-starter-sample-jetty"
     steps:
       - checkout:
@@ -58,7 +58,7 @@ jobs:
     docker:
       - image: "circleci/openjdk:8"
     environment:
-        _JAVA_OPTIONS: "-Xmx1g"
+        _JAVA_OPTIONS: "-Xmx1536m"
     working_directory: "~/logback-access-spring-boot-starter/logback-access-spring-boot-starter-sample-tomcat"
     steps:
       - checkout:
@@ -78,7 +78,7 @@ jobs:
     docker:
       - image: "circleci/openjdk:8"
     environment:
-        _JAVA_OPTIONS: "-Xmx1g"
+        _JAVA_OPTIONS: "-Xmx1536m"
     working_directory: "~/logback-access-spring-boot-starter/logback-access-spring-boot-starter-sample-undertow"
     steps:
       - checkout:
