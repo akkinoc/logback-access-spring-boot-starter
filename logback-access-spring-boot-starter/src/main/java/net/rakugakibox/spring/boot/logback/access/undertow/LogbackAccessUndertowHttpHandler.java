@@ -56,7 +56,12 @@ public class LogbackAccessUndertowHttpHandler implements HttpHandler {
         nextHandler.handleRequest(exchange);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Handles exchange event.
+     *
+     * @param exchange the HTTP server exchange.
+     * @param nextListener the next listener.
+     */
     public void handleExchangeEvent(HttpServerExchange exchange, NextListener nextListener) {
         UndertowLogbackAccessEvent event = new UndertowLogbackAccessEvent(exchange);
         logbackAccessContext.emit(event);
