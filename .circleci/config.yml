@@ -24,11 +24,8 @@ jobs:
           name: "Upload Codecov reports"
           command: "curl --silent https://codecov.io/bash | bash"
       - store_artifacts:
-          path: "~/.m2/repository/net/rakugakibox/spring/boot/logback-access-spring-boot-starter"
-          destination: "/artifacts"
-      - store_artifacts:
-          path: "target/site"
-          destination: "/site"
+          path: "target"
+          destination: "/"
       - persist_to_workspace:
           root: "~/.m2/repository/net/rakugakibox/spring/boot/logback-access-spring-boot-starter"
           paths:
