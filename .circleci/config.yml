@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build-and-test-logback-access-spring-boot-starter:
+  build_and_test_logback_access_spring_boot_starter:
     docker:
       - image: "circleci/openjdk:8"
         environment:
@@ -35,7 +35,7 @@ jobs:
           paths:
             - "*"
             - "*/*"
-  build-logback-access-spring-boot-starter-sample-jetty:
+  build_logback_access_spring_boot_starter_sample_jetty:
     docker:
       - image: "circleci/openjdk:8"
         environment:
@@ -58,7 +58,7 @@ jobs:
           key: *logback_access_spring_boot_starter_sample_jetty_dependencies_cache_key
           paths:
             - "~/.m2"
-  build-logback-access-spring-boot-starter-sample-tomcat:
+  build_logback_access_spring_boot_starter_sample_tomcat:
     docker:
       - image: "circleci/openjdk:8"
         environment:
@@ -81,7 +81,7 @@ jobs:
           key: *logback_access_spring_boot_starter_sample_tomcat_dependencies_cache_key
           paths:
             - "~/.m2"
-  build-logback-access-spring-boot-starter-sample-undertow:
+  build_logback_access_spring_boot_starter_sample_undertow:
     docker:
       - image: "circleci/openjdk:8"
         environment:
@@ -106,15 +106,15 @@ jobs:
             - "~/.m2"
 workflows:
   version: 2
-  build-and-test:
+  build_and_test:
     jobs:
-      - build-and-test-logback-access-spring-boot-starter
-      - build-logback-access-spring-boot-starter-sample-jetty:
+      - build_and_test_logback_access_spring_boot_starter
+      - build_logback_access_spring_boot_starter_sample_jetty:
           requires:
-            - build-and-test-logback-access-spring-boot-starter
-      - build-logback-access-spring-boot-starter-sample-tomcat:
+            - build_and_test_logback_access_spring_boot_starter
+      - build_logback_access_spring_boot_starter_sample_tomcat:
           requires:
-            - build-and-test-logback-access-spring-boot-starter
-      - build-logback-access-spring-boot-starter-sample-undertow:
+            - build_and_test_logback_access_spring_boot_starter
+      - build_logback_access_spring_boot_starter_sample_undertow:
           requires:
-            - build-and-test-logback-access-spring-boot-starter
+            - build_and_test_logback_access_spring_boot_starter
