@@ -2,7 +2,7 @@ version: 2
 jobs:
   build-and-test-logback-access-spring-boot-starter:
     docker:
-      - image: "openjdk:8"
+      - image: "circleci/openjdk:8"
         environment:
           _JAVA_OPTIONS: "-Xmx1536m"
     working_directory: "~/logback-access-spring-boot-starter/logback-access-spring-boot-starter"
@@ -33,7 +33,7 @@ jobs:
             - "*/*"
   build-logback-access-spring-boot-starter-sample-jetty:
     docker:
-      - image: "openjdk:8"
+      - image: "circleci/openjdk:8"
         environment:
           _JAVA_OPTIONS: "-Xmx1536m"
     working_directory: "~/logback-access-spring-boot-starter/logback-access-spring-boot-starter-sample-jetty"
@@ -53,7 +53,7 @@ jobs:
             - "~/.m2"
   build-logback-access-spring-boot-starter-sample-tomcat:
     docker:
-      - image: "openjdk:8"
+      - image: "circleci/openjdk:8"
         environment:
           _JAVA_OPTIONS: "-Xmx1536m"
     working_directory: "~/logback-access-spring-boot-starter/logback-access-spring-boot-starter-sample-tomcat"
@@ -73,7 +73,7 @@ jobs:
             - "~/.m2"
   build-logback-access-spring-boot-starter-sample-undertow:
     docker:
-      - image: "openjdk:8"
+      - image: "circleci/openjdk:8"
         environment:
           _JAVA_OPTIONS: "-Xmx1536m"
     working_directory: "~/logback-access-spring-boot-starter/logback-access-spring-boot-starter-sample-undertow"
