@@ -4,9 +4,6 @@ aliases:
     image: "circleci/openjdk:8"
     environment:
       _JAVA_OPTIONS: "-Xmx1536m"
-  - &checkout
-    checkout:
-      path: "~/logback-access-spring-boot-starter"
   - &logback_access_spring_boot_starter_dependencies_cache_key >-
     logback-access-spring-boot-starter-dependencies
     {{ checksum "pom.xml" }}
@@ -23,8 +20,16 @@ aliases:
     logback-access-spring-boot-starter-sample-undertow-dependencies
     {{ checksum "pom.xml" }}
     {{ checksum ".mvn/wrapper/maven-wrapper.properties" }}
-  - &logback_access_spring_boot_starter_workspace_root >-
-    ~/.m2/repository/net/rakugakibox/spring/boot/logback-access-spring-boot-starter
+  - &checkout
+    checkout:
+      path: "~/logback-access-spring-boot-starter"
+  - &attach_workspace
+    attach_workspace:
+      at: "~/logback-access-spring-boot-starter-workspace"
+  - &restore_from_workspace
+    run:
+      name: "Restoring from workspace"
+      command: "cp --archive --verbose ~/logback-access-spring-boot-starter-workspace/. ~"
 jobs:
   build_and_test_logback_access_spring_boot_starter:
     docker:
@@ -42,7 +47,7 @@ jobs:
           paths:
             - "~/.m2"
       - run:
-          name: "Upload Codecov reports"
+          name: "Uploading Codecov reports"
           command: "curl --silent https://codecov.io/bash | bash"
       - store_test_results:
           path: "target/surefire-reports"
@@ -50,20 +55,19 @@ jobs:
           path: "target"
           destination: "/"
       - persist_to_workspace:
-          root: *logback_access_spring_boot_starter_workspace_root
+          root: "~"
           paths:
-            - "*"
-            - "*/*"
+            - ".m2/repository/net/rakugakibox/spring/boot/logback-access-spring-boot-starter"
   build_logback_access_spring_boot_starter_sample_jetty:
     docker:
       - *java_container
     working_directory: "~/logback-access-spring-boot-starter/logback-access-spring-boot-starter-sample-jetty"
     steps:
       - *checkout
+      - *attach_workspace
+      - *restore_from_workspace
       - restore_cache:
           key: *logback_access_spring_boot_starter_sample_jetty_dependencies_cache_key
-      - attach_workspace:
-          at: *logback_access_spring_boot_starter_workspace_root
       - run:
           name: "Building"
           command: "./mvnw --batch-mode clean install"
@@ -77,10 +81,10 @@ jobs:
     working_directory: "~/logback-access-spring-boot-starter/logback-access-spring-boot-starter-sample-tomcat"
     steps:
       - *checkout
+      - *attach_workspace
+      - *restore_from_workspace
       - restore_cache:
           key: *logback_access_spring_boot_starter_sample_tomcat_dependencies_cache_key
-      - attach_workspace:
-          at: *logback_access_spring_boot_starter_workspace_root
       - run:
           name: "Building"
           command: "./mvnw --batch-mode clean install"
@@ -94,10 +98,10 @@ jobs:
     working_directory: "~/logback-access-spring-boot-starter/logback-access-spring-boot-starter-sample-undertow"
     steps:
       - *checkout
+      - *attach_workspace
+      - *restore_from_workspace
       - restore_cache:
           key: *logback_access_spring_boot_starter_sample_undertow_dependencies_cache_key
-      - attach_workspace:
-          at: *logback_access_spring_boot_starter_workspace_root
       - run:
           name: "Building"
           command: "./mvnw --batch-mode clean install"
