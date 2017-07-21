@@ -10,12 +10,15 @@ jobs:
       - checkout:
           path: "~/logback-access-spring-boot-starter"
       - restore_cache:
-          key: 'logback-access-spring-boot-starter-dependencies-{{ checksum "pom.xml" }}'
+          key: &logback-access-spring-boot-starter-dependencies-cache-key >
+            logback-access-spring-boot-starter-dependencies
+            {{ checksum "pom.xml" }}
+            {{ checksum ".mvn/wrapper/maven-wrapper.properties" }}
       - run:
           name: "Building and testing"
           command: "./mvnw --batch-mode clean install"
       - save_cache:
-          key: 'logback-access-spring-boot-starter-dependencies-{{ checksum "pom.xml" }}'
+          key: *logback-access-spring-boot-starter-dependencies-cache-key
           paths:
             - "~/.m2"
       - run:
@@ -41,14 +44,17 @@ jobs:
       - checkout:
           path: "~/logback-access-spring-boot-starter"
       - restore_cache:
-          key: 'logback-access-spring-boot-starter-sample-jetty-dependencies-{{ checksum "pom.xml" }}'
+          key: &logback-access-spring-boot-starter-sample-jetty-dependencies-cache-key >
+            logback-access-spring-boot-starter-sample-jetty-dependencies
+            {{ checksum "pom.xml" }}
+            {{ checksum ".mvn/wrapper/maven-wrapper.properties" }}
       - attach_workspace:
           at: "~/.m2/repository/net/rakugakibox/spring/boot/logback-access-spring-boot-starter"
       - run:
           name: "Building"
           command: "./mvnw --batch-mode clean install"
       - save_cache:
-          key: 'logback-access-spring-boot-starter-sample-jetty-dependencies-{{ checksum "pom.xml" }}'
+          key: *logback-access-spring-boot-starter-sample-jetty-dependencies-cache-key
           paths:
             - "~/.m2"
   build-logback-access-spring-boot-starter-sample-tomcat:
@@ -61,14 +67,17 @@ jobs:
       - checkout:
           path: "~/logback-access-spring-boot-starter"
       - restore_cache:
-          key: 'logback-access-spring-boot-starter-sample-tomcat-dependencies-{{ checksum "pom.xml" }}'
+          key: &logback-access-spring-boot-starter-sample-tomcat-dependencies-cache-key >
+            logback-access-spring-boot-starter-sample-tomcat-dependencies
+            {{ checksum "pom.xml" }}
+            {{ checksum ".mvn/wrapper/maven-wrapper.properties" }}
       - attach_workspace:
           at: "~/.m2/repository/net/rakugakibox/spring/boot/logback-access-spring-boot-starter"
       - run:
           name: "Building"
           command: "./mvnw --batch-mode clean install"
       - save_cache:
-          key: 'logback-access-spring-boot-starter-sample-tomcat-dependencies-{{ checksum "pom.xml" }}'
+          key: *logback-access-spring-boot-starter-sample-tomcat-dependencies-cache-key
           paths:
             - "~/.m2"
   build-logback-access-spring-boot-starter-sample-undertow:
@@ -81,14 +90,17 @@ jobs:
       - checkout:
           path: "~/logback-access-spring-boot-starter"
       - restore_cache:
-          key: 'logback-access-spring-boot-starter-sample-undertow-dependencies-{{ checksum "pom.xml" }}'
+          key: &logback-access-spring-boot-starter-sample-undertow-dependencies-cache-key >
+            logback-access-spring-boot-starter-sample-undertow-dependencies
+            {{ checksum "pom.xml" }}
+            {{ checksum ".mvn/wrapper/maven-wrapper.properties" }}
       - attach_workspace:
           at: "~/.m2/repository/net/rakugakibox/spring/boot/logback-access-spring-boot-starter"
       - run:
           name: "Building"
           command: "./mvnw --batch-mode clean install"
       - save_cache:
-          key: 'logback-access-spring-boot-starter-sample-undertow-dependencies-{{ checksum "pom.xml" }}'
+          key: *logback-access-spring-boot-starter-sample-undertow-dependencies-cache-key
           paths:
             - "~/.m2"
 workflows:
