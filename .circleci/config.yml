@@ -1,19 +1,39 @@
 version: 2
+aliases:
+  - &java_container
+    image: "circleci/openjdk:8"
+    environment:
+      _JAVA_OPTIONS: "-Xmx1536m"
+  - &checkout
+    checkout:
+      path: "~/logback-access-spring-boot-starter"
+  - &logback_access_spring_boot_starter_dependencies_cache_key >-
+    logback-access-spring-boot-starter-dependencies
+    {{ checksum "pom.xml" }}
+    {{ checksum ".mvn/wrapper/maven-wrapper.properties" }}
+  - &logback_access_spring_boot_starter_sample_jetty_dependencies_cache_key >-
+    logback-access-spring-boot-starter-sample-jetty-dependencies
+    {{ checksum "pom.xml" }}
+    {{ checksum ".mvn/wrapper/maven-wrapper.properties" }}
+  - &logback_access_spring_boot_starter_sample_tomcat_dependencies_cache_key >-
+    logback-access-spring-boot-starter-sample-tomcat-dependencies
+    {{ checksum "pom.xml" }}
+    {{ checksum ".mvn/wrapper/maven-wrapper.properties" }}
+  - &logback_access_spring_boot_starter_sample_undertow_dependencies_cache_key >-
+    logback-access-spring-boot-starter-sample-undertow-dependencies
+    {{ checksum "pom.xml" }}
+    {{ checksum ".mvn/wrapper/maven-wrapper.properties" }}
+  - &logback_access_spring_boot_starter_workspace_root >-
+    ~/.m2/repository/net/rakugakibox/spring/boot/logback-access-spring-boot-starter
 jobs:
   build_and_test_logback_access_spring_boot_starter:
     docker:
-      - image: "circleci/openjdk:8"
-        environment:
-          _JAVA_OPTIONS: "-Xmx1536m"
+      - *java_container
     working_directory: "~/logback-access-spring-boot-starter/logback-access-spring-boot-starter"
     steps:
-      - checkout:
-          path: "~/logback-access-spring-boot-starter"
+      - *checkout
       - restore_cache:
-          key: &logback_access_spring_boot_starter_dependencies_cache_key >-
-            logback-access-spring-boot-starter-dependencies
-            {{ checksum "pom.xml" }}
-            {{ checksum ".mvn/wrapper/maven-wrapper.properties" }}
+          key: *logback_access_spring_boot_starter_dependencies_cache_key
       - run:
           name: "Building and testing"
           command: "./mvnw --batch-mode clean install"
@@ -30,25 +50,18 @@ jobs:
           path: "target"
           destination: "/"
       - persist_to_workspace:
-          root: &logback_access_spring_boot_starter_workspace_root >-
-            ~/.m2/repository/net/rakugakibox/spring/boot/logback-access-spring-boot-starter
+          root: *logback_access_spring_boot_starter_workspace_root
           paths:
             - "*"
             - "*/*"
   build_logback_access_spring_boot_starter_sample_jetty:
     docker:
-      - image: "circleci/openjdk:8"
-        environment:
-          _JAVA_OPTIONS: "-Xmx1536m"
+      - *java_container
     working_directory: "~/logback-access-spring-boot-starter/logback-access-spring-boot-starter-sample-jetty"
     steps:
-      - checkout:
-          path: "~/logback-access-spring-boot-starter"
+      - *checkout
       - restore_cache:
-          key: &logback_access_spring_boot_starter_sample_jetty_dependencies_cache_key >-
-            logback-access-spring-boot-starter-sample-jetty-dependencies
-            {{ checksum "pom.xml" }}
-            {{ checksum ".mvn/wrapper/maven-wrapper.properties" }}
+          key: *logback_access_spring_boot_starter_sample_jetty_dependencies_cache_key
       - attach_workspace:
           at: *logback_access_spring_boot_starter_workspace_root
       - run:
@@ -60,18 +73,12 @@ jobs:
             - "~/.m2"
   build_logback_access_spring_boot_starter_sample_tomcat:
     docker:
-      - image: "circleci/openjdk:8"
-        environment:
-          _JAVA_OPTIONS: "-Xmx1536m"
+      - *java_container
     working_directory: "~/logback-access-spring-boot-starter/logback-access-spring-boot-starter-sample-tomcat"
     steps:
-      - checkout:
-          path: "~/logback-access-spring-boot-starter"
+      - *checkout
       - restore_cache:
-          key: &logback_access_spring_boot_starter_sample_tomcat_dependencies_cache_key >-
-            logback-access-spring-boot-starter-sample-tomcat-dependencies
-            {{ checksum "pom.xml" }}
-            {{ checksum ".mvn/wrapper/maven-wrapper.properties" }}
+          key: *logback_access_spring_boot_starter_sample_tomcat_dependencies_cache_key
       - attach_workspace:
           at: *logback_access_spring_boot_starter_workspace_root
       - run:
@@ -83,18 +90,12 @@ jobs:
             - "~/.m2"
   build_logback_access_spring_boot_starter_sample_undertow:
     docker:
-      - image: "circleci/openjdk:8"
-        environment:
-          _JAVA_OPTIONS: "-Xmx1536m"
+      - *java_container
     working_directory: "~/logback-access-spring-boot-starter/logback-access-spring-boot-starter-sample-undertow"
     steps:
-      - checkout:
-          path: "~/logback-access-spring-boot-starter"
+      - *checkout
       - restore_cache:
-          key: &logback_access_spring_boot_starter_sample_undertow_dependencies_cache_key >-
-            logback-access-spring-boot-starter-sample-undertow-dependencies
-            {{ checksum "pom.xml" }}
-            {{ checksum ".mvn/wrapper/maven-wrapper.properties" }}
+          key: *logback_access_spring_boot_starter_sample_undertow_dependencies_cache_key
       - attach_workspace:
           at: *logback_access_spring_boot_starter_workspace_root
       - run:
