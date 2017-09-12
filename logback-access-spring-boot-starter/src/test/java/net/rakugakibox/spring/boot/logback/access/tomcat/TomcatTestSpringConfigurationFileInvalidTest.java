@@ -1,7 +1,7 @@
 package net.rakugakibox.spring.boot.logback.access.tomcat;
 
 import net.rakugakibox.spring.boot.logback.access.AbstractTestSpringConfigurationFileInvalidTest;
-import org.springframework.boot.autoconfigure.web.EmbeddedServletContainerAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
@@ -21,7 +21,7 @@ public class TomcatTestSpringConfigurationFileInvalidTest extends AbstractTestSp
      * The context configuration.
      */
     @Configuration
-    @Import(EmbeddedServletContainerAutoConfiguration.EmbeddedTomcat.class)
+    @Import(ServletWebServerFactoryAutoConfiguration.EmbeddedTomcat.class)
     public static class ContextConfiguration extends AbstractContextConfiguration {
     }
 

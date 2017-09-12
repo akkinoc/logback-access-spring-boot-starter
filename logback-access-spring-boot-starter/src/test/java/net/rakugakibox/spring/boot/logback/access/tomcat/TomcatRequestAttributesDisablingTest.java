@@ -14,8 +14,8 @@ import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.web.EmbeddedServletContainerAutoConfiguration;
-import org.springframework.boot.context.embedded.LocalServerPort;
+import org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryAutoConfiguration;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.context.annotation.Configuration;
@@ -97,7 +97,7 @@ public class TomcatRequestAttributesDisablingTest {
     @EnableAutoConfiguration
     @Configuration
     @Import({
-            EmbeddedServletContainerAutoConfiguration.EmbeddedTomcat.class,
+            ServletWebServerFactoryAutoConfiguration.EmbeddedTomcat.class,
             LogbackAccessEventQueuingListenerConfiguration.class,
             TestControllerConfiguration.class,
     })

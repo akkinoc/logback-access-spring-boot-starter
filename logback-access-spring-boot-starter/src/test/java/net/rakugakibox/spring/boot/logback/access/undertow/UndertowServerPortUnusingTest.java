@@ -4,7 +4,7 @@ import ch.qos.logback.access.spi.IAccessEvent;
 import net.rakugakibox.spring.boot.logback.access.AbstractServerPortUnusingTest;
 import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingAppender;
 import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingListener;
-import org.springframework.boot.autoconfigure.web.EmbeddedServletContainerAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
@@ -40,7 +40,7 @@ public class UndertowServerPortUnusingTest extends AbstractServerPortUnusingTest
      * The context configuration.
      */
     @Configuration
-    @Import(EmbeddedServletContainerAutoConfiguration.EmbeddedUndertow.class)
+    @Import(ServletWebServerFactoryAutoConfiguration.EmbeddedUndertow.class)
     public static class ContextConfiguration extends AbstractContextConfiguration {
     }
 

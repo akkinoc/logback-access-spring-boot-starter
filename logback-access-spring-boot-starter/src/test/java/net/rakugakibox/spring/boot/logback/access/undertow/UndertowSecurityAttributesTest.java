@@ -1,7 +1,7 @@
 package net.rakugakibox.spring.boot.logback.access.undertow;
 
 import net.rakugakibox.spring.boot.logback.access.AbstractSecurityAttributesTest;
-import org.springframework.boot.autoconfigure.web.EmbeddedServletContainerAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
@@ -14,7 +14,7 @@ public class UndertowSecurityAttributesTest extends AbstractSecurityAttributesTe
      * The context configuration.
      */
     @Configuration
-    @Import(EmbeddedServletContainerAutoConfiguration.EmbeddedUndertow.class)
+    @Import(ServletWebServerFactoryAutoConfiguration.EmbeddedUndertow.class)
     public static class ContextConfiguration extends AbstractContextConfiguration {
     }
 

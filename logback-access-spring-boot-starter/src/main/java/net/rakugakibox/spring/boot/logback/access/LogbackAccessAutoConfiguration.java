@@ -10,9 +10,9 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
-import org.springframework.boot.context.embedded.jetty.JettyEmbeddedServletContainerFactory;
-import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
-import org.springframework.boot.context.embedded.undertow.UndertowEmbeddedServletContainerFactory;
+import org.springframework.boot.web.embedded.jetty.JettyServletWebServerFactory;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.embedded.undertow.UndertowServletWebServerFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.ApplicationEventPublisher;
@@ -35,7 +35,7 @@ public class LogbackAccessAutoConfiguration {
      * For Tomcat.
      */
     @RequiredArgsConstructor
-    @ConditionalOnBean(value = TomcatEmbeddedServletContainerFactory.class)
+    @ConditionalOnBean(value = TomcatServletWebServerFactory.class)
     @Configuration
     public static class ForTomcat {
 
@@ -74,7 +74,7 @@ public class LogbackAccessAutoConfiguration {
      * For Jetty.
      */
     @RequiredArgsConstructor
-    @ConditionalOnBean(value = JettyEmbeddedServletContainerFactory.class)
+    @ConditionalOnBean(value = JettyServletWebServerFactory.class)
     @Configuration
     public static class ForJetty {
 
@@ -113,7 +113,7 @@ public class LogbackAccessAutoConfiguration {
      * For Undertow.
      */
     @RequiredArgsConstructor
-    @ConditionalOnBean(value = UndertowEmbeddedServletContainerFactory.class)
+    @ConditionalOnBean(value = UndertowServletWebServerFactory.class)
     @Configuration
     public static class ForUndertow {
 
