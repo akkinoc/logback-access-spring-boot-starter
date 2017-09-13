@@ -42,10 +42,10 @@ Note: This artifact name was changed in [v2.0.0]. The old name is "spring-boot-e
 Other versions might also work, but we have not tested it.  
 
 * Java 8
-* Spring Boot 1.5.4
-* Embedded Tomcat 8.5.15
-* Embedded Jetty 9.4.5
-* Embedded Undertow 1.4.15
+* Spring Boot 1.5.7
+* Embedded Tomcat 8.5.20
+* Embedded Jetty 9.4.6
+* Embedded Undertow 1.4.20
 * Logback-access 1.1.11
 
 ## Usage
@@ -59,7 +59,7 @@ If you are using Maven, add the following dependency.
 <dependency>
     <groupId>net.rakugakibox.spring.boot</groupId>
     <artifactId>logback-access-spring-boot-starter</artifactId>
-    <version>2.5.0</version>
+    <version>2.6.0</version>
 </dependency>
 ```
 
@@ -144,7 +144,7 @@ Usage of this extension follows [Spring Boot Logback extension "Profile-specific
 > </springProfile>
 > ```
 
-[Spring Boot Logback extension "Profile-specific configuration"]: http://docs.spring.io/spring-boot/docs/1.5.4.RELEASE/reference/htmlsingle/#_profile_specific_configuration
+[Spring Boot Logback extension "Profile-specific configuration"]: http://docs.spring.io/spring-boot/docs/1.5.7.RELEASE/reference/htmlsingle/#_profile_specific_configuration
 
 ### `<springProperty>` tag: Environment properties
 
@@ -159,7 +159,7 @@ Usage of this extension follows [Spring Boot Logback extension "Environment prop
 > </appender>
 > ```
 
-[Spring Boot Logback extension "Environment properties"]: http://docs.spring.io/spring-boot/docs/1.5.4.RELEASE/reference/htmlsingle/#_environment_properties
+[Spring Boot Logback extension "Environment properties"]: http://docs.spring.io/spring-boot/docs/1.5.7.RELEASE/reference/htmlsingle/#_environment_properties
 
 ## Configuration properties
 
