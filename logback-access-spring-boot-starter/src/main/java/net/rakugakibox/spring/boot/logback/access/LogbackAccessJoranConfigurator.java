@@ -16,7 +16,6 @@ import ch.qos.logback.core.joran.spi.InterpretationContext;
 import ch.qos.logback.core.joran.spi.RuleStore;
 import ch.qos.logback.core.util.OptionHelper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.bind.RelaxedPropertyResolver;
 import org.springframework.core.env.Environment;
 import org.springframework.util.StringUtils;
 import org.xml.sax.Attributes;
@@ -108,11 +107,6 @@ public class LogbackAccessJoranConfigurator extends JoranConfigurator {
      */
     private class SpringPropertyAction extends Action {
 
-        /**
-         * The property resolver.
-         */
-        private final RelaxedPropertyResolver propertyResolver = new RelaxedPropertyResolver(environment);
-
         /** {@inheritDoc} */
         @Override
         public void begin(InterpretationContext ic, String name, Attributes attributes) throws ActionException {
@@ -120,7 +114,7 @@ public class LogbackAccessJoranConfigurator extends JoranConfigurator {
             Scope scope = ActionUtil.stringToScope(attributes.getValue(SCOPE_ATTRIBUTE));
             String source = attributes.getValue("source");
             String defaultValue = attributes.getValue("defaultValue");
-            String value = propertyResolver.getProperty(source, defaultValue);
+            String value = environment.getProperty(source, defaultValue);
             ActionUtil.setProperty(ic, key, value, scope);
         }
 

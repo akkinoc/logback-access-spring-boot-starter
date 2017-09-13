@@ -2,7 +2,7 @@ package net.rakugakibox.spring.boot.logback.access.jetty;
 
 import net.rakugakibox.spring.boot.logback.access.AbstractLogbackAccessAutoConfigurationTest;
 import net.rakugakibox.spring.boot.logback.access.LogbackAccessAutoConfiguration;
-import org.springframework.boot.autoconfigure.web.EmbeddedServletContainerAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -34,7 +34,7 @@ public class JettyLogbackAccessAutoConfigurationTest extends AbstractLogbackAcce
      * The context configuration.
      */
     @Configuration
-    @Import(EmbeddedServletContainerAutoConfiguration.EmbeddedJetty.class)
+    @Import(ServletWebServerFactoryAutoConfiguration.EmbeddedJetty.class)
     public static class ContextConfiguration extends AbstractContextConfiguration {
     }
 

@@ -2,7 +2,7 @@ package net.rakugakibox.spring.boot.logback.access.tomcat;
 
 import net.rakugakibox.spring.boot.logback.access.AbstractLogbackAccessAutoConfigurationTest;
 import net.rakugakibox.spring.boot.logback.access.LogbackAccessAutoConfiguration;
-import org.springframework.boot.autoconfigure.web.EmbeddedServletContainerAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -34,7 +34,7 @@ public class TomcatLogbackAccessAutoConfigurationTest extends AbstractLogbackAcc
      * The context configuration.
      */
     @Configuration
-    @Import(EmbeddedServletContainerAutoConfiguration.EmbeddedTomcat.class)
+    @Import(ServletWebServerFactoryAutoConfiguration.EmbeddedTomcat.class)
     public static class ContextConfiguration extends AbstractContextConfiguration {
     }
 

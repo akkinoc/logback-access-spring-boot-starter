@@ -3,7 +3,7 @@ package net.rakugakibox.spring.boot.logback.access.tomcat;
 import lombok.extern.slf4j.Slf4j;
 import net.rakugakibox.spring.boot.logback.access.AbstractLogbackAccessInstaller;
 import net.rakugakibox.spring.boot.logback.access.LogbackAccessProperties;
-import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.core.env.Environment;
 
@@ -12,7 +12,7 @@ import org.springframework.core.env.Environment;
  */
 @Slf4j
 public class TomcatLogbackAccessInstaller
-        extends AbstractLogbackAccessInstaller<TomcatEmbeddedServletContainerFactory> {
+        extends AbstractLogbackAccessInstaller<TomcatServletWebServerFactory> {
 
     /**
      * Constructs an instance.
@@ -26,13 +26,12 @@ public class TomcatLogbackAccessInstaller
             Environment environment,
             ApplicationEventPublisher applicationEventPublisher
     ) {
-        super(TomcatEmbeddedServletContainerFactory.class,
-                logbackAccessProperties, environment, applicationEventPublisher);
+        super(logbackAccessProperties, environment, applicationEventPublisher);
     }
 
     /** {@inheritDoc} */
     @Override
-    protected void installLogbackAccess(TomcatEmbeddedServletContainerFactory container) {
+    protected void installLogbackAccess(TomcatServletWebServerFactory container) {
         LogbackAccessTomcatValve valve = new LogbackAccessTomcatValve(
                 logbackAccessProperties, environment, applicationEventPublisher);
         container.addEngineValves(valve);
