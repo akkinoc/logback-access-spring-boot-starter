@@ -20,10 +20,12 @@
 [Spring Boot] Starter for [Logback-access].  
 
 [Spring Boot]: https://projects.spring.io/spring-boot/
-[Logback-access]: http://logback.qos.ch/access.html
+[Logback-access]: https://logback.qos.ch/access.html
 
+Note: This page is for Spring Boot 2. If you use Spring Boot 1, please refer to [v2.6.x branch].  
 Note: This artifact name was changed in [v2.0.0]. The old name is "spring-boot-ext-logback-access".  
 
+[v2.6.x branch]: https://github.com/akihyro/logback-access-spring-boot-starter/tree/v2.6.x
 [v2.0.0]: https://github.com/akihyro/logback-access-spring-boot-starter/releases/tag/v2.0.0
 
 ## Features
@@ -42,11 +44,11 @@ Note: This artifact name was changed in [v2.0.0]. The old name is "spring-boot-e
 Other versions might also work, but we have not tested it.  
 
 * Java 8
-* Spring Boot 1.5.4
-* Embedded Tomcat 8.5.15
-* Embedded Jetty 9.4.5
-* Embedded Undertow 1.4.15
-* Logback-access 1.1.11
+* Spring Boot 2.0.0 M3
+* Embedded Tomcat 8.5.16
+* Embedded Jetty 9.4.6
+* Embedded Undertow 1.4.18
+* Logback-access 1.2.3
 
 ## Usage
 
@@ -59,7 +61,7 @@ If you are using Maven, add the following dependency.
 <dependency>
     <groupId>net.rakugakibox.spring.boot</groupId>
     <artifactId>logback-access-spring-boot-starter</artifactId>
-    <version>2.5.0</version>
+    <version>2.7.0</version>
 </dependency>
 ```
 
@@ -84,7 +86,7 @@ See also the Logback official documents:
 
 * [Logback-access configuration]
 
-[Logback-access configuration]: http://logback.qos.ch/access.html#configuration
+[Logback-access configuration]: https://logback.qos.ch/access.html#configuration
 
 ### Access logging
 
@@ -144,7 +146,7 @@ Usage of this extension follows [Spring Boot Logback extension "Profile-specific
 > </springProfile>
 > ```
 
-[Spring Boot Logback extension "Profile-specific configuration"]: http://docs.spring.io/spring-boot/docs/1.5.4.RELEASE/reference/htmlsingle/#_profile_specific_configuration
+[Spring Boot Logback extension "Profile-specific configuration"]: https://docs.spring.io/spring-boot/docs/2.0.0.M3/reference/htmlsingle/#_profile_specific_configuration
 
 ### `<springProperty>` tag: Environment properties
 
@@ -159,7 +161,7 @@ Usage of this extension follows [Spring Boot Logback extension "Environment prop
 > </appender>
 > ```
 
-[Spring Boot Logback extension "Environment properties"]: http://docs.spring.io/spring-boot/docs/1.5.4.RELEASE/reference/htmlsingle/#_environment_properties
+[Spring Boot Logback extension "Environment properties"]: https://docs.spring.io/spring-boot/docs/2.0.0.M3/reference/htmlsingle/#_environment_properties
 
 ## Configuration properties
 
