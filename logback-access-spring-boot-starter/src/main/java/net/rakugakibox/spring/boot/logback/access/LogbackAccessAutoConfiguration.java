@@ -5,15 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import net.rakugakibox.spring.boot.logback.access.jetty.JettyLogbackAccessInstaller;
 import net.rakugakibox.spring.boot.logback.access.tomcat.TomcatLogbackAccessInstaller;
 import net.rakugakibox.spring.boot.logback.access.undertow.UndertowLogbackAccessInstaller;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
-import org.springframework.boot.web.embedded.jetty.JettyServletWebServerFactory;
-import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
-import org.springframework.boot.web.embedded.undertow.UndertowServletWebServerFactory;
+import org.springframework.boot.autoconfigure.condition.*;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.web.embedded.jetty.ConfigurableJettyWebServerFactory;
+import org.springframework.boot.web.embedded.tomcat.ConfigurableTomcatWebServerFactory;
+import org.springframework.boot.web.embedded.undertow.ConfigurableUndertowWebServerFactory;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
@@ -35,7 +31,7 @@ public class LogbackAccessAutoConfiguration {
      * For Tomcat.
      */
     @RequiredArgsConstructor
-    @ConditionalOnBean(value = TomcatServletWebServerFactory.class)
+    @ConditionalOnBean(value = ConfigurableTomcatWebServerFactory.class)
     @Configuration
     public static class ForTomcat {
 
@@ -74,7 +70,7 @@ public class LogbackAccessAutoConfiguration {
      * For Jetty.
      */
     @RequiredArgsConstructor
-    @ConditionalOnBean(value = JettyServletWebServerFactory.class)
+    @ConditionalOnBean(value = ConfigurableJettyWebServerFactory.class)
     @Configuration
     public static class ForJetty {
 
@@ -113,7 +109,7 @@ public class LogbackAccessAutoConfiguration {
      * For Undertow.
      */
     @RequiredArgsConstructor
-    @ConditionalOnBean(value = UndertowServletWebServerFactory.class)
+    @ConditionalOnBean(value = ConfigurableUndertowWebServerFactory.class)
     @Configuration
     public static class ForUndertow {
 

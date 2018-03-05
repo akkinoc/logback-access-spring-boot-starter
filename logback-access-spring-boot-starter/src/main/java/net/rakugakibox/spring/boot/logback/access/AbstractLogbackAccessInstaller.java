@@ -1,8 +1,8 @@
 package net.rakugakibox.spring.boot.logback.access;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.web.server.ConfigurableWebServerFactory;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
-import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.core.env.Environment;
 
@@ -12,7 +12,7 @@ import org.springframework.core.env.Environment;
  * @param <T> the type of the servlet container.
  */
 @RequiredArgsConstructor
-public abstract class AbstractLogbackAccessInstaller<T extends ConfigurableServletWebServerFactory>
+public abstract class AbstractLogbackAccessInstaller<T extends ConfigurableWebServerFactory>
         implements WebServerFactoryCustomizer<T> {
 
     /**

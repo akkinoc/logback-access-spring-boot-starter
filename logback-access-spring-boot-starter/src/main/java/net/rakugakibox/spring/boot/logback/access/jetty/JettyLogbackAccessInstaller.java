@@ -5,7 +5,7 @@ import net.rakugakibox.spring.boot.logback.access.AbstractLogbackAccessInstaller
 import net.rakugakibox.spring.boot.logback.access.LogbackAccessProperties;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.RequestLogHandler;
-import org.springframework.boot.web.embedded.jetty.JettyServletWebServerFactory;
+import org.springframework.boot.web.embedded.jetty.ConfigurableJettyWebServerFactory;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.core.env.Environment;
 
@@ -14,7 +14,7 @@ import org.springframework.core.env.Environment;
  */
 @Slf4j
 public class JettyLogbackAccessInstaller
-        extends AbstractLogbackAccessInstaller<JettyServletWebServerFactory> {
+        extends AbstractLogbackAccessInstaller<ConfigurableJettyWebServerFactory> {
 
     /**
      * Constructs an instance.
@@ -33,7 +33,7 @@ public class JettyLogbackAccessInstaller
 
     /** {@inheritDoc} */
     @Override
-    protected void installLogbackAccess(JettyServletWebServerFactory container) {
+    protected void installLogbackAccess(ConfigurableJettyWebServerFactory container) {
         container.addServerCustomizers(this::wrapJettyHandler);
         log.debug("Installed Logback-access: container=[{}]", container);
     }
