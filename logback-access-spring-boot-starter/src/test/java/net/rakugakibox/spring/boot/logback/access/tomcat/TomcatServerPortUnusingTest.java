@@ -4,7 +4,7 @@ import ch.qos.logback.access.spi.IAccessEvent;
 import net.rakugakibox.spring.boot.logback.access.AbstractServerPortUnusingTest;
 import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingAppender;
 import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingListener;
-import org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryAutoConfiguration;
+import net.rakugakibox.spring.boot.logback.access.test.TomcatServletWebServerConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
@@ -39,7 +39,7 @@ public class TomcatServerPortUnusingTest extends AbstractServerPortUnusingTest {
      * The context configuration.
      */
     @Configuration
-    @Import(ServletWebServerFactoryAutoConfiguration.EmbeddedTomcat.class)
+    @Import(TomcatServletWebServerConfiguration.class)
     public static class ContextConfiguration extends AbstractContextConfiguration {
     }
 

@@ -7,6 +7,7 @@ import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuing
 import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingListenerConfiguration;
 import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingListenerRule;
 import net.rakugakibox.spring.boot.logback.access.test.TestControllerConfiguration;
+import net.rakugakibox.spring.boot.logback.access.test.TomcatServletWebServerConfiguration;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.RuleChain;
@@ -14,10 +15,10 @@ import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryAutoConfiguration;
-import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
@@ -94,10 +95,10 @@ public class TomcatRequestAttributesDisablingTest {
     /**
      * The context configuration.
      */
-    @EnableAutoConfiguration
+    @EnableAutoConfiguration(exclude = SecurityAutoConfiguration.class)
     @Configuration
     @Import({
-            ServletWebServerFactoryAutoConfiguration.EmbeddedTomcat.class,
+            TomcatServletWebServerConfiguration.class,
             LogbackAccessEventQueuingListenerConfiguration.class,
             TestControllerConfiguration.class,
     })

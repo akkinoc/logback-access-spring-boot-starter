@@ -2,9 +2,9 @@ package net.rakugakibox.spring.boot.logback.access.jetty;
 
 import ch.qos.logback.access.spi.IAccessEvent;
 import net.rakugakibox.spring.boot.logback.access.AbstractServerPortUnusingTest;
+import net.rakugakibox.spring.boot.logback.access.test.JettyServletWebServerConfiguration;
 import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingAppender;
 import net.rakugakibox.spring.boot.logback.access.test.LogbackAccessEventQueuingListener;
-import org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
@@ -39,7 +39,7 @@ public class JettyServerPortUnusingTest extends AbstractServerPortUnusingTest {
      * The context configuration.
      */
     @Configuration
-    @Import(ServletWebServerFactoryAutoConfiguration.EmbeddedJetty.class)
+    @Import(JettyServletWebServerConfiguration.class)
     public static class ContextConfiguration extends AbstractContextConfiguration {
     }
 

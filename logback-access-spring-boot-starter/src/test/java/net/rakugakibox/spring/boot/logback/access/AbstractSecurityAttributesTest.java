@@ -29,9 +29,8 @@ import static net.rakugakibox.spring.boot.logback.access.test.ResponseEntityAsse
 @RunWith(SpringRunner.class)
 @SpringBootTest(
         value = {
-                "security.basic.enabled=true",
-                "security.user.name=TEST-USER",
-                "security.user.password=TEST-PASSWORD",
+                "spring.security.user.name=TEST-USER",
+                "spring.security.user.password=TEST-PASSWORD",
                 "logback.access.config=classpath:logback-access.queue.xml",
         },
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT

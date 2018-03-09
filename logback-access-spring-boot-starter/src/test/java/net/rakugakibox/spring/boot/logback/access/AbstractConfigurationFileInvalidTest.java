@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.junit.Test;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.springframework.util.SocketUtils.findAvailableTcpPort;
@@ -89,7 +90,7 @@ public abstract class AbstractConfigurationFileInvalidTest {
     /**
      * The base class of context configuration.
      */
-    @EnableAutoConfiguration
+    @EnableAutoConfiguration(exclude = SecurityAutoConfiguration.class)
     public static abstract class AbstractContextConfiguration {
     }
 

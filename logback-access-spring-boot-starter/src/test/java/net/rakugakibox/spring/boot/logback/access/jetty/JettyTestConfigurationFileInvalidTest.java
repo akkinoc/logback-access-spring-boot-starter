@@ -1,7 +1,7 @@
 package net.rakugakibox.spring.boot.logback.access.jetty;
 
 import net.rakugakibox.spring.boot.logback.access.AbstractTestConfigurationFileInvalidTest;
-import org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryAutoConfiguration;
+import net.rakugakibox.spring.boot.logback.access.test.JettyServletWebServerConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
@@ -21,7 +21,7 @@ public class JettyTestConfigurationFileInvalidTest extends AbstractTestConfigura
      * The context configuration.
      */
     @Configuration
-    @Import(ServletWebServerFactoryAutoConfiguration.EmbeddedJetty.class)
+    @Import(JettyServletWebServerConfiguration.class)
     public static class ContextConfiguration extends AbstractContextConfiguration {
     }
 

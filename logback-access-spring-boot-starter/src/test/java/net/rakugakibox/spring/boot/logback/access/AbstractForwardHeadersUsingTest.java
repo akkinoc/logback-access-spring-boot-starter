@@ -11,6 +11,7 @@ import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.context.annotation.Import;
@@ -56,7 +57,7 @@ public abstract class AbstractForwardHeadersUsingTest {
     /**
      * The base class of context configuration.
      */
-    @EnableAutoConfiguration
+    @EnableAutoConfiguration(exclude = SecurityAutoConfiguration.class)
     @Import({LogbackAccessEventQueuingListenerConfiguration.class, TestControllerConfiguration.class})
     public static abstract class AbstractContextConfiguration {
     }

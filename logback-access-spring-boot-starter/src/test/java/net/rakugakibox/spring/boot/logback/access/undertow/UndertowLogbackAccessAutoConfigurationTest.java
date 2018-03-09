@@ -2,7 +2,7 @@ package net.rakugakibox.spring.boot.logback.access.undertow;
 
 import net.rakugakibox.spring.boot.logback.access.AbstractLogbackAccessAutoConfigurationTest;
 import net.rakugakibox.spring.boot.logback.access.LogbackAccessAutoConfiguration;
-import org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryAutoConfiguration;
+import net.rakugakibox.spring.boot.logback.access.test.UndertowServletWebServerConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -34,7 +34,7 @@ public class UndertowLogbackAccessAutoConfigurationTest extends AbstractLogbackA
      * The context configuration.
      */
     @Configuration
-    @Import(ServletWebServerFactoryAutoConfiguration.EmbeddedUndertow.class)
+    @Import(UndertowServletWebServerConfiguration.class)
     public static class ContextConfiguration extends AbstractContextConfiguration {
     }
 
