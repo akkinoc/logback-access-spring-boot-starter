@@ -67,6 +67,9 @@
 
     <properties>
         <assertj.version>3.8.0</assertj.version>
+        <lombok.version>1.16.22</lombok.version>
+        <maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
+        <maven-surefire-plugin.version>2.21.0</maven-surefire-plugin.version>
     </properties>
 
     <profiles>
