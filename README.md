@@ -19,7 +19,7 @@
 
 [Spring Boot] Starter for [Logback-access].  
 
-[Spring Boot]: https://projects.spring.io/spring-boot/
+[Spring Boot]: http://spring.io/projects/spring-boot
 [Logback-access]: https://logback.qos.ch/access.html
 
 Note: This page is for Spring Boot 2. If you use Spring Boot 1, please refer to [v2.6.x branch].  
@@ -200,10 +200,10 @@ Please refer to the "[Releases]" page.
 
 ## Related articles
 
-* [Issue #2609 Provide auto-configuration for logback-access - GitHub spring-projects/spring-boot]
+* [Issue #2609 Add logback-access-spring-boot-starter to 3rd party starter list - GitHub spring-projects/spring-boot]
 * [Spring Boot: Logback-access が使いやすくなる自動設定を作って公開した - rakugakibox.net]
 
-[Issue #2609 Provide auto-configuration for logback-access - GitHub spring-projects/spring-boot]: https://github.com/spring-projects/spring-boot/issues/2609
+[Issue #2609 Add logback-access-spring-boot-starter to 3rd party starter list - GitHub spring-projects/spring-boot]: https://github.com/spring-projects/spring-boot/issues/2609
 [Spring Boot: Logback-access が使いやすくなる自動設定を作って公開した - rakugakibox.net]: http://blog.rakugakibox.net/entry/2015/12/25/spring-boot-ext-logback-access
 
 ## Contributing
