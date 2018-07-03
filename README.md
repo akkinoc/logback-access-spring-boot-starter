@@ -19,7 +19,7 @@
 
 [Spring Boot] Starter for [Logback-access].  
 
-[Spring Boot]: https://projects.spring.io/spring-boot/
+[Spring Boot]: http://spring.io/projects/spring-boot
 [Logback-access]: https://logback.qos.ch/access.html
 
 Note: This page is for Spring Boot 2. If you use Spring Boot 1, please refer to [v2.6.x branch].  
