@@ -193,7 +193,6 @@
                 <configuration>
                     <redirectTestOutputToFile>true</redirectTestOutputToFile>
                     <trimStackTrace>false</trimStackTrace>
-                    <argLine>-Xmx512m -XX:MaxPermSize=64m</argLine>
                 </configuration>
             </plugin>
             <plugin>
