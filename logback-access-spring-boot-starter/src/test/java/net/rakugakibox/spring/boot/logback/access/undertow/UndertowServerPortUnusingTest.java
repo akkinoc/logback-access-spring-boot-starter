@@ -32,8 +32,7 @@ public class UndertowServerPortUnusingTest extends AbstractServerPortUnusingTest
         LogbackAccessEventQueuingListener.appendedEventQueue.pop();
 
         assertThat(response).hasStatusCode(HttpStatus.OK);
-        //port is overridden permanently, can't do anyting with it right now
-//        assertThat(event).hasLocalPort(port);
+        assertThat(event).hasLocalPort(port);
     }
 
     /**
