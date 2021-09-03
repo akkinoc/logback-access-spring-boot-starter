@@ -2,18 +2,12 @@
 
 [![Maven Central][Maven Central Badge]][Maven Central]
 [![javadoc.io][javadoc.io Badge]][javadoc.io]
-[![CircleCI][CircleCI Badge]][CircleCI]
-[![Codecov][Codecov Badge]][Codecov]
 [![License][License Badge]][License]
 
 [Maven Central Badge]: https://maven-badges.herokuapp.com/maven-central/net.rakugakibox.spring.boot/logback-access-spring-boot-starter/badge.svg
 [Maven Central]: https://maven-badges.herokuapp.com/maven-central/net.rakugakibox.spring.boot/logback-access-spring-boot-starter
 [javadoc.io Badge]: https://www.javadoc.io/badge/net.rakugakibox.spring.boot/logback-access-spring-boot-starter.svg
 [javadoc.io]: https://www.javadoc.io/doc/net.rakugakibox.spring.boot/logback-access-spring-boot-starter
-[CircleCI Badge]: https://circleci.com/gh/akihyro/logback-access-spring-boot-starter.svg?style=shield
-[CircleCI]: https://circleci.com/gh/akihyro/logback-access-spring-boot-starter
-[Codecov Badge]: https://codecov.io/gh/akihyro/logback-access-spring-boot-starter/branch/master/graph/badge.svg
-[Codecov]: https://codecov.io/gh/akihyro/logback-access-spring-boot-starter
 [License Badge]: https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg
 [License]: LICENSE.txt
 
@@ -21,12 +15,6 @@
 
 [Spring Boot]: http://spring.io/projects/spring-boot
 [Logback-access]: https://logback.qos.ch/access.html
-
-Note: This page is for Spring Boot 2. If you use Spring Boot 1, please refer to [v2.6.x branch].  
-Note: This artifact name was changed in [v2.0.0]. The old name is "spring-boot-ext-logback-access".  
-
-[v2.6.x branch]: https://github.com/akihyro/logback-access-spring-boot-starter/tree/v2.6.x
-[v2.0.0]: https://github.com/akihyro/logback-access-spring-boot-starter/releases/tag/v2.0.0
 
 ## Features
 
@@ -44,10 +32,10 @@ Note: This artifact name was changed in [v2.0.0]. The old name is "spring-boot-e
 Other versions might also work, but we have not tested it.  
 
 * Java 8
-* Spring Boot 2.0.0
-* Embedded Tomcat 8.5.28
-* Embedded Jetty 9.4.8
-* Embedded Undertow 1.4.22
+* Spring Boot 2.1.1
+* Embedded Tomcat 9.0.13
+* Embedded Jetty 9.4.12
+* Embedded Undertow 2.0.16
 * Logback-access 1.2.3
 
 ## Usage
@@ -61,7 +49,7 @@ If you are using Maven, add the following dependency.
 <dependency>
     <groupId>net.rakugakibox.spring.boot</groupId>
     <artifactId>logback-access-spring-boot-starter</artifactId>
-    <version>2.7.1</version>
+    <version>${logback-access-spring-boot-starter.version}</version>
 </dependency>
 ```
 
@@ -196,7 +184,7 @@ logback.access:
 
 Please refer to the "[Releases]" page.  
 
-[Releases]: https://github.com/akihyro/logback-access-spring-boot-starter/releases
+[Releases]: https://github.com/akkinoc/logback-access-spring-boot-starter/releases
 
 ## Related articles
 
