@@ -24,7 +24,7 @@
         <fluidoSkin>
             <sourceLineNumbersEnabled>true</sourceLineNumbersEnabled>
             <gitHub>
-                <projectId>akihyro/logback-access-spring-boot-starter</projectId>
+                <projectId>akkinoc/logback-access-spring-boot-starter</projectId>
                 <ribbonOrientation>right</ribbonOrientation>
                 <ribbonColor>orange</ribbonColor>
             </gitHub>

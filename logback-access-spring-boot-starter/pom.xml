@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
     <name>logback-access-spring-boot-starter</name>
     <description>Spring Boot Starter for Logback-access</description>
-    <url>https://github.com/akihyro/logback-access-spring-boot-starter</url>
+    <url>https://github.com/akkinoc/logback-access-spring-boot-starter</url>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -18,39 +18,39 @@
     </parent>
 
     <organization>
-        <name>rakugakibox.net</name>
-        <url>http://rakugakibox.net</url>
+        <name>akkinoc.dev</name>
+        <url>https://akkinoc.dev</url>
     </organization>
 
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
         </license>
     </licenses>
 
     <scm>
-        <url>https://github.com/akihyro/logback-access-spring-boot-starter</url>
-        <connection>scm:git:git@github.com:akihyro/logback-access-spring-boot-starter.git</connection>
-        <developerConnection>scm:git:git@github.com:akihyro/logback-access-spring-boot-starter.git</developerConnection>
+        <url>https://github.com/akkinoc/logback-access-spring-boot-starter</url>
+        <connection>scm:git:git@github.com:akkinoc/logback-access-spring-boot-starter.git</connection>
+        <developerConnection>scm:git:git@github.com:akkinoc/logback-access-spring-boot-starter.git</developerConnection>
     </scm>
 
     <issueManagement>
-        <url>https://github.com/akihyro/logback-access-spring-boot-starter/issues</url>
         <system>GitHub Issues</system>
+        <url>https://github.com/akkinoc/logback-access-spring-boot-starter/issues</url>
     </issueManagement>
 
     <ciManagement>
-        <system>CircleCI</system>
-        <url>https://circleci.com/gh/akihyro/logback-access-spring-boot-starter</url>
+        <system>GitHub Actions</system>
+        <url>https://github.com/akkinoc/logback-access-spring-boot-starter/actions</url>
     </ciManagement>
 
     <developers>
         <developer>
-            <id>akihyro</id>
+            <id>akkinoc</id>
             <name>Akihiro Kondo</name>
-            <email>akihyro@gmail.com</email>
-            <url>http://rakugakibox.net</url>
+            <email>akkinoc@gmail.com</email>
+            <url>https://akkinoc.dev</url>
         </developer>
     </developers>
 
