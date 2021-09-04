@@ -26,11 +26,6 @@ import java.util.concurrent.Callable;
 @EnableAutoConfiguration(exclude = { ReactiveSecurityAutoConfiguration.class, ServletWebServerFactoryAutoConfiguration.class })
 public class GenericReactiveWebServerConfiguration implements WebFluxConfigurer {
 
-    @Bean
-    public SecurityProperties securityProperties() {
-        return new SecurityProperties();
-    }
-
     @Override
     public void configureHttpMessageCodecs(ServerCodecConfigurer configurer) {
         configurer.customCodecs().encoder(new AbstractEncoder<Callable>(MediaType.TEXT_PLAIN) {
