@@ -32,10 +32,10 @@
 Other versions might also work, but we have not tested it.  
 
 * Java 8
-* Spring Boot 2.1.1
-* Embedded Tomcat 9.0.13
-* Embedded Jetty 9.4.12
-* Embedded Undertow 2.0.16
+* Spring Boot 2.2.6
+* Embedded Tomcat 9.0.33
+* Embedded Jetty 9.4.27
+* Embedded Undertow 2.0.30
 * Logback-access 1.2.3
 
 ## Usage
