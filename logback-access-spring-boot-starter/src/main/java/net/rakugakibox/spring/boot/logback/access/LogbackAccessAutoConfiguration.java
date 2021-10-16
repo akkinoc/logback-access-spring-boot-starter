@@ -1,13 +1,20 @@
 package net.rakugakibox.spring.boot.logback.access;
 
+import static ch.qos.logback.access.AccessConstants.TEE_FILTER_EXCLUDES_PARAM;
+import static ch.qos.logback.access.AccessConstants.TEE_FILTER_INCLUDES_PARAM;
+import ch.qos.logback.access.servlet.TeeFilter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.rakugakibox.spring.boot.logback.access.LogbackAccessProperties.TeeFilterProperties;
 import net.rakugakibox.spring.boot.logback.access.jetty.JettyLogbackAccessInstaller;
 import net.rakugakibox.spring.boot.logback.access.tomcat.TomcatLogbackAccessInstaller;
 import net.rakugakibox.spring.boot.logback.access.undertow.UndertowLogbackAccessInstaller;
-
-import org.springframework.boot.autoconfigure.condition.*;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.boot.autoconfigure.web.servlet.ConditionalOnMissingFilterBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.embedded.jetty.ConfigurableJettyWebServerFactory;
 import org.springframework.boot.web.embedded.tomcat.ConfigurableTomcatWebServerFactory;
@@ -18,11 +25,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
-
-import ch.qos.logback.access.servlet.TeeFilter;
-
-import static ch.qos.logback.access.AccessConstants.TEE_FILTER_INCLUDES_PARAM;
-import static ch.qos.logback.access.AccessConstants.TEE_FILTER_EXCLUDES_PARAM;
 
 /**
  * The auto-configuration for Logback-access.
@@ -177,10 +179,10 @@ public class LogbackAccessAutoConfiguration {
 
         /**
          * Creates the TeeFilter required to log full request and response payloads.
-         * 
+         *
          * @return a TeeFilter required to log full request and response payloads.
          */
-        @ConditionalOnMissingBean
+        @ConditionalOnMissingFilterBean
         @Bean
         public FilterRegistrationBean<TeeFilter> logbackTeeFilter() {
             TeeFilter filter = new TeeFilter();
