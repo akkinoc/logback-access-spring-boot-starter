@@ -188,8 +188,10 @@ public class LogbackAccessAutoConfiguration {
             TeeFilter filter = new TeeFilter();
             FilterRegistrationBean<TeeFilter> filterRegistrationBean = new FilterRegistrationBean<>(filter);
             TeeFilterProperties props = logbackAccessProperties.getTeeFilter();
-            filterRegistrationBean.addInitParameter(TEE_FILTER_INCLUDES_PARAM, props.getIncludes());
-            filterRegistrationBean.addInitParameter(TEE_FILTER_EXCLUDES_PARAM, props.getExcludes());
+            if (props.getIncludes() != null)
+                filterRegistrationBean.addInitParameter(TEE_FILTER_INCLUDES_PARAM, props.getIncludes());
+            if (props.getExcludes() != null)
+                filterRegistrationBean.addInitParameter(TEE_FILTER_EXCLUDES_PARAM, props.getExcludes());
             return filterRegistrationBean;
         }
 
