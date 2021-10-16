@@ -178,6 +178,11 @@ logback.access:
     # Whether to enable request attributes to work with the RemoteIpValve enabled with "server.useForwardHeaders".
     # Defaults to the presence of the RemoteIpValve.
     enableRequestAttributes: true
+  # ref) http://logback.qos.ch/access.html#teeFilter
+  tee-filter:
+    enabled: false
+    includes: ...
+    excludes: ...
 ```
 
 ## Release notes
