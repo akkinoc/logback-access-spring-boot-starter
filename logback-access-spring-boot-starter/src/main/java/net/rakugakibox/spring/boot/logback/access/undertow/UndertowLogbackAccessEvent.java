@@ -1,21 +1,29 @@
 package net.rakugakibox.spring.boot.logback.access.undertow;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import ch.qos.logback.access.pattern.AccessConverter;
+import ch.qos.logback.access.spi.AccessEvent;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.servlet.handlers.ServletRequestContext;
 import io.undertow.util.HeaderMap;
 import io.undertow.util.HeaderValues;
 import net.rakugakibox.spring.boot.logback.access.AbstractLogbackAccessEvent;
+import net.rakugakibox.spring.boot.logback.access.AbstractOverridenAttribute;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 /**
  * The Logback-access event for Undertow.
  */
 public class UndertowLogbackAccessEvent extends AbstractLogbackAccessEvent {
+
+    private final RequestURI requestURI = new RequestURI();
+
+    private final QueryString queryString = new QueryString();
 
     /**
      * Constructs an instance.
@@ -48,6 +56,26 @@ public class UndertowLogbackAccessEvent extends AbstractLogbackAccessEvent {
         return (HttpServletResponse) context.getServletResponse();
     }
 
+    @Override
+    public String getRequestURI() {
+        return requestURI.get();
+    }
+
+    @Override
+    public String getQueryString() {
+        return queryString.get();
+    }
+
+    @Override
+    public String getRequestURL() {
+        return getMethod() +
+                AccessConverter.SPACE_CHAR +
+                getRequestURI() +
+                getQueryString() +
+                AccessConverter.SPACE_CHAR +
+                getProtocol();
+    }
+
     /**
      * The server adapter.
      */
@@ -67,7 +95,6 @@ public class UndertowLogbackAccessEvent extends AbstractLogbackAccessEvent {
             this.exchange = exchange;
         }
 
-        /** {@inheritDoc} */
         @Override
         public long getRequestTimestamp() {
             long currentTimeMillis = System.currentTimeMillis();
@@ -76,19 +103,16 @@ public class UndertowLogbackAccessEvent extends AbstractLogbackAccessEvent {
             return currentTimeMillis - TimeUnit.NANOSECONDS.toMillis(nanoTime - requestStartTime);
         }
 
-        /** {@inheritDoc} */
         @Override
         public int getStatusCode() {
             return exchange.getStatusCode();
         }
 
-        /** {@inheritDoc} */
         @Override
         public long getContentLength() {
             return exchange.getResponseBytesSent();
         }
 
-        /** {@inheritDoc} */
         @Override
         public Map<String, String> buildResponseHeaderMap() {
             Map<String, String> result = new HashMap<>();
@@ -97,6 +121,40 @@ public class UndertowLogbackAccessEvent extends AbstractLogbackAccessEvent {
                 result.put(header.getHeaderName().toString(), header.getFirst());
             }
             return result;
+        }
+
+    }
+
+    private class RequestURI extends AbstractOverridenAttribute<String> {
+
+        @Override
+        protected Optional<String> evaluateValueToOverride() {
+            return Optional.of(UndertowLogbackAccessEvent.this)
+                    .map(AccessEvent::getRequest)
+                    .map(request -> (String) request.getAttribute(RequestDispatcher.FORWARD_REQUEST_URI));
+        }
+
+        @Override
+        protected String getOriginalValue() {
+            return UndertowLogbackAccessEvent.super.getRequestURI();
+        }
+
+    }
+
+    private class QueryString extends AbstractOverridenAttribute<String> {
+
+        @Override
+        protected Optional<String> evaluateValueToOverride() {
+            return Optional.of(UndertowLogbackAccessEvent.this)
+                    .map(AccessEvent::getRequest)
+                    .map(request -> (String) request.getAttribute(RequestDispatcher.FORWARD_QUERY_STRING))
+                    .filter(query -> !query.isEmpty())
+                    .map(query -> AccessConverter.QUESTION_CHAR + query);
+        }
+
+        @Override
+        protected String getOriginalValue() {
+            return UndertowLogbackAccessEvent.super.getQueryString();
         }
 
     }
