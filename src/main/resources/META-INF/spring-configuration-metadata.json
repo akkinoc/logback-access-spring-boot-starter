@@ -1,0 +1,83 @@
+{
+  "groups": [
+    {
+      "name": "logback.access",
+      "type": "dev.akkinoc.spring.boot.logback.access.LogbackAccessProperties",
+      "sourceType": "dev.akkinoc.spring.boot.logback.access.LogbackAccessProperties",
+      "description": "The configuration properties for Logback-access."
+    },
+    {
+      "name": "logback.access.tomcat",
+      "type": "dev.akkinoc.spring.boot.logback.access.LogbackAccessProperties$Tomcat",
+      "sourceType": "dev.akkinoc.spring.boot.logback.access.LogbackAccessProperties",
+      "description": "The properties for the Tomcat web server."
+    },
+    {
+      "name": "logback.access.undertow",
+      "type": "dev.akkinoc.spring.boot.logback.access.LogbackAccessProperties$Undertow",
+      "sourceType": "dev.akkinoc.spring.boot.logback.access.LogbackAccessProperties",
+      "description": "The properties for the Undertow web server."
+    },
+    {
+      "name": "logback.access.tee-filter",
+      "type": "dev.akkinoc.spring.boot.logback.access.LogbackAccessProperties$TeeFilter",
+      "sourceType": "dev.akkinoc.spring.boot.logback.access.LogbackAccessProperties",
+      "description": "The properties for the tee filter."
+    }
+  ],
+  "properties": [
+    {
+      "name": "logback.access.enabled",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.akkinoc.spring.boot.logback.access.LogbackAccessProperties",
+      "description": "Whether to enable auto-configuration.",
+      "defaultValue": true
+    },
+    {
+      "name": "logback.access.config",
+      "type": "java.lang.String",
+      "sourceType": "dev.akkinoc.spring.boot.logback.access.LogbackAccessProperties",
+      "description": "The location of the configuration file. Auto-detected by default: 1. \"classpath:logback-access-test.xml\" 2. \"classpath:logback-access.xml\" 3. \"classpath:logback-access-test-spring.xml\" 4. \"classpath:logback-access-spring.xml\" 5. \"classpath:dev/akkinoc/spring/boot/logback/access/logback-access-spring.xml\""
+    },
+    {
+      "name": "logback.access.local-port-strategy",
+      "type": "dev.akkinoc.spring.boot.logback.access.value.LogbackAccessLocalPortStrategy",
+      "sourceType": "dev.akkinoc.spring.boot.logback.access.LogbackAccessProperties",
+      "defaultValue": "server",
+      "description": "The strategy to change the behavior of IAccessEvent.getLocalPort."
+    },
+    {
+      "name": "logback.access.tomcat.request-attributes-enabled",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.akkinoc.spring.boot.logback.access.LogbackAccessProperties$Tomcat",
+      "description": "Whether to enable the request attributes to work with RemoteIpValve. Defaults to the presence of RemoteIpValve enabled by the property \"server.forward-headers-strategy=native\"."
+    },
+    {
+      "name": "logback.access.undertow.record-request-start-time",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.akkinoc.spring.boot.logback.access.LogbackAccessProperties$Undertow",
+      "description": "Whether to enable UndertowOptions.RECORD_REQUEST_START_TIME. Used to measure IAccessEvent.getElapsedTime and IAccessEvent.getElapsedSeconds."
+    },
+    {
+      "name": "logback.access.tee-filter.enabled",
+      "type": "java.lang.Boolean",
+      "sourceType": "dev.akkinoc.spring.boot.logback.access.LogbackAccessProperties$TeeFilter",
+      "defaultValue": false,
+      "description": "Whether to enable the tee filter."
+    },
+    {
+      "name": "logback.access.tee-filter.includes",
+      "type": "java.lang.String",
+      "sourceType": "dev.akkinoc.spring.boot.logback.access.LogbackAccessProperties$TeeFilter",
+      "description": "The host names to activate. By default, all hosts are activated."
+    },
+    {
+      "name": "logback.access.tee-filter.excludes",
+      "type": "java.lang.String",
+      "sourceType": "dev.akkinoc.spring.boot.logback.access.LogbackAccessProperties$TeeFilter",
+      "description": "The host names to deactivate. By default, all hosts are activated."
+    }
+  ],
+  "hints": [
+  ]
+}

@@ -1,53 +1,67 @@
 # logback-access-spring-boot-starter
 
-[![Maven Central][Maven Central Badge]][Maven Central]
-[![javadoc.io][javadoc.io Badge]][javadoc.io]
-[![License][License Badge]][License]
+[![maven central badge]][maven central]
+[![javadoc badge]][javadoc]
+[![release badge]][release]
+[![build badge]][build]
+[![codecov badge]][codecov]
+[![license badge]][license]
 
-[Maven Central Badge]: https://maven-badges.herokuapp.com/maven-central/net.rakugakibox.spring.boot/logback-access-spring-boot-starter/badge.svg
-[Maven Central]: https://maven-badges.herokuapp.com/maven-central/net.rakugakibox.spring.boot/logback-access-spring-boot-starter
-[javadoc.io Badge]: https://www.javadoc.io/badge/net.rakugakibox.spring.boot/logback-access-spring-boot-starter.svg
-[javadoc.io]: https://www.javadoc.io/doc/net.rakugakibox.spring.boot/logback-access-spring-boot-starter
-[License Badge]: https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg
-[License]: LICENSE.txt
+[maven central]: https://maven-badges.herokuapp.com/maven-central/dev.akkinoc.spring.boot/logback-access-spring-boot-starter
+[maven central badge]: https://maven-badges.herokuapp.com/maven-central/dev.akkinoc.spring.boot/logback-access-spring-boot-starter/badge.svg
+[javadoc]: https://javadoc.io/doc/dev.akkinoc.spring.boot/logback-access-spring-boot-starter
+[javadoc badge]: https://javadoc.io/badge2/dev.akkinoc.spring.boot/logback-access-spring-boot-starter/javadoc.svg
+[release]: https://github.com/akkinoc/logback-access-spring-boot-starter/releases
+[release badge]: https://img.shields.io/github/v/release/akkinoc/logback-access-spring-boot-starter?color=brightgreen&sort=semver
+[build]: https://github.com/akkinoc/logback-access-spring-boot-starter/actions/workflows/build.yml
+[build badge]: https://github.com/akkinoc/logback-access-spring-boot-starter/actions/workflows/build.yml/badge.svg
+[codecov]: https://codecov.io/gh/akkinoc/logback-access-spring-boot-starter
+[codecov badge]: https://codecov.io/gh/akkinoc/logback-access-spring-boot-starter/branch/main/graph/badge.svg
+[license]: LICENSE.txt
+[license badge]: https://img.shields.io/github/license/akkinoc/logback-access-spring-boot-starter?color=blue
 
-[Spring Boot] Starter for [Logback-access].  
+[Spring Boot] Starter for [Logback-access].
 
 [Spring Boot]: https://spring.io/projects/spring-boot
 [Logback-access]: https://logback.qos.ch/access.html
 
 ## Features
 
-* Auto-detects your configuration file and configures Logback-access.
+* Auto-detects your configuration file and auto-configures Logback-access.
 * Supports configuration files on the classpath.
-* Supports `X-Forwarded-*` HTTP headers.
-* Supports `HttpServletRequest#getRemoteUser()` provided by Spring Security.
-* Provides extensions of configuration file.
-    * `<springProfile>` tag.
-    * `<springProperty>` tag.
+* Provides extensions (`<springProfile>` tag, `<springProperty>` tag) for configuration files.
+* Supports rewriting of some attributes by HTTP forward headers ("X-Forwarded-*").
+* Supports remote user provided by Spring Security.
+* Provides configuration properties to enable the tee filter.
 
-## Supported versions
+Supports the following web servers:
 
-"logback-access-spring-boot-starter" supports the following versions.  
-Other versions might also work, but we have not tested it.  
+|          | Web MVC (Servlet Stack) | WebFlux (Reactive Stack) |
+|:--------:|:-----------------------:|:------------------------:|
+|  Tomcat  |            ✅           |            ✅            |
+|  Jetty   |            ✅           |            ✅            |
+| Undertow |            ✅           |            ✅            |
+|  Netty   |            -            |  🚧 (under development)  |
 
-* Java 8
-* Spring Boot 2.2.6
-* Embedded Tomcat 9.0.33
-* Embedded Jetty 9.4.27
-* Embedded Undertow 2.0.30
-* Logback-access 1.2.3
+## Dependencies
+
+Depends on:
+
+* Java 8, 11 or 17
+* Kotlin 1.5
+* Spring Boot 2.5
+* Logback-access 1.2
 
 ## Usage
 
-### Adding the dependency
+### Adding the Dependency
 
-"logback-access-spring-boot-starter" is published on Maven Central Repository.  
-If you are using Maven, add the following dependency.  
+The artifact is published on [Maven Central Repository][maven central].
+If you are using Maven, add the following dependency.
 
 ```xml
 <dependency>
-    <groupId>net.rakugakibox.spring.boot</groupId>
+    <groupId>dev.akkinoc.spring.boot</groupId>
     <artifactId>logback-access-spring-boot-starter</artifactId>
     <version>${logback-access-spring-boot-starter.version}</version>
 </dependency>
@@ -55,108 +69,105 @@ If you are using Maven, add the following dependency.
 
 ### Configuring the Logback-access
 
-Create a Logback-access configuration file "logback-access.xml" in the root of the classpath.  
+Create a Logback-access configuration file "logback-access.xml" in the root of the classpath.
 
-For example:  
+For example:
 
 ```xml
+<?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>common</pattern>
         </encoder>
     </appender>
-    <appender-ref ref="CONSOLE" />
+    <appender-ref ref="console"/>
 </configuration>
 ```
 
-See also the Logback official documents:  
+See also the Logback-access official documents:
 
-* [Logback-access configuration]
+* [Logback-access configuration](https://logback.qos.ch/access.html#configuration)
 
-[Logback-access configuration]: https://logback.qos.ch/access.html#configuration
+### Access Logging
 
-### Access logging
+When access the web application, it is logged.
 
-When access the web application, it is logged.  
+For example:
 
-For example:  
-
-```
-192.168.35.1 - - [14/5/2016:17:59:54 +0900] "GET / HTTP/1.1" 200 241
-192.168.35.1 - - [14/5/2016:18:00:32 +0900] "GET /favicon.ico HTTP/1.1" 200 946
-192.168.35.1 - - [14/5/2016:18:01:21 +0900] "GET / HTTP/1.1" 304 0
+```console
+0:0:0:0:0:0:0:1 - - [24/Oct/2021:15:32:03 +0900] "GET / HTTP/1.1" 200 319
+0:0:0:0:0:0:0:1 - - [24/Oct/2021:15:32:03 +0900] "GET /favicon.ico HTTP/1.1" 404 111
+0:0:0:0:0:0:0:1 - - [24/Oct/2021:15:32:04 +0900] "GET / HTTP/1.1" 304 0
 ```
 
-## Auto-detection of configuration file
+## Auto-detection of Configuration File
 
-### Priority order
+### Priority Order
 
-"logback-access-spring-boot-starter" will look for the configuration file in the following order.  
-The first found configuration file will be used.  
+When the web application is started, the configuration files are searched in the following order.
+The first configuration file found will be used.
 
 1. "logback-access-test.xml" in the root of the classpath.
 2. "logback-access.xml" in the root of the classpath.
 3. "logback-access-test-spring.xml" in the root of the classpath.
 4. "logback-access-spring.xml" in the root of the classpath.
-5. [fallback configuration file (appends to standard output with common pattern)].
+5. [fallback configuration file (appends to the console with a common pattern)](src/main/resources/dev/akkinoc/spring/boot/logback/access/logback-access-spring.xml).
 
-[fallback configuration file (appends to standard output with common pattern)]: logback-access-spring-boot-starter/src/main/resources/net/rakugakibox/spring/boot/logback/access/logback-access-spring.xml
+### Separation for Testing
 
-### Separation for testing
+If you are using Maven and place the "logback-access-test(-spring).xml" file under the "src/test/resources" folder,
+Maven will ensure that it won't be included in the artifact produced.
+Thus, you can use a different configuration file "logback-access-test(-spring).xml" during testing,
+and another file "logback-access(-spring).xml" in production.
 
-If you are using Maven and place "logback-access-test.xml" under the "src/test/resources" folder,
-Maven does not include it in the artifact.  
-Thus, you can use a different configuration file "logback-access-test.xml" during testing
-and another file "logback-access.xml" in production.  
-This is the same concept as [Logback configuration ("logback.xml" and "logback-test.xml")].  
+This is the same concept as the [Logback configuration ("logback.xml" and "logback-test.xml")].
 
 [Logback configuration ("logback.xml" and "logback-test.xml")]: https://logback.qos.ch/manual/configuration.html#auto_configuration
 
-## Extensions of configuration file
+## Extensions for Configuration File
 
-### `<springProfile>` tag: Profile-specific configuration
+### Profile-specific Configuration
 
-The `<springProfile>` tag allows you to optionally include or exclude sections of configuration based on the active Spring profiles.  
-Usage of this extension follows [Spring Boot Logback extension "Profile-specific configuration"].  
+The `<springProfile>` tag lets you optionally include or exclude sections of configuration based on the active Spring profiles.
+The usage of this extension is the same as the [Spring Boot Logback Extension "Profile-specific Configuration"].
+
+[Spring Boot Logback Extension "Profile-specific Configuration"]: https://docs.spring.io/spring-boot/docs/2.5.6/reference/html/features.html#features.logging.logback-extensions.profile-specific
 
 > ```xml
 > <springProfile name="staging">
 >     <!-- configuration to be enabled when the "staging" profile is active -->
 > </springProfile>
-> 
-> <springProfile name="dev, staging">
+> <springProfile name="dev | staging">
 >     <!-- configuration to be enabled when the "dev" or "staging" profiles are active -->
 > </springProfile>
-> 
 > <springProfile name="!production">
 >     <!-- configuration to be enabled when the "production" profile is not active -->
 > </springProfile>
 > ```
 
-[Spring Boot Logback extension "Profile-specific configuration"]: https://docs.spring.io/spring-boot/docs/2.0.0.RELEASE/reference/htmlsingle/#_profile_specific_configuration
+### Environment Properties
 
-### `<springProperty>` tag: Environment properties
+The '<springProperty>' tag lets you expose properties from the Spring Environment for use within Logback.
+The usage of this extension is the same as the [Spring Boot Logback Extension "Environment Properties"].
 
-The `<springProperty>` tag allows you to surface properties from the Spring `Environment`.  
-Usage of this extension follows [Spring Boot Logback extension "Environment properties"].  
+[Spring Boot Logback Extension "Environment Properties"]: https://docs.spring.io/spring-boot/docs/2.5.6/reference/html/features.html#features.logging.logback-extensions.environment-properties
 
 > ```xml
-> <springProperty scope="context" name="fluentHost" source="myapp.fluentd.host" defaultValue="localhost" />
+> <springProperty scope="context" name="fluentHost" source="myapp.fluentd.host" defaultValue="localhost"/>
 > <appender name="FLUENT" class="ch.qos.logback.more.appenders.DataFluentAppender">
 >     <remoteHost>${fluentHost}</remoteHost>
 >     ...
 > </appender>
 > ```
 
-[Spring Boot Logback extension "Environment properties"]: https://docs.spring.io/spring-boot/docs/2.0.0.RELEASE/reference/htmlsingle/#_environment_properties
+## Configuration Properties
 
-## Configuration properties
+Provides the following configuration properties.
+These can be configured by your "application.yml", "application.properties", etc.
 
-"logback-access-spring-boot-starter" provides the following configuration properties.  
-These can be configure by your "application.yml" / "application.properties".  
-
-```yml
+```yaml
+# The configuration properties for Logback-access.
 logback.access:
   # Whether to enable auto-configuration.
   # Defaults to true.
@@ -167,53 +178,50 @@ logback.access:
   #   2. "classpath:logback-access.xml"
   #   3. "classpath:logback-access-test-spring.xml"
   #   4. "classpath:logback-access-spring.xml"
-  #   5. "classpath:net/rakugakibox/spring/boot/logback/access/logback-access-spring.xml"
-  config: "classpath:your-logback-access.xml"
-  # Whether to use the server port (HttpServletRequest#getServerPort())
-  # instead of the local port (HttpServletRequest#getLocalPort()) within IAccessEvent#getLocalPort().
-  # Defaults to true.
-  useServerPortInsteadOfLocalPort: true
-  # for Tomcat.
+  #   5. "classpath:dev/akkinoc/spring/boot/logback/access/logback-access-spring.xml"
+  config: classpath:your-logback-access.xml
+  # The strategy to change the behavior of IAccessEvent.getLocalPort.
+  # Defaults to "server".
+  #   "local":
+  #     Returns the port number of the interface on which the request was received.
+  #     Equivalent to ServletRequest.getLocalPort when using a servlet web server.
+  #   "server":
+  #     Returns the port number to which the request was sent.
+  #     Equivalent to ServletRequest.getServerPort when using a servlet web server.
+  #     Helps to identify the destination port number used by the client when forward headers are enabled.
+  local-port-strategy: server
+  # The properties for the Tomcat web server.
   tomcat:
-    # Whether to enable request attributes to work with the RemoteIpValve enabled with "server.useForwardHeaders".
-    # Defaults to the presence of the RemoteIpValve.
-    enableRequestAttributes: true
-  # ref) http://logback.qos.ch/access.html#teeFilter
+    # Whether to enable the request attributes to work with RemoteIpValve.
+    # Defaults to the presence of RemoteIpValve enabled by the property "server.forward-headers-strategy=native".
+    request-attributes-enabled: true
+  # The properties for the Undertow web server.
+  undertow:
+    # Whether to enable UndertowOptions.RECORD_REQUEST_START_TIME.
+    # Used to measure IAccessEvent.getElapsedTime and IAccessEvent.getElapsedSeconds.
+    # Defaults to true.
+    record-request-start-time: true
+  # The properties for the tee filter.
   tee-filter:
-    enabled: false
-    includes: ...
-    excludes: ...
+    # Whether to enable the tee filter.
+    # Defaults to false.
+    enabled: true
+    # The host names to activate.
+    # By default, all hosts are activated.
+    includes: your-development-host
+    # The host names to deactivate.
+    # By default, all hosts are activated.
+    excludes: your-production-host
 ```
 
-## Release notes
+## API Reference
 
-Please refer to the "[Releases]" page.  
+Please refer to the [Javadoc][javadoc].
 
-[Releases]: https://github.com/akkinoc/logback-access-spring-boot-starter/releases
+## Release Notes
 
-## Related articles
-
-* [Issue #2609 Add logback-access-spring-boot-starter to 3rd party starter list - GitHub spring-projects/spring-boot]
-* [Spring Boot: Logback-access が使いやすくなる自動設定を作って公開した - akkinoc.dev]
-
-[Issue #2609 Add logback-access-spring-boot-starter to 3rd party starter list - GitHub spring-projects/spring-boot]: https://github.com/spring-projects/spring-boot/issues/2609
-[Spring Boot: Logback-access が使いやすくなる自動設定を作って公開した - akkinoc.dev]: https://akkinoc.dev/posts/2015/12/25/spring-boot-ext-logback-access/
-
-## Contributing
-
-Bug reports and pull requests are welcome :)  
-
-## Building and testing
-
-To build and test, you can run:  
-
-```sh
-$ cd logback-access-spring-boot-starter
-$ ./mvnw clean install
-```
+Please refer to the [Releases][release] page.
 
 ## License
 
-Licensed under the [Apache License, Version 2.0].  
-
-[Apache License, Version 2.0]: LICENSE.txt
+Licensed under the [Apache License, Version 2.0][license].

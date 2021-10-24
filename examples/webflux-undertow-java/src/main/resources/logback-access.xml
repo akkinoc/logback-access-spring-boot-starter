@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>common</pattern>
+        </encoder>
+    </appender>
+    <appender name="file" class="ch.qos.logback.core.FileAppender">
+        <file>access.log</file>
+        <encoder>
+            <pattern>combined</pattern>
+        </encoder>
+    </appender>
+    <appender-ref ref="console"/>
+    <appender-ref ref="file"/>
+</configuration>
