@@ -148,7 +148,7 @@ The usage of this extension is the same as the [Spring Boot Logback Extension "P
 
 ### Environment Properties
 
-The '<springProperty>' tag lets you expose properties from the Spring Environment for use within Logback.
+The `<springProperty>` tag lets you expose properties from the Spring Environment for use within Logback.
 The usage of this extension is the same as the [Spring Boot Logback Extension "Environment Properties"].
 
 [Spring Boot Logback Extension "Environment Properties"]: https://docs.spring.io/spring-boot/docs/2.5.6/reference/html/features.html#features.logging.logback-extensions.environment-properties
