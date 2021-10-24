@@ -120,7 +120,6 @@ If you are using Maven and place the "logback-access-test(-spring).xml" file und
 Maven will ensure that it won't be included in the artifact produced.
 Thus, you can use a different configuration file "logback-access-test(-spring).xml" during testing,
 and another file "logback-access(-spring).xml" in production.
-
 This is the same concept as the [Logback configuration ("logback.xml" and "logback-test.xml")].
 
 [Logback configuration ("logback.xml" and "logback-test.xml")]: https://logback.qos.ch/manual/configuration.html#auto_configuration
