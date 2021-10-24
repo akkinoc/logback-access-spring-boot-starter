@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <springProfile name="!logback-access-test-disable-default-console">
+        <appender name="default_console" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>default_console: %h %l %u [%t] &quot;%r&quot; %s %b</pattern>
+            </encoder>
+        </appender>
+        <appender-ref ref="default_console"/>
+        <springProfile name="!logback-access-test-disable-default-nested-console">
+            <appender name="default_nested_console" class="ch.qos.logback.core.ConsoleAppender">
+                <encoder>
+                    <pattern>default_nested_console: %h %l %u [%t] &quot;%r&quot; %s %b</pattern>
+                </encoder>
+            </appender>
+            <appender-ref ref="default_nested_console"/>
+        </springProfile>
+    </springProfile>
+    <springProfile name="logback-access-test-enable-additional-console">
+        <appender name="additional_console" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>additional_console: %h %l %u [%t] &quot;%r&quot; %s %b</pattern>
+            </encoder>
+        </appender>
+        <appender-ref ref="additional_console"/>
+        <springProfile name="logback-access-test-enable-additional-nested-console">
+            <appender name="additional_nested_console" class="ch.qos.logback.core.ConsoleAppender">
+                <encoder>
+                    <pattern>additional_nested_console: %h %l %u [%t] &quot;%r&quot; %s %b</pattern>
+                </encoder>
+            </appender>
+            <appender-ref ref="additional_nested_console"/>
+        </springProfile>
+    </springProfile>
+    <springProfile name="!logback-access-test-disable-empty"/>
+    <springProfile name="">
+        <appender name="ignored_console" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>ignored_console: %h %l %u [%t] &quot;%r&quot; %s %b</pattern>
+            </encoder>
+        </appender>
+        <appender-ref ref="ignored_console"/>
+    </springProfile>
+</configuration>

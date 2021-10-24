@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="capture" class="dev.akkinoc.spring.boot.logback.access.test.extension.EventsCaptureAppender"/>
+    <appender-ref ref="capture"/>
+</configuration>

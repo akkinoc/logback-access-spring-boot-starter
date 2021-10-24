@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <springProperty
+            name="console_pattern_prefix"
+            source="logback.access.test.console.pattern.prefix"/>
+    <springProperty
+            name="console_pattern_body"
+            source="logback.access.test.console.pattern.body"
+            defaultValue="%h %l %u [%t] &quot;%r&quot; %s %b"/>
+    <springProperty
+            name="console_pattern_suffix"
+            source="logback.access.test.console.pattern.suffix"
+            defaultValue=";"/>
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${console_pattern_prefix}${console_pattern_body}${console_pattern_suffix}</pattern>
+        </encoder>
+    </appender>
+    <appender-ref ref="console"/>
+</configuration>

@@ -1,0 +1,2 @@
+org.springframework.test.context.ContextCustomizerFactory=\
+dev.akkinoc.spring.boot.logback.access.test.configuration.TestContextClassLoaderCustomizerFactory
