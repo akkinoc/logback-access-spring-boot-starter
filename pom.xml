@@ -6,12 +6,12 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.rakugakibox.springbootext</groupId>
     <artifactId>spring-boot-ext-logback-access</artifactId>
-    <version>1.6</version>
+    <version>1.7</version>
     <packaging>jar</packaging>
 
     <name>spring-boot-ext-logback-access</name>
     <description>Spring Boot Extension: Logback-access Auto Configuration</description>
-    <url>https://github.com/akihyro/spring-boot-ext-logback-access</url>
+    <url>https://github.com/akkinoc/logback-access-spring-boot-starter</url>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -20,8 +20,8 @@
     </parent>
 
     <organization>
-        <name>rakugakibox.net</name>
-        <url>http://rakugakibox.net</url>
+        <name>akkinoc.dev</name>
+        <url>https://akkinoc.dev</url>
     </organization>
 
     <licenses>
@@ -32,27 +32,27 @@
     </licenses>
 
     <scm>
-        <url>https://github.com/akihyro/spring-boot-ext-logback-access</url>
-        <connection>scm:git:git@github.com:akihyro/spring-boot-ext-logback-access.git</connection>
-        <developerConnection>scm:git:git@github.com:akihyro/spring-boot-ext-logback-access.git</developerConnection>
+        <url>https://github.com/akkinoc/logback-access-spring-boot-starter</url>
+        <connection>scm:git:git@github.com:akkinoc/logback-access-spring-boot-starter.git</connection>
+        <developerConnection>scm:git:git@github.com:akkinoc/logback-access-spring-boot-starter.git</developerConnection>
     </scm>
 
     <issueManagement>
-        <url>https://github.com/akihyro/spring-boot-ext-logback-access/issues</url>
         <system>GitHub Issues</system>
+        <url>https://github.com/akkinoc/logback-access-spring-boot-starter/issues</url>
     </issueManagement>
 
     <ciManagement>
-        <system>CircleCI</system>
-        <url>https://circleci.com/gh/akihyro/spring-boot-ext-logback-access</url>
+        <system>GitHub Actions</system>
+        <url>https://github.com/akkinoc/logback-access-spring-boot-starter/actions</url>
     </ciManagement>
 
     <developers>
         <developer>
-            <id>akihyro</id>
+            <id>akkinoc</id>
             <name>Akihiro Kondo</name>
-            <email>akihyro@gmail.com</email>
-            <url>http://rakugakibox.net</url>
+            <email>akkinoc@gmail.com</email>
+            <url>https://akkinoc.dev</url>
         </developer>
     </developers>
 
@@ -65,6 +65,10 @@
             <id>ossrh</id>
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
+        <relocation>
+            <groupId>dev.akkinoc.spring.boot</groupId>
+            <artifactId>logback-access-spring-boot-starter</artifactId>
+        </relocation>
     </distributionManagement>
 
     <properties>
