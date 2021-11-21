@@ -48,8 +48,8 @@ Supports the following web servers:
 Depends on:
 
 * Java 8, 11 or 17
-* Kotlin 1.5
-* Spring Boot 2.5
+* Kotlin 1.6
+* Spring Boot 2.6
 * Logback-access 1.2
 
 ## Usage
