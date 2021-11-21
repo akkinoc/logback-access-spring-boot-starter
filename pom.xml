@@ -204,9 +204,6 @@
                     </dependency>
                 </dependencies>
                 <configuration>
-                    <args>
-                        <arg>-Xopt-in=kotlin.time.ExperimentalTime</arg>
-                    </args>
                     <compilerPlugins>
                         <compilerPlugin>spring</compilerPlugin>
                     </compilerPlugins>

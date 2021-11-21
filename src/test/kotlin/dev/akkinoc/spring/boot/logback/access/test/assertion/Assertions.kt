@@ -22,7 +22,7 @@ object Assertions {
      */
     fun <T> assertLogbackAccessEventsEventually(assert: () -> T): T {
         return runBlocking {
-            eventually<T>(duration = seconds(1), interval = milliseconds(100).fixed()) { assert() }
+            eventually<T>(duration = 1.seconds, interval = 100.milliseconds.fixed()) { assert() }
         }
     }
 
@@ -36,7 +36,7 @@ object Assertions {
      */
     fun <T> assertLogbackAccessEventsContinually(assert: () -> T): T? {
         return runBlocking {
-            continually(duration = seconds(1), interval = milliseconds(100).fixed()) { assert() }
+            continually(duration = 1.seconds, interval = 100.milliseconds.fixed()) { assert() }
         }
     }
 
