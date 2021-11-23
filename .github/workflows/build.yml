@@ -16,7 +16,7 @@ jobs:
           distribution: temurin
           java-version: ${{ matrix.java }}
       - name: Cache the Maven local repository
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v2.1.7
         with:
           path: ~/.m2/repository
           key: maven-${{ matrix.java }}-${{ hashFiles('**/pom.xml') }}
