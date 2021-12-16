@@ -13,10 +13,12 @@ complexity:
 formatting:
   ImportOrdering:
     active: true
+  Indentation:
+    active: false
   NoBlankLineBeforeRbrace:
     active: false
   ParameterListWrapping:
-    indentSize: 8
+    active: false
 performance:
   SpreadOperator:
     active: false
