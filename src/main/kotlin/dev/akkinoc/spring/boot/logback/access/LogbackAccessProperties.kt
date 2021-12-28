@@ -14,6 +14,7 @@ import org.springframework.boot.context.properties.ConstructorBinding
  *  Whether to enable auto-configuration.
  * @property config
  *  The location of the configuration file.
+ *  Specify a URL that starts with "classpath:" or "file:".
  *  Auto-detected by default:
  *      1. "classpath:logback-access-test.xml"
  *      2. "classpath:logback-access.xml"
