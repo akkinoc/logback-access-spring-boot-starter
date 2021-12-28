@@ -6,6 +6,7 @@
 [![build badge]][build]
 [![codecov badge]][codecov]
 [![license badge]][license]
+[![sponsor badge]][sponsor]
 
 [maven central]: https://maven-badges.herokuapp.com/maven-central/dev.akkinoc.spring.boot/logback-access-spring-boot-starter
 [maven central badge]: https://maven-badges.herokuapp.com/maven-central/dev.akkinoc.spring.boot/logback-access-spring-boot-starter/badge.svg
@@ -19,6 +20,8 @@
 [codecov badge]: https://codecov.io/gh/akkinoc/logback-access-spring-boot-starter/branch/main/graph/badge.svg
 [license]: LICENSE.txt
 [license badge]: https://img.shields.io/github/license/akkinoc/logback-access-spring-boot-starter?color=blue
+[sponsor]: https://github.com/sponsors/akkinoc
+[sponsor badge]: https://img.shields.io/static/v1?logo=github&label=sponsor&message=%E2%9D%A4&color=db61a2
 
 [Spring Boot] Starter for [Logback-access].
 
@@ -224,3 +227,9 @@ Please refer to the [Releases][release] page.
 ## License
 
 Licensed under the [Apache License, Version 2.0][license].
+
+## Support the Project
+
+If this project is useful to you, I appreciate giving a star to this repository ⭐  
+I would also appreciate if you would consider [sponsoring][sponsor] as well 💖  
+Your support is my biggest motive force. Thanks ✨  
