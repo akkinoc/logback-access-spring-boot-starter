@@ -175,6 +175,7 @@ logback.access:
   # Defaults to true.
   enabled: true
   # The location of the configuration file.
+  # Specify a URL that starts with "classpath:" or "file:".
   # Auto-detected by default:
   #   1. "classpath:logback-access-test.xml"
   #   2. "classpath:logback-access.xml"

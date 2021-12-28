@@ -10,6 +10,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory.getLogger
 import org.springframework.core.env.Environment
 import org.springframework.core.io.ResourceLoader
+import org.springframework.util.ResourceUtils.getURL
 
 /**
  * The Logback-access context.
@@ -30,7 +31,7 @@ class LogbackAccessContext(
     private val raw: AccessContext = AccessContext()
 
     init {
-        val (name, resource) = properties.config?.let { it to resourceLoader.getResource(it) }
+        val (name, resource) = properties.config?.let { it to resourceLoader.getResource("${getURL(it)}") }
                 ?: DEFAULT_CONFIGS.asSequence()
                         .map { it to resourceLoader.getResource(it) }
                         .firstOrNull { (_, resource) -> resource.exists() }
