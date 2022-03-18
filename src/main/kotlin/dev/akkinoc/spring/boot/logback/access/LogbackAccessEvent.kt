@@ -83,7 +83,7 @@ class LogbackAccessEvent(private var source: LogbackAccessEventSource) : IAccess
     }
 
     override fun getRequestURI(): String {
-        return source.requestURI
+        return source.requestURI ?: NA
     }
 
     override fun getQueryString(): String {

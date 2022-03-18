@@ -97,7 +97,7 @@ class LogbackAccessUndertowEventSource(
         "${exchange.requestMethod}"
     }
 
-    override val requestURI: String by lazy(LazyThreadSafetyMode.NONE) {
+    override val requestURI: String? by lazy(LazyThreadSafetyMode.NONE) {
         request?.getAttribute(FORWARD_REQUEST_URI) as String? ?: exchange.requestURI
     }
 

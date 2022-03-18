@@ -82,7 +82,7 @@ class LogbackAccessTomcatEventSource(
         request.method
     }
 
-    override val requestURI: String by lazy(LazyThreadSafetyMode.NONE) {
+    override val requestURI: String? by lazy(LazyThreadSafetyMode.NONE) {
         request.requestURI
     }
 
