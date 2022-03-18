@@ -83,7 +83,7 @@ abstract class LogbackAccessEventSource {
     /**
      * The value of [IAccessEvent.getRequestURI].
      */
-    abstract val requestURI: String
+    abstract val requestURI: String?
 
     /**
      * The value of [IAccessEvent.getQueryString].
@@ -192,7 +192,7 @@ abstract class LogbackAccessEventSource {
 
         override val method: String = source.method
 
-        override val requestURI: String = source.requestURI
+        override val requestURI: String? = source.requestURI
 
         override val queryString: String = source.queryString
 

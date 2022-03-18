@@ -7,7 +7,11 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory.getLogger
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication
 import org.springframework.boot.test.context.TestConfiguration
+import org.springframework.boot.test.web.client.LocalHostUriTemplateHandler
+import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.context.annotation.Bean
+import org.springframework.core.env.Environment
+import org.springframework.web.util.DefaultUriBuilderFactory
 
 /**
  * The test configuration for testing using the web server.
@@ -51,6 +55,24 @@ class WebTestConfiguration {
         val mockReactiveController = MockReactiveController()
         log.debug("Providing the {}: {}", MockReactiveController::class.simpleName, mockReactiveController)
         return mockReactiveController
+    }
+
+    /**
+     * Provides the [TestRestTemplate] for testing using the web server.
+     *
+     * @return The [TestRestTemplate] for testing using the web server.
+     */
+    @Bean
+    fun testRestTemplate(environment: Environment): TestRestTemplate {
+        val uriBuilderFactory = DefaultUriBuilderFactory().apply {
+            encodingMode = DefaultUriBuilderFactory.EncodingMode.VALUES_ONLY
+        }
+        val uriTemplateHandler = LocalHostUriTemplateHandler(environment, "http", uriBuilderFactory)
+        val testRestTemplate = TestRestTemplate().apply {
+            setUriTemplateHandler(uriTemplateHandler)
+        }
+        log.debug("Providing the {}: {}", TestRestTemplate::class.simpleName, testRestTemplate)
+        return testRestTemplate
     }
 
     companion object {
