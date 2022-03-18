@@ -36,10 +36,10 @@ import kotlin.text.Charsets.UTF_8
  * @see org.apache.catalina.valves.AbstractAccessLogValve.AccessLogElement
  */
 class LogbackAccessTomcatEventSource(
-        override val request: Request,
-        override val response: Response,
-        private val localPortStrategy: LogbackAccessLocalPortStrategy,
-        private val requestAttributesEnabled: Boolean,
+    override val request: Request,
+    override val response: Response,
+    private val localPortStrategy: LogbackAccessLocalPortStrategy,
+    private val requestAttributesEnabled: Boolean,
 ) : LogbackAccessEventSource() {
 
     override val serverAdapter: TomcatServerAdapter = TomcatServerAdapter(request, response)
@@ -115,8 +115,8 @@ class LogbackAccessTomcatEventSource(
     override val attributeMap: Map<String, String> by lazy(LazyThreadSafetyMode.NONE) {
         val attrs = linkedMapOf<String, String>()
         request.attributeNames.asSequence()
-                .filter { it !in setOf(LB_INPUT_BUFFER, LB_OUTPUT_BUFFER) }
-                .associateWithTo(attrs) { "${request.getAttribute(it)}" }
+            .filter { it !in setOf(LB_INPUT_BUFFER, LB_OUTPUT_BUFFER) }
+            .associateWithTo(attrs) { "${request.getAttribute(it)}" }
         unmodifiableMap(attrs)
     }
 
@@ -128,9 +128,9 @@ class LogbackAccessTomcatEventSource(
         val bytes = request.getAttribute(LB_INPUT_BUFFER) as ByteArray?
         if (bytes == null && isFormUrlEncoded(request)) {
             return@lazy requestParameterMap.asSequence()
-                    .flatMap { (key, values) -> values.asSequence().map { key to it } }
-                    .map { (key, value) -> encode(key, UTF_8.name()) to encode(value, UTF_8.name()) }
-                    .joinToString("&") { (key, value) -> "$key=$value" }
+                .flatMap { (key, values) -> values.asSequence().map { key to it } }
+                .map { (key, value) -> encode(key, UTF_8.name()) to encode(value, UTF_8.name()) }
+                .joinToString("&") { (key, value) -> "$key=$value" }
         }
         bytes?.let { String(it, UTF_8) }
     }

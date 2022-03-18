@@ -15,16 +15,16 @@ import org.springframework.boot.web.server.WebServerFactoryCustomizer
  * @see org.springframework.boot.autoconfigure.web.embedded.UndertowWebServerFactoryCustomizer
  */
 class LogbackAccessUndertowWebServerFactoryCustomizer(
-        private val logbackAccessContext: LogbackAccessContext,
+    private val logbackAccessContext: LogbackAccessContext,
 ) : WebServerFactoryCustomizer<ConfigurableUndertowWebServerFactory> {
 
     override fun customize(factory: ConfigurableUndertowWebServerFactory) {
         factory.addBuilderCustomizers(::customize)
         log.debug(
-                "Customized the {}: {} @{}",
-                ConfigurableUndertowWebServerFactory::class.simpleName,
-                factory,
-                logbackAccessContext,
+            "Customized the {}: {} @{}",
+            ConfigurableUndertowWebServerFactory::class.simpleName,
+            factory,
+            logbackAccessContext,
         )
     }
 
@@ -37,10 +37,10 @@ class LogbackAccessUndertowWebServerFactoryCustomizer(
         val props = logbackAccessContext.properties.undertow
         builder.setServerOption(UndertowOptions.RECORD_REQUEST_START_TIME, props.recordRequestStartTime)
         log.debug(
-                "Customized the {}: {} @{}",
-                Builder::class.simpleName,
-                builder,
-                logbackAccessContext,
+            "Customized the {}: {} @{}",
+            Builder::class.simpleName,
+            builder,
+            logbackAccessContext,
         )
     }
 

@@ -1,10 +1,10 @@
 name: build
-on: [push, pull_request]
+on: [ push, pull_request ]
 jobs:
   build:
     strategy:
       matrix:
-        java: [8, 11, 17]
+        java: [ 8, 11, 17 ]
     name: Build with Java ${{ matrix.java }}
     runs-on: ubuntu-20.04
     steps:

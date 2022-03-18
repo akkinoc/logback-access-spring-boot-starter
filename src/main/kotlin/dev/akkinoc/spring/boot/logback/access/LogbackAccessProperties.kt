@@ -35,12 +35,12 @@ import org.springframework.boot.context.properties.ConstructorBinding
 data class LogbackAccessProperties
 @JvmOverloads
 constructor(
-        val enabled: Boolean = true,
-        val config: String? = null,
-        val localPortStrategy: LogbackAccessLocalPortStrategy = LogbackAccessLocalPortStrategy.SERVER,
-        val tomcat: Tomcat = Tomcat(),
-        val undertow: Undertow = Undertow(),
-        val teeFilter: TeeFilter = TeeFilter(),
+    val enabled: Boolean = true,
+    val config: String? = null,
+    val localPortStrategy: LogbackAccessLocalPortStrategy = LogbackAccessLocalPortStrategy.SERVER,
+    val tomcat: Tomcat = Tomcat(),
+    val undertow: Undertow = Undertow(),
+    val teeFilter: TeeFilter = TeeFilter(),
 ) {
 
     companion object {
@@ -50,10 +50,10 @@ constructor(
          */
         @JvmField
         val DEFAULT_CONFIGS: List<String> = listOf(
-                "classpath:logback-access-test.xml",
-                "classpath:logback-access.xml",
-                "classpath:logback-access-test-spring.xml",
-                "classpath:logback-access-spring.xml",
+            "classpath:logback-access-test.xml",
+            "classpath:logback-access.xml",
+            "classpath:logback-access-test-spring.xml",
+            "classpath:logback-access-spring.xml",
         )
 
         /**
@@ -73,7 +73,7 @@ constructor(
     data class Tomcat
     @JvmOverloads
     constructor(
-            val requestAttributesEnabled: Boolean? = null,
+        val requestAttributesEnabled: Boolean? = null,
     )
 
     /**
@@ -86,7 +86,7 @@ constructor(
     data class Undertow
     @JvmOverloads
     constructor(
-            val recordRequestStartTime: Boolean = true,
+        val recordRequestStartTime: Boolean = true,
     )
 
     /**
@@ -104,9 +104,9 @@ constructor(
     data class TeeFilter
     @JvmOverloads
     constructor(
-            val enabled: Boolean = false,
-            val includes: String? = null,
-            val excludes: String? = null,
+        val enabled: Boolean = false,
+        val includes: String? = null,
+        val excludes: String? = null,
     )
 
 }

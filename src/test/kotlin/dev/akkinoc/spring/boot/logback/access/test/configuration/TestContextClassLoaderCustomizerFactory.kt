@@ -26,17 +26,17 @@ import reactor.netty.http.server.HttpServer as NettyHttpServer
 class TestContextClassLoaderCustomizerFactory : ContextCustomizerFactory {
 
     override fun createContextCustomizer(
-            testClass: Class<*>,
-            attributes: MutableList<ContextConfigurationAttributes>,
+        testClass: Class<*>,
+        attributes: MutableList<ContextConfigurationAttributes>,
     ): TestContextClassLoaderCustomizer {
         val testContextClassLoaderCustomizer = TestContextClassLoaderCustomizer(
-                hiddenClasses = getHiddenClasses(testClass),
-                additionalClassPaths = getAdditionalClassPaths(testClass),
+            hiddenClasses = getHiddenClasses(testClass),
+            additionalClassPaths = getAdditionalClassPaths(testClass),
         )
         log.debug(
-                "Creating the {}: {}",
-                TestContextClassLoaderCustomizer::class.simpleName,
-                testContextClassLoaderCustomizer,
+            "Creating the {}: {}",
+            TestContextClassLoaderCustomizer::class.simpleName,
+            testContextClassLoaderCustomizer,
         )
         return testContextClassLoaderCustomizer
     }
@@ -51,11 +51,11 @@ class TestContextClassLoaderCustomizerFactory : ContextCustomizerFactory {
     private fun getHiddenClasses(testClass: Class<*>): Set<Class<*>> {
         val annotations = MergedAnnotations.from(testClass, MergedAnnotations.SearchStrategy.TYPE_HIERARCHY)
         val usesTomcat = annotations.isPresent(TomcatServletWebTest::class.java) ||
-                annotations.isPresent(TomcatReactiveWebTest::class.java)
+            annotations.isPresent(TomcatReactiveWebTest::class.java)
         val usesJetty = annotations.isPresent(JettyServletWebTest::class.java) ||
-                annotations.isPresent(JettyReactiveWebTest::class.java)
+            annotations.isPresent(JettyReactiveWebTest::class.java)
         val usesUndertow = annotations.isPresent(UndertowServletWebTest::class.java) ||
-                annotations.isPresent(UndertowReactiveWebTest::class.java)
+            annotations.isPresent(UndertowReactiveWebTest::class.java)
         val usesNetty = annotations.isPresent(NettyReactiveWebTest::class.java)
         return mutableSetOf<Class<*>>().apply {
             if (!usesTomcat) add(Tomcat::class.java)
@@ -75,12 +75,12 @@ class TestContextClassLoaderCustomizerFactory : ContextCustomizerFactory {
      */
     private fun getAdditionalClassPaths(testClass: Class<*>): List<URL> {
         return generateSequence(testClass) { it.superclass }
-                .takeWhile { it != Any::class.java }
-                .map { convertClassNameToResourcePath(it.name) }
-                .map { ClassPathResource("$it/") }
-                .filter { it.exists() }
-                .map { it.url }
-                .toList()
+            .takeWhile { it != Any::class.java }
+            .map { convertClassNameToResourcePath(it.name) }
+            .map { ClassPathResource("$it/") }
+            .filter { it.exists() }
+            .map { it.url }
+            .toList()
     }
 
     companion object {

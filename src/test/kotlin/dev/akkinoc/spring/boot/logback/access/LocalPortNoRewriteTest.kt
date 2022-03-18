@@ -25,26 +25,26 @@ import org.springframework.test.context.TestPropertySource
  */
 @ExtendWith(EventsCaptureExtension::class)
 @TestPropertySource(
-        properties = [
-            "server.forward-headers-strategy=native",
-            "logback.access.config=classpath:logback-access-test.capture.xml",
-            "logback.access.local-port-strategy=local",
-        ],
+    properties = [
+        "server.forward-headers-strategy=native",
+        "logback.access.config=classpath:logback-access-test.capture.xml",
+        "logback.access.local-port-strategy=local",
+    ],
 )
 sealed class LocalPortNoRewriteTest {
 
     @Test
     fun `Does not rewrite the local port of the appended Logback-access event with forward headers`(
-            @Autowired rest: TestRestTemplate,
-            @LocalServerPort port: Int,
-            capture: EventsCapture,
+        @Autowired rest: TestRestTemplate,
+        @LocalServerPort port: Int,
+        capture: EventsCapture,
     ) {
         val request = RequestEntity.get("/mock-controller/text")
-                .header("x-forwarded-host", "forwarded-host")
-                .header("x-forwarded-port", "12345")
-                .header("x-forwarded-for", "1.2.3.4")
-                .header("x-forwarded-proto", "https")
-                .build()
+            .header("x-forwarded-host", "forwarded-host")
+            .header("x-forwarded-port", "12345")
+            .header("x-forwarded-for", "1.2.3.4")
+            .header("x-forwarded-proto", "https")
+            .build()
         val response = rest.exchange<String>(request)
         response.statusCodeValue.shouldBe(200)
         val event = assertLogbackAccessEventsEventually { capture.shouldBeSingleton().single() }
@@ -57,9 +57,9 @@ sealed class LocalPortNoRewriteTest {
 
     @Test
     fun `Does not rewrite the local port of the appended Logback-access event without forward headers`(
-            @Autowired rest: TestRestTemplate,
-            @LocalServerPort port: Int,
-            capture: EventsCapture,
+        @Autowired rest: TestRestTemplate,
+        @LocalServerPort port: Int,
+        capture: EventsCapture,
     ) {
         val request = RequestEntity.get("/mock-controller/text").build()
         val response = rest.exchange<String>(request)

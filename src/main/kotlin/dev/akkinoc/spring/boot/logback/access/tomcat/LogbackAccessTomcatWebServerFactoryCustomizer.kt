@@ -13,17 +13,17 @@ import org.springframework.boot.web.server.WebServerFactoryCustomizer
  * @see org.springframework.boot.autoconfigure.web.embedded.TomcatWebServerFactoryCustomizer
  */
 class LogbackAccessTomcatWebServerFactoryCustomizer(
-        private val logbackAccessContext: LogbackAccessContext,
+    private val logbackAccessContext: LogbackAccessContext,
 ) : WebServerFactoryCustomizer<ConfigurableTomcatWebServerFactory> {
 
     override fun customize(factory: ConfigurableTomcatWebServerFactory) {
         val valve = LogbackAccessTomcatValve(logbackAccessContext)
         factory.addEngineValves(valve)
         log.debug(
-                "Customized the {}: {} @{}",
-                ConfigurableTomcatWebServerFactory::class.simpleName,
-                factory,
-                logbackAccessContext,
+            "Customized the {}: {} @{}",
+            ConfigurableTomcatWebServerFactory::class.simpleName,
+            factory,
+            logbackAccessContext,
         )
     }
 

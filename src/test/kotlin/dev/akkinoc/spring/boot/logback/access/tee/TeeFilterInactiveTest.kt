@@ -31,24 +31,24 @@ import java.net.InetAddress
  */
 @ExtendWith(EventsCaptureExtension::class)
 @TestPropertySource(
-        properties = [
-            "logback.access.config=classpath:logback-access-test.capture.xml",
-            "logback.access.tee-filter.enabled=true",
-        ],
+    properties = [
+        "logback.access.config=classpath:logback-access-test.capture.xml",
+        "logback.access.tee-filter.enabled=true",
+    ],
 )
 sealed class TeeFilterInactiveTest(
-        private val supportsRequestContents: Boolean,
-        private val supportsResponseContents: Boolean,
+    private val supportsRequestContents: Boolean,
+    private val supportsResponseContents: Boolean,
 ) {
 
     @Test
     fun `Appends a Logback-access event without passing through the tee filter`(
-            @Autowired rest: TestRestTemplate,
-            capture: EventsCapture,
+        @Autowired rest: TestRestTemplate,
+        capture: EventsCapture,
     ) {
         val request = RequestEntity.post("/mock-controller/text")
-                .header("content-type", "text/plain")
-                .body("posted-text")
+            .header("content-type", "text/plain")
+            .body("posted-text")
         val response = rest.exchange<String>(request)
         response.statusCodeValue.shouldBe(200)
         response.body.shouldBe("mock-text")
@@ -66,11 +66,11 @@ sealed class TeeFilterInactiveTest(
  * @property supportsResponseContents Whether to support response contents.
  */
 sealed class TeeFilterHostNotIncludedTest(
-        supportsRequestContents: Boolean,
-        supportsResponseContents: Boolean,
+    supportsRequestContents: Boolean,
+    supportsResponseContents: Boolean,
 ) : TeeFilterInactiveTest(
-        supportsRequestContents = supportsRequestContents,
-        supportsResponseContents = supportsResponseContents,
+    supportsRequestContents = supportsRequestContents,
+    supportsResponseContents = supportsResponseContents,
 ) {
 
     companion object {
@@ -96,8 +96,8 @@ sealed class TeeFilterHostNotIncludedTest(
  */
 @TomcatServletWebTest
 class TomcatServletWebTeeFilterHostNotIncludedTest : TeeFilterHostNotIncludedTest(
-        supportsRequestContents = true,
-        supportsResponseContents = true,
+    supportsRequestContents = true,
+    supportsResponseContents = true,
 )
 
 /**
@@ -105,8 +105,8 @@ class TomcatServletWebTeeFilterHostNotIncludedTest : TeeFilterHostNotIncludedTes
  */
 @TomcatReactiveWebTest
 class TomcatReactiveWebTeeFilterHostNotIncludedTest : TeeFilterHostNotIncludedTest(
-        supportsRequestContents = false,
-        supportsResponseContents = false,
+    supportsRequestContents = false,
+    supportsResponseContents = false,
 )
 
 /**
@@ -114,8 +114,8 @@ class TomcatReactiveWebTeeFilterHostNotIncludedTest : TeeFilterHostNotIncludedTe
  */
 @JettyServletWebTest
 class JettyServletWebTeeFilterHostNotIncludedTest : TeeFilterHostNotIncludedTest(
-        supportsRequestContents = true,
-        supportsResponseContents = true,
+    supportsRequestContents = true,
+    supportsResponseContents = true,
 )
 
 /**
@@ -123,8 +123,8 @@ class JettyServletWebTeeFilterHostNotIncludedTest : TeeFilterHostNotIncludedTest
  */
 @JettyReactiveWebTest
 class JettyReactiveWebTeeFilterHostNotIncludedTest : TeeFilterHostNotIncludedTest(
-        supportsRequestContents = false,
-        supportsResponseContents = false,
+    supportsRequestContents = false,
+    supportsResponseContents = false,
 )
 
 /**
@@ -132,8 +132,8 @@ class JettyReactiveWebTeeFilterHostNotIncludedTest : TeeFilterHostNotIncludedTes
  */
 @UndertowServletWebTest
 class UndertowServletWebTeeFilterHostNotIncludedTest : TeeFilterHostNotIncludedTest(
-        supportsRequestContents = true,
-        supportsResponseContents = false,
+    supportsRequestContents = true,
+    supportsResponseContents = false,
 )
 
 /**
@@ -141,8 +141,8 @@ class UndertowServletWebTeeFilterHostNotIncludedTest : TeeFilterHostNotIncludedT
  */
 @UndertowReactiveWebTest
 class UndertowReactiveWebTeeFilterHostNotIncludedTest : TeeFilterHostNotIncludedTest(
-        supportsRequestContents = false,
-        supportsResponseContents = false,
+    supportsRequestContents = false,
+    supportsResponseContents = false,
 )
 
 /**
@@ -152,11 +152,11 @@ class UndertowReactiveWebTeeFilterHostNotIncludedTest : TeeFilterHostNotIncluded
  * @property supportsResponseContents Whether to support response contents.
  */
 sealed class TeeFilterHostExcludedTest(
-        supportsRequestContents: Boolean,
-        supportsResponseContents: Boolean,
+    supportsRequestContents: Boolean,
+    supportsResponseContents: Boolean,
 ) : TeeFilterInactiveTest(
-        supportsRequestContents = supportsRequestContents,
-        supportsResponseContents = supportsResponseContents,
+    supportsRequestContents = supportsRequestContents,
+    supportsResponseContents = supportsResponseContents,
 ) {
 
     companion object {
@@ -182,8 +182,8 @@ sealed class TeeFilterHostExcludedTest(
  */
 @TomcatServletWebTest
 class TomcatServletWebTeeFilterHostExcludedTest : TeeFilterHostExcludedTest(
-        supportsRequestContents = true,
-        supportsResponseContents = true,
+    supportsRequestContents = true,
+    supportsResponseContents = true,
 )
 
 /**
@@ -191,8 +191,8 @@ class TomcatServletWebTeeFilterHostExcludedTest : TeeFilterHostExcludedTest(
  */
 @TomcatReactiveWebTest
 class TomcatReactiveWebTeeFilterHostExcludedTest : TeeFilterHostExcludedTest(
-        supportsRequestContents = false,
-        supportsResponseContents = false,
+    supportsRequestContents = false,
+    supportsResponseContents = false,
 )
 
 /**
@@ -200,8 +200,8 @@ class TomcatReactiveWebTeeFilterHostExcludedTest : TeeFilterHostExcludedTest(
  */
 @JettyServletWebTest
 class JettyServletWebTeeFilterHostExcludedTest : TeeFilterHostExcludedTest(
-        supportsRequestContents = true,
-        supportsResponseContents = true,
+    supportsRequestContents = true,
+    supportsResponseContents = true,
 )
 
 /**
@@ -209,8 +209,8 @@ class JettyServletWebTeeFilterHostExcludedTest : TeeFilterHostExcludedTest(
  */
 @JettyReactiveWebTest
 class JettyReactiveWebTeeFilterHostExcludedTest : TeeFilterHostExcludedTest(
-        supportsRequestContents = false,
-        supportsResponseContents = false,
+    supportsRequestContents = false,
+    supportsResponseContents = false,
 )
 
 /**
@@ -218,8 +218,8 @@ class JettyReactiveWebTeeFilterHostExcludedTest : TeeFilterHostExcludedTest(
  */
 @UndertowServletWebTest
 class UndertowServletWebTeeFilterHostExcludedTest : TeeFilterHostExcludedTest(
-        supportsRequestContents = true,
-        supportsResponseContents = false,
+    supportsRequestContents = true,
+    supportsResponseContents = false,
 )
 
 /**
@@ -227,6 +227,6 @@ class UndertowServletWebTeeFilterHostExcludedTest : TeeFilterHostExcludedTest(
  */
 @UndertowReactiveWebTest
 class UndertowReactiveWebTeeFilterHostExcludedTest : TeeFilterHostExcludedTest(
-        supportsRequestContents = false,
-        supportsResponseContents = false,
+    supportsRequestContents = false,
+    supportsResponseContents = false,
 )

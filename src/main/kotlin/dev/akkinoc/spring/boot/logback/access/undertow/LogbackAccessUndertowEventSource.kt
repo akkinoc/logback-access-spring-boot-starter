@@ -35,8 +35,8 @@ import kotlin.text.Charsets.UTF_8
  * @see io.undertow.attribute.ExchangeAttribute
  */
 class LogbackAccessUndertowEventSource(
-        private val exchange: HttpServerExchange,
-        private val localPortStrategy: LogbackAccessLocalPortStrategy,
+    private val exchange: HttpServerExchange,
+    private val localPortStrategy: LogbackAccessLocalPortStrategy,
 ) : LogbackAccessEventSource() {
 
     override val request: HttpServletRequest? = run {
@@ -133,8 +133,8 @@ class LogbackAccessUndertowEventSource(
         val attrs = linkedMapOf<String, String>()
         if (request != null) {
             request.attributeNames.asSequence()
-                    .filter { it !in setOf(LB_INPUT_BUFFER, LB_OUTPUT_BUFFER) }
-                    .associateWithTo(attrs) { "${request.getAttribute(it)}" }
+                .filter { it !in setOf(LB_INPUT_BUFFER, LB_OUTPUT_BUFFER) }
+                .associateWithTo(attrs) { "${request.getAttribute(it)}" }
         }
         unmodifiableMap(attrs)
     }
@@ -147,9 +147,9 @@ class LogbackAccessUndertowEventSource(
         val bytes = request?.getAttribute(LB_INPUT_BUFFER) as ByteArray?
         if (bytes == null && request != null && isFormUrlEncoded(request)) {
             return@lazy requestParameterMap.asSequence()
-                    .flatMap { (key, values) -> values.asSequence().map { key to it } }
-                    .map { (key, value) -> encode(key, UTF_8.name()) to encode(value, UTF_8.name()) }
-                    .joinToString("&") { (key, value) -> "$key=$value" }
+                .flatMap { (key, values) -> values.asSequence().map { key to it } }
+                .map { (key, value) -> encode(key, UTF_8.name()) to encode(value, UTF_8.name()) }
+                .joinToString("&") { (key, value) -> "$key=$value" }
         }
         bytes?.let { String(it, UTF_8) }
     }

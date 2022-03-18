@@ -24,18 +24,18 @@ import org.springframework.test.context.TestPropertySource
  */
 @ExtendWith(OutputCaptureExtension::class)
 @TestPropertySource(
-        properties = [
-            "logback.access.config=classpath:logback-access-test-spring.property.xml",
-            "logback.access.test.console.pattern.prefix=>>>",
-            "logback.access.test.console.pattern.suffix=<<<",
-        ],
+    properties = [
+        "logback.access.config=classpath:logback-access-test-spring.property.xml",
+        "logback.access.test.console.pattern.prefix=>>>",
+        "logback.access.test.console.pattern.suffix=<<<",
+    ],
 )
 sealed class JoranSpringPropertyTest {
 
     @Test
     fun `Appends a Logback-access event according to the configuration file that contains springProperty tags`(
-            @Autowired rest: TestRestTemplate,
-            capture: CapturedOutput,
+        @Autowired rest: TestRestTemplate,
+        capture: CapturedOutput,
     ) {
         val request = RequestEntity.get("/mock-controller/text").build()
         val response = rest.exchange<String>(request)

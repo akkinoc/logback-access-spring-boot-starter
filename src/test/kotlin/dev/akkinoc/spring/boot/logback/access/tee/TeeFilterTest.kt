@@ -29,20 +29,20 @@ import org.springframework.test.context.TestPropertySource
  */
 @ExtendWith(EventsCaptureExtension::class)
 @TestPropertySource(
-        properties = [
-            "logback.access.config=classpath:logback-access-test.capture.xml",
-            "logback.access.tee-filter.enabled=true",
-        ],
+    properties = [
+        "logback.access.config=classpath:logback-access-test.capture.xml",
+        "logback.access.tee-filter.enabled=true",
+    ],
 )
 sealed class TeeFilterTest(
-        private val supportsRequestContents: Boolean,
-        private val supportsResponseContents: Boolean,
+    private val supportsRequestContents: Boolean,
+    private val supportsResponseContents: Boolean,
 ) {
 
     @Test
     fun `Appends a Logback-access event through the tee filter`(
-            @Autowired rest: TestRestTemplate,
-            capture: EventsCapture,
+        @Autowired rest: TestRestTemplate,
+        capture: EventsCapture,
     ) {
         val request = RequestEntity.get("/mock-controller/text").build()
         val response = rest.exchange<String>(request)
@@ -55,12 +55,12 @@ sealed class TeeFilterTest(
 
     @Test
     fun `Appends a Logback-access event with a request content through the tee filter`(
-            @Autowired rest: TestRestTemplate,
-            capture: EventsCapture,
+        @Autowired rest: TestRestTemplate,
+        capture: EventsCapture,
     ) {
         val request = RequestEntity.post("/mock-controller/text")
-                .header("content-type", "text/plain")
-                .body("posted-text")
+            .header("content-type", "text/plain")
+            .body("posted-text")
         val response = rest.exchange<String>(request)
         response.statusCodeValue.shouldBe(200)
         response.body.shouldBe("mock-text")
@@ -71,12 +71,12 @@ sealed class TeeFilterTest(
 
     @Test
     fun `Appends a Logback-access event with a form data request content through the tee filter`(
-            @Autowired rest: TestRestTemplate,
-            capture: EventsCapture,
+        @Autowired rest: TestRestTemplate,
+        capture: EventsCapture,
     ) {
         val request = RequestEntity.post("/mock-controller/form-data")
-                .header("content-type", "application/x-www-form-urlencoded")
-                .body("a=value+%40a&b=value1+%40b&b=value2+%40b&c=")
+            .header("content-type", "application/x-www-form-urlencoded")
+            .body("a=value+%40a&b=value1+%40b&b=value2+%40b&c=")
         val response = rest.exchange<String>(request)
         response.statusCodeValue.shouldBe(200)
         response.body.shouldBe("mock-text")
@@ -87,8 +87,8 @@ sealed class TeeFilterTest(
 
     @Test
     fun `Appends a Logback-access event with an image response content through the tee filter`(
-            @Autowired rest: TestRestTemplate,
-            capture: EventsCapture,
+        @Autowired rest: TestRestTemplate,
+        capture: EventsCapture,
     ) {
         val request = RequestEntity.get("/mock-static/image.svg").build()
         val response = rest.exchange<ByteArray>(request)
@@ -106,8 +106,8 @@ sealed class TeeFilterTest(
  */
 @TomcatServletWebTest
 class TomcatServletWebTeeFilterTest : TeeFilterTest(
-        supportsRequestContents = true,
-        supportsResponseContents = true,
+    supportsRequestContents = true,
+    supportsResponseContents = true,
 )
 
 /**
@@ -115,8 +115,8 @@ class TomcatServletWebTeeFilterTest : TeeFilterTest(
  */
 @TomcatReactiveWebTest
 class TomcatReactiveWebTeeFilterTest : TeeFilterTest(
-        supportsRequestContents = false,
-        supportsResponseContents = false,
+    supportsRequestContents = false,
+    supportsResponseContents = false,
 )
 
 /**
@@ -124,8 +124,8 @@ class TomcatReactiveWebTeeFilterTest : TeeFilterTest(
  */
 @JettyServletWebTest
 class JettyServletWebTeeFilterTest : TeeFilterTest(
-        supportsRequestContents = true,
-        supportsResponseContents = true,
+    supportsRequestContents = true,
+    supportsResponseContents = true,
 )
 
 /**
@@ -133,8 +133,8 @@ class JettyServletWebTeeFilterTest : TeeFilterTest(
  */
 @JettyReactiveWebTest
 class JettyReactiveWebTeeFilterTest : TeeFilterTest(
-        supportsRequestContents = false,
-        supportsResponseContents = false,
+    supportsRequestContents = false,
+    supportsResponseContents = false,
 )
 
 /**
@@ -142,8 +142,8 @@ class JettyReactiveWebTeeFilterTest : TeeFilterTest(
  */
 @UndertowServletWebTest
 class UndertowServletWebTeeFilterTest : TeeFilterTest(
-        supportsRequestContents = true,
-        supportsResponseContents = false,
+    supportsRequestContents = true,
+    supportsResponseContents = false,
 )
 
 /**
@@ -151,6 +151,6 @@ class UndertowServletWebTeeFilterTest : TeeFilterTest(
  */
 @UndertowReactiveWebTest
 class UndertowReactiveWebTeeFilterTest : TeeFilterTest(
-        supportsRequestContents = false,
-        supportsResponseContents = false,
+    supportsRequestContents = false,
+    supportsResponseContents = false,
 )

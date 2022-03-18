@@ -28,14 +28,14 @@ class LogbackAccessTomcatConfiguration {
     @Bean
     @ConditionalOnMissingBean
     fun logbackAccessTomcatWebServerFactoryCustomizer(
-            logbackAccessContext: LogbackAccessContext,
+        logbackAccessContext: LogbackAccessContext,
     ): LogbackAccessTomcatWebServerFactoryCustomizer {
         val logbackAccessTomcatWebServerFactoryCustomizer =
-                LogbackAccessTomcatWebServerFactoryCustomizer(logbackAccessContext)
+            LogbackAccessTomcatWebServerFactoryCustomizer(logbackAccessContext)
         log.debug(
-                "Providing the {}: {}",
-                LogbackAccessTomcatWebServerFactoryCustomizer::class.simpleName,
-                logbackAccessTomcatWebServerFactoryCustomizer,
+            "Providing the {}: {}",
+            LogbackAccessTomcatWebServerFactoryCustomizer::class.simpleName,
+            logbackAccessTomcatWebServerFactoryCustomizer,
         )
         return logbackAccessTomcatWebServerFactoryCustomizer
     }

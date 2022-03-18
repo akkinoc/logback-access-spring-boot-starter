@@ -31,13 +31,13 @@ import org.springframework.core.io.ResourceLoader
 @ConditionalOnWebApplication
 @EnableConfigurationProperties(LogbackAccessProperties::class)
 @Import(
-        LogbackAccessTomcatConfiguration::class,
-        LogbackAccessJettyConfiguration::class,
-        LogbackAccessUndertowConfiguration::class,
-        LogbackAccessUndertowServletConfiguration::class,
-        LogbackAccessUndertowReactiveConfiguration::class,
-        LogbackAccessSecurityServletFilterConfiguration::class,
-        LogbackAccessTeeServletFilterConfiguration::class,
+    LogbackAccessTomcatConfiguration::class,
+    LogbackAccessJettyConfiguration::class,
+    LogbackAccessUndertowConfiguration::class,
+    LogbackAccessUndertowServletConfiguration::class,
+    LogbackAccessUndertowReactiveConfiguration::class,
+    LogbackAccessSecurityServletFilterConfiguration::class,
+    LogbackAccessTeeServletFilterConfiguration::class,
 )
 class LogbackAccessAutoConfiguration {
 
@@ -52,9 +52,9 @@ class LogbackAccessAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     fun logbackAccessContext(
-            logbackAccessProperties: LogbackAccessProperties,
-            resourceLoader: ResourceLoader,
-            environment: Environment,
+        logbackAccessProperties: LogbackAccessProperties,
+        resourceLoader: ResourceLoader,
+        environment: Environment,
     ): LogbackAccessContext {
         val logbackAccessContext = LogbackAccessContext(logbackAccessProperties, resourceLoader, environment)
         log.debug("Providing the {}: {}", LogbackAccessContext::class.simpleName, logbackAccessContext)

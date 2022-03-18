@@ -28,9 +28,9 @@ class LogbackAccessSecurityServletFilterConfiguration {
     fun logbackAccessSecurityServletFilter(): FilterRegistrationBean<LogbackAccessSecurityServletFilter> {
         val logbackAccessSecurityServletFilter = FilterRegistrationBean(LogbackAccessSecurityServletFilter())
         log.debug(
-                "Providing the {}: {}",
-                LogbackAccessSecurityServletFilter::class.simpleName,
-                logbackAccessSecurityServletFilter,
+            "Providing the {}: {}",
+            LogbackAccessSecurityServletFilter::class.simpleName,
+            logbackAccessSecurityServletFilter,
         )
         return logbackAccessSecurityServletFilter
     }

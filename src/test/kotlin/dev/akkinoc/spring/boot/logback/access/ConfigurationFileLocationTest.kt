@@ -27,8 +27,8 @@ sealed class ConfigurationFileLocationTest {
 
     @Test
     fun `Appends a Logback-access event according to the configuration file found`(
-            @Autowired rest: TestRestTemplate,
-            capture: EventsCapture,
+        @Autowired rest: TestRestTemplate,
+        capture: EventsCapture,
     ) {
         val request = RequestEntity.get("/mock-controller/text").build()
         val response = rest.exchange<String>(request)

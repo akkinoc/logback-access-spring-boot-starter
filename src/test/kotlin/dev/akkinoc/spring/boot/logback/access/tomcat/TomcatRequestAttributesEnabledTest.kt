@@ -21,19 +21,19 @@ import org.springframework.test.context.TestPropertySource
  */
 @ExtendWith(EventsCaptureExtension::class)
 @TestPropertySource(
-        properties = [
-            "server.forward-headers-strategy=none",
-            "logback.access.config=classpath:logback-access-test.capture.xml",
-            "logback.access.tomcat.request-attributes-enabled=true",
-        ],
+    properties = [
+        "server.forward-headers-strategy=none",
+        "logback.access.config=classpath:logback-access-test.capture.xml",
+        "logback.access.tomcat.request-attributes-enabled=true",
+    ],
 )
 sealed class TomcatRequestAttributesEnabledTest {
 
     @Test
     fun `Does not rewrite some attributes of the appended Logback-access event with forward headers`(
-            @Autowired rest: TestRestTemplate,
-            @LocalServerPort port: Int,
-            capture: EventsCapture,
+        @Autowired rest: TestRestTemplate,
+        @LocalServerPort port: Int,
+        capture: EventsCapture,
     ) {
         val request = RequestEntity.get("/mock-controller/text").build()
         val response = rest.exchange<String>(request)
@@ -48,9 +48,9 @@ sealed class TomcatRequestAttributesEnabledTest {
 
     @Test
     fun `Does not rewrite some attributes of the appended Logback-access event without forward headers`(
-            @Autowired rest: TestRestTemplate,
-            @LocalServerPort port: Int,
-            capture: EventsCapture,
+        @Autowired rest: TestRestTemplate,
+        @LocalServerPort port: Int,
+        capture: EventsCapture,
     ) {
         val request = RequestEntity.get("/mock-controller/text").build()
         val response = rest.exchange<String>(request)

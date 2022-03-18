@@ -28,14 +28,14 @@ class LogbackAccessUndertowServletConfiguration {
     @Bean
     @ConditionalOnMissingBean
     fun logbackAccessUndertowServletWebServerFactoryCustomizer(
-            logbackAccessContext: LogbackAccessContext,
+        logbackAccessContext: LogbackAccessContext,
     ): LogbackAccessUndertowServletWebServerFactoryCustomizer {
         val logbackAccessUndertowServletWebServerFactoryCustomizer =
-                LogbackAccessUndertowServletWebServerFactoryCustomizer(logbackAccessContext)
+            LogbackAccessUndertowServletWebServerFactoryCustomizer(logbackAccessContext)
         log.debug(
-                "Providing the {}: {}",
-                LogbackAccessUndertowServletWebServerFactoryCustomizer::class.simpleName,
-                logbackAccessUndertowServletWebServerFactoryCustomizer,
+            "Providing the {}: {}",
+            LogbackAccessUndertowServletWebServerFactoryCustomizer::class.simpleName,
+            logbackAccessUndertowServletWebServerFactoryCustomizer,
         )
         return logbackAccessUndertowServletWebServerFactoryCustomizer
     }

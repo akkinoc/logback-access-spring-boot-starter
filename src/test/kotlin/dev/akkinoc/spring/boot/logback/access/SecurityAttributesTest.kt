@@ -30,20 +30,20 @@ import org.springframework.test.context.TestPropertySource
 @ExtendWith(EventsCaptureExtension::class)
 @Import(SecurityAutoConfiguration::class, ReactiveSecurityAutoConfiguration::class)
 @TestPropertySource(
-        properties = [
-            "spring.security.user.name=test-user",
-            "spring.security.user.password=test-password",
-            "logback.access.config=classpath:logback-access-test.capture.xml",
-        ],
+    properties = [
+        "spring.security.user.name=test-user",
+        "spring.security.user.password=test-password",
+        "logback.access.config=classpath:logback-access-test.capture.xml",
+    ],
 )
 sealed class SecurityAttributesTest(
-        private val supportsRemoteUsers: Boolean,
+    private val supportsRemoteUsers: Boolean,
 ) {
 
     @Test
     fun `Rewrites the remote user of the appended Logback-access event with Spring Security`(
-            @Autowired rest: TestRestTemplate,
-            capture: EventsCapture,
+        @Autowired rest: TestRestTemplate,
+        capture: EventsCapture,
     ) {
         val request = RequestEntity.get("/mock-controller/text").build()
         val response = rest.withBasicAuth("test-user", "test-password").exchange<String>(request)
@@ -60,7 +60,7 @@ sealed class SecurityAttributesTest(
  */
 @TomcatServletWebTest
 class TomcatServletWebSecurityAttributesTest : SecurityAttributesTest(
-        supportsRemoteUsers = true,
+    supportsRemoteUsers = true,
 )
 
 /**
@@ -68,7 +68,7 @@ class TomcatServletWebSecurityAttributesTest : SecurityAttributesTest(
  */
 @TomcatReactiveWebTest
 class TomcatReactiveWebSecurityAttributesTest : SecurityAttributesTest(
-        supportsRemoteUsers = false,
+    supportsRemoteUsers = false,
 )
 
 /**
@@ -76,7 +76,7 @@ class TomcatReactiveWebSecurityAttributesTest : SecurityAttributesTest(
  */
 @JettyServletWebTest
 class JettyServletWebSecurityAttributesTest : SecurityAttributesTest(
-        supportsRemoteUsers = true,
+    supportsRemoteUsers = true,
 )
 
 /**
@@ -84,7 +84,7 @@ class JettyServletWebSecurityAttributesTest : SecurityAttributesTest(
  */
 @JettyReactiveWebTest
 class JettyReactiveWebSecurityAttributesTest : SecurityAttributesTest(
-        supportsRemoteUsers = false,
+    supportsRemoteUsers = false,
 )
 
 /**
@@ -92,7 +92,7 @@ class JettyReactiveWebSecurityAttributesTest : SecurityAttributesTest(
  */
 @UndertowServletWebTest
 class UndertowServletWebSecurityAttributesTest : SecurityAttributesTest(
-        supportsRemoteUsers = true,
+    supportsRemoteUsers = true,
 )
 
 /**
@@ -100,5 +100,5 @@ class UndertowServletWebSecurityAttributesTest : SecurityAttributesTest(
  */
 @UndertowReactiveWebTest
 class UndertowReactiveWebSecurityAttributesTest : SecurityAttributesTest(
-        supportsRemoteUsers = false,
+    supportsRemoteUsers = false,
 )

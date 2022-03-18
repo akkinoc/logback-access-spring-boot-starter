@@ -28,14 +28,14 @@ class LogbackAccessJettyConfiguration {
     @Bean
     @ConditionalOnMissingBean
     fun logbackAccessJettyWebServerFactoryCustomizer(
-            logbackAccessContext: LogbackAccessContext,
+        logbackAccessContext: LogbackAccessContext,
     ): LogbackAccessJettyWebServerFactoryCustomizer {
         val logbackAccessJettyWebServerFactoryCustomizer =
-                LogbackAccessJettyWebServerFactoryCustomizer(logbackAccessContext)
+            LogbackAccessJettyWebServerFactoryCustomizer(logbackAccessContext)
         log.debug(
-                "Providing the {}: {}",
-                LogbackAccessJettyWebServerFactoryCustomizer::class.simpleName,
-                logbackAccessJettyWebServerFactoryCustomizer,
+            "Providing the {}: {}",
+            LogbackAccessJettyWebServerFactoryCustomizer::class.simpleName,
+            logbackAccessJettyWebServerFactoryCustomizer,
         )
         return logbackAccessJettyWebServerFactoryCustomizer
     }

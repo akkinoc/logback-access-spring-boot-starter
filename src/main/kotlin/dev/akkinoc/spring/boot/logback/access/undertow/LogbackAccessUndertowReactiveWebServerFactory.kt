@@ -24,7 +24,7 @@ import org.springframework.util.ReflectionUtils.makeAccessible
  * @see org.springframework.boot.web.embedded.undertow.AccessLogHttpHandlerFactory
  */
 class LogbackAccessUndertowReactiveWebServerFactory(
-        private val logbackAccessContext: LogbackAccessContext,
+    private val logbackAccessContext: LogbackAccessContext,
 ) : UndertowReactiveWebServerFactory() {
 
     // FIXME: I'd like to fix this class if there is a better way.
@@ -40,10 +40,10 @@ class LogbackAccessUndertowReactiveWebServerFactory(
         val autoStart = originalServer.extractField<Boolean>("autoStart")
         val server = UndertowWebServer(builder, httpHandlerFactories, autoStart)
         log.debug(
-                "Customized the {}: {} @{}",
-                WebServer::class.simpleName,
-                server,
-                logbackAccessContext,
+            "Customized the {}: {} @{}",
+            WebServer::class.simpleName,
+            server,
+            logbackAccessContext,
         )
         return server
     }

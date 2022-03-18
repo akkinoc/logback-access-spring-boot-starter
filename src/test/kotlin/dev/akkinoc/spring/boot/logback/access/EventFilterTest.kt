@@ -30,12 +30,12 @@ sealed class EventFilterTest {
 
     @Test
     fun `If the filter accepts a Logback-access event, appends it`(
-            @Autowired rest: TestRestTemplate,
-            capture: EventsCapture,
+        @Autowired rest: TestRestTemplate,
+        capture: EventsCapture,
     ) {
         val request = RequestEntity.get("/mock-controller/text")
-                .header("mock-event-filter-reply", "accept")
-                .build()
+            .header("mock-event-filter-reply", "accept")
+            .build()
         val response = rest.exchange<String>(request)
         response.statusCodeValue.shouldBe(200)
         assertLogbackAccessEventsEventually { capture.shouldBeSingleton() }
@@ -43,12 +43,12 @@ sealed class EventFilterTest {
 
     @Test
     fun `If the filter passes a Logback-access event, appends it`(
-            @Autowired rest: TestRestTemplate,
-            capture: EventsCapture,
+        @Autowired rest: TestRestTemplate,
+        capture: EventsCapture,
     ) {
         val request = RequestEntity.get("/mock-controller/text")
-                .header("mock-event-filter-reply", "neutral")
-                .build()
+            .header("mock-event-filter-reply", "neutral")
+            .build()
         val response = rest.exchange<String>(request)
         response.statusCodeValue.shouldBe(200)
         assertLogbackAccessEventsEventually { capture.shouldBeSingleton() }
@@ -56,12 +56,12 @@ sealed class EventFilterTest {
 
     @Test
     fun `If the filter denies a Logback-access event, does not append it`(
-            @Autowired rest: TestRestTemplate,
-            capture: EventsCapture,
+        @Autowired rest: TestRestTemplate,
+        capture: EventsCapture,
     ) {
         val request = RequestEntity.get("/mock-controller/text")
-                .header("mock-event-filter-reply", "deny")
-                .build()
+            .header("mock-event-filter-reply", "deny")
+            .build()
         val response = rest.exchange<String>(request)
         response.statusCodeValue.shouldBe(200)
         assertLogbackAccessEventsContinually { capture.shouldBeEmpty() }

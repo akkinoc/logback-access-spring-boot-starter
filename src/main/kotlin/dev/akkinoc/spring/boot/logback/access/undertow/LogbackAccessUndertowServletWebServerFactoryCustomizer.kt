@@ -17,16 +17,16 @@ import org.springframework.boot.web.server.WebServerFactoryCustomizer
  * @see org.springframework.boot.web.embedded.undertow.AccessLogHttpHandlerFactory
  */
 class LogbackAccessUndertowServletWebServerFactoryCustomizer(
-        private val logbackAccessContext: LogbackAccessContext,
+    private val logbackAccessContext: LogbackAccessContext,
 ) : WebServerFactoryCustomizer<UndertowServletWebServerFactory> {
 
     override fun customize(factory: UndertowServletWebServerFactory) {
         factory.addDeploymentInfoCustomizers(::customize)
         log.debug(
-                "Customized the {}: {} @{}",
-                UndertowServletWebServerFactory::class.simpleName,
-                factory,
-                logbackAccessContext,
+            "Customized the {}: {} @{}",
+            UndertowServletWebServerFactory::class.simpleName,
+            factory,
+            logbackAccessContext,
         )
     }
 
@@ -40,10 +40,10 @@ class LogbackAccessUndertowServletWebServerFactoryCustomizer(
             LogbackAccessUndertowHttpHandler(logbackAccessContext, it)
         }
         log.debug(
-                "Customized the {}: {} @{}",
-                DeploymentInfo::class.simpleName,
-                info,
-                logbackAccessContext,
+            "Customized the {}: {} @{}",
+            DeploymentInfo::class.simpleName,
+            info,
+            logbackAccessContext,
         )
     }
 

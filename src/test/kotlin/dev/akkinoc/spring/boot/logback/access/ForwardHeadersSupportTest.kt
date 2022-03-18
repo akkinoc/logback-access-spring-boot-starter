@@ -29,15 +29,15 @@ sealed class ForwardHeadersSupportTest {
 
     @Test
     fun `Rewrites some attributes of the appended Logback-access event with forward headers`(
-            @Autowired rest: TestRestTemplate,
-            capture: EventsCapture,
+        @Autowired rest: TestRestTemplate,
+        capture: EventsCapture,
     ) {
         val request = RequestEntity.get("/mock-controller/text")
-                .header("x-forwarded-host", "forwarded-host")
-                .header("x-forwarded-port", "12345")
-                .header("x-forwarded-for", "1.2.3.4")
-                .header("x-forwarded-proto", "https")
-                .build()
+            .header("x-forwarded-host", "forwarded-host")
+            .header("x-forwarded-port", "12345")
+            .header("x-forwarded-for", "1.2.3.4")
+            .header("x-forwarded-proto", "https")
+            .build()
         val response = rest.exchange<String>(request)
         response.statusCodeValue.shouldBe(200)
         val event = assertLogbackAccessEventsEventually { capture.shouldBeSingleton().single() }
@@ -50,9 +50,9 @@ sealed class ForwardHeadersSupportTest {
 
     @Test
     fun `Does not rewrite some attributes of the appended Logback-access event without forward headers`(
-            @Autowired rest: TestRestTemplate,
-            @LocalServerPort port: Int,
-            capture: EventsCapture,
+        @Autowired rest: TestRestTemplate,
+        @LocalServerPort port: Int,
+        capture: EventsCapture,
     ) {
         val request = RequestEntity.get("/mock-controller/text").build()
         val response = rest.exchange<String>(request)

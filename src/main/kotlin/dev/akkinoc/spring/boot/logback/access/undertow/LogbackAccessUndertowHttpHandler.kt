@@ -16,16 +16,16 @@ import org.slf4j.LoggerFactory.getLogger
  * @see io.undertow.server.handlers.accesslog.AccessLogHandler
  */
 class LogbackAccessUndertowHttpHandler(
-        private val logbackAccessContext: LogbackAccessContext,
-        private val next: HttpHandler,
+    private val logbackAccessContext: LogbackAccessContext,
+    private val next: HttpHandler,
 ) : HttpHandler {
 
     override fun handleRequest(exchange: HttpServerExchange) {
         log.debug(
-                "Handling the {}: {} @{}",
-                HttpServerExchange::class.simpleName,
-                exchange,
-                logbackAccessContext,
+            "Handling the {}: {} @{}",
+            HttpServerExchange::class.simpleName,
+            exchange,
+            logbackAccessContext,
         )
         exchange.addExchangeCompleteListener(::log)
         next.handleRequest(exchange)
@@ -39,14 +39,14 @@ class LogbackAccessUndertowHttpHandler(
      */
     private fun log(exchange: HttpServerExchange, next: NextListener) {
         log.debug(
-                "Logging the {}: {} @{}",
-                HttpServerExchange::class.simpleName,
-                exchange,
-                logbackAccessContext,
+            "Logging the {}: {} @{}",
+            HttpServerExchange::class.simpleName,
+            exchange,
+            logbackAccessContext,
         )
         val source = LogbackAccessUndertowEventSource(
-                exchange = exchange,
-                localPortStrategy = logbackAccessContext.properties.localPortStrategy,
+            exchange = exchange,
+            localPortStrategy = logbackAccessContext.properties.localPortStrategy,
         )
         val event = LogbackAccessEvent(source)
         logbackAccessContext.emit(event)

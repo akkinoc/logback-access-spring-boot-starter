@@ -15,16 +15,16 @@ import org.springframework.boot.web.server.WebServerFactoryCustomizer
  * @see org.springframework.boot.autoconfigure.web.embedded.JettyWebServerFactoryCustomizer
  */
 class LogbackAccessJettyWebServerFactoryCustomizer(
-        private val logbackAccessContext: LogbackAccessContext,
+    private val logbackAccessContext: LogbackAccessContext,
 ) : WebServerFactoryCustomizer<ConfigurableJettyWebServerFactory> {
 
     override fun customize(factory: ConfigurableJettyWebServerFactory) {
         factory.addServerCustomizers(::customize)
         log.debug(
-                "Customized the {}: {} @{}",
-                ConfigurableJettyWebServerFactory::class.simpleName,
-                factory,
-                logbackAccessContext,
+            "Customized the {}: {} @{}",
+            ConfigurableJettyWebServerFactory::class.simpleName,
+            factory,
+            logbackAccessContext,
         )
     }
 
@@ -39,10 +39,10 @@ class LogbackAccessJettyWebServerFactoryCustomizer(
         }
         server.insertHandler(handler)
         log.debug(
-                "Customized the {}: {} @{}",
-                Server::class.simpleName,
-                server,
-                logbackAccessContext,
+            "Customized the {}: {} @{}",
+            Server::class.simpleName,
+            server,
+            logbackAccessContext,
         )
     }
 

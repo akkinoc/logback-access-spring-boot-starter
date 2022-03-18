@@ -16,8 +16,8 @@ import java.net.URLClassLoader
  * @property additionalClassPaths The class paths to add.
  */
 data class TestContextClassLoaderCustomizer(
-        private val hiddenClasses: Set<Class<*>> = emptySet(),
-        private val additionalClassPaths: List<URL> = emptyList(),
+    private val hiddenClasses: Set<Class<*>> = emptySet(),
+    private val additionalClassPaths: List<URL> = emptyList(),
 ) : ContextCustomizer {
 
     override fun customizeContext(context: ConfigurableApplicationContext, config: MergedContextConfiguration) {

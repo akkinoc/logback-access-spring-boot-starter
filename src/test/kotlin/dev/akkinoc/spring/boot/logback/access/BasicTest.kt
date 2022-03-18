@@ -31,7 +31,7 @@ sealed class BasicTest {
 
     @Test
     fun `Provides the configuration properties for Logback-access`(
-            @Autowired logbackAccessProperties: LogbackAccessProperties?,
+        @Autowired logbackAccessProperties: LogbackAccessProperties?,
     ) {
         logbackAccessProperties.shouldNotBeNull()
         logbackAccessProperties.enabled.shouldBe(true)
@@ -46,8 +46,8 @@ sealed class BasicTest {
 
     @Test
     fun `Provides the Logback-access context`(
-            @Autowired logbackAccessContext: LogbackAccessContext?,
-            @Autowired logbackAccessProperties: LogbackAccessProperties?,
+        @Autowired logbackAccessContext: LogbackAccessContext?,
+        @Autowired logbackAccessProperties: LogbackAccessProperties?,
     ) {
         logbackAccessContext.shouldNotBeNull()
         logbackAccessContext.properties.shouldBeSameInstanceAs(logbackAccessProperties)
@@ -55,8 +55,8 @@ sealed class BasicTest {
 
     @Test
     fun `Appends a Logback-access event`(
-            @Autowired rest: TestRestTemplate,
-            capture: CapturedOutput,
+        @Autowired rest: TestRestTemplate,
+        capture: CapturedOutput,
     ) {
         val request = RequestEntity.get("/mock-controller/text").build()
         val response = rest.exchange<String>(request)

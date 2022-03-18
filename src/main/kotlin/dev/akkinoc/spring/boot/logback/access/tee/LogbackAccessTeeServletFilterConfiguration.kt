@@ -18,10 +18,10 @@ import org.springframework.context.annotation.Configuration
  */
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnProperty(
-        prefix = "logback.access.tee-filter",
-        name = ["enabled"],
-        havingValue = "true",
-        matchIfMissing = false,
+    prefix = "logback.access.tee-filter",
+    name = ["enabled"],
+    havingValue = "true",
+    matchIfMissing = false,
 )
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 class LogbackAccessTeeServletFilterConfiguration {
@@ -35,16 +35,16 @@ class LogbackAccessTeeServletFilterConfiguration {
     @Bean
     @ConditionalOnMissingFilterBean
     fun logbackAccessTeeServletFilter(
-            logbackAccessProperties: LogbackAccessProperties,
+        logbackAccessProperties: LogbackAccessProperties,
     ): FilterRegistrationBean<TeeFilter> {
         val props = logbackAccessProperties.teeFilter
         val logbackAccessTeeServletFilter = FilterRegistrationBean(TeeFilter())
         props.includes?.also { logbackAccessTeeServletFilter.addInitParameter(TEE_FILTER_INCLUDES_PARAM, it) }
         props.excludes?.also { logbackAccessTeeServletFilter.addInitParameter(TEE_FILTER_EXCLUDES_PARAM, it) }
         log.debug(
-                "Providing the {}: {}",
-                TeeFilter::class.simpleName,
-                logbackAccessTeeServletFilter,
+            "Providing the {}: {}",
+            TeeFilter::class.simpleName,
+            logbackAccessTeeServletFilter,
         )
         return logbackAccessTeeServletFilter
     }

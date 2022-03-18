@@ -20,9 +20,9 @@ import org.springframework.util.ResourceUtils.getURL
  * @param environment The environment.
  */
 class LogbackAccessContext(
-        val properties: LogbackAccessProperties,
-        resourceLoader: ResourceLoader,
-        environment: Environment,
+    val properties: LogbackAccessProperties,
+    resourceLoader: ResourceLoader,
+    environment: Environment,
 ) : AutoCloseable {
 
     /**
@@ -32,10 +32,10 @@ class LogbackAccessContext(
 
     init {
         val (name, resource) = properties.config?.let { it to resourceLoader.getResource("${getURL(it)}") }
-                ?: DEFAULT_CONFIGS.asSequence()
-                        .map { it to resourceLoader.getResource(it) }
-                        .firstOrNull { (_, resource) -> resource.exists() }
-                ?: FALLBACK_CONFIG.let { it to resourceLoader.getResource(it) }
+            ?: DEFAULT_CONFIGS.asSequence()
+                .map { it to resourceLoader.getResource(it) }
+                .firstOrNull { (_, resource) -> resource.exists() }
+            ?: FALLBACK_CONFIG.let { it to resourceLoader.getResource(it) }
         raw.name = name
         raw.statusManager.add(::log)
         val configurator = LogbackAccessJoranConfigurator(environment)

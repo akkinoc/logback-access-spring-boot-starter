@@ -51,17 +51,17 @@ import java.util.concurrent.TimeUnit.MILLISECONDS
 @ExtendWith(EventsCaptureExtension::class)
 @TestPropertySource(properties = ["logback.access.config=classpath:logback-access-test.capture.xml"])
 sealed class BasicEventTest(
-        private val supportsRequestParametersByFormData: Boolean,
-        private val supportsRequestAttributes: Boolean,
-        private val supportsSessionIDs: Boolean,
-        private val canForwardRequests: Boolean,
+    private val supportsRequestParametersByFormData: Boolean,
+    private val supportsRequestAttributes: Boolean,
+    private val supportsSessionIDs: Boolean,
+    private val canForwardRequests: Boolean,
 ) {
 
     @Test
     fun `Appends a Logback-access event`(
-            @Autowired rest: TestRestTemplate,
-            @LocalServerPort port: Int,
-            capture: EventsCapture,
+        @Autowired rest: TestRestTemplate,
+        @LocalServerPort port: Int,
+        capture: EventsCapture,
     ) {
         val request = RequestEntity.get("/mock-controller/text").build()
         val started = currentTimeMillis()
@@ -107,14 +107,14 @@ sealed class BasicEventTest(
 
     @Test
     fun `Appends a Logback-access event with request headers`(
-            @Autowired rest: TestRestTemplate,
-            capture: EventsCapture,
+        @Autowired rest: TestRestTemplate,
+        capture: EventsCapture,
     ) {
         val request = RequestEntity.get("/mock-controller/text")
-                .header("a", "value @a")
-                .header("b", "value1 @b", "value2 @b")
-                .header("c", "")
-                .build()
+            .header("a", "value @a")
+            .header("b", "value1 @b", "value2 @b")
+            .header("c", "")
+            .build()
         val response = rest.exchange<String>(request)
         response.statusCodeValue.shouldBe(200)
         val event = assertLogbackAccessEventsEventually { capture.shouldBeSingleton().single() }
@@ -133,12 +133,12 @@ sealed class BasicEventTest(
 
     @Test
     fun `Appends a Logback-access event with request cookies`(
-            @Autowired rest: TestRestTemplate,
-            capture: EventsCapture,
+        @Autowired rest: TestRestTemplate,
+        capture: EventsCapture,
     ) {
         val request = RequestEntity.get("/mock-controller/text")
-                .header("cookie", "a=value+%40a; b=")
-                .build()
+            .header("cookie", "a=value+%40a; b=")
+            .build()
         val response = rest.exchange<String>(request)
         response.statusCodeValue.shouldBe(200)
         val event = assertLogbackAccessEventsEventually { capture.shouldBeSingleton().single() }
@@ -148,8 +148,8 @@ sealed class BasicEventTest(
 
     @Test
     fun `Appends a Logback-access event with request parameters by query string`(
-            @Autowired rest: TestRestTemplate,
-            capture: EventsCapture,
+        @Autowired rest: TestRestTemplate,
+        capture: EventsCapture,
     ) {
         val request = RequestEntity.get("/mock-controller/text?a=value+@a&b=value1+@b&b=value2+@b&c=").build()
         val response = rest.exchange<String>(request)
@@ -170,12 +170,12 @@ sealed class BasicEventTest(
 
     @Test
     fun `Appends a Logback-access event with request parameters by form data`(
-            @Autowired rest: TestRestTemplate,
-            capture: EventsCapture,
+        @Autowired rest: TestRestTemplate,
+        capture: EventsCapture,
     ) {
         val request = RequestEntity.post("/mock-controller/form-data")
-                .header("content-type", "application/x-www-form-urlencoded")
-                .body("a=value+%40a&b=value1+%40b&b=value2+%40b&c=")
+            .header("content-type", "application/x-www-form-urlencoded")
+            .body("a=value+%40a&b=value1+%40b&b=value2+%40b&c=")
         val response = rest.exchange<String>(request)
         response.statusCodeValue.shouldBe(200)
         val event = assertLogbackAccessEventsEventually { capture.shouldBeSingleton().single() }
@@ -201,8 +201,8 @@ sealed class BasicEventTest(
 
     @Test
     fun `Appends a Logback-access event with request attributes`(
-            @Autowired rest: TestRestTemplate,
-            capture: EventsCapture,
+        @Autowired rest: TestRestTemplate,
+        capture: EventsCapture,
     ) {
         val request = RequestEntity.get("/mock-controller/text-with-request-attributes").build()
         val response = rest.exchange<String>(request)
@@ -223,8 +223,8 @@ sealed class BasicEventTest(
 
     @Test
     fun `Appends a Logback-access event with a session`(
-            @Autowired rest: TestRestTemplate,
-            capture: EventsCapture,
+        @Autowired rest: TestRestTemplate,
+        capture: EventsCapture,
     ) {
         val request = RequestEntity.get("/mock-controller/text-with-session").build()
         val response = rest.exchange<String>(request)
@@ -236,8 +236,8 @@ sealed class BasicEventTest(
 
     @Test
     fun `Appends a Logback-access event with response headers`(
-            @Autowired rest: TestRestTemplate,
-            capture: EventsCapture,
+        @Autowired rest: TestRestTemplate,
+        capture: EventsCapture,
     ) {
         val request = RequestEntity.get("/mock-controller/text-with-response-headers").build()
         val response = rest.exchange<String>(request)
@@ -258,8 +258,8 @@ sealed class BasicEventTest(
 
     @Test
     fun `Appends a Logback-access event with an empty response`(
-            @Autowired rest: TestRestTemplate,
-            capture: EventsCapture,
+        @Autowired rest: TestRestTemplate,
+        capture: EventsCapture,
     ) {
         val request = RequestEntity.get("/mock-controller/empty-text").build()
         val response = rest.exchange<String>(request)
@@ -271,8 +271,8 @@ sealed class BasicEventTest(
 
     @Test
     fun `Appends a Logback-access event with an asynchronous response`(
-            @Autowired rest: TestRestTemplate,
-            capture: EventsCapture,
+        @Autowired rest: TestRestTemplate,
+        capture: EventsCapture,
     ) {
         val request = RequestEntity.get("/mock-controller/text-asynchronously").build()
         val response = rest.exchange<String>(request)
@@ -285,8 +285,8 @@ sealed class BasicEventTest(
 
     @Test
     fun `Appends a Logback-access event with a chunked response`(
-            @Autowired rest: TestRestTemplate,
-            capture: EventsCapture,
+        @Autowired rest: TestRestTemplate,
+        capture: EventsCapture,
     ) {
         val request = RequestEntity.get("/mock-controller/text-with-chunked-transfer-encoding").build()
         val response = rest.exchange<String>(request)
@@ -300,8 +300,8 @@ sealed class BasicEventTest(
 
     @Test
     fun `Appends a Logback-access event with a forward response`(
-            @Autowired rest: TestRestTemplate,
-            capture: EventsCapture,
+        @Autowired rest: TestRestTemplate,
+        capture: EventsCapture,
     ) {
         if (!canForwardRequests) return
         val request = RequestEntity.get("/mock-controller/text-with-forward?a=value+@a").build()
@@ -320,8 +320,8 @@ sealed class BasicEventTest(
 
     @Test
     fun `Appends a Logback-access event with an error response`(
-            @Autowired rest: TestRestTemplate,
-            capture: EventsCapture,
+        @Autowired rest: TestRestTemplate,
+        capture: EventsCapture,
     ) {
         val request = RequestEntity.get("/mock-controller/unknown?a=value+@a").build()
         val response = rest.exchange<String>(request)
@@ -344,10 +344,10 @@ sealed class BasicEventTest(
  */
 @TomcatServletWebTest
 class TomcatServletWebBasicEventTest : BasicEventTest(
-        supportsRequestParametersByFormData = true,
-        supportsRequestAttributes = true,
-        supportsSessionIDs = true,
-        canForwardRequests = true,
+    supportsRequestParametersByFormData = true,
+    supportsRequestAttributes = true,
+    supportsSessionIDs = true,
+    canForwardRequests = true,
 )
 
 /**
@@ -355,10 +355,10 @@ class TomcatServletWebBasicEventTest : BasicEventTest(
  */
 @TomcatReactiveWebTest
 class TomcatReactiveWebBasicEventTest : BasicEventTest(
-        supportsRequestParametersByFormData = false,
-        supportsRequestAttributes = false,
-        supportsSessionIDs = false,
-        canForwardRequests = false,
+    supportsRequestParametersByFormData = false,
+    supportsRequestAttributes = false,
+    supportsSessionIDs = false,
+    canForwardRequests = false,
 )
 
 /**
@@ -366,10 +366,10 @@ class TomcatReactiveWebBasicEventTest : BasicEventTest(
  */
 @JettyServletWebTest
 class JettyServletWebBasicEventTest : BasicEventTest(
-        supportsRequestParametersByFormData = true,
-        supportsRequestAttributes = true,
-        supportsSessionIDs = true,
-        canForwardRequests = true,
+    supportsRequestParametersByFormData = true,
+    supportsRequestAttributes = true,
+    supportsSessionIDs = true,
+    canForwardRequests = true,
 )
 
 /**
@@ -377,10 +377,10 @@ class JettyServletWebBasicEventTest : BasicEventTest(
  */
 @JettyReactiveWebTest
 class JettyReactiveWebBasicEventTest : BasicEventTest(
-        supportsRequestParametersByFormData = false,
-        supportsRequestAttributes = false,
-        supportsSessionIDs = false,
-        canForwardRequests = false,
+    supportsRequestParametersByFormData = false,
+    supportsRequestAttributes = false,
+    supportsSessionIDs = false,
+    canForwardRequests = false,
 )
 
 /**
@@ -388,10 +388,10 @@ class JettyReactiveWebBasicEventTest : BasicEventTest(
  */
 @UndertowServletWebTest
 class UndertowServletWebBasicEventTest : BasicEventTest(
-        supportsRequestParametersByFormData = true,
-        supportsRequestAttributes = true,
-        supportsSessionIDs = true,
-        canForwardRequests = true,
+    supportsRequestParametersByFormData = true,
+    supportsRequestAttributes = true,
+    supportsSessionIDs = true,
+    canForwardRequests = true,
 )
 
 /**
@@ -399,8 +399,8 @@ class UndertowServletWebBasicEventTest : BasicEventTest(
  */
 @UndertowReactiveWebTest
 class UndertowReactiveWebBasicEventTest : BasicEventTest(
-        supportsRequestParametersByFormData = false,
-        supportsRequestAttributes = false,
-        supportsSessionIDs = false,
-        canForwardRequests = false,
+    supportsRequestParametersByFormData = false,
+    supportsRequestAttributes = false,
+    supportsSessionIDs = false,
+    canForwardRequests = false,
 )

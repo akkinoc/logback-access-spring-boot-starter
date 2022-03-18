@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory.getLogger
  * @see ch.qos.logback.access.tomcat.LogbackValve
  */
 class LogbackAccessTomcatValve(
-        private val logbackAccessContext: LogbackAccessContext,
+    private val logbackAccessContext: LogbackAccessContext,
 ) : ValveBase(true), AccessLog {
 
     /**
@@ -39,37 +39,37 @@ class LogbackAccessTomcatValve(
         super.initInternal()
         val props = logbackAccessContext.properties.tomcat
         requestAttributesEnabled = props.requestAttributesEnabled
-                ?: container.pipeline.valves.any { it is RemoteIpValve }
+            ?: container.pipeline.valves.any { it is RemoteIpValve }
         log.debug("Initialized the {}: {}", LogbackAccessTomcatValve::class.simpleName, this)
     }
 
     override fun invoke(request: Request, response: Response) {
         log.debug(
-                "Handling the {}/{}: {} => {} @{}",
-                Request::class.simpleName,
-                Response::class.simpleName,
-                request,
-                response,
-                logbackAccessContext,
+            "Handling the {}/{}: {} => {} @{}",
+            Request::class.simpleName,
+            Response::class.simpleName,
+            request,
+            response,
+            logbackAccessContext,
         )
         getNext().invoke(request, response)
     }
 
     override fun log(request: Request, response: Response, time: Long) {
         log.debug(
-                "Logging the {}/{}: {} => {} ({}ms) @{}",
-                Request::class.simpleName,
-                Response::class.simpleName,
-                request,
-                response,
-                time,
-                logbackAccessContext,
+            "Logging the {}/{}: {} => {} ({}ms) @{}",
+            Request::class.simpleName,
+            Response::class.simpleName,
+            request,
+            response,
+            time,
+            logbackAccessContext,
         )
         val source = LogbackAccessTomcatEventSource(
-                request = request,
-                response = response,
-                localPortStrategy = logbackAccessContext.properties.localPortStrategy,
-                requestAttributesEnabled = requestAttributesEnabled,
+            request = request,
+            response = response,
+            localPortStrategy = logbackAccessContext.properties.localPortStrategy,
+            requestAttributesEnabled = requestAttributesEnabled,
         )
         val event = LogbackAccessEvent(source)
         logbackAccessContext.emit(event)

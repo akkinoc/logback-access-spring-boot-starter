@@ -22,17 +22,17 @@ import java.lang.System.currentTimeMillis
  */
 @ExtendWith(EventsCaptureExtension::class)
 @TestPropertySource(
-        properties = [
-            "logback.access.config=classpath:logback-access-test.capture.xml",
-            "logback.access.undertow.record-request-start-time=false",
-        ],
+    properties = [
+        "logback.access.config=classpath:logback-access-test.capture.xml",
+        "logback.access.undertow.record-request-start-time=false",
+    ],
 )
 sealed class UndertowNoRequestStartTimeTest {
 
     @Test
     fun `Does not return the elapsed time of the appended Logback-access event`(
-            @Autowired rest: TestRestTemplate,
-            capture: EventsCapture,
+        @Autowired rest: TestRestTemplate,
+        capture: EventsCapture,
     ) {
         val request = RequestEntity.get("/mock-controller/text").build()
         val started = currentTimeMillis()

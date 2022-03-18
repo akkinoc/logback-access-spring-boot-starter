@@ -32,16 +32,16 @@ class LogbackAccessUndertowReactiveConfiguration {
     @Bean
     @ConditionalOnMissingBean(ReactiveWebServerFactory::class)
     fun logbackAccessUndertowReactiveWebServerFactory(
-            logbackAccessContext: LogbackAccessContext,
-            undertowBuilderCustomizers: List<UndertowBuilderCustomizer>,
+        logbackAccessContext: LogbackAccessContext,
+        undertowBuilderCustomizers: List<UndertowBuilderCustomizer>,
     ): LogbackAccessUndertowReactiveWebServerFactory {
         val logbackAccessUndertowReactiveWebServerFactory =
-                LogbackAccessUndertowReactiveWebServerFactory(logbackAccessContext)
+            LogbackAccessUndertowReactiveWebServerFactory(logbackAccessContext)
         logbackAccessUndertowReactiveWebServerFactory.builderCustomizers.addAll(undertowBuilderCustomizers)
         log.debug(
-                "Providing the {}: {}",
-                LogbackAccessUndertowReactiveWebServerFactory::class.simpleName,
-                logbackAccessUndertowReactiveWebServerFactory,
+            "Providing the {}: {}",
+            LogbackAccessUndertowReactiveWebServerFactory::class.simpleName,
+            logbackAccessUndertowReactiveWebServerFactory,
         )
         return logbackAccessUndertowReactiveWebServerFactory
     }

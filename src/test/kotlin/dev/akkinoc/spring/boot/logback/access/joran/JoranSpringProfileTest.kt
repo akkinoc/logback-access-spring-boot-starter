@@ -26,17 +26,17 @@ import org.springframework.test.context.TestPropertySource
  */
 @ExtendWith(OutputCaptureExtension::class)
 @ActiveProfiles(
-        "logback-access-test-disable-default-console",
-        "logback-access-test-enable-additional-console",
-        "logback-access-test-enable-additional-nested-console",
+    "logback-access-test-disable-default-console",
+    "logback-access-test-enable-additional-console",
+    "logback-access-test-enable-additional-nested-console",
 )
 @TestPropertySource(properties = ["logback.access.config=classpath:logback-access-test-spring.profile.xml"])
 sealed class JoranSpringProfileTest {
 
     @Test
     fun `Appends a Logback-access event according to the configuration file that contains springProfile tags`(
-            @Autowired rest: TestRestTemplate,
-            capture: CapturedOutput,
+        @Autowired rest: TestRestTemplate,
+        capture: CapturedOutput,
     ) {
         val request = RequestEntity.get("/mock-controller/text").build()
         val response = rest.exchange<String>(request)

@@ -39,10 +39,10 @@ class MockController {
     @GetMapping("/text-with-response-headers")
     fun getTextWithResponseHeaders(): ResponseEntity<String> {
         val response = ResponseEntity.ok()
-                .header("a", "value @a")
-                .header("b", "value1 @b", "value2 @b")
-                .header("c", "")
-                .body("mock-text")
+            .header("a", "value @a")
+            .header("b", "value1 @b", "value2 @b")
+            .header("c", "")
+            .body("mock-text")
         log.debug("Getting a text with response headers: {}", response)
         return response
     }

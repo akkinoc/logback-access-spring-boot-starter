@@ -19,14 +19,14 @@ sealed class InactiveTest {
 
     @Test
     fun `Does not provide the configuration properties for Logback-access`(
-            @Autowired logbackAccessProperties: LogbackAccessProperties?,
+        @Autowired logbackAccessProperties: LogbackAccessProperties?,
     ) {
         logbackAccessProperties.shouldBeNull()
     }
 
     @Test
     fun `Does not provide the Logback-access context`(
-            @Autowired logbackAccessContext: LogbackAccessContext?,
+        @Autowired logbackAccessContext: LogbackAccessContext?,
     ) {
         logbackAccessContext.shouldBeNull()
     }

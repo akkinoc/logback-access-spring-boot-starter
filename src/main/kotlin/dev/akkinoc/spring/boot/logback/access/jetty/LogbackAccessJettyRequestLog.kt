@@ -16,22 +16,22 @@ import org.slf4j.LoggerFactory.getLogger
  * @see ch.qos.logback.access.jetty.RequestLogImpl
  */
 class LogbackAccessJettyRequestLog(
-        private val logbackAccessContext: LogbackAccessContext,
+    private val logbackAccessContext: LogbackAccessContext,
 ) : RequestLog {
 
     override fun log(request: Request, response: Response) {
         log.debug(
-                "Logging the {}/{}: {} => {} @{}",
-                Request::class.simpleName,
-                Response::class.simpleName,
-                request,
-                response,
-                logbackAccessContext,
+            "Logging the {}/{}: {} => {} @{}",
+            Request::class.simpleName,
+            Response::class.simpleName,
+            request,
+            response,
+            logbackAccessContext,
         )
         val source = LogbackAccessJettyEventSource(
-                request = request,
-                response = response,
-                localPortStrategy = logbackAccessContext.properties.localPortStrategy,
+            request = request,
+            response = response,
+            localPortStrategy = logbackAccessContext.properties.localPortStrategy,
         )
         val event = LogbackAccessEvent(source)
         logbackAccessContext.emit(event)
