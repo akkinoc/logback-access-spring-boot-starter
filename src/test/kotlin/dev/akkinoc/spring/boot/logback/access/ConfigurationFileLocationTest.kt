@@ -1,6 +1,6 @@
 package dev.akkinoc.spring.boot.logback.access
 
-import dev.akkinoc.spring.boot.logback.access.test.assertion.Assertions
+import dev.akkinoc.spring.boot.logback.access.test.assertion.Assertions.assertLogbackAccessEventsEventually
 import dev.akkinoc.spring.boot.logback.access.test.extension.EventsCapture
 import dev.akkinoc.spring.boot.logback.access.test.extension.EventsCaptureExtension
 import dev.akkinoc.spring.boot.logback.access.test.type.JettyReactiveWebTest
@@ -33,7 +33,7 @@ sealed class ConfigurationFileLocationTest {
         val request = RequestEntity.get("/mock-controller/text").build()
         val response = rest.exchange<String>(request)
         response.statusCodeValue.shouldBe(200)
-        Assertions.assertLogbackAccessEventsEventually { capture.shouldBeSingleton() }
+        assertLogbackAccessEventsEventually { capture.shouldBeSingleton() }
     }
 
 }

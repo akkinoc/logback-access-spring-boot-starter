@@ -1,6 +1,6 @@
 package dev.akkinoc.spring.boot.logback.access.tomcat
 
-import dev.akkinoc.spring.boot.logback.access.test.assertion.Assertions
+import dev.akkinoc.spring.boot.logback.access.test.assertion.Assertions.assertLogbackAccessEventsEventually
 import dev.akkinoc.spring.boot.logback.access.test.extension.EventsCapture
 import dev.akkinoc.spring.boot.logback.access.test.extension.EventsCaptureExtension
 import dev.akkinoc.spring.boot.logback.access.test.type.TomcatReactiveWebTest
@@ -38,7 +38,7 @@ sealed class TomcatRequestAttributesEnabledTest {
         val request = RequestEntity.get("/mock-controller/text").build()
         val response = rest.exchange<String>(request)
         response.statusCodeValue.shouldBe(200)
-        val event = Assertions.assertLogbackAccessEventsEventually { capture.shouldBeSingleton().single() }
+        val event = assertLogbackAccessEventsEventually { capture.shouldBeSingleton().single() }
         event.serverName.shouldBe("localhost")
         event.localPort.shouldBe(port)
         event.remoteAddr.shouldBe("127.0.0.1")
@@ -55,7 +55,7 @@ sealed class TomcatRequestAttributesEnabledTest {
         val request = RequestEntity.get("/mock-controller/text").build()
         val response = rest.exchange<String>(request)
         response.statusCodeValue.shouldBe(200)
-        val event = Assertions.assertLogbackAccessEventsEventually { capture.shouldBeSingleton().single() }
+        val event = assertLogbackAccessEventsEventually { capture.shouldBeSingleton().single() }
         event.serverName.shouldBe("localhost")
         event.localPort.shouldBe(port)
         event.remoteAddr.shouldBe("127.0.0.1")
