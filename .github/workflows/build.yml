@@ -3,6 +3,7 @@ on: [ push, pull_request ]
 jobs:
   build:
     strategy:
+      fail-fast: false
       matrix:
         java: [ 8, 11, 17 ]
     name: Build with Java ${{ matrix.java }}
