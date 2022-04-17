@@ -276,7 +276,7 @@
                     <dependency>
                         <groupId>io.gitlab.arturbosch.detekt</groupId>
                         <artifactId>detekt-cli</artifactId>
-                        <version>1.19.0</version>
+                        <version>1.20.0</version>
                     </dependency>
                     <dependency>
                         <groupId>io.gitlab.arturbosch.detekt</groupId>
