@@ -31,11 +31,15 @@ class LogbackAccessContext(
     private val raw: AccessContext = AccessContext()
 
     init {
-        val (name, resource) = properties.config?.let { it to resourceLoader.getResource("${getURL(it)}") }
-            ?: DEFAULT_CONFIGS.asSequence()
+        val (name, resource) = run {
+            properties.config
+                ?.also { return@run it to resourceLoader.getResource("${getURL(it)}") }
+            DEFAULT_CONFIGS.asSequence()
                 .map { it to resourceLoader.getResource(it) }
                 .firstOrNull { (_, resource) -> resource.exists() }
-            ?: FALLBACK_CONFIG.let { it to resourceLoader.getResource(it) }
+                ?.also { return@run it }
+            return@run FALLBACK_CONFIG.let { it to resourceLoader.getResource(it) }
+        }
         raw.name = name
         raw.statusManager.add(::log)
         val configurator = LogbackAccessJoranConfigurator(environment)
