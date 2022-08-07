@@ -231,6 +231,6 @@ Licensed under the [Apache License, Version 2.0][license].
 
 ## Support the Project
 
-If this project is useful to you, I appreciate giving a star to this repository ⭐  
-I would also appreciate if you would consider [sponsoring][sponsor] as well 💖  
-Your support is my biggest motive force. Thanks ✨  
+If this project is useful to you, I appreciate giving a ⭐ star to this repository.
+I would also appreciate if you would consider 💖 [sponsoring][sponsor] as well.
+Your support is my biggest motive force. Thanks ✨
