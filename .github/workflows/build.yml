@@ -10,14 +10,14 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout the Git repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.0.2
       - name: Setup Java
         uses: actions/setup-java@v3.4.1
         with:
           distribution: temurin
           java-version: ${{ matrix.java }}
       - name: Cache the Maven local repository
-        uses: actions/cache@v3
+        uses: actions/cache@v3.0.6
         with:
           path: ~/.m2/repository
           key: maven-${{ matrix.java }}-${{ hashFiles('**/pom.xml') }}
@@ -48,4 +48,4 @@ jobs:
         run: mvn -B -Dlogback-access-spring-boot-starter.version=${{ env.PROJECT_VERSION }} clean install
         working-directory: examples/webflux-undertow-java
       - name: Upload the coverage report to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v3.1.0
