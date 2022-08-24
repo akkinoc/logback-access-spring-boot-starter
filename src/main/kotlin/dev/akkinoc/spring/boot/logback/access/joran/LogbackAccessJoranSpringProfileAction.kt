@@ -33,7 +33,7 @@ class LogbackAccessJoranSpringProfileAction(private val environment: Environment
     /**
      * The SAX events in parsing.
      */
-    private var events: MutableList<SaxEvent> = mutableListOf()
+    private val events: MutableList<SaxEvent> = mutableListOf()
 
     override fun begin(ic: InterpretationContext, elem: String, attrs: Attributes) {
         if (++depth != 1) return
