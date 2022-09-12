@@ -29,6 +29,9 @@ style:
     active: false
   NoTabs:
     active: true
+  ReturnCount:
+    excludeLabeled: true
+    excludeGuardClauses: true
   SerialVersionUIDInSerializableClass:
     active: false
   UnusedPrivateMember:
