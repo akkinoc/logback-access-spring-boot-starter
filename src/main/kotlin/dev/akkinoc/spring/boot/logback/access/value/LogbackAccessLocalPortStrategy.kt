@@ -1,7 +1,7 @@
 package dev.akkinoc.spring.boot.logback.access.value
 
 import ch.qos.logback.access.spi.IAccessEvent
-import javax.servlet.ServletRequest
+import jakarta.servlet.ServletRequest
 
 /**
  * The strategy to change the behavior of [IAccessEvent.getLocalPort].

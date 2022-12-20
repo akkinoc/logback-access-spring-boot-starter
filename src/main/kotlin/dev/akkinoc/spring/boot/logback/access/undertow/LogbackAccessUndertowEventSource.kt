@@ -17,10 +17,10 @@ import java.net.URLEncoder.encode
 import java.util.Collections.unmodifiableList
 import java.util.Collections.unmodifiableMap
 import java.util.concurrent.TimeUnit.NANOSECONDS
-import javax.servlet.RequestDispatcher.FORWARD_QUERY_STRING
-import javax.servlet.RequestDispatcher.FORWARD_REQUEST_URI
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
+import jakarta.servlet.RequestDispatcher.FORWARD_QUERY_STRING
+import jakarta.servlet.RequestDispatcher.FORWARD_REQUEST_URI
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 import kotlin.text.Charsets.UTF_8
 
 /**

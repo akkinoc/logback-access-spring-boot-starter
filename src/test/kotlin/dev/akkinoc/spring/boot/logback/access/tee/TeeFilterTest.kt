@@ -46,7 +46,7 @@ sealed class TeeFilterTest(
     ) {
         val request = RequestEntity.get("/mock-controller/text").build()
         val response = rest.exchange<String>(request)
-        response.statusCodeValue.shouldBe(200)
+        response.statusCode.value().shouldBe(200)
         response.body.shouldBe("mock-text")
         val event = assertLogbackAccessEventsEventually { capture.shouldBeSingleton().single() }
         if (supportsRequestContents) event.requestContent.shouldBeEmpty()
@@ -62,7 +62,7 @@ sealed class TeeFilterTest(
             .header("content-type", "text/plain")
             .body("posted-text")
         val response = rest.exchange<String>(request)
-        response.statusCodeValue.shouldBe(200)
+        response.statusCode.value().shouldBe(200)
         response.body.shouldBe("mock-text")
         val event = assertLogbackAccessEventsEventually { capture.shouldBeSingleton().single() }
         if (supportsRequestContents) event.requestContent.shouldBe("posted-text")
@@ -78,7 +78,7 @@ sealed class TeeFilterTest(
             .header("content-type", "application/x-www-form-urlencoded")
             .body("a=value+%40a&b=value1+%40b&b=value2+%40b&c=")
         val response = rest.exchange<String>(request)
-        response.statusCodeValue.shouldBe(200)
+        response.statusCode.value().shouldBe(200)
         response.body.shouldBe("mock-text")
         val event = assertLogbackAccessEventsEventually { capture.shouldBeSingleton().single() }
         if (supportsRequestContents) event.requestContent.shouldBe("a=value+%40a&b=value1+%40b&b=value2+%40b&c=")
@@ -92,7 +92,7 @@ sealed class TeeFilterTest(
     ) {
         val request = RequestEntity.get("/mock-static/image.svg").build()
         val response = rest.exchange<ByteArray>(request)
-        response.statusCodeValue.shouldBe(200)
+        response.statusCode.value().shouldBe(200)
         response.hasBody().shouldBeTrue()
         val event = assertLogbackAccessEventsEventually { capture.shouldBeSingleton().single() }
         if (supportsRequestContents) event.requestContent.shouldBeEmpty()

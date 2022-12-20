@@ -1,2 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 dev.akkinoc.spring.boot.logback.access.LogbackAccessAutoConfiguration
