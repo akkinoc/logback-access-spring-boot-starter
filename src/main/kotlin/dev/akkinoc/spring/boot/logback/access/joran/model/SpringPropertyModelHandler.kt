@@ -8,7 +8,12 @@ import ch.qos.logback.core.model.processor.ModelHandlerBase
 import ch.qos.logback.core.model.processor.ModelInterpretationContext
 import org.springframework.core.env.Environment
 
-// Copied from org.springframework.boot.logging.logback.SpringPropertyModelHandler since it was package-private
+/**
+ * Logback model handler to support <springProperty> tags. Allows Logback properties to be sourced
+ * from the Spring environment.
+ *
+ * @see org.springframework.boot.logging.logback.SpringPropertyModelHandler
+ */
 class SpringPropertyModelHandler(private val environment: Environment, context: Context) : ModelHandlerBase(context) {
     override fun handle(intercon: ModelInterpretationContext, model: Model) {
 

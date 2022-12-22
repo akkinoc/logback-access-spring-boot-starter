@@ -9,7 +9,11 @@ import org.springframework.core.env.Environment
 import org.springframework.core.env.Profiles
 import org.springframework.util.StringUtils
 
-// Copied from org.springframework.boot.logging.logback.SpringProfileModelHandler since it was package-private
+/**
+ * Logback model handler to support <springProfile> tags.
+ *
+ * @see org.springframework.boot.logging.logback.SpringProfileModelHandler
+ */
 class SpringProfileModelHandler(private val environment: Environment, context: Context) : ModelHandlerBase(context) {
     override fun handle(ic: ModelInterpretationContext, model: Model) {
         val springModel = model as SpringProfileModel

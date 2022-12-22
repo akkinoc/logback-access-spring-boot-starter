@@ -1,13 +1,13 @@
 package dev.akkinoc.spring.boot.logback.access.test.mock
 
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpSession
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory.getLogger
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.servlet.ModelAndView
-import jakarta.servlet.http.HttpServletRequest
-import jakarta.servlet.http.HttpSession
 
 /**
  * The mock controller for testing using the servlet web server.

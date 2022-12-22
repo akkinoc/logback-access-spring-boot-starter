@@ -2,9 +2,9 @@ package dev.akkinoc.spring.boot.logback.access
 
 import ch.qos.logback.access.spi.IAccessEvent
 import ch.qos.logback.access.spi.ServerAdapter
-import java.io.Serializable
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import java.io.Serializable
 
 /**
  * The Logback-access event source.

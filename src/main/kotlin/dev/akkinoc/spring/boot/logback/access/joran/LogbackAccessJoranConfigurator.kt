@@ -23,11 +23,11 @@ class LogbackAccessJoranConfigurator(private val environment: Environment) : Jor
 
         store.addRule(
             ElementSelector("configuration/springProperty"),
-        ) { LogbackAccessJoranSpringPropertyAction(environment) }
+        ) { LogbackAccessJoranSpringPropertyAction() }
         store.addRule(
             ElementSelector("*/springProfile"),
-        ) { LogbackAccessJoranSpringProfileAction(environment) }
-        store.addTransparentPathPart("springProfile");
+        ) { LogbackAccessJoranSpringProfileAction() }
+        store.addTransparentPathPart("springProfile")
     }
 
     override fun addModelHandlerAssociations(defaultProcessor: DefaultProcessor) {
