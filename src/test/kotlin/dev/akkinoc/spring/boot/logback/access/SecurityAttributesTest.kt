@@ -49,8 +49,11 @@ sealed class SecurityAttributesTest(
         val response = rest.withBasicAuth("test-user", "test-password").exchange<String>(request)
         response.statusCodeValue.shouldBe(200)
         val event = assertLogbackAccessEventsEventually { capture.shouldBeSingleton().single() }
-        if (supportsRemoteUsers) event.remoteUser.shouldBe("test-user")
-        else event.remoteUser.shouldBe("-")
+        if (supportsRemoteUsers) {
+            event.remoteUser.shouldBe("test-user")
+        } else {
+            event.remoteUser.shouldBe("-")
+        }
     }
 
 }
