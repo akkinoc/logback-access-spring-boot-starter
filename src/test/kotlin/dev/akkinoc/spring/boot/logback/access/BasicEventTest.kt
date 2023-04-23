@@ -230,8 +230,11 @@ sealed class BasicEventTest(
         val response = rest.exchange<String>(request)
         response.statusCode.value().shouldBe(200)
         val event = assertLogbackAccessEventsEventually { capture.shouldBeSingleton().single() }
-        if (supportsSessionIDs) event.sessionID.shouldNotBeEmpty().shouldNotBe("-")
-        else event.sessionID.shouldBe("-")
+        if (supportsSessionIDs) {
+            event.sessionID.shouldNotBeEmpty().shouldNotBe("-")
+        } else {
+            event.sessionID.shouldBe("-")
+        }
     }
 
     @Test

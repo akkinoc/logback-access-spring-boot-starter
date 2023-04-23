@@ -124,8 +124,11 @@ class LogbackAccessUndertowEventSource(
 
     override val requestParameterMap: Map<String, List<String>> by lazy(LazyThreadSafetyMode.NONE) {
         val params = linkedMapOf<String, List<String>>()
-        if (request != null) request.parameterMap.mapValuesTo(params) { unmodifiableList(it.value.asList()) }
-        else exchange.queryParameters.mapValuesTo(params) { unmodifiableList(it.value.toList()) }
+        if (request != null) {
+            request.parameterMap.mapValuesTo(params) { unmodifiableList(it.value.asList()) }
+        } else {
+            exchange.queryParameters.mapValuesTo(params) { unmodifiableList(it.value.toList()) }
+        }
         unmodifiableMap(params)
     }
 
