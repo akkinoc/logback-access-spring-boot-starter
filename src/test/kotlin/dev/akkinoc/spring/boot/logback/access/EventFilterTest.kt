@@ -37,7 +37,7 @@ sealed class EventFilterTest {
             .header("mock-event-filter-reply", "accept")
             .build()
         val response = rest.exchange<String>(request)
-        response.statusCodeValue.shouldBe(200)
+        response.statusCode.value().shouldBe(200)
         assertLogbackAccessEventsEventually { capture.shouldBeSingleton() }
     }
 
@@ -50,7 +50,7 @@ sealed class EventFilterTest {
             .header("mock-event-filter-reply", "neutral")
             .build()
         val response = rest.exchange<String>(request)
-        response.statusCodeValue.shouldBe(200)
+        response.statusCode.value().shouldBe(200)
         assertLogbackAccessEventsEventually { capture.shouldBeSingleton() }
     }
 
@@ -63,7 +63,7 @@ sealed class EventFilterTest {
             .header("mock-event-filter-reply", "deny")
             .build()
         val response = rest.exchange<String>(request)
-        response.statusCodeValue.shouldBe(200)
+        response.statusCode.value().shouldBe(200)
         assertLogbackAccessEventsContinually { capture.shouldBeEmpty() }
     }
 

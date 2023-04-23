@@ -49,7 +49,7 @@ sealed class TeeFilterActiveTest(
             .header("content-type", "text/plain")
             .body("posted-text")
         val response = rest.exchange<String>(request)
-        response.statusCodeValue.shouldBe(200)
+        response.statusCode.value().shouldBe(200)
         response.body.shouldBe("mock-text")
         val event = assertLogbackAccessEventsEventually { capture.shouldBeSingleton().single() }
         if (supportsRequestContents) event.requestContent.shouldBe("posted-text")

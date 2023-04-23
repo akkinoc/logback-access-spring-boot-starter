@@ -39,7 +39,7 @@ sealed class ForwardHeadersSupportTest {
             .header("x-forwarded-proto", "https")
             .build()
         val response = rest.exchange<String>(request)
-        response.statusCodeValue.shouldBe(200)
+        response.statusCode.value().shouldBe(200)
         val event = assertLogbackAccessEventsEventually { capture.shouldBeSingleton().single() }
         event.serverName.shouldBe("forwarded-host")
         event.localPort.shouldBe(12345)
@@ -56,7 +56,7 @@ sealed class ForwardHeadersSupportTest {
     ) {
         val request = RequestEntity.get("/mock-controller/text").build()
         val response = rest.exchange<String>(request)
-        response.statusCodeValue.shouldBe(200)
+        response.statusCode.value().shouldBe(200)
         val event = assertLogbackAccessEventsEventually { capture.shouldBeSingleton().single() }
         event.serverName.shouldBe("localhost")
         event.localPort.shouldBe(port)

@@ -1,30 +1,34 @@
 package dev.akkinoc.spring.boot.logback.access.joran
 
 import ch.qos.logback.core.joran.action.Action
-import ch.qos.logback.core.joran.action.ActionUtil.setProperty
-import ch.qos.logback.core.joran.action.ActionUtil.stringToScope
-import ch.qos.logback.core.joran.spi.InterpretationContext
-import org.springframework.core.env.Environment
+import ch.qos.logback.core.joran.action.BaseModelAction
+import ch.qos.logback.core.joran.spi.SaxEventInterpretationContext
+import ch.qos.logback.core.model.Model
+import dev.akkinoc.spring.boot.logback.access.joran.model.SpringPropertyModel
 import org.xml.sax.Attributes
 
 /**
  * The Joran [Action] to support `<springProperty>` tags.
  * Allows properties to be sourced from the environment.
  *
- * @property environment The environment.
  * @see org.springframework.boot.logging.logback.SpringPropertyAction
  */
-class LogbackAccessJoranSpringPropertyAction(private val environment: Environment) : Action() {
-
-    override fun begin(ic: InterpretationContext, elem: String, attrs: Attributes) {
-        val name = attrs.getValue(NAME_ATTRIBUTE)
-        val scope = stringToScope(attrs.getValue(SCOPE_ATTRIBUTE))
-        val source = attrs.getValue("source")
-        val defaultValue = attrs.getValue("defaultValue")
-        val value = environment.getProperty(source, defaultValue)
-        setProperty(ic, name, value, scope)
+class LogbackAccessJoranSpringPropertyAction : BaseModelAction() {
+    override fun buildCurrentModel(
+        interpretationContext: SaxEventInterpretationContext,
+        name: String,
+        attributes: Attributes
+    ): Model {
+        val model = SpringPropertyModel()
+        model.name = attributes.getValue(NAME_ATTRIBUTE).orEmpty()
+        model.source = attributes.getValue(SOURCE_ATTRIBUTE).orEmpty()
+        model.scope = attributes.getValue(SCOPE_ATTRIBUTE).orEmpty()
+        model.defaultValue = attributes.getValue(DEFAULT_VALUE_ATTRIBUTE).orEmpty()
+        return model
     }
 
-    override fun end(ic: InterpretationContext, elem: String) = Unit
-
+    companion object {
+        private const val SOURCE_ATTRIBUTE = "source"
+        private const val DEFAULT_VALUE_ATTRIBUTE = "defaultValue"
+    }
 }

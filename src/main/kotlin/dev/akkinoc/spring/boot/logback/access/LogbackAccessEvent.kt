@@ -4,14 +4,15 @@ import ch.qos.logback.access.spi.IAccessEvent
 import ch.qos.logback.access.spi.IAccessEvent.NA
 import ch.qos.logback.access.spi.IAccessEvent.SENTINEL
 import ch.qos.logback.access.spi.ServerAdapter
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 import java.io.IOException
 import java.io.ObjectOutputStream
 import java.io.Serializable
 import java.util.Collections.enumeration
 import java.util.Enumeration
 import java.util.concurrent.TimeUnit.MILLISECONDS
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
+import java.util.concurrent.atomic.AtomicLong
 
 /**
  * The Logback-access event.
@@ -20,7 +21,6 @@ import javax.servlet.http.HttpServletResponse
  * @see ch.qos.logback.access.spi.AccessEvent
  */
 class LogbackAccessEvent(private var source: LogbackAccessEventSource) : IAccessEvent, Serializable {
-
     override fun getRequest(): HttpServletRequest? {
         return source.request
     }
@@ -35,6 +35,10 @@ class LogbackAccessEvent(private var source: LogbackAccessEventSource) : IAccess
 
     override fun getTimeStamp(): Long {
         return source.timeStamp
+    }
+
+    override fun getSequenceNumber(): Long {
+        return sequence.addAndGet(1)
     }
 
     override fun getElapsedTime(): Long {
@@ -170,4 +174,7 @@ class LogbackAccessEvent(private var source: LogbackAccessEventSource) : IAccess
         out.defaultWriteObject()
     }
 
+    companion object {
+        private val sequence = AtomicLong(0)
+    }
 }

@@ -10,6 +10,10 @@ import dev.akkinoc.spring.boot.logback.access.security.LogbackAccessSecurityServ
 import dev.akkinoc.spring.boot.logback.access.value.LogbackAccessLocalPortStrategy
 import io.undertow.server.HttpServerExchange
 import io.undertow.servlet.handlers.ServletRequestContext
+import jakarta.servlet.RequestDispatcher.FORWARD_QUERY_STRING
+import jakarta.servlet.RequestDispatcher.FORWARD_REQUEST_URI
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 import java.lang.System.currentTimeMillis
 import java.lang.System.nanoTime
 import java.lang.Thread.currentThread
@@ -17,10 +21,6 @@ import java.net.URLEncoder.encode
 import java.util.Collections.unmodifiableList
 import java.util.Collections.unmodifiableMap
 import java.util.concurrent.TimeUnit.NANOSECONDS
-import javax.servlet.RequestDispatcher.FORWARD_QUERY_STRING
-import javax.servlet.RequestDispatcher.FORWARD_REQUEST_URI
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
 import kotlin.text.Charsets.UTF_8
 
 /**
