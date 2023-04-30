@@ -32,18 +32,11 @@ class LogbackAccessJoranConfigurator(private val environment: Environment) : Jor
 
     override fun addModelHandlerAssociations(defaultProcessor: DefaultProcessor) {
         defaultProcessor.addHandler(SpringProfileModel::class.java) { _, _ ->
-            SpringProfileModelHandler(
-                this.environment,
-                this.context
-            )
+            SpringProfileModelHandler(environment, context)
         }
         defaultProcessor.addHandler(SpringPropertyModel::class.java) { _, _ ->
-            SpringPropertyModelHandler(
-                this.environment,
-                this.context
-            )
+            SpringPropertyModelHandler(environment, context)
         }
-
         super.addModelHandlerAssociations(defaultProcessor)
     }
 

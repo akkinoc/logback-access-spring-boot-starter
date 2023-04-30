@@ -15,8 +15,8 @@ import org.springframework.core.env.Environment
  * @see org.springframework.boot.logging.logback.SpringPropertyModelHandler
  */
 class SpringPropertyModelHandler(private val environment: Environment, context: Context) : ModelHandlerBase(context) {
-    override fun handle(intercon: ModelInterpretationContext, model: Model) {
 
+    override fun handle(intercon: ModelInterpretationContext, model: Model) {
         val propertyModel = model as SpringPropertyModel
         val scope = ActionUtil.stringToScope(propertyModel.scope)
         val defaultValue = propertyModel.defaultValue
@@ -28,6 +28,7 @@ class SpringPropertyModelHandler(private val environment: Environment, context: 
     }
 
     private fun getValue(source: String, defaultValue: String): String {
-        return this.environment.getProperty(source, defaultValue)
+        return environment.getProperty(source, defaultValue)
     }
+
 }
