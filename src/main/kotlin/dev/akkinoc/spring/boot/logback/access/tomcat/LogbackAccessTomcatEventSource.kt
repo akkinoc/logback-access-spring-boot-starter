@@ -51,23 +51,23 @@ class LogbackAccessTomcatEventSource(
     override val threadName: String = currentThread().name
 
     override val serverName: String by lazy(LazyThreadSafetyMode.NONE) {
-        request.getAccessLogAttribute<String>(SERVER_NAME_ATTRIBUTE) ?: request.serverName
+        request.getAccessLogAttribute(SERVER_NAME_ATTRIBUTE) ?: request.serverName
     }
 
     override val localPort: Int by lazy(LazyThreadSafetyMode.NONE) {
         when (localPortStrategy) {
             LogbackAccessLocalPortStrategy.LOCAL -> request.localPort
             LogbackAccessLocalPortStrategy.SERVER ->
-                request.getAccessLogAttribute<Int>(SERVER_PORT_ATTRIBUTE) ?: request.serverPort
+                request.getAccessLogAttribute(SERVER_PORT_ATTRIBUTE) ?: request.serverPort
         }
     }
 
     override val remoteAddr: String by lazy(LazyThreadSafetyMode.NONE) {
-        request.getAccessLogAttribute<String>(REMOTE_ADDR_ATTRIBUTE) ?: request.remoteAddr
+        request.getAccessLogAttribute(REMOTE_ADDR_ATTRIBUTE) ?: request.remoteAddr
     }
 
     override val remoteHost: String by lazy(LazyThreadSafetyMode.NONE) {
-        request.getAccessLogAttribute<String>(REMOTE_HOST_ATTRIBUTE) ?: request.remoteHost
+        request.getAccessLogAttribute(REMOTE_HOST_ATTRIBUTE) ?: request.remoteHost
     }
 
     override val remoteUser: String? by lazy(LazyThreadSafetyMode.NONE) {
@@ -75,7 +75,7 @@ class LogbackAccessTomcatEventSource(
     }
 
     override val protocol: String by lazy(LazyThreadSafetyMode.NONE) {
-        request.getAccessLogAttribute<String>(PROTOCOL_ATTRIBUTE) ?: request.protocol
+        request.getAccessLogAttribute(PROTOCOL_ATTRIBUTE) ?: request.protocol
     }
 
     override val method: String by lazy(LazyThreadSafetyMode.NONE) {
