@@ -76,6 +76,7 @@ sealed class BasicEventTest(
         event.timeStamp.shouldBeBetween(started, finished)
         event.elapsedTime.shouldBeBetween(0L, finished - started)
         event.elapsedSeconds.shouldBeBetween(0L, MILLISECONDS.toSeconds(finished - started))
+        event.sequenceNumber.shouldBe(0L)
         event.threadName.shouldNotBeEmpty()
         shouldThrowUnit<UnsupportedOperationException> { event.threadName = "changed-thread-name" }
         event.serverName.shouldBe("localhost")

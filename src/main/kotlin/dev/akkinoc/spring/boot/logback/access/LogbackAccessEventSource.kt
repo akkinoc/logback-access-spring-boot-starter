@@ -41,6 +41,11 @@ abstract class LogbackAccessEventSource {
     abstract val elapsedTime: Long?
 
     /**
+     * The value of [IAccessEvent.getSequenceNumber].
+     */
+    abstract val sequenceNumber: Long?
+
+    /**
      * The value of [IAccessEvent.getThreadName].
      */
     abstract val threadName: String
@@ -175,6 +180,8 @@ abstract class LogbackAccessEventSource {
         override val timeStamp: Long = source.timeStamp
 
         override val elapsedTime: Long? = source.elapsedTime
+
+        override val sequenceNumber: Long? = source.sequenceNumber
 
         override val threadName: String = source.threadName
 

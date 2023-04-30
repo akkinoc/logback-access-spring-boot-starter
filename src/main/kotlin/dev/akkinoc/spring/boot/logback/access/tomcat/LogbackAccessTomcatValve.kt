@@ -66,10 +66,10 @@ class LogbackAccessTomcatValve(
             logbackAccessContext,
         )
         val source = LogbackAccessTomcatEventSource(
+            logbackAccessContext = logbackAccessContext,
+            requestAttributesEnabled = requestAttributesEnabled,
             request = request,
             response = response,
-            localPortStrategy = logbackAccessContext.properties.localPortStrategy,
-            requestAttributesEnabled = requestAttributesEnabled,
         )
         val event = LogbackAccessEvent(source)
         logbackAccessContext.emit(event)

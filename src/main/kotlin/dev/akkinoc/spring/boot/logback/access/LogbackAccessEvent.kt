@@ -12,7 +12,6 @@ import java.io.Serializable
 import java.util.Collections.enumeration
 import java.util.Enumeration
 import java.util.concurrent.TimeUnit.MILLISECONDS
-import java.util.concurrent.atomic.AtomicLong
 
 /**
  * The Logback-access event.
@@ -21,6 +20,7 @@ import java.util.concurrent.atomic.AtomicLong
  * @see ch.qos.logback.access.spi.AccessEvent
  */
 class LogbackAccessEvent(private var source: LogbackAccessEventSource) : IAccessEvent, Serializable {
+
     override fun getRequest(): HttpServletRequest? {
         return source.request
     }
@@ -37,10 +37,6 @@ class LogbackAccessEvent(private var source: LogbackAccessEventSource) : IAccess
         return source.timeStamp
     }
 
-    override fun getSequenceNumber(): Long {
-        return sequence.addAndGet(1)
-    }
-
     override fun getElapsedTime(): Long {
         return source.elapsedTime ?: SENTINEL.toLong()
     }
@@ -48,6 +44,10 @@ class LogbackAccessEvent(private var source: LogbackAccessEventSource) : IAccess
     override fun getElapsedSeconds(): Long {
         val millis = source.elapsedTime ?: return SENTINEL.toLong()
         return MILLISECONDS.toSeconds(millis)
+    }
+
+    override fun getSequenceNumber(): Long {
+        return source.sequenceNumber ?: 0L
     }
 
     override fun getThreadName(): String {
@@ -174,7 +174,4 @@ class LogbackAccessEvent(private var source: LogbackAccessEventSource) : IAccess
         out.defaultWriteObject()
     }
 
-    companion object {
-        private val sequence = AtomicLong(0)
-    }
 }
