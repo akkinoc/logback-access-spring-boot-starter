@@ -202,7 +202,6 @@
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
-                <version>1.7.21</version>
                 <dependencies>
                     <dependency>
                         <groupId>org.jetbrains.kotlin</groupId>
