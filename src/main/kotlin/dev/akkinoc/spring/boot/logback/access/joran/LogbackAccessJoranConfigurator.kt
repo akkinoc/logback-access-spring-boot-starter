@@ -4,10 +4,6 @@ import ch.qos.logback.access.joran.JoranConfigurator
 import ch.qos.logback.core.joran.spi.ElementSelector
 import ch.qos.logback.core.joran.spi.RuleStore
 import ch.qos.logback.core.model.processor.DefaultProcessor
-import dev.akkinoc.spring.boot.logback.access.joran.model.SpringProfileModel
-import dev.akkinoc.spring.boot.logback.access.joran.model.SpringProfileModelHandler
-import dev.akkinoc.spring.boot.logback.access.joran.model.SpringPropertyModel
-import dev.akkinoc.spring.boot.logback.access.joran.model.SpringPropertyModelHandler
 import org.springframework.core.env.Environment
 
 /**
@@ -20,24 +16,19 @@ class LogbackAccessJoranConfigurator(private val environment: Environment) : Jor
 
     override fun addElementSelectorAndActionAssociations(store: RuleStore) {
         super.addElementSelectorAndActionAssociations(store)
-
-        store.addRule(
-            ElementSelector("configuration/springProperty"),
-        ) { LogbackAccessJoranSpringPropertyAction() }
-        store.addRule(
-            ElementSelector("*/springProfile"),
-        ) { LogbackAccessJoranSpringProfileAction() }
+        store.addRule(ElementSelector("configuration/springProperty")) { LogbackAccessJoranSpringPropertyAction() }
+        store.addRule(ElementSelector("*/springProfile")) { LogbackAccessJoranSpringProfileAction() }
         store.addTransparentPathPart("springProfile")
     }
 
-    override fun addModelHandlerAssociations(defaultProcessor: DefaultProcessor) {
-        defaultProcessor.addHandler(SpringProfileModel::class.java) { _, _ ->
-            SpringProfileModelHandler(environment, context)
+    override fun addModelHandlerAssociations(processor: DefaultProcessor) {
+        processor.addHandler(LogbackAccessJoranSpringPropertyModel::class.java) { _, _ ->
+            LogbackAccessJoranSpringPropertyModelHandler(context, environment)
         }
-        defaultProcessor.addHandler(SpringPropertyModel::class.java) { _, _ ->
-            SpringPropertyModelHandler(environment, context)
+        processor.addHandler(LogbackAccessJoranSpringProfileModel::class.java) { _, _ ->
+            LogbackAccessJoranSpringProfileModelHandler(context, environment)
         }
-        super.addModelHandlerAssociations(defaultProcessor)
+        super.addModelHandlerAssociations(processor)
     }
 
 }
