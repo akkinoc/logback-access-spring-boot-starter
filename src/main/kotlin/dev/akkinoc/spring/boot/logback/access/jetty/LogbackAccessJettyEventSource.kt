@@ -5,6 +5,7 @@ import ch.qos.logback.access.AccessConstants.LB_OUTPUT_BUFFER
 import ch.qos.logback.access.jetty.JettyServerAdapter
 import ch.qos.logback.access.servlet.Util.isFormUrlEncoded
 import ch.qos.logback.access.servlet.Util.isImageResponse
+import dev.akkinoc.spring.boot.logback.access.LogbackAccessContext
 import dev.akkinoc.spring.boot.logback.access.LogbackAccessEventSource
 import dev.akkinoc.spring.boot.logback.access.security.LogbackAccessSecurityServletFilter.Companion.REMOTE_USER_ATTRIBUTE
 import dev.akkinoc.spring.boot.logback.access.value.LogbackAccessLocalPortStrategy
@@ -20,16 +21,16 @@ import kotlin.text.Charsets.UTF_8
 /**
  * The Logback-access event source for the Jetty web server.
  *
- * @property localPortStrategy The strategy to change the behavior of [localPort].
+ * @property logbackAccessContext The Logback-access context.
  * @see ch.qos.logback.access.spi.AccessEvent
  * @see ch.qos.logback.access.jetty.JettyServerAdapter
  * @see ch.qos.logback.access.PatternLayout
  * @see org.eclipse.jetty.server.CustomRequestLog
  */
 class LogbackAccessJettyEventSource(
+    private val logbackAccessContext: LogbackAccessContext,
     override val request: Request,
     override val response: Response,
-    private val localPortStrategy: LogbackAccessLocalPortStrategy,
 ) : LogbackAccessEventSource() {
 
     override val serverAdapter: JettyServerAdapter = JettyServerAdapter(request, response)
@@ -38,6 +39,8 @@ class LogbackAccessJettyEventSource(
 
     override val elapsedTime: Long = timeStamp - request.timeStamp
 
+    override val sequenceNumber: Long? = logbackAccessContext.raw.sequenceNumberGenerator?.nextSequenceNumber()
+
     override val threadName: String = currentThread().name
 
     override val serverName: String by lazy(LazyThreadSafetyMode.NONE) {
@@ -45,7 +48,7 @@ class LogbackAccessJettyEventSource(
     }
 
     override val localPort: Int by lazy(LazyThreadSafetyMode.NONE) {
-        when (localPortStrategy) {
+        when (logbackAccessContext.properties.localPortStrategy) {
             LogbackAccessLocalPortStrategy.LOCAL -> request.localPort
             LogbackAccessLocalPortStrategy.SERVER -> request.serverPort
         }

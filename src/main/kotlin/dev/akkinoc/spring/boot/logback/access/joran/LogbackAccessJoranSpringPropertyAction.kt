@@ -1,30 +1,26 @@
 package dev.akkinoc.spring.boot.logback.access.joran
 
 import ch.qos.logback.core.joran.action.Action
-import ch.qos.logback.core.joran.action.ActionUtil.setProperty
-import ch.qos.logback.core.joran.action.ActionUtil.stringToScope
-import ch.qos.logback.core.joran.spi.InterpretationContext
-import org.springframework.core.env.Environment
+import ch.qos.logback.core.joran.action.BaseModelAction
+import ch.qos.logback.core.joran.spi.SaxEventInterpretationContext
+import ch.qos.logback.core.model.Model
 import org.xml.sax.Attributes
 
 /**
  * The Joran [Action] to support `<springProperty>` tags.
- * Allows properties to be sourced from the environment.
+ * Allows Logback properties to be sourced from the Spring environment.
  *
- * @property environment The environment.
  * @see org.springframework.boot.logging.logback.SpringPropertyAction
  */
-class LogbackAccessJoranSpringPropertyAction(private val environment: Environment) : Action() {
+class LogbackAccessJoranSpringPropertyAction : BaseModelAction() {
 
-    override fun begin(ic: InterpretationContext, elem: String, attrs: Attributes) {
-        val name = attrs.getValue(NAME_ATTRIBUTE)
-        val scope = stringToScope(attrs.getValue(SCOPE_ATTRIBUTE))
-        val source = attrs.getValue("source")
-        val defaultValue = attrs.getValue("defaultValue")
-        val value = environment.getProperty(source, defaultValue)
-        setProperty(ic, name, value, scope)
+    override fun buildCurrentModel(ic: SaxEventInterpretationContext, name: String, attrs: Attributes): Model {
+        val model = LogbackAccessJoranSpringPropertyModel()
+        model.name = attrs.getValue(NAME_ATTRIBUTE)
+        model.source = attrs.getValue("source")
+        model.defaultValue = attrs.getValue("defaultValue")
+        model.scope = attrs.getValue(SCOPE_ATTRIBUTE)
+        return model
     }
-
-    override fun end(ic: InterpretationContext, elem: String) = Unit
 
 }

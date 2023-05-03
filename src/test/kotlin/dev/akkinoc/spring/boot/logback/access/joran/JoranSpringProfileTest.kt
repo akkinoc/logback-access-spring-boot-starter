@@ -40,7 +40,7 @@ sealed class JoranSpringProfileTest {
     ) {
         val request = RequestEntity.get("/mock-controller/text").build()
         val response = rest.exchange<String>(request)
-        response.statusCodeValue.shouldBe(200)
+        response.statusCode.value().shouldBe(200)
         response.body.shouldBe("mock-text")
         assertLogbackAccessEventsEventually {
             capture.out.shouldNotContain("default_console:")

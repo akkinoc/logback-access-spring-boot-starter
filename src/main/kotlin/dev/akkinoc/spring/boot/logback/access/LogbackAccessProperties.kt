@@ -5,7 +5,6 @@ import dev.akkinoc.spring.boot.logback.access.value.LogbackAccessLocalPortStrate
 import io.undertow.UndertowOptions
 import org.apache.catalina.valves.RemoteIpValve
 import org.springframework.boot.context.properties.ConfigurationProperties
-import org.springframework.boot.context.properties.ConstructorBinding
 
 /**
  * The configuration properties for Logback-access.
@@ -31,7 +30,6 @@ import org.springframework.boot.context.properties.ConstructorBinding
  *  The properties for the tee filter.
  */
 @ConfigurationProperties("logback.access")
-@ConstructorBinding
 data class LogbackAccessProperties
 @JvmOverloads
 constructor(

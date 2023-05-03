@@ -60,7 +60,7 @@ sealed class BasicTest {
     ) {
         val request = RequestEntity.get("/mock-controller/text").build()
         val response = rest.exchange<String>(request)
-        response.statusCodeValue.shouldBe(200)
+        response.statusCode.value().shouldBe(200)
         response.body.shouldBe("mock-text")
         val regex = Regex("""^127\.0\.0\.1 - - \[.+] "GET /mock-controller/text HTTP/1\.1" 200 9$""")
         assertLogbackAccessEventsEventually { capture.out.lines().shouldHaveSingleElement { it matches regex } }

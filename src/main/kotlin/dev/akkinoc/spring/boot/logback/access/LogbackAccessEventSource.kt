@@ -2,9 +2,9 @@ package dev.akkinoc.spring.boot.logback.access
 
 import ch.qos.logback.access.spi.IAccessEvent
 import ch.qos.logback.access.spi.ServerAdapter
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 import java.io.Serializable
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
 
 /**
  * The Logback-access event source.
@@ -39,6 +39,11 @@ abstract class LogbackAccessEventSource {
      * The value of [IAccessEvent.getElapsedTime] and [IAccessEvent.getElapsedSeconds].
      */
     abstract val elapsedTime: Long?
+
+    /**
+     * The value of [IAccessEvent.getSequenceNumber].
+     */
+    abstract val sequenceNumber: Long?
 
     /**
      * The value of [IAccessEvent.getThreadName].
@@ -175,6 +180,8 @@ abstract class LogbackAccessEventSource {
         override val timeStamp: Long = source.timeStamp
 
         override val elapsedTime: Long? = source.elapsedTime
+
+        override val sequenceNumber: Long? = source.sequenceNumber
 
         override val threadName: String = source.threadName
 

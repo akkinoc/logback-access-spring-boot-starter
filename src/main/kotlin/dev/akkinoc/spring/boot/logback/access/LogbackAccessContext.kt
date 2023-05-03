@@ -28,7 +28,7 @@ class LogbackAccessContext(
     /**
      * The raw Logback-access context.
      */
-    private val raw: AccessContext = AccessContext()
+    val raw: AccessContext = AccessContext()
 
     init {
         val (name, resource) = run {

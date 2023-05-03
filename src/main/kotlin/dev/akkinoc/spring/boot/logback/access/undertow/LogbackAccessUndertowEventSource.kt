@@ -5,11 +5,16 @@ import ch.qos.logback.access.AccessConstants.LB_OUTPUT_BUFFER
 import ch.qos.logback.access.servlet.Util.isFormUrlEncoded
 import ch.qos.logback.access.servlet.Util.isImageResponse
 import ch.qos.logback.access.spi.ServerAdapter
+import dev.akkinoc.spring.boot.logback.access.LogbackAccessContext
 import dev.akkinoc.spring.boot.logback.access.LogbackAccessEventSource
 import dev.akkinoc.spring.boot.logback.access.security.LogbackAccessSecurityServletFilter.Companion.REMOTE_USER_ATTRIBUTE
 import dev.akkinoc.spring.boot.logback.access.value.LogbackAccessLocalPortStrategy
 import io.undertow.server.HttpServerExchange
 import io.undertow.servlet.handlers.ServletRequestContext
+import jakarta.servlet.RequestDispatcher.FORWARD_QUERY_STRING
+import jakarta.servlet.RequestDispatcher.FORWARD_REQUEST_URI
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 import java.lang.System.currentTimeMillis
 import java.lang.System.nanoTime
 import java.lang.Thread.currentThread
@@ -17,17 +22,13 @@ import java.net.URLEncoder.encode
 import java.util.Collections.unmodifiableList
 import java.util.Collections.unmodifiableMap
 import java.util.concurrent.TimeUnit.NANOSECONDS
-import javax.servlet.RequestDispatcher.FORWARD_QUERY_STRING
-import javax.servlet.RequestDispatcher.FORWARD_REQUEST_URI
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
 import kotlin.text.Charsets.UTF_8
 
 /**
  * The Logback-access event source for the Undertow web server.
  *
+ * @property logbackAccessContext The Logback-access context.
  * @property exchange The request/response exchange.
- * @property localPortStrategy The strategy to change the behavior of [localPort].
  * @see ch.qos.logback.access.spi.AccessEvent
  * @see ch.qos.logback.access.PatternLayout
  * @see io.undertow.servlet.spec.HttpServletRequestImpl
@@ -35,8 +36,8 @@ import kotlin.text.Charsets.UTF_8
  * @see io.undertow.attribute.ExchangeAttribute
  */
 class LogbackAccessUndertowEventSource(
+    private val logbackAccessContext: LogbackAccessContext,
     private val exchange: HttpServerExchange,
-    private val localPortStrategy: LogbackAccessLocalPortStrategy,
 ) : LogbackAccessEventSource() {
 
     override val request: HttpServletRequest? = run {
@@ -59,6 +60,8 @@ class LogbackAccessUndertowEventSource(
         NANOSECONDS.toMillis(nanos)
     }
 
+    override val sequenceNumber: Long? = logbackAccessContext.raw.sequenceNumberGenerator?.nextSequenceNumber()
+
     override val threadName: String = currentThread().name
 
     override val serverName: String by lazy(LazyThreadSafetyMode.NONE) {
@@ -66,7 +69,7 @@ class LogbackAccessUndertowEventSource(
     }
 
     override val localPort: Int by lazy(LazyThreadSafetyMode.NONE) {
-        when (localPortStrategy) {
+        when (logbackAccessContext.properties.localPortStrategy) {
             LogbackAccessLocalPortStrategy.LOCAL -> exchange.destinationAddress.port
             LogbackAccessLocalPortStrategy.SERVER -> exchange.hostPort
         }

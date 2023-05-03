@@ -38,7 +38,7 @@ sealed class InvalidAccessEventTest(
     ) {
         val request = RequestEntity.get("/mock-controller/text?[]").build()
         val response = rest.exchange<String>(request)
-        response.statusCodeValue.shouldBe(if (supportsInvalidUrls) 200 else 400)
+        response.statusCode.value().shouldBe(if (supportsInvalidUrls) 200 else 400)
         val event = assertLogbackAccessEventsEventually { capture.shouldBeSingleton().single() }
         if (supportsInvalidUrls) {
             event.requestURI.shouldBe("/mock-controller/text")

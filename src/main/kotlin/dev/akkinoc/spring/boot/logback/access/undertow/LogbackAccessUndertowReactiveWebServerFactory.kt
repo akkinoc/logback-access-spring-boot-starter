@@ -33,7 +33,7 @@ class LogbackAccessUndertowReactiveWebServerFactory(
     override fun getWebServer(httpHandler: HttpHandler): WebServer {
         val originalServer = super.getWebServer(httpHandler) as UndertowWebServer
         val builder = originalServer.extractField<Builder>("builder")
-        val httpHandlerFactories = mutableListOf<HttpHandlerFactory>().apply {
+        val httpHandlerFactories = buildList<HttpHandlerFactory> {
             addAll(originalServer.extractField<Iterable<HttpHandlerFactory>>("httpHandlerFactories"))
             add { LogbackAccessUndertowHttpHandler(logbackAccessContext, it) }
         }

@@ -13,11 +13,12 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.11</version>
+        <version>3.0.6</version>
     </parent>
 
     <properties>
-        <logback-access-spring-boot-starter.version>[3.0.0,)</logback-access-spring-boot-starter.version>
+        <jakarta-servlet.version>5.0.0</jakarta-servlet.version>
+        <logback-access-spring-boot-starter.version>[4.0.0,)</logback-access-spring-boot-starter.version>
     </properties>
 
     <dependencies>

@@ -4,14 +4,14 @@ import ch.qos.logback.access.spi.IAccessEvent
 import ch.qos.logback.access.spi.IAccessEvent.NA
 import ch.qos.logback.access.spi.IAccessEvent.SENTINEL
 import ch.qos.logback.access.spi.ServerAdapter
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 import java.io.IOException
 import java.io.ObjectOutputStream
 import java.io.Serializable
 import java.util.Collections.enumeration
 import java.util.Enumeration
 import java.util.concurrent.TimeUnit.MILLISECONDS
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
 
 /**
  * The Logback-access event.
@@ -44,6 +44,10 @@ class LogbackAccessEvent(private var source: LogbackAccessEventSource) : IAccess
     override fun getElapsedSeconds(): Long {
         val millis = source.elapsedTime ?: return SENTINEL.toLong()
         return MILLISECONDS.toSeconds(millis)
+    }
+
+    override fun getSequenceNumber(): Long {
+        return source.sequenceNumber ?: 0L
     }
 
     override fun getThreadName(): String {

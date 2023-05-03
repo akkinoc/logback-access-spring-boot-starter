@@ -5,6 +5,7 @@ import ch.qos.logback.access.AccessConstants.LB_OUTPUT_BUFFER
 import ch.qos.logback.access.servlet.Util.isFormUrlEncoded
 import ch.qos.logback.access.servlet.Util.isImageResponse
 import ch.qos.logback.access.tomcat.TomcatServerAdapter
+import dev.akkinoc.spring.boot.logback.access.LogbackAccessContext
 import dev.akkinoc.spring.boot.logback.access.LogbackAccessEventSource
 import dev.akkinoc.spring.boot.logback.access.security.LogbackAccessSecurityServletFilter.Companion.REMOTE_USER_ATTRIBUTE
 import dev.akkinoc.spring.boot.logback.access.value.LogbackAccessLocalPortStrategy
@@ -26,7 +27,7 @@ import kotlin.text.Charsets.UTF_8
 /**
  * The Logback-access event source for the Tomcat web server.
  *
- * @property localPortStrategy The strategy to change the behavior of [localPort].
+ * @property logbackAccessContext The Logback-access context.
  * @property requestAttributesEnabled Whether to enable the request attributes to work with [RemoteIpValve].
  * @see ch.qos.logback.access.spi.AccessEvent
  * @see ch.qos.logback.access.tomcat.TomcatServerAdapter
@@ -36,10 +37,10 @@ import kotlin.text.Charsets.UTF_8
  * @see org.apache.catalina.valves.AbstractAccessLogValve.AccessLogElement
  */
 class LogbackAccessTomcatEventSource(
+    private val logbackAccessContext: LogbackAccessContext,
+    private val requestAttributesEnabled: Boolean,
     override val request: Request,
     override val response: Response,
-    private val localPortStrategy: LogbackAccessLocalPortStrategy,
-    private val requestAttributesEnabled: Boolean,
 ) : LogbackAccessEventSource() {
 
     override val serverAdapter: TomcatServerAdapter = TomcatServerAdapter(request, response)
@@ -48,6 +49,8 @@ class LogbackAccessTomcatEventSource(
 
     override val elapsedTime: Long = timeStamp - request.coyoteRequest.startTime
 
+    override val sequenceNumber: Long? = logbackAccessContext.raw.sequenceNumberGenerator?.nextSequenceNumber()
+
     override val threadName: String = currentThread().name
 
     override val serverName: String by lazy(LazyThreadSafetyMode.NONE) {
@@ -55,7 +58,7 @@ class LogbackAccessTomcatEventSource(
     }
 
     override val localPort: Int by lazy(LazyThreadSafetyMode.NONE) {
-        when (localPortStrategy) {
+        when (logbackAccessContext.properties.localPortStrategy) {
             LogbackAccessLocalPortStrategy.LOCAL -> request.localPort
             LogbackAccessLocalPortStrategy.SERVER ->
                 request.getAccessLogAttribute(SERVER_PORT_ATTRIBUTE) ?: request.serverPort

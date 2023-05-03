@@ -37,7 +37,7 @@ sealed class UndertowNoRequestStartTimeTest {
         val request = RequestEntity.get("/mock-controller/text").build()
         val started = currentTimeMillis()
         val response = rest.exchange<String>(request)
-        response.statusCodeValue.shouldBe(200)
+        response.statusCode.value().shouldBe(200)
         val event = assertLogbackAccessEventsEventually { capture.shouldBeSingleton().single() }
         val finished = currentTimeMillis()
         event.timeStamp.shouldBeBetween(started, finished)

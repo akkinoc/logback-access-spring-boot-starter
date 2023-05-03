@@ -50,10 +50,10 @@ Supports the following web servers:
 
 Depends on:
 
-* Java 8, 11 or 17
-* Kotlin 1.6
-* Spring Boot 2.7
-* Logback-access 1.2
+* Java 17
+* Kotlin 1.7
+* Spring Boot 3.0
+* Logback-access 1.4
 
 ## Usage
 
@@ -90,7 +90,7 @@ For example:
 
 See also the Logback-access official documents:
 
-* [Logback-access configuration](https://logback.qos.ch/access.html#configuration)
+* [Logback-access configuration](https://logback.qos.ch/access.html)
 
 ### Access Logging
 
@@ -134,7 +134,7 @@ This is the same concept as the [Logback configuration ("logback.xml" and "logba
 The `<springProfile>` tag lets you optionally include or exclude sections of configuration based on the active Spring profiles.
 The usage of this extension is the same as the [Spring Boot Logback Extension "Profile-specific Configuration"].
 
-[Spring Boot Logback Extension "Profile-specific Configuration"]: https://docs.spring.io/spring-boot/docs/2.5.6/reference/html/features.html#features.logging.logback-extensions.profile-specific
+[Spring Boot Logback Extension "Profile-specific Configuration"]: https://docs.spring.io/spring-boot/docs/3.0.6/reference/html/features.html#features.logging.logback-extensions.profile-specific
 
 > ```xml
 > <springProfile name="staging">
@@ -153,7 +153,7 @@ The usage of this extension is the same as the [Spring Boot Logback Extension "P
 The `<springProperty>` tag lets you expose properties from the Spring Environment for use within Logback.
 The usage of this extension is the same as the [Spring Boot Logback Extension "Environment Properties"].
 
-[Spring Boot Logback Extension "Environment Properties"]: https://docs.spring.io/spring-boot/docs/2.5.6/reference/html/features.html#features.logging.logback-extensions.environment-properties
+[Spring Boot Logback Extension "Environment Properties"]: https://docs.spring.io/spring-boot/docs/3.0.6/reference/html/features.html#features.logging.logback-extensions.environment-properties
 
 > ```xml
 > <springProperty scope="context" name="fluentHost" source="myapp.fluentd.host" defaultValue="localhost"/>
