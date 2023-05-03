@@ -11,6 +11,8 @@
             name="console_pattern_suffix"
             source="logback.access.test.console.pattern.suffix"
             defaultValue=";"/>
+    <springProperty name="ignored_source_is_missing"/>
+    <springProperty source="logback.access.test.ignored.name-is-missing"/>
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>${console_pattern_prefix}${console_pattern_body}${console_pattern_suffix}</pattern>
