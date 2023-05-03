@@ -57,7 +57,7 @@ class TestContextClassLoaderCustomizerFactory : ContextCustomizerFactory {
         val usesUndertow = annotations.isPresent(UndertowServletWebTest::class.java) ||
             annotations.isPresent(UndertowReactiveWebTest::class.java)
         val usesNetty = annotations.isPresent(NettyReactiveWebTest::class.java)
-        return mutableSetOf<Class<*>>().apply {
+        return buildSet {
             if (!usesTomcat) add(Tomcat::class.java)
             if (!usesJetty) add(JettyServer::class.java)
             if (!usesUndertow) add(Undertow::class.java)
