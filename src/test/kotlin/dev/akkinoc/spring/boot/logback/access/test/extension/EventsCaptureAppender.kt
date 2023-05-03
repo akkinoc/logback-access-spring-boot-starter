@@ -4,8 +4,7 @@ import ch.qos.logback.core.AppenderBase
 import dev.akkinoc.spring.boot.logback.access.LogbackAccessEvent
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory.getLogger
-import org.springframework.util.SerializationUtils.deserialize
-import org.springframework.util.SerializationUtils.serialize
+import org.springframework.util.SerializationUtils.clone
 import java.util.concurrent.ConcurrentHashMap
 
 /**
@@ -15,10 +14,9 @@ class EventsCaptureAppender : AppenderBase<LogbackAccessEvent>() {
 
     override fun append(event: LogbackAccessEvent) {
         event.prepareForDeferredProcessing()
-        val serialized = serialize(event)
-        val deserialized = deserialize(serialized) as LogbackAccessEvent
+        val cloned = clone(event)
         captures.forEach { (id, capture) ->
-            capture += deserialized
+            capture += cloned
             log.debug("Captured the {}: {} @{}", LogbackAccessEvent::class.simpleName, event, id)
         }
     }
