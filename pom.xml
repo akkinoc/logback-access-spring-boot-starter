@@ -277,7 +277,7 @@
             <plugin>
                 <groupId>com.github.ozsie</groupId>
                 <artifactId>detekt-maven-plugin</artifactId>
-                <version>1.22.0</version>
+                <version>1.23.0</version>
                 <dependencies>
                     <dependency>
                         <groupId>io.gitlab.arturbosch.detekt</groupId>
