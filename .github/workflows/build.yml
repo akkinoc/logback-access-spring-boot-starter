@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout the Git repository
-        uses: actions/checkout@v3.5.3
+        uses: actions/checkout@v3.6.0
       - name: Setup Java
         uses: actions/setup-java@v3.12.0
         with:
