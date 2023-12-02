@@ -17,7 +17,10 @@ import org.springframework.test.context.ContextConfigurationAttributes
 import org.springframework.test.context.ContextCustomizerFactory
 import org.springframework.util.ClassUtils.convertClassNameToResourcePath
 import java.net.URL
+import io.undertow.websockets.jsr.Bootstrap as UndertowBootstrap
+import org.apache.tomcat.websocket.server.WsSci as TomcatWsSci
 import org.eclipse.jetty.server.Server as JettyServer
+import org.eclipse.jetty.websocket.jakarta.server.config.JakartaWebSocketServletContainerInitializer as JettyJakartaWebSocketServletContainerInitializer
 import reactor.netty.http.server.HttpServer as NettyHttpServer
 
 /**
@@ -59,8 +62,11 @@ class TestContextClassLoaderCustomizerFactory : ContextCustomizerFactory {
         val usesNetty = annotations.isPresent(NettyReactiveWebTest::class.java)
         return buildSet {
             if (!usesTomcat) add(Tomcat::class.java)
+            if (!usesTomcat) add(TomcatWsSci::class.java)
             if (!usesJetty) add(JettyServer::class.java)
+            if (!usesJetty) add(JettyJakartaWebSocketServletContainerInitializer::class.java)
             if (!usesUndertow) add(Undertow::class.java)
+            if (!usesUndertow) add(UndertowBootstrap::class.java)
             if (!usesNetty) add(NettyHttpServer::class.java)
         }
     }
