@@ -5,7 +5,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: [17]
+        java: [17, 21]
     name: Build with Java ${{ matrix.java }}
     runs-on: ubuntu-20.04
     steps:
