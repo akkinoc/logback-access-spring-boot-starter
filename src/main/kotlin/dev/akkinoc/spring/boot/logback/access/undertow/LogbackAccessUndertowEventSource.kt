@@ -7,6 +7,8 @@ import ch.qos.logback.access.servlet.Util.isImageResponse
 import ch.qos.logback.access.spi.ServerAdapter
 import dev.akkinoc.spring.boot.logback.access.LogbackAccessContext
 import dev.akkinoc.spring.boot.logback.access.LogbackAccessEventSource
+import dev.akkinoc.spring.boot.logback.access.LogbackAccessHackyLoggingOverrides.overriddenRequestBody
+import dev.akkinoc.spring.boot.logback.access.LogbackAccessHackyLoggingOverrides.overriddenResponseBody
 import dev.akkinoc.spring.boot.logback.access.security.LogbackAccessSecurityServletFilter.Companion.REMOTE_USER_ATTRIBUTE
 import dev.akkinoc.spring.boot.logback.access.value.LogbackAccessLocalPortStrategy
 import io.undertow.server.HttpServerExchange
@@ -150,6 +152,7 @@ class LogbackAccessUndertowEventSource(
     }
 
     override val requestContent: String? by lazy(LazyThreadSafetyMode.NONE) {
+        overriddenRequestBody(request)?.also { return@lazy it }
         val bytes = request?.getAttribute(LB_INPUT_BUFFER) as ByteArray?
         if (bytes == null && request != null && isFormUrlEncoded(request)) {
             return@lazy requestParameterMap.asSequence()
@@ -175,6 +178,7 @@ class LogbackAccessUndertowEventSource(
     }
 
     override val responseContent: String? by lazy(LazyThreadSafetyMode.NONE) {
+        overriddenResponseBody(request, response)?.also { return@lazy it }
         if (response != null && isImageResponse(response)) return@lazy "[IMAGE CONTENTS SUPPRESSED]"
         val bytes = request?.getAttribute(LB_OUTPUT_BUFFER) as ByteArray?
         bytes?.let { String(it, UTF_8) }
