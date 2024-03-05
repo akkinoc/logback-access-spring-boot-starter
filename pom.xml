@@ -257,7 +257,7 @@
             <plugin>
                 <groupId>org.jetbrains.dokka</groupId>
                 <artifactId>dokka-maven-plugin</artifactId>
-                <version>1.9.10</version>
+                <version>1.9.20</version>
                 <configuration>
                     <includes>
                         <include>src/main/kotlin/dev/akkinoc/spring/boot/logback/access/module.md</include>
