@@ -1,6 +1,6 @@
 package dev.akkinoc.spring.boot.logback.access
 
-import ch.qos.logback.access.spi.AccessContext
+import ch.qos.logback.access.common.spi.AccessContext
 import ch.qos.logback.core.spi.FilterReply
 import ch.qos.logback.core.status.Status
 import dev.akkinoc.spring.boot.logback.access.LogbackAccessProperties.Companion.DEFAULT_CONFIGS

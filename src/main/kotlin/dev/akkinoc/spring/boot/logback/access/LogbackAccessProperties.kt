@@ -1,6 +1,6 @@
 package dev.akkinoc.spring.boot.logback.access
 
-import ch.qos.logback.access.spi.IAccessEvent
+import ch.qos.logback.access.common.spi.IAccessEvent
 import dev.akkinoc.spring.boot.logback.access.value.LogbackAccessLocalPortStrategy
 import io.undertow.UndertowOptions
 import org.apache.catalina.valves.RemoteIpValve
