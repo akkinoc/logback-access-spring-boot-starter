@@ -7,7 +7,7 @@ jobs:
       matrix:
         java: [17, 21]
     name: Build with Java ${{ matrix.java }}
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout the Git repository
         uses: actions/checkout@v4.1.6
