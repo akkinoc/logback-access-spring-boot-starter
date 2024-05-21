@@ -44,3 +44,5 @@ jobs:
         working-directory: examples/webflux-undertow-java
       - name: Upload the coverage report to Codecov
         uses: codecov/codecov-action@v4.4.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
