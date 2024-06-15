@@ -2,7 +2,6 @@ package dev.akkinoc.spring.boot.logback.access.jetty
 
 import dev.akkinoc.spring.boot.logback.access.LogbackAccessContext
 import org.eclipse.jetty.server.Server
-import org.eclipse.jetty.server.handler.RequestLogHandler
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory.getLogger
 import org.springframework.boot.web.embedded.jetty.ConfigurableJettyWebServerFactory
@@ -34,10 +33,7 @@ class LogbackAccessJettyWebServerFactoryCustomizer(
      * @param server The [Server].
      */
     private fun customize(server: Server) {
-        val handler = RequestLogHandler().apply {
-            requestLog = LogbackAccessJettyRequestLog(logbackAccessContext)
-        }
-        server.insertHandler(handler)
+        server.setRequestLog(LogbackAccessJettyRequestLog(logbackAccessContext))
         log.debug(
             "Customized the {}: {} @{}",
             Server::class.simpleName,

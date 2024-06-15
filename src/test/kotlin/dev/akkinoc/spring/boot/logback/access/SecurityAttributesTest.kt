@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.security.reactive.ReactiveSecurityAutoConfiguration
+import org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.boot.test.web.client.exchange
@@ -28,7 +29,11 @@ import org.springframework.test.context.TestPropertySource
  * @property supportsRemoteUsers Whether to support remote users.
  */
 @ExtendWith(EventsCaptureExtension::class)
-@Import(SecurityAutoConfiguration::class, ReactiveSecurityAutoConfiguration::class)
+@Import(
+    ReactiveUserDetailsServiceAutoConfiguration::class,
+    SecurityAutoConfiguration::class,
+    ReactiveSecurityAutoConfiguration::class
+)
 @TestPropertySource(
     properties = [
         "spring.security.user.name=test-user",

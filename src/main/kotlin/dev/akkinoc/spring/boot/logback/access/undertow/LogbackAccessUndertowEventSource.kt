@@ -1,10 +1,10 @@
 package dev.akkinoc.spring.boot.logback.access.undertow
 
-import ch.qos.logback.access.AccessConstants.LB_INPUT_BUFFER
-import ch.qos.logback.access.AccessConstants.LB_OUTPUT_BUFFER
-import ch.qos.logback.access.servlet.Util.isFormUrlEncoded
-import ch.qos.logback.access.servlet.Util.isImageResponse
-import ch.qos.logback.access.spi.ServerAdapter
+import ch.qos.logback.access.common.AccessConstants.LB_INPUT_BUFFER
+import ch.qos.logback.access.common.AccessConstants.LB_OUTPUT_BUFFER
+import ch.qos.logback.access.common.servlet.Util.isFormUrlEncoded
+import ch.qos.logback.access.common.servlet.Util.isImageResponse
+import ch.qos.logback.access.common.spi.ServerAdapter
 import dev.akkinoc.spring.boot.logback.access.LogbackAccessContext
 import dev.akkinoc.spring.boot.logback.access.LogbackAccessEventSource
 import dev.akkinoc.spring.boot.logback.access.LogbackAccessHackyLoggingOverrides.overriddenRequestBody
@@ -31,8 +31,8 @@ import kotlin.text.Charsets.UTF_8
  *
  * @property logbackAccessContext The Logback-access context.
  * @property exchange The request/response exchange.
- * @see ch.qos.logback.access.spi.AccessEvent
- * @see ch.qos.logback.access.PatternLayout
+ * @see ch.qos.logback.access.common.spi.AccessEvent
+ * @see ch.qos.logback.access.common.PatternLayout
  * @see io.undertow.servlet.spec.HttpServletRequestImpl
  * @see io.undertow.server.handlers.accesslog.AccessLogHandler
  * @see io.undertow.attribute.ExchangeAttribute
@@ -117,7 +117,10 @@ class LogbackAccessUndertowEventSource(
 
     override val requestHeaderMap: Map<String, String> by lazy(LazyThreadSafetyMode.NONE) {
         val headers = sortedMapOf<String, String>(String.CASE_INSENSITIVE_ORDER)
-        exchange.requestHeaders.associateTo(headers) { "${it.headerName}" to it.first }
+        exchange.requestHeaders.associateTo(headers) {
+            "${it.headerName}" to it.first()
+
+        }
         unmodifiableMap(headers)
     }
 
@@ -139,11 +142,8 @@ class LogbackAccessUndertowEventSource(
 
     override val attributeMap: Map<String, String> by lazy(LazyThreadSafetyMode.NONE) {
         val attrs = linkedMapOf<String, String>()
-        if (request != null) {
-            request.attributeNames.asSequence()
-                .filter { it !in setOf(LB_INPUT_BUFFER, LB_OUTPUT_BUFFER) }
-                .associateWithTo(attrs) { "${request.getAttribute(it)}" }
-        }
+        request?.attributeNames?.asSequence()?.filter { it !in setOf(LB_INPUT_BUFFER, LB_OUTPUT_BUFFER) }
+            ?.associateWithTo(attrs) { "${request.getAttribute(it)}" }
         unmodifiableMap(attrs)
     }
 
@@ -169,7 +169,7 @@ class LogbackAccessUndertowEventSource(
 
     override val responseHeaderMap: Map<String, String> by lazy(LazyThreadSafetyMode.NONE) {
         val headers = sortedMapOf<String, String>(String.CASE_INSENSITIVE_ORDER)
-        exchange.responseHeaders.associateTo(headers) { "${it.headerName}" to it.first }
+        exchange.responseHeaders.associateTo(headers) { "${it.headerName}" to it.first() }
         unmodifiableMap(headers)
     }
 

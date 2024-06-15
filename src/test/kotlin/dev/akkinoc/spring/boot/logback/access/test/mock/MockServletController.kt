@@ -42,7 +42,7 @@ class MockServletController {
     @GetMapping("/text-with-session")
     fun getTextWithSession(session: HttpSession): String {
         val response = "mock-text"
-        log.debug("Getting a text with a session: {}; {}", response, session)
+        log.debug("Getting a text with a session: {}; {}", response, session.id)
         return response
     }
 

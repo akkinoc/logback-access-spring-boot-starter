@@ -1,8 +1,9 @@
 package dev.akkinoc.spring.boot.logback.access.test.assertion
 
-import io.kotest.assertions.timing.continually
-import io.kotest.assertions.timing.eventually
-import io.kotest.assertions.until.fixed
+import io.kotest.assertions.nondeterministic.continually
+import io.kotest.assertions.nondeterministic.continuallyConfig
+import io.kotest.assertions.nondeterministic.eventually
+import io.kotest.assertions.nondeterministic.eventuallyConfig
 import kotlinx.coroutines.runBlocking
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
@@ -21,8 +22,12 @@ object Assertions {
      * @return The return value of the assertion function.
      */
     fun <T> assertLogbackAccessEventsEventually(assert: () -> T): T {
+        val config = eventuallyConfig {
+            duration = 1.seconds
+            interval = 100.milliseconds
+        }
         return runBlocking {
-            eventually<T>(duration = 1.seconds, interval = 100.milliseconds.fixed()) { assert() }
+            eventually(config) { assert() }
         }
     }
 
@@ -35,8 +40,12 @@ object Assertions {
      * @return The return value of the assertion function.
      */
     fun <T> assertLogbackAccessEventsContinually(assert: () -> T): T? {
+        val config = continuallyConfig<T> {
+            duration = 1.seconds
+            interval = 100.milliseconds
+        }
         return runBlocking {
-            continually(duration = 1.seconds, interval = 100.milliseconds.fixed()) { assert() }
+            continually(config) { assert() }
         }
     }
 

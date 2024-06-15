@@ -1,6 +1,6 @@
 package dev.akkinoc.spring.boot.logback.access.value
 
-import ch.qos.logback.access.spi.IAccessEvent
+import ch.qos.logback.access.common.spi.IAccessEvent
 import jakarta.servlet.ServletRequest
 
 /**
