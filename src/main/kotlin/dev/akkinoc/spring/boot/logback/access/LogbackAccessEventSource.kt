@@ -1,7 +1,7 @@
 package dev.akkinoc.spring.boot.logback.access
 
-import ch.qos.logback.access.spi.IAccessEvent
-import ch.qos.logback.access.spi.ServerAdapter
+import ch.qos.logback.access.common.spi.IAccessEvent
+import ch.qos.logback.access.common.spi.ServerAdapter
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import java.io.Serializable
@@ -11,7 +11,7 @@ import java.io.Serializable
  * Represents the attributes of [IAccessEvent] by Kotlin properties,
  * which helps to implement subclasses with Kotlin delegated properties (especially [lazy]).
  *
- * @see ch.qos.logback.access.spi.IAccessEvent
+ * @see ch.qos.logback.access.common.spi.IAccessEvent
  */
 abstract class LogbackAccessEventSource {
 

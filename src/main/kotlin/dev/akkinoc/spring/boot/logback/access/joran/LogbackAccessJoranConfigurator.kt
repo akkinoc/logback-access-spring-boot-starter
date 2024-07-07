@@ -1,6 +1,6 @@
 package dev.akkinoc.spring.boot.logback.access.joran
 
-import ch.qos.logback.access.joran.JoranConfigurator
+import ch.qos.logback.access.common.joran.JoranConfigurator
 import ch.qos.logback.core.joran.spi.ElementSelector
 import ch.qos.logback.core.joran.spi.RuleStore
 import ch.qos.logback.core.model.processor.DefaultProcessor

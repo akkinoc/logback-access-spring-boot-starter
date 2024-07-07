@@ -1,8 +1,8 @@
 package dev.akkinoc.spring.boot.logback.access.tee
 
-import ch.qos.logback.access.AccessConstants.TEE_FILTER_EXCLUDES_PARAM
-import ch.qos.logback.access.AccessConstants.TEE_FILTER_INCLUDES_PARAM
-import ch.qos.logback.access.servlet.TeeFilter
+import ch.qos.logback.access.common.AccessConstants.TEE_FILTER_EXCLUDES_PARAM
+import ch.qos.logback.access.common.AccessConstants.TEE_FILTER_INCLUDES_PARAM
+import ch.qos.logback.access.common.servlet.TeeFilter
 import dev.akkinoc.spring.boot.logback.access.LogbackAccessProperties
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory.getLogger

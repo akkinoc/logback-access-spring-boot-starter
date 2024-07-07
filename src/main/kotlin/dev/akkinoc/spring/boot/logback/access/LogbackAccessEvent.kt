@@ -1,9 +1,9 @@
 package dev.akkinoc.spring.boot.logback.access
 
-import ch.qos.logback.access.spi.IAccessEvent
-import ch.qos.logback.access.spi.IAccessEvent.NA
-import ch.qos.logback.access.spi.IAccessEvent.SENTINEL
-import ch.qos.logback.access.spi.ServerAdapter
+import ch.qos.logback.access.common.spi.IAccessEvent
+import ch.qos.logback.access.common.spi.IAccessEvent.NA
+import ch.qos.logback.access.common.spi.IAccessEvent.SENTINEL
+import ch.qos.logback.access.common.spi.ServerAdapter
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import java.io.IOException
@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit.MILLISECONDS
  * The Logback-access event.
  *
  * @property source The Logback-access event source.
- * @see ch.qos.logback.access.spi.AccessEvent
+ * @see ch.qos.logback.access.common.spi.AccessEvent
  */
 class LogbackAccessEvent(private var source: LogbackAccessEventSource) : IAccessEvent, Serializable {
 

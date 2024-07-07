@@ -1,9 +1,9 @@
 package dev.akkinoc.spring.boot.logback.access.tomcat
 
-import ch.qos.logback.access.AccessConstants.LB_INPUT_BUFFER
-import ch.qos.logback.access.AccessConstants.LB_OUTPUT_BUFFER
-import ch.qos.logback.access.servlet.Util.isFormUrlEncoded
-import ch.qos.logback.access.servlet.Util.isImageResponse
+import ch.qos.logback.access.common.AccessConstants.LB_INPUT_BUFFER
+import ch.qos.logback.access.common.AccessConstants.LB_OUTPUT_BUFFER
+import ch.qos.logback.access.common.servlet.Util.isFormUrlEncoded
+import ch.qos.logback.access.common.servlet.Util.isImageResponse
 import ch.qos.logback.access.tomcat.TomcatServerAdapter
 import dev.akkinoc.spring.boot.logback.access.LogbackAccessContext
 import dev.akkinoc.spring.boot.logback.access.LogbackAccessEventSource
@@ -31,9 +31,9 @@ import kotlin.text.Charsets.UTF_8
  *
  * @property logbackAccessContext The Logback-access context.
  * @property requestAttributesEnabled Whether to enable the request attributes to work with [RemoteIpValve].
- * @see ch.qos.logback.access.spi.AccessEvent
+ * @see ch.qos.logback.access.common.spi.AccessEvent
  * @see ch.qos.logback.access.tomcat.TomcatServerAdapter
- * @see ch.qos.logback.access.PatternLayout
+ * @see ch.qos.logback.access.common.PatternLayout
  * @see org.apache.catalina.valves.AccessLogValve
  * @see org.apache.catalina.valves.AbstractAccessLogValve
  * @see org.apache.catalina.valves.AbstractAccessLogValve.AccessLogElement

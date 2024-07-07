@@ -19,8 +19,8 @@ import org.springframework.util.ClassUtils.convertClassNameToResourcePath
 import java.net.URL
 import io.undertow.websockets.jsr.Bootstrap as UndertowBootstrap
 import org.apache.tomcat.websocket.server.WsSci as TomcatWsSci
+import org.eclipse.jetty.ee10.websocket.jakarta.server.config.JakartaWebSocketServletContainerInitializer as JettyJakartaWebSocketServletContainerInitializer
 import org.eclipse.jetty.server.Server as JettyServer
-import org.eclipse.jetty.websocket.jakarta.server.config.JakartaWebSocketServletContainerInitializer as JettyJakartaWebSocketServletContainerInitializer
 import reactor.netty.http.server.HttpServer as NettyHttpServer
 
 /**
