@@ -129,17 +129,17 @@
         <dependency>
             <groupId>ch.qos.logback.access</groupId>
             <artifactId>common</artifactId>
-            <version>2.0.1</version>
+            <version>2.0.2</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback.access</groupId>
             <artifactId>tomcat</artifactId>
-            <version>2.0.1</version>
+            <version>2.0.2</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback.access</groupId>
             <artifactId>jetty12</artifactId>
-            <version>2.0.1</version>
+            <version>2.0.2</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
