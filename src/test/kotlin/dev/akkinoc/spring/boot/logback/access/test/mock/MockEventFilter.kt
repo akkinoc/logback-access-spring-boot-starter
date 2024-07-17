@@ -10,13 +10,8 @@ import ch.qos.logback.core.spi.FilterReply
  */
 class MockEventFilter : Filter<IAccessEvent>() {
 
-    /**
-     * The request header name for overriding filter replies.
-     */
-    private var requestHeaderName: String = "mock-event-filter-reply"
-
     override fun decide(event: IAccessEvent): FilterReply {
-        val value = event.getRequestHeader(requestHeaderName)
+        val value = event.getRequestHeader("mock-event-filter-reply")
         return FilterReply.entries.find { it.name.equals(value, ignoreCase = true) } ?: FilterReply.NEUTRAL
     }
 
