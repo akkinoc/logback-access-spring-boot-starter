@@ -32,7 +32,7 @@ import org.springframework.test.context.TestPropertySource
 @Import(
     ReactiveUserDetailsServiceAutoConfiguration::class,
     SecurityAutoConfiguration::class,
-    ReactiveSecurityAutoConfiguration::class
+    ReactiveSecurityAutoConfiguration::class,
 )
 @TestPropertySource(
     properties = [
