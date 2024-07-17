@@ -21,12 +21,12 @@ object Assertions {
      * @param assert The assertion function that is called repeatedly.
      * @return The return value of the assertion function.
      */
-    fun <T> assertLogbackAccessEventsEventually(assert: () -> T): T {
+    fun <T> assertLogbackAccessEventsEventually(assert: () -> T): T = runBlocking {
         val config = eventuallyConfig {
             duration = 2.seconds
             interval = 100.milliseconds
         }
-        return runBlocking { eventually(config) { assert() } }
+        eventually(config) { assert() }
     }
 
     /**
@@ -37,12 +37,12 @@ object Assertions {
      * @param assert The assertion function that is called repeatedly.
      * @return The return value of the assertion function.
      */
-    fun <T> assertLogbackAccessEventsContinually(assert: () -> T): T? {
+    fun <T> assertLogbackAccessEventsContinually(assert: () -> T): T? = runBlocking {
         val config = continuallyConfig<T> {
             duration = 2.seconds
             interval = 100.milliseconds
         }
-        return runBlocking { continually(config) { assert() } }
+        continually(config) { assert() }
     }
 
 }
