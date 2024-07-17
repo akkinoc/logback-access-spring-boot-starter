@@ -23,12 +23,10 @@ object Assertions {
      */
     fun <T> assertLogbackAccessEventsEventually(assert: () -> T): T {
         val config = eventuallyConfig {
-            duration = 1.seconds
+            duration = 2.seconds
             interval = 100.milliseconds
         }
-        return runBlocking {
-            eventually(config) { assert() }
-        }
+        return runBlocking { eventually(config) { assert() } }
     }
 
     /**
@@ -41,12 +39,10 @@ object Assertions {
      */
     fun <T> assertLogbackAccessEventsContinually(assert: () -> T): T? {
         val config = continuallyConfig<T> {
-            duration = 1.seconds
+            duration = 2.seconds
             interval = 100.milliseconds
         }
-        return runBlocking {
-            continually(config) { assert() }
-        }
+        return runBlocking { continually(config) { assert() } }
     }
 
 }
