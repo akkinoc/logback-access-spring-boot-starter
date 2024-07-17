@@ -1,6 +1,5 @@
 package dev.akkinoc.spring.boot.logback.access.jetty
 
-import ch.qos.logback.access.jetty.ResponseWrapper
 import dev.akkinoc.spring.boot.logback.access.LogbackAccessContext
 import dev.akkinoc.spring.boot.logback.access.LogbackAccessEvent
 import org.eclipse.jetty.server.Request
@@ -33,8 +32,6 @@ class LogbackAccessJettyRequestLog(
             logbackAccessContext = logbackAccessContext,
             rawRequest = request,
             rawResponse = response,
-            request = RequestWrapper(request),
-            response = ResponseWrapper(response),
         )
         val event = LogbackAccessEvent(source)
         logbackAccessContext.emit(event)

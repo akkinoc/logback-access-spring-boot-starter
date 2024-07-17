@@ -5,6 +5,7 @@ import ch.qos.logback.access.common.AccessConstants.LB_OUTPUT_BUFFER
 import ch.qos.logback.access.common.servlet.Util.isFormUrlEncoded
 import ch.qos.logback.access.jetty.JettyModernServerAdapter
 import ch.qos.logback.access.jetty.JettyServerAdapter
+import ch.qos.logback.access.jetty.RequestWrapper
 import ch.qos.logback.access.jetty.ResponseWrapper
 import dev.akkinoc.spring.boot.logback.access.LogbackAccessContext
 import dev.akkinoc.spring.boot.logback.access.LogbackAccessEventSource
@@ -12,6 +13,8 @@ import dev.akkinoc.spring.boot.logback.access.LogbackAccessHackyLoggingOverrides
 import dev.akkinoc.spring.boot.logback.access.LogbackAccessHackyLoggingOverrides.overriddenResponseBody
 import dev.akkinoc.spring.boot.logback.access.security.LogbackAccessSecurityServletFilter.Companion.REMOTE_USER_ATTRIBUTE
 import dev.akkinoc.spring.boot.logback.access.value.LogbackAccessLocalPortStrategy
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 import org.eclipse.jetty.http.HttpHeader
 import org.eclipse.jetty.server.Request
 import org.eclipse.jetty.server.Response
@@ -26,6 +29,8 @@ import kotlin.text.Charsets.UTF_8
  * The Logback-access event source for the Jetty web server.
  *
  * @property logbackAccessContext The Logback-access context.
+ * @property rawRequest The raw request.
+ * @property rawResponse The raw response.
  * @see ch.qos.logback.access.common.spi.AccessEvent
  * @see ch.qos.logback.access.jetty.JettyServerAdapter
  * @see ch.qos.logback.access.common.PatternLayout
@@ -35,9 +40,13 @@ class LogbackAccessJettyEventSource(
     private val logbackAccessContext: LogbackAccessContext,
     private val rawRequest: Request,
     private val rawResponse: Response,
-    override val request: RequestWrapper,
-    override val response: ResponseWrapper
 ) : LogbackAccessEventSource() {
+
+    override val request: HttpServletRequest = object : RequestWrapper(rawRequest) {
+        override fun getContentType(): String? = rawRequest.headers[HttpHeader.CONTENT_TYPE]
+    }
+
+    override val response: HttpServletResponse = ResponseWrapper(rawResponse)
 
     override val serverAdapter: JettyServerAdapter = JettyModernServerAdapter(rawRequest, rawResponse)
 
