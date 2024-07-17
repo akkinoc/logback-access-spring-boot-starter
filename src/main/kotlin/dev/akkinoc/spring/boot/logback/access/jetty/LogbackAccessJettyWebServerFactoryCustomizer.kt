@@ -33,7 +33,7 @@ class LogbackAccessJettyWebServerFactoryCustomizer(
      * @param server The [Server].
      */
     private fun customize(server: Server) {
-        server.setRequestLog(LogbackAccessJettyRequestLog(logbackAccessContext))
+        server.requestLog = LogbackAccessJettyRequestLog(logbackAccessContext)
         log.debug(
             "Customized the {}: {} @{}",
             Server::class.simpleName,
