@@ -4,7 +4,7 @@ import ch.qos.logback.core.Context
 import ch.qos.logback.core.joran.action.ActionUtil.stringToScope
 import ch.qos.logback.core.model.Model
 import ch.qos.logback.core.model.processor.ModelInterpretationContext
-import ch.qos.logback.core.model.util.PropertyModelHandlerHelper
+import ch.qos.logback.core.model.util.PropertyModelHandlerHelper.setProperty
 import org.springframework.core.env.Environment
 import ch.qos.logback.core.model.processor.ModelHandlerBase as ModelHandler
 
@@ -31,7 +31,7 @@ class LogbackAccessJoranSpringPropertyModelHandler(
             return
         }
         val value = environment.getProperty(source, defaultValue)
-        PropertyModelHandlerHelper.setProperty(ic, name, value, scope)
+        setProperty(ic, name, value, scope)
     }
 
 }
