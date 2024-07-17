@@ -3,8 +3,8 @@ package dev.akkinoc.spring.boot.logback.access.jetty
 import ch.qos.logback.access.common.AccessConstants.LB_INPUT_BUFFER
 import ch.qos.logback.access.common.AccessConstants.LB_OUTPUT_BUFFER
 import ch.qos.logback.access.common.servlet.Util.isFormUrlEncoded
+import ch.qos.logback.access.common.servlet.Util.isImageResponse
 import ch.qos.logback.access.jetty.JettyModernServerAdapter
-import ch.qos.logback.access.jetty.JettyServerAdapter
 import ch.qos.logback.access.jetty.RequestWrapper
 import ch.qos.logback.access.jetty.ResponseWrapper
 import dev.akkinoc.spring.boot.logback.access.LogbackAccessContext
@@ -13,8 +13,6 @@ import dev.akkinoc.spring.boot.logback.access.LogbackAccessHackyLoggingOverrides
 import dev.akkinoc.spring.boot.logback.access.LogbackAccessHackyLoggingOverrides.overriddenResponseBody
 import dev.akkinoc.spring.boot.logback.access.security.LogbackAccessSecurityServletFilter.Companion.REMOTE_USER_ATTRIBUTE
 import dev.akkinoc.spring.boot.logback.access.value.LogbackAccessLocalPortStrategy
-import jakarta.servlet.http.HttpServletRequest
-import jakarta.servlet.http.HttpServletResponse
 import org.eclipse.jetty.http.HttpHeader
 import org.eclipse.jetty.server.Request
 import org.eclipse.jetty.server.Response
@@ -22,6 +20,7 @@ import org.eclipse.jetty.session.DefaultSessionIdManager
 import java.lang.System.currentTimeMillis
 import java.lang.Thread.currentThread
 import java.net.URLEncoder.encode
+import java.util.Collections.unmodifiableList
 import java.util.Collections.unmodifiableMap
 import kotlin.text.Charsets.UTF_8
 
@@ -42,13 +41,15 @@ class LogbackAccessJettyEventSource(
     private val rawResponse: Response,
 ) : LogbackAccessEventSource() {
 
-    override val request: HttpServletRequest = object : RequestWrapper(rawRequest) {
+    override val request: RequestWrapper = object : RequestWrapper(rawRequest) {
         override fun getContentType(): String? = rawRequest.headers[HttpHeader.CONTENT_TYPE]
     }
 
-    override val response: HttpServletResponse = ResponseWrapper(rawResponse)
+    override val response: ResponseWrapper = object : ResponseWrapper(rawResponse) {
+        override fun getContentType(): String? = rawResponse.headers[HttpHeader.CONTENT_TYPE]
+    }
 
-    override val serverAdapter: JettyServerAdapter = JettyModernServerAdapter(rawRequest, rawResponse)
+    override val serverAdapter: JettyModernServerAdapter = JettyModernServerAdapter(rawRequest, rawResponse)
 
     override val timeStamp: Long = currentTimeMillis()
 
@@ -103,19 +104,19 @@ class LogbackAccessJettyEventSource(
 
     override val requestHeaderMap: Map<String, String> by lazy(LazyThreadSafetyMode.NONE) {
         val headers = sortedMapOf<String, String>(String.CASE_INSENSITIVE_ORDER)
-        rawRequest.headers.fieldNamesCollection.associateByTo(headers, { it }, { rawRequest.headers[it] })
+        rawRequest.headers.fieldNamesCollection.associateWithTo(headers) { rawRequest.headers[it] }
         unmodifiableMap(headers)
     }
 
     override val cookieMap: Map<String, String> by lazy(LazyThreadSafetyMode.NONE) {
         val cookies = linkedMapOf<String, String>()
-        Request.getCookies(rawRequest).associateByTo(cookies, { it.name }, { it.value })
+        Request.getCookies(rawRequest).associateTo(cookies) { it.name to it.value }
         unmodifiableMap(cookies)
     }
 
     override val requestParameterMap: Map<String, List<String>> by lazy(LazyThreadSafetyMode.NONE) {
         val params = linkedMapOf<String, List<String>>()
-        Request.getParameters(rawRequest).associateByTo(params, { it.name }, { it.values })
+        Request.getParameters(rawRequest).associateTo(params) { it.name to unmodifiableList(it.values) }
         unmodifiableMap(params)
     }
 
@@ -133,7 +134,7 @@ class LogbackAccessJettyEventSource(
 
     override val requestContent: String? by lazy(LazyThreadSafetyMode.NONE) {
         overriddenRequestBody(request)?.also { return@lazy it }
-        val bytes = rawRequest.getAttribute(LB_INPUT_BUFFER) as ByteArray?
+        val bytes = request.getAttribute(LB_INPUT_BUFFER) as ByteArray?
         if (bytes == null && isFormUrlEncoded(request)) {
             return@lazy requestParameterMap.asSequence()
                 .flatMap { (key, values) -> values.asSequence().map { key to it } }
@@ -149,7 +150,7 @@ class LogbackAccessJettyEventSource(
 
     override val responseHeaderMap: Map<String, String> by lazy(LazyThreadSafetyMode.NONE) {
         val headers = sortedMapOf<String, String>(String.CASE_INSENSITIVE_ORDER)
-        rawResponse.headers.fieldNamesCollection.associateByTo(headers, { it }, { rawResponse.headers[it] })
+        rawResponse.headers.fieldNamesCollection.associateWithTo(headers) { rawResponse.headers[it] }
         unmodifiableMap(headers)
     }
 
@@ -159,9 +160,8 @@ class LogbackAccessJettyEventSource(
 
     override val responseContent: String? by lazy(LazyThreadSafetyMode.NONE) {
         overriddenResponseBody(request, response)?.also { return@lazy it }
-        val contentType = rawResponse.headers[HttpHeader.CONTENT_TYPE]
-        if (contentType != null && contentType.startsWith("image/")) return@lazy "[IMAGE CONTENTS SUPPRESSED]"
-        val bytes = rawRequest.getAttribute(LB_OUTPUT_BUFFER) as ByteArray?
+        if (isImageResponse(response)) return@lazy "[IMAGE CONTENTS SUPPRESSED]"
+        val bytes = request.getAttribute(LB_OUTPUT_BUFFER) as ByteArray?
         bytes?.let { String(it, UTF_8) }
     }
 
