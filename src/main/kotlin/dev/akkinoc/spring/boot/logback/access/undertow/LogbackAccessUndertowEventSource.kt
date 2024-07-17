@@ -117,10 +117,7 @@ class LogbackAccessUndertowEventSource(
 
     override val requestHeaderMap: Map<String, String> by lazy(LazyThreadSafetyMode.NONE) {
         val headers = sortedMapOf<String, String>(String.CASE_INSENSITIVE_ORDER)
-        exchange.requestHeaders.associateTo(headers) {
-            "${it.headerName}" to it.first()
-
-        }
+        exchange.requestHeaders.associateTo(headers) { "${it.headerName}" to it.first }
         unmodifiableMap(headers)
     }
 
@@ -142,8 +139,11 @@ class LogbackAccessUndertowEventSource(
 
     override val attributeMap: Map<String, String> by lazy(LazyThreadSafetyMode.NONE) {
         val attrs = linkedMapOf<String, String>()
-        request?.attributeNames?.asSequence()?.filter { it !in setOf(LB_INPUT_BUFFER, LB_OUTPUT_BUFFER) }
-            ?.associateWithTo(attrs) { "${request.getAttribute(it)}" }
+        if (request != null) {
+            request.attributeNames.asSequence()
+                .filter { it !in setOf(LB_INPUT_BUFFER, LB_OUTPUT_BUFFER) }
+                .associateWithTo(attrs) { "${request.getAttribute(it)}" }
+        }
         unmodifiableMap(attrs)
     }
 
@@ -169,7 +169,7 @@ class LogbackAccessUndertowEventSource(
 
     override val responseHeaderMap: Map<String, String> by lazy(LazyThreadSafetyMode.NONE) {
         val headers = sortedMapOf<String, String>(String.CASE_INSENSITIVE_ORDER)
-        exchange.responseHeaders.associateTo(headers) { "${it.headerName}" to it.first() }
+        exchange.responseHeaders.associateTo(headers) { "${it.headerName}" to it.first }
         unmodifiableMap(headers)
     }
 
