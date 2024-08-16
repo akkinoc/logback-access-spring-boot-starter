@@ -1,10 +1,12 @@
 package dev.akkinoc.spring.boot.logback.access.joran
 
 import ch.qos.logback.access.common.joran.JoranConfigurator
+import ch.qos.logback.core.joran.GenericXMLConfigurator
 import ch.qos.logback.core.joran.spi.ElementSelector
 import ch.qos.logback.core.joran.spi.RuleStore
 import ch.qos.logback.core.model.processor.DefaultProcessor
 import org.springframework.core.env.Environment
+import java.util.function.Supplier
 
 /**
  * The [JoranConfigurator] to support additional rules.
@@ -19,6 +21,15 @@ class LogbackAccessJoranConfigurator(private val environment: Environment) : Jor
         store.addRule(ElementSelector("configuration/springProperty")) { LogbackAccessJoranSpringPropertyAction() }
         store.addRule(ElementSelector("*/springProfile")) { LogbackAccessJoranSpringProfileAction() }
         store.addTransparentPathPart("springProfile")
+    }
+
+    override fun buildModelInterpretationContext() {
+        super.buildModelInterpretationContext()
+        modelInterpretationContext.configuratorSupplier = Supplier<GenericXMLConfigurator> {
+            LogbackAccessJoranConfigurator(environment).apply {
+                setContext(this.context)
+            }
+        }
     }
 
     override fun addModelHandlerAssociations(processor: DefaultProcessor) {
