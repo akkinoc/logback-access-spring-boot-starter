@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<included>
+    <springProperty
+            name="console_pattern_prefix"
+            source="logback.access.test.console.pattern.prefix"/>
+    <springProperty
+            name="console_pattern_body"
+            source="logback.access.test.console.pattern.body"
+            defaultValue="%h %l %u [%t] &quot;%r&quot; %s %b"/>
+    <springProperty
+            name="console_pattern_suffix"
+            source="logback.access.test.console.pattern.suffix"
+            defaultValue=";"/>
+    <springProperty name="ignored_source_is_blank" source=""/>
+    <springProperty name="ignored_source_is_missing"/>
+    <springProperty name="" source="logback.access.test.ignored.name-is-blank"/>
+    <springProperty source="logback.access.test.ignored.name-is-missing"/>
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${console_pattern_prefix}${console_pattern_body}${console_pattern_suffix}</pattern>
+        </encoder>
+    </appender>
+    <appender-ref ref="console"/>
+</included>
