@@ -292,7 +292,7 @@
                     <dependency>
                         <groupId>io.gitlab.arturbosch.detekt</groupId>
                         <artifactId>detekt-formatting</artifactId>
-                        <version>1.23.6</version>
+                        <version>1.23.7</version>
                     </dependency>
                 </dependencies>
                 <configuration>
