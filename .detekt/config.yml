@@ -1,6 +1,7 @@
 comments:
   UndocumentedPublicClass:
     active: true
+    searchInInnerObject: false
   UndocumentedPublicFunction:
     active: true
   UndocumentedPublicProperty:
