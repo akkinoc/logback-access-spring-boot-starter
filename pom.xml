@@ -128,18 +128,18 @@
         </dependency>
         <dependency>
             <groupId>ch.qos.logback.access</groupId>
-            <artifactId>common</artifactId>
-            <version>2.0.3</version>
+            <artifactId>logback-access-common</artifactId>
+            <version>2.0.4</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback.access</groupId>
-            <artifactId>tomcat</artifactId>
-            <version>2.0.3</version>
+            <artifactId>logback-access-tomcat</artifactId>
+            <version>2.0.4</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback.access</groupId>
-            <artifactId>jetty12</artifactId>
-            <version>2.0.3</version>
+            <artifactId>logback-access-jetty12</artifactId>
+            <version>2.0.4</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
