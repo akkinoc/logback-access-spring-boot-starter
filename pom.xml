@@ -71,7 +71,7 @@
     <properties>
         <gpg.skip>true</gpg.skip>
         <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
-        <logback.version>1.5.15</logback.version>
+        <logback.version>1.5.16</logback.version>
     </properties>
 
     <profiles>
