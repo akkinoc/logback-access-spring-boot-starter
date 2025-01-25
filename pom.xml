@@ -17,7 +17,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.0</version>
+        <version>3.4.1</version>
     </parent>
 
     <organization>
@@ -71,6 +71,7 @@
     <properties>
         <gpg.skip>true</gpg.skip>
         <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
+        <logback.version>1.5.16</logback.version>
     </properties>
 
     <profiles>
@@ -129,17 +130,17 @@
         <dependency>
             <groupId>ch.qos.logback.access</groupId>
             <artifactId>logback-access-common</artifactId>
-            <version>2.0.4</version>
+            <version>2.0.6</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback.access</groupId>
             <artifactId>logback-access-tomcat</artifactId>
-            <version>2.0.4</version>
+            <version>2.0.6</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback.access</groupId>
             <artifactId>logback-access-jetty12</artifactId>
-            <version>2.0.4</version>
+            <version>2.0.6</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
