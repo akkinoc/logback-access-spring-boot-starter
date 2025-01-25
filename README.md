@@ -52,7 +52,7 @@ Depends on:
 
 * Java 17 or 21
 * Kotlin 1.9
-* Spring Boot 3.3
+* Spring Boot 3.4
 * Logback-access 2.0
 
 ## Usage
