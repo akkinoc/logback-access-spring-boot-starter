@@ -55,7 +55,7 @@ class LogbackAccessTomcatEventSource(
 
     override val threadName: String = currentThread().name
 
-    override val serverName: String by lazy(LazyThreadSafetyMode.NONE) {
+    override val serverName: String? by lazy(LazyThreadSafetyMode.NONE) {
         request.getAccessLogAttribute(SERVER_NAME_ATTRIBUTE) ?: request.serverName
     }
 

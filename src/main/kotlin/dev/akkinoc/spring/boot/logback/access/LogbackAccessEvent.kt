@@ -59,7 +59,7 @@ class LogbackAccessEvent(private var source: LogbackAccessEventSource) : IAccess
     }
 
     override fun getServerName(): String {
-        return source.serverName
+        return source.serverName ?: NA
     }
 
     override fun getLocalPort(): Int {

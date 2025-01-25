@@ -53,7 +53,7 @@ abstract class LogbackAccessEventSource {
     /**
      * The value of [IAccessEvent.getServerName].
      */
-    abstract val serverName: String
+    abstract val serverName: String?
 
     /**
      * The value of [IAccessEvent.getLocalPort].
@@ -185,7 +185,7 @@ abstract class LogbackAccessEventSource {
 
         override val threadName: String = source.threadName
 
-        override val serverName: String = source.serverName
+        override val serverName: String? = source.serverName
 
         override val localPort: Int = source.localPort
 
