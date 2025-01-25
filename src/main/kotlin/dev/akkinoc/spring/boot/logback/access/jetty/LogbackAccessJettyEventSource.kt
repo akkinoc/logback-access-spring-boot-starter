@@ -59,7 +59,7 @@ class LogbackAccessJettyEventSource(
 
     override val threadName: String = currentThread().name
 
-    override val serverName: String by lazy(LazyThreadSafetyMode.NONE) {
+    override val serverName: String? by lazy(LazyThreadSafetyMode.NONE) {
         Request.getServerName(rawRequest)
     }
 
