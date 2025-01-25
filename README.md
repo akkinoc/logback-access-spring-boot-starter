@@ -70,6 +70,26 @@ If you are using Maven, add the following dependency.
 </dependency>
 ```
 
+If you are using the Tomcat web server, also add the following dependency.
+
+```xml
+<dependency>
+    <groupId>ch.qos.logback.access</groupId>
+    <artifactId>logback-access-tomcat</artifactId>
+    <version>${logback-access.version}</version>
+</dependency>
+```
+
+If you are using the Jetty web server, also add the following dependency.
+
+```xml
+<dependency>
+    <groupId>ch.qos.logback.access</groupId>
+    <artifactId>logback-access-jetty12</artifactId>
+    <version>${logback-access.version}</version>
+</dependency>
+```
+
 ### Configuring the Logback-access
 
 Create a Logback-access configuration file "logback-access.xml" in the root of the classpath.
