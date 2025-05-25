@@ -1,56 +1,38 @@
 version: 2
 updates:
-  - package-ecosystem: maven
-    directory: /
-    schedule:
-      interval: daily
-    labels:
-      - type:dependencies
-  - package-ecosystem: maven
-    directory: /examples/webmvc-tomcat-java
-    schedule:
-      interval: daily
-    labels:
-      - type:dependencies
-  - package-ecosystem: maven
-    directory: /examples/webmvc-tomcat-kotlin
-    schedule:
-      interval: daily
-    labels:
-      - type:dependencies
-  - package-ecosystem: maven
-    directory: /examples/webmvc-jetty-java
-    schedule:
-      interval: daily
-    labels:
-      - type:dependencies
-  - package-ecosystem: maven
-    directory: /examples/webmvc-undertow-java
-    schedule:
-      interval: daily
-    labels:
-      - type:dependencies
-  - package-ecosystem: maven
-    directory: /examples/webflux-tomcat-java
-    schedule:
-      interval: daily
-    labels:
-      - type:dependencies
-  - package-ecosystem: maven
-    directory: /examples/webflux-jetty-java
-    schedule:
-      interval: daily
-    labels:
-      - type:dependencies
-  - package-ecosystem: maven
-    directory: /examples/webflux-undertow-java
-    schedule:
-      interval: daily
-    labels:
-      - type:dependencies
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: daily
+      interval: cron
+      cronjob: 0 12 * * *
+    reviewers:
+      - akkinoc
+    assignees:
+      - akkinoc
     labels:
       - type:dependencies
+    milestone: 4
+  - package-ecosystem: maven
+    directories:
+      - /
+      - /examples/webflux-jetty-java
+      - /examples/webflux-tomcat-java
+      - /examples/webflux-undertow-java
+      - /examples/webmvc-jetty-java
+      - /examples/webmvc-tomcat-java
+      - /examples/webmvc-tomcat-kotlin
+      - /examples/webmvc-undertow-java
+    schedule:
+      interval: cron
+      cronjob: 0 12 * * *
+    reviewers:
+      - akkinoc
+    assignees:
+      - akkinoc
+    labels:
+      - type:dependencies
+    milestone: 4
+    groups:
+      spring-boot:
+        patterns:
+          - org.springframework.boot:*
