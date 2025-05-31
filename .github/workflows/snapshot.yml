@@ -26,7 +26,7 @@ jobs:
           server-id: central
           server-username: MAVEN_CENTRAL_USERNAME
           server-password: MAVEN_CENTRAL_PASSWORD
-      - name: Get the project version
+      - name: Export the project version
         run: echo PROJECT_VERSION=$(mvn -Dexpression=project.version -DforceStdout -q help:evaluate) >>$GITHUB_ENV
       - name: Snapshot the project
         run: mvn -Prelease clean deploy

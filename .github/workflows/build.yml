@@ -22,7 +22,7 @@ jobs:
           distribution: temurin
           java-version: ${{ matrix.java }}
           cache: maven
-      - name: Get the project version
+      - name: Export the project version
         run: echo PROJECT_VERSION=$(mvn -Dexpression=project.version -DforceStdout -q help:evaluate) >>$GITHUB_ENV
       - name: Build the project
         run: mvn clean install
