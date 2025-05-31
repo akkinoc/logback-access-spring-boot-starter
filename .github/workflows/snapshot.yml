@@ -1,0 +1,35 @@
+name: Snapshot
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: 0 12 * * 5
+  workflow_dispatch:
+jobs:
+  snapshot:
+    name: Snapshot
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout the Git repository
+        uses: actions/checkout@v4.2.2
+      - name: Setup Java
+        uses: actions/setup-java@v4.7.1
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+          gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+          server-id: central
+          server-username: MAVEN_CENTRAL_USERNAME
+          server-password: MAVEN_CENTRAL_PASSWORD
+      - name: Get the project version
+        run: echo PROJECT_VERSION=$(mvn -B -Dexpression=project.version -DforceStdout -q help:evaluate) >>$GITHUB_ENV
+      - name: Snapshot the project
+        run: mvn -B -Prelease clean deploy
+        if: endsWith(env.PROJECT_VERSION, '-SNAPSHOT')
+        env:
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
+          MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          MAVEN_CENTRAL_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
