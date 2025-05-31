@@ -18,7 +18,7 @@
 To set up, run:
 
 ```console
-$ git clone git@github.com:akkinoc/logback-access-spring-boot-starter.git
+$ git clone https://github.com/akkinoc/logback-access-spring-boot-starter.git
 $ cd logback-access-spring-boot-starter
 ```
 
