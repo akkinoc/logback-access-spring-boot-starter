@@ -30,7 +30,7 @@ jobs:
         run: echo PROJECT_VERSION=$(mvn -Dexpression=project.version -DforceStdout -q help:evaluate) >>$GITHUB_ENV
       - name: Snapshot the project
         run: mvn clean deploy
-        if: endsWith(env.PROJECT_VERSION, '-SNAPSHOT')
+        if: ${{ endsWith(env.PROJECT_VERSION, '-SNAPSHOT') }}
         env:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
