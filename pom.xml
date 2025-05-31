@@ -295,6 +295,7 @@
                 <version>3.2.7</version>
                 <configuration>
                     <bestPractices>true</bestPractices>
+                    <passphraseEnvName>GPG_PASSPHRASE</passphraseEnvName>
                 </configuration>
                 <executions>
                     <execution>
