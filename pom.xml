@@ -59,18 +59,7 @@
 
     <properties>
         <gpg.skip>true</gpg.skip>
-        <publishing.skip>true</publishing.skip>
     </properties>
-
-    <profiles>
-        <profile>
-            <id>release</id>
-            <properties>
-                <gpg.skip>false</gpg.skip>
-                <publishing.skip>false</publishing.skip>
-            </properties>
-        </profile>
-    </profiles>
 
     <dependencies>
         <dependency>
@@ -325,7 +314,6 @@
                 <extensions>true</extensions>
                 <configuration>
                     <autoPublish>true</autoPublish>
-                    <skipPublishing>${publishing.skip}</skipPublishing>
                 </configuration>
             </plugin>
         </plugins>
