@@ -136,7 +136,6 @@
         <plugins>
             <plugin>
                 <artifactId>maven-help-plugin</artifactId>
-                <version>3.5.1</version>
             </plugin>
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
