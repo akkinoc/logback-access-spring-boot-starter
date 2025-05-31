@@ -57,10 +57,6 @@
         <url>https://github.com/akkinoc/logback-access-spring-boot-starter/actions</url>
     </ciManagement>
 
-    <properties>
-        <gpg.skip>true</gpg.skip>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -293,19 +289,20 @@
                 </executions>
             </plugin>
             <plugin>
+                <artifactId>maven-install-plugin</artifactId>
+            </plugin>
+            <plugin>
                 <artifactId>maven-gpg-plugin</artifactId>
                 <version>3.2.7</version>
                 <executions>
                     <execution>
                         <id>sign</id>
+                        <phase>deploy</phase>
                         <goals>
                             <goal>sign</goal>
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-install-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.sonatype.central</groupId>
