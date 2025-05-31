@@ -20,10 +20,10 @@ jobs:
           distribution: temurin
           java-version: ${{ matrix.java }}
           cache: maven
-      - name: Build the project
-        run: mvn -B clean install
       - name: Get the project version
         run: echo PROJECT_VERSION=$(mvn -B -Dexpression=project.version -DforceStdout -q help:evaluate) >>$GITHUB_ENV
+      - name: Build the project
+        run: mvn -B clean install
       - name: Build the "examples/webmvc-tomcat-java" project
         run: mvn -B -Dlogback-access-spring-boot-starter.version=${{ env.PROJECT_VERSION }} clean install
         working-directory: examples/webmvc-tomcat-java
