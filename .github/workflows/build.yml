@@ -27,25 +27,25 @@ jobs:
       - name: Build the project
         run: mvn clean install
       - name: Build the "examples/webmvc-tomcat-java" project
-        run: mvn -Dlogback-access-spring-boot-starter.version=PROJECT_VERSION clean install
+        run: mvn -Dlogback-access-spring-boot-starter.version=$PROJECT_VERSION clean install
         working-directory: examples/webmvc-tomcat-java
       - name: Build the "examples/webmvc-tomcat-kotlin" project
-        run: mvn -Dlogback-access-spring-boot-starter.version=PROJECT_VERSION clean install
+        run: mvn -Dlogback-access-spring-boot-starter.version=$PROJECT_VERSION clean install
         working-directory: examples/webmvc-tomcat-kotlin
       - name: Build the "examples/webmvc-jetty-java" project
-        run: mvn -Dlogback-access-spring-boot-starter.version=PROJECT_VERSION clean install
+        run: mvn -Dlogback-access-spring-boot-starter.version=$PROJECT_VERSION clean install
         working-directory: examples/webmvc-jetty-java
       - name: Build the "examples/webmvc-undertow-java" project
-        run: mvn -Dlogback-access-spring-boot-starter.version=PROJECT_VERSION clean install
+        run: mvn -Dlogback-access-spring-boot-starter.version=$PROJECT_VERSION clean install
         working-directory: examples/webmvc-undertow-java
       - name: Build the "examples/webflux-tomcat-java" project
-        run: mvn -Dlogback-access-spring-boot-starter.version=PROJECT_VERSION clean install
+        run: mvn -Dlogback-access-spring-boot-starter.version=$PROJECT_VERSION clean install
         working-directory: examples/webflux-tomcat-java
       - name: Build the "examples/webflux-jetty-java" project
-        run: mvn -Dlogback-access-spring-boot-starter.version=PROJECT_VERSION clean install
+        run: mvn -Dlogback-access-spring-boot-starter.version=$PROJECT_VERSION clean install
         working-directory: examples/webflux-jetty-java
       - name: Build the "examples/webflux-undertow-java" project
-        run: mvn -Dlogback-access-spring-boot-starter.version=PROJECT_VERSION clean install
+        run: mvn -Dlogback-access-spring-boot-starter.version=$PROJECT_VERSION clean install
         working-directory: examples/webflux-undertow-java
       - name: Upload the coverage report to Codecov
         uses: codecov/codecov-action@v5.4.3
