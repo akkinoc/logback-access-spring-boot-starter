@@ -10,6 +10,8 @@ jobs:
   snapshot:
     name: Snapshot
     runs-on: ubuntu-24.04
+    env:
+      MAVEN_ARGS: -B --color always
     steps:
       - name: Checkout the Git repository
         uses: actions/checkout@v4.2.2
@@ -25,9 +27,9 @@ jobs:
           server-username: MAVEN_CENTRAL_USERNAME
           server-password: MAVEN_CENTRAL_PASSWORD
       - name: Get the project version
-        run: echo PROJECT_VERSION=$(mvn -B -Dexpression=project.version -DforceStdout -q help:evaluate) >>$GITHUB_ENV
+        run: echo PROJECT_VERSION=$(mvn -Dexpression=project.version -DforceStdout -q help:evaluate) >>$GITHUB_ENV
       - name: Snapshot the project
-        run: mvn -B -Prelease clean deploy
+        run: mvn -Prelease clean deploy
         if: endsWith(env.PROJECT_VERSION, '-SNAPSHOT')
         env:
           MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
