@@ -30,7 +30,7 @@ jobs:
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
       - name: Export the project version
-        run: echo PROJECT_VERSION=$(mvn -Dexpression=project.version -DforceStdout -q help:evaluate) >>$GITHUB_ENV
+        run: echo PROJECT_VERSION=$(mvn -Dexpression=project.version -q help:evaluate) | tee -a $GITHUB_ENV
       - name: Snapshot the project
         run: mvn clean deploy
         if: ${{ endsWith(env.PROJECT_VERSION, '-SNAPSHOT') }}

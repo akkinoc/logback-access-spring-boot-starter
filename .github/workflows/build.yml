@@ -23,7 +23,7 @@ jobs:
           java-version: ${{ matrix.java }}
           cache: maven
       - name: Export the project version
-        run: echo PROJECT_VERSION=$(mvn -Dexpression=project.version -DforceStdout -q help:evaluate) >>$GITHUB_ENV
+        run: echo PROJECT_VERSION=$(mvn -Dexpression=project.version -q help:evaluate) | tee -a $GITHUB_ENV
       - name: Build the project
         run: mvn clean install
       - name: Build the "examples/webmvc-tomcat-java" project
