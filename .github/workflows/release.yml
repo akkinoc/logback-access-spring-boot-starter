@@ -10,13 +10,13 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-24.04
-    permissions:
-      contents: write
     env:
       MAVEN_ARGS: -B --color always
     steps:
       - name: Checkout the Git repository
         uses: actions/checkout@v4.2.2
+        with:
+          ssh-key: ${{ secrets.GIT_PRIVATE_KEY }}
       - name: Setup Java
         uses: actions/setup-java@v4.7.1
         with:
