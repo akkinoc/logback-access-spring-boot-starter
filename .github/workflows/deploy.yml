@@ -1,14 +1,16 @@
-name: Snapshot
+name: Deploy
 on:
   push:
     branches:
       - main
+    tags:
+      - v*
   schedule:
     - cron: 0 12 * * 5
   workflow_dispatch:
 jobs:
-  snapshot:
-    name: Snapshot
+  deploy:
+    name: Deploy
     runs-on: ubuntu-24.04
     env:
       MAVEN_ARGS: -B --color always
@@ -31,9 +33,9 @@ jobs:
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
       - name: Export the project version
         run: echo PROJECT_VERSION=$(mvn -Dexpression=project.version -q help:evaluate) | tee -a $GITHUB_ENV
-      - name: Snapshot the project
+      - name: Deploy the project
         run: mvn clean deploy
-        if: ${{ endsWith(env.PROJECT_VERSION, '-SNAPSHOT') }}
+        if: ${{ startsWith(github.ref, 'refs/tags/') || endsWith(env.PROJECT_VERSION, '-SNAPSHOT') }}
         env:
           MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
           MAVEN_CENTRAL_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
