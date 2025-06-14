@@ -6,6 +6,9 @@ on:
         description: Version
         type: string
         required: true
+concurrency:
+  group: release
+  cancel-in-progress: false
 jobs:
   release:
     name: Release
