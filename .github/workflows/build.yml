@@ -51,6 +51,6 @@ jobs:
         run: mvn -Dlogback-access-spring-boot-starter.version=$PROJECT_VERSION clean install
         working-directory: examples/webflux-undertow-java
       - name: Upload the coverage report to Codecov
-        uses: codecov/codecov-action@v5.4.3
+        uses: codecov/codecov-action@v5.5.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
