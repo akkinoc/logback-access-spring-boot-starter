@@ -32,3 +32,6 @@ updates:
       spring-boot:
         patterns:
           - org.springframework.boot:*
+      logback-access:
+        patterns:
+          - ch.qos.logback.access:*
