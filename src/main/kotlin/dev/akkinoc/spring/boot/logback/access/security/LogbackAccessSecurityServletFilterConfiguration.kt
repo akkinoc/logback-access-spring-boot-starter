@@ -1,5 +1,7 @@
 package dev.akkinoc.spring.boot.logback.access.security
 
+import jakarta.servlet.DispatcherType.FORWARD
+import jakarta.servlet.DispatcherType.REQUEST
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory.getLogger
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
@@ -27,6 +29,7 @@ class LogbackAccessSecurityServletFilterConfiguration {
     @ConditionalOnMissingFilterBean
     fun logbackAccessSecurityServletFilter(): FilterRegistrationBean<LogbackAccessSecurityServletFilter> {
         val logbackAccessSecurityServletFilter = FilterRegistrationBean(LogbackAccessSecurityServletFilter())
+        logbackAccessSecurityServletFilter.setDispatcherTypes(REQUEST, FORWARD)
         log.debug(
             "Providing the {}: {}",
             LogbackAccessSecurityServletFilter::class.simpleName,
