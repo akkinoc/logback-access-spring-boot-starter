@@ -26,7 +26,9 @@ class LogbackAccessJoranSpringProfileModelHandler(
         model as LogbackAccessJoranSpringProfileModel
         val names = trimArrayElements(commaDelimitedListToStringArray(model.name))
         val resolvedNames = names.mapNotNull { it?.let { name -> substVars(name, ic, context) } }.toTypedArray()
-        if (resolvedNames.isEmpty() || !environment.acceptsProfiles(Profiles.of(*resolvedNames))) model.deepMarkAsSkipped()
+        if (resolvedNames.isEmpty() || !environment.acceptsProfiles(Profiles.of(*resolvedNames))) {
+            model.deepMarkAsSkipped()
+        }
     }
 
 }

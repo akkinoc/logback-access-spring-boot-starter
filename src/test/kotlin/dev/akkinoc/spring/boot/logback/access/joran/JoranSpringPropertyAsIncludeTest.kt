@@ -10,10 +10,10 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.system.CapturedOutput
-import org.springframework.boot.test.system.OutputCaptureExtension
 import org.springframework.boot.resttestclient.TestRestTemplate
 import org.springframework.boot.resttestclient.exchange
+import org.springframework.boot.test.system.CapturedOutput
+import org.springframework.boot.test.system.OutputCaptureExtension
 import org.springframework.http.RequestEntity
 import org.springframework.test.context.TestPropertySource
 
@@ -69,4 +69,3 @@ class JettyServletWebJoranSpringPropertyAsIncludeTest : JoranSpringPropertyAsInc
  */
 @JettyReactiveWebTest
 class JettyReactiveWebJoranSpringPropertyAsIncludeTest : JoranSpringPropertyAsIncludeTest()
-

@@ -125,7 +125,6 @@ class JettyReactiveWebTeeFilterHostNotIncludedTest : TeeFilterHostNotIncludedTes
     supportsResponseContents = false,
 )
 
-
 /**
  * Tests the case where the current host is included in the tee filter's exclusion hosts.
  *
@@ -193,4 +192,3 @@ class JettyReactiveWebTeeFilterHostExcludedTest : TeeFilterHostExcludedTest(
     supportsRequestContents = false,
     supportsResponseContents = false,
 )
-

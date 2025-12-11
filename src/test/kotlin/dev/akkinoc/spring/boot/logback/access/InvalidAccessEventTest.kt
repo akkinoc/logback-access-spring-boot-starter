@@ -38,7 +38,8 @@ import org.springframework.test.context.TestPropertySource
  *
  * @property queryString The expected query string format (URL-encoded as per RFC 3986).
  * @see <a href="https://www.rfc-editor.org/rfc/rfc3986#section-2.2">RFC 3986 Section 2.2</a>
- * @see <a href="https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-uri-building.html">Spring Framework URI Links</a>
+ * @see <a href="https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-uri-building.html">
+ *     Spring Framework URI Links</a>
  */
 @ExtendWith(EventsCaptureExtension::class)
 @TestPropertySource(properties = ["logback.access.config=classpath:logback-access-test.capture.xml"])

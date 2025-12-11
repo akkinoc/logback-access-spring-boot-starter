@@ -23,8 +23,10 @@ import org.springframework.boot.security.autoconfigure.web.servlet.ServletWebSec
         ReactiveUserDetailsServiceAutoConfiguration::class,
     ],
     excludeName = [
-        "org.springframework.boot.security.autoconfigure.actuate.web.reactive.ReactiveManagementWebSecurityAutoConfiguration",
-        "org.springframework.boot.security.autoconfigure.actuate.web.servlet.ManagementWebSecurityAutoConfiguration",
+        "org.springframework.boot.security.autoconfigure.actuate" +
+            ".web.reactive.ReactiveManagementWebSecurityAutoConfiguration",
+        "org.springframework.boot.security.autoconfigure.actuate" +
+            ".web.servlet.ManagementWebSecurityAutoConfiguration",
     ],
 )
 class TestContextConfiguration
