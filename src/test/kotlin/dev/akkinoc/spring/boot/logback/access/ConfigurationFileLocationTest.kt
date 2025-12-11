@@ -7,15 +7,13 @@ import dev.akkinoc.spring.boot.logback.access.test.type.JettyReactiveWebTest
 import dev.akkinoc.spring.boot.logback.access.test.type.JettyServletWebTest
 import dev.akkinoc.spring.boot.logback.access.test.type.TomcatReactiveWebTest
 import dev.akkinoc.spring.boot.logback.access.test.type.TomcatServletWebTest
-import dev.akkinoc.spring.boot.logback.access.test.type.UndertowReactiveWebTest
-import dev.akkinoc.spring.boot.logback.access.test.type.UndertowServletWebTest
 import io.kotest.matchers.collections.shouldBeSingleton
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.web.client.TestRestTemplate
-import org.springframework.boot.test.web.client.exchange
+import org.springframework.boot.resttestclient.TestRestTemplate
+import org.springframework.boot.resttestclient.exchange
 import org.springframework.http.RequestEntity
 import org.springframework.test.context.TestPropertySource
 
@@ -69,18 +67,6 @@ class JettyServletWebConfigurationFilePathTest : ConfigurationFilePathTest()
 class JettyReactiveWebConfigurationFilePathTest : ConfigurationFilePathTest()
 
 /**
- * Tests the [ConfigurationFilePathTest] using the Undertow servlet web server.
- */
-@UndertowServletWebTest
-class UndertowServletWebConfigurationFilePathTest : ConfigurationFilePathTest()
-
-/**
- * Tests the [ConfigurationFilePathTest] using the Undertow reactive web server.
- */
-@UndertowReactiveWebTest
-class UndertowReactiveWebConfigurationFilePathTest : ConfigurationFilePathTest()
-
-/**
  * Tests the case where the location of the configuration file is specified as a file scheme URI.
  */
 @TestPropertySource(properties = ["logback.access.config=file:target/test-classes/logback-access-test.capture.xml"])
@@ -109,15 +95,3 @@ class JettyServletWebConfigurationFileUriTest : ConfigurationFileUriTest()
  */
 @JettyReactiveWebTest
 class JettyReactiveWebConfigurationFileUriTest : ConfigurationFileUriTest()
-
-/**
- * Tests the [ConfigurationFileUriTest] using the Undertow servlet web server.
- */
-@UndertowServletWebTest
-class UndertowServletWebConfigurationFileUriTest : ConfigurationFileUriTest()
-
-/**
- * Tests the [ConfigurationFileUriTest] using the Undertow reactive web server.
- */
-@UndertowReactiveWebTest
-class UndertowReactiveWebConfigurationFileUriTest : ConfigurationFileUriTest()

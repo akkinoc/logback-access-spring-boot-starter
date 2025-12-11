@@ -7,18 +7,19 @@ import dev.akkinoc.spring.boot.logback.access.test.type.JettyReactiveWebTest
 import dev.akkinoc.spring.boot.logback.access.test.type.JettyServletWebTest
 import dev.akkinoc.spring.boot.logback.access.test.type.TomcatReactiveWebTest
 import dev.akkinoc.spring.boot.logback.access.test.type.TomcatServletWebTest
-import dev.akkinoc.spring.boot.logback.access.test.type.UndertowReactiveWebTest
-import dev.akkinoc.spring.boot.logback.access.test.type.UndertowServletWebTest
 import io.kotest.matchers.collections.shouldBeSingleton
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.autoconfigure.security.reactive.ReactiveSecurityAutoConfiguration
-import org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
-import org.springframework.boot.test.web.client.TestRestTemplate
-import org.springframework.boot.test.web.client.exchange
+import org.springframework.boot.security.autoconfigure.ReactiveUserDetailsServiceAutoConfiguration
+import org.springframework.boot.security.autoconfigure.SecurityAutoConfiguration
+import org.springframework.boot.security.autoconfigure.UserDetailsServiceAutoConfiguration
+import org.springframework.boot.security.autoconfigure.web.reactive.ReactiveWebSecurityAutoConfiguration
+import org.springframework.boot.security.autoconfigure.web.servlet.SecurityFilterAutoConfiguration
+import org.springframework.boot.security.autoconfigure.web.servlet.ServletWebSecurityAutoConfiguration
+import org.springframework.boot.resttestclient.TestRestTemplate
+import org.springframework.boot.resttestclient.exchange
 import org.springframework.context.annotation.Import
 import org.springframework.http.RequestEntity
 import org.springframework.test.context.TestPropertySource
@@ -30,9 +31,12 @@ import org.springframework.test.context.TestPropertySource
  */
 @ExtendWith(EventsCaptureExtension::class)
 @Import(
-    ReactiveUserDetailsServiceAutoConfiguration::class,
     SecurityAutoConfiguration::class,
-    ReactiveSecurityAutoConfiguration::class,
+    UserDetailsServiceAutoConfiguration::class,
+    ReactiveUserDetailsServiceAutoConfiguration::class,
+    ServletWebSecurityAutoConfiguration::class,
+    SecurityFilterAutoConfiguration::class,
+    ReactiveWebSecurityAutoConfiguration::class,
 )
 @TestPropertySource(
     properties = [
@@ -92,21 +96,5 @@ class JettyServletWebSecurityAttributesTest : SecurityAttributesTest(
  */
 @JettyReactiveWebTest
 class JettyReactiveWebSecurityAttributesTest : SecurityAttributesTest(
-    supportsRemoteUsers = false,
-)
-
-/**
- * Tests the [SecurityAttributesTest] using the Undertow servlet web server.
- */
-@UndertowServletWebTest
-class UndertowServletWebSecurityAttributesTest : SecurityAttributesTest(
-    supportsRemoteUsers = true,
-)
-
-/**
- * Tests the [SecurityAttributesTest] using the Undertow reactive web server.
- */
-@UndertowReactiveWebTest
-class UndertowReactiveWebSecurityAttributesTest : SecurityAttributesTest(
     supportsRemoteUsers = false,
 )
