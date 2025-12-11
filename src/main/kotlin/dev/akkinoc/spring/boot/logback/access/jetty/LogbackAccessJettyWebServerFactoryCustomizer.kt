@@ -4,7 +4,7 @@ import dev.akkinoc.spring.boot.logback.access.LogbackAccessContext
 import org.eclipse.jetty.server.Server
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory.getLogger
-import org.springframework.boot.web.embedded.jetty.ConfigurableJettyWebServerFactory
+import org.springframework.boot.jetty.ConfigurableJettyWebServerFactory
 import org.springframework.boot.web.server.WebServerFactoryCustomizer
 
 /**
