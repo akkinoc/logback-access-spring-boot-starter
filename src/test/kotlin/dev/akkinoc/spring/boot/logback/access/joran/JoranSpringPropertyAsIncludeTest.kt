@@ -5,17 +5,15 @@ import dev.akkinoc.spring.boot.logback.access.test.type.JettyReactiveWebTest
 import dev.akkinoc.spring.boot.logback.access.test.type.JettyServletWebTest
 import dev.akkinoc.spring.boot.logback.access.test.type.TomcatReactiveWebTest
 import dev.akkinoc.spring.boot.logback.access.test.type.TomcatServletWebTest
-import dev.akkinoc.spring.boot.logback.access.test.type.UndertowReactiveWebTest
-import dev.akkinoc.spring.boot.logback.access.test.type.UndertowServletWebTest
 import io.kotest.matchers.collections.shouldHaveSingleElement
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.resttestclient.TestRestTemplate
+import org.springframework.boot.resttestclient.exchange
 import org.springframework.boot.test.system.CapturedOutput
 import org.springframework.boot.test.system.OutputCaptureExtension
-import org.springframework.boot.test.web.client.TestRestTemplate
-import org.springframework.boot.test.web.client.exchange
 import org.springframework.http.RequestEntity
 import org.springframework.test.context.TestPropertySource
 
@@ -71,15 +69,3 @@ class JettyServletWebJoranSpringPropertyAsIncludeTest : JoranSpringPropertyAsInc
  */
 @JettyReactiveWebTest
 class JettyReactiveWebJoranSpringPropertyAsIncludeTest : JoranSpringPropertyAsIncludeTest()
-
-/**
- * Tests the [JoranSpringPropertyAsIncludeTest] using the Undertow servlet web server.
- */
-@UndertowServletWebTest
-class UndertowServletWebJoranSpringPropertyAsIncludeTest : JoranSpringPropertyAsIncludeTest()
-
-/**
- * Tests the [JoranSpringPropertyAsIncludeTest] using the Undertow reactive web server.
- */
-@UndertowReactiveWebTest
-class UndertowReactiveWebJoranSpringPropertyAsIncludeTest : JoranSpringPropertyAsIncludeTest()

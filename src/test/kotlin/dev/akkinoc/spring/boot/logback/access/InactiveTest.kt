@@ -5,8 +5,6 @@ import dev.akkinoc.spring.boot.logback.access.test.type.JettyServletWebTest
 import dev.akkinoc.spring.boot.logback.access.test.type.NonWebTest
 import dev.akkinoc.spring.boot.logback.access.test.type.TomcatReactiveWebTest
 import dev.akkinoc.spring.boot.logback.access.test.type.TomcatServletWebTest
-import dev.akkinoc.spring.boot.logback.access.test.type.UndertowReactiveWebTest
-import dev.akkinoc.spring.boot.logback.access.test.type.UndertowServletWebTest
 import io.kotest.matchers.nulls.shouldBeNull
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -68,15 +66,3 @@ class JettyServletWebDisabledTest : DisabledTest()
  */
 @JettyReactiveWebTest
 class JettyReactiveWebDisabledTest : DisabledTest()
-
-/**
- * Tests the [DisabledTest] using the Undertow servlet web server.
- */
-@UndertowServletWebTest
-class UndertowServletWebDisabledTest : DisabledTest()
-
-/**
- * Tests the [DisabledTest] using the Undertow reactive web server.
- */
-@UndertowReactiveWebTest
-class UndertowReactiveWebDisabledTest : DisabledTest()

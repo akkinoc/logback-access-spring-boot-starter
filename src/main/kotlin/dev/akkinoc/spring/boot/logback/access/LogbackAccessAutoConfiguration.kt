@@ -4,18 +4,15 @@ import dev.akkinoc.spring.boot.logback.access.jetty.LogbackAccessJettyConfigurat
 import dev.akkinoc.spring.boot.logback.access.security.LogbackAccessSecurityServletFilterConfiguration
 import dev.akkinoc.spring.boot.logback.access.tee.LogbackAccessTeeServletFilterConfiguration
 import dev.akkinoc.spring.boot.logback.access.tomcat.LogbackAccessTomcatConfiguration
-import dev.akkinoc.spring.boot.logback.access.undertow.LogbackAccessUndertowConfiguration
-import dev.akkinoc.spring.boot.logback.access.undertow.LogbackAccessUndertowReactiveConfiguration
-import dev.akkinoc.spring.boot.logback.access.undertow.LogbackAccessUndertowServletConfiguration
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory.getLogger
 import org.springframework.boot.autoconfigure.AutoConfigureBefore
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication
-import org.springframework.boot.autoconfigure.web.reactive.ReactiveWebServerFactoryAutoConfiguration
-import org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryAutoConfiguration
 import org.springframework.boot.context.properties.EnableConfigurationProperties
+import org.springframework.boot.web.server.autoconfigure.reactive.ReactiveWebServerConfiguration
+import org.springframework.boot.web.server.autoconfigure.servlet.ServletWebServerConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
@@ -26,16 +23,13 @@ import org.springframework.core.io.ResourceLoader
  * The auto-configuration for Logback-access.
  */
 @Configuration(proxyBeanMethods = false)
-@AutoConfigureBefore(ServletWebServerFactoryAutoConfiguration::class, ReactiveWebServerFactoryAutoConfiguration::class)
+@AutoConfigureBefore(ServletWebServerConfiguration::class, ReactiveWebServerConfiguration::class)
 @ConditionalOnProperty(prefix = "logback.access", name = ["enabled"], havingValue = "true", matchIfMissing = true)
 @ConditionalOnWebApplication
 @EnableConfigurationProperties(LogbackAccessProperties::class)
 @Import(
     LogbackAccessTomcatConfiguration::class,
     LogbackAccessJettyConfiguration::class,
-    LogbackAccessUndertowConfiguration::class,
-    LogbackAccessUndertowServletConfiguration::class,
-    LogbackAccessUndertowReactiveConfiguration::class,
     LogbackAccessSecurityServletFilterConfiguration::class,
     LogbackAccessTeeServletFilterConfiguration::class,
 )

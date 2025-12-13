@@ -5,9 +5,6 @@ import dev.akkinoc.spring.boot.logback.access.test.type.JettyServletWebTest
 import dev.akkinoc.spring.boot.logback.access.test.type.NettyReactiveWebTest
 import dev.akkinoc.spring.boot.logback.access.test.type.TomcatReactiveWebTest
 import dev.akkinoc.spring.boot.logback.access.test.type.TomcatServletWebTest
-import dev.akkinoc.spring.boot.logback.access.test.type.UndertowReactiveWebTest
-import dev.akkinoc.spring.boot.logback.access.test.type.UndertowServletWebTest
-import io.undertow.Undertow
 import org.apache.catalina.startup.Tomcat
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory.getLogger
@@ -17,9 +14,8 @@ import org.springframework.test.context.ContextConfigurationAttributes
 import org.springframework.test.context.ContextCustomizerFactory
 import org.springframework.util.ClassUtils.convertClassNameToResourcePath
 import java.net.URL
-import io.undertow.websockets.jsr.Bootstrap as UndertowBootstrap
 import org.apache.tomcat.websocket.server.WsSci as TomcatWsSci
-import org.eclipse.jetty.ee10.websocket.jakarta.server.config.JakartaWebSocketServletContainerInitializer as JettyJakartaWebSocketServletContainerInitializer
+import org.eclipse.jetty.ee11.websocket.jakarta.server.config.JakartaWebSocketServletContainerInitializer as JettyJakartaWebSocketServletContainerInitializer
 import org.eclipse.jetty.server.Server as JettyServer
 import reactor.netty.http.server.HttpServer as NettyHttpServer
 
@@ -57,16 +53,12 @@ class TestContextClassLoaderCustomizerFactory : ContextCustomizerFactory {
             annotations.isPresent(TomcatReactiveWebTest::class.java)
         val usesJetty = annotations.isPresent(JettyServletWebTest::class.java) ||
             annotations.isPresent(JettyReactiveWebTest::class.java)
-        val usesUndertow = annotations.isPresent(UndertowServletWebTest::class.java) ||
-            annotations.isPresent(UndertowReactiveWebTest::class.java)
         val usesNetty = annotations.isPresent(NettyReactiveWebTest::class.java)
         return buildSet {
             if (!usesTomcat) add(Tomcat::class.java)
             if (!usesTomcat) add(TomcatWsSci::class.java)
             if (!usesJetty) add(JettyServer::class.java)
             if (!usesJetty) add(JettyJakartaWebSocketServletContainerInitializer::class.java)
-            if (!usesUndertow) add(Undertow::class.java)
-            if (!usesUndertow) add(UndertowBootstrap::class.java)
             if (!usesNetty) add(NettyHttpServer::class.java)
         }
     }
