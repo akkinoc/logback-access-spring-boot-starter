@@ -3,7 +3,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>dev.akkinoc.spring.boot</groupId>
+    <groupId>io.github.seijikohara</groupId>
     <artifactId>logback-access-spring-boot-starter.examples.webmvc-tomcat-java</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
@@ -14,7 +14,7 @@
     </parent>
 
     <properties>
-        <logback-access-spring-boot-starter.version>[4.0.0,)</logback-access-spring-boot-starter.version>
+        <logback-access-spring-boot-starter.version>[1.0.0,)</logback-access-spring-boot-starter.version>
     </properties>
 
     <dependencies>
@@ -23,7 +23,7 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>dev.akkinoc.spring.boot</groupId>
+            <groupId>io.github.seijikohara</groupId>
             <artifactId>logback-access-spring-boot-starter</artifactId>
             <version>${logback-access-spring-boot-starter.version}</version>
         </dependency>

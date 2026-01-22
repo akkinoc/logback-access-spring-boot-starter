@@ -3,13 +3,13 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>dev.akkinoc.spring.boot</groupId>
+    <groupId>io.github.seijikohara</groupId>
     <artifactId>logback-access-spring-boot-starter</artifactId>
-    <version>4.7.1-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
 
     <name>logback-access-spring-boot-starter</name>
-    <description>Spring Boot Starter for Logback-access.</description>
-    <url>https://github.com/akkinoc/logback-access-spring-boot-starter</url>
+    <description>Spring Boot Starter for Logback-access</description>
+    <url>https://github.com/seijikohara/logback-access-spring-boot-starter</url>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -17,19 +17,23 @@
         <version>4.0.0</version>
     </parent>
 
-    <organization>
-        <name>akkinoc.dev</name>
-        <url>https://akkinoc.dev</url>
-    </organization>
-
     <developers>
         <developer>
-            <id>akkinoc</id>
-            <name>Akihiro Kondo</name>
-            <email>akkinoc@gmail.com</email>
-            <url>https://akkinoc.dev</url>
+            <id>seijikohara</id>
+            <name>Seiji Kohara</name>
+            <url>https://github.com/seijikohara</url>
         </developer>
     </developers>
+
+    <contributors>
+        <contributor>
+            <name>Akihiro Kondo</name>
+            <url>https://github.com/akkinoc</url>
+            <roles>
+                <role>Original Author</role>
+            </roles>
+        </contributor>
+    </contributors>
 
     <licenses>
         <license>
@@ -39,20 +43,20 @@
     </licenses>
 
     <scm>
-        <url>https://github.com/akkinoc/logback-access-spring-boot-starter</url>
-        <connection>scm:git:https://github.com/akkinoc/logback-access-spring-boot-starter.git</connection>
-        <developerConnection>scm:git:git@github.com:akkinoc/logback-access-spring-boot-starter.git</developerConnection>
+        <url>https://github.com/seijikohara/logback-access-spring-boot-starter</url>
+        <connection>scm:git:https://github.com/seijikohara/logback-access-spring-boot-starter.git</connection>
+        <developerConnection>scm:git:git@github.com:seijikohara/logback-access-spring-boot-starter.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
 
     <issueManagement>
         <system>GitHub Issues</system>
-        <url>https://github.com/akkinoc/logback-access-spring-boot-starter/issues</url>
+        <url>https://github.com/seijikohara/logback-access-spring-boot-starter/issues</url>
     </issueManagement>
 
     <ciManagement>
         <system>GitHub Actions</system>
-        <url>https://github.com/akkinoc/logback-access-spring-boot-starter/actions</url>
+        <url>https://github.com/seijikohara/logback-access-spring-boot-starter/actions</url>
     </ciManagement>
 
     <dependencies>
@@ -259,8 +263,8 @@
                 <version>2.1.0</version>
                 <configuration>
                     <includes>
-                        <include>src/main/kotlin/dev/akkinoc/spring/boot/logback/access/module.md</include>
-                        <include>src/main/kotlin/dev/akkinoc/spring/boot/logback/access/package.md</include>
+                        <include>src/main/kotlin/io/github/seijikohara/logback/access/module.md</include>
+                        <include>src/main/kotlin/io/github/seijikohara/logback/access/package.md</include>
                     </includes>
                 </configuration>
                 <executions>

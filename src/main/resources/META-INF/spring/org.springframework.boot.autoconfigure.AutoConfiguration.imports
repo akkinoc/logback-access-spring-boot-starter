@@ -1,1 +1,1 @@
-dev.akkinoc.spring.boot.logback.access.LogbackAccessAutoConfiguration
+io.github.seijikohara.logback.access.LogbackAccessAutoConfiguration

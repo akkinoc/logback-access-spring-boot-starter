@@ -4,26 +4,22 @@
 [![javadoc badge]][javadoc]
 [![release badge]][release]
 [![build badge]][build]
-[![codecov badge]][codecov]
 [![license badge]][license]
-[![sponsor badge]][sponsor]
 
-[maven central]: https://maven-badges.herokuapp.com/maven-central/dev.akkinoc.spring.boot/logback-access-spring-boot-starter
-[maven central badge]: https://maven-badges.herokuapp.com/maven-central/dev.akkinoc.spring.boot/logback-access-spring-boot-starter/badge.svg
-[javadoc]: https://javadoc.io/doc/dev.akkinoc.spring.boot/logback-access-spring-boot-starter
-[javadoc badge]: https://javadoc.io/badge2/dev.akkinoc.spring.boot/logback-access-spring-boot-starter/javadoc.svg
-[release]: https://github.com/akkinoc/logback-access-spring-boot-starter/releases
-[release badge]: https://img.shields.io/github/v/release/akkinoc/logback-access-spring-boot-starter?color=brightgreen&sort=semver
-[build]: https://github.com/akkinoc/logback-access-spring-boot-starter/actions/workflows/build.yml
-[build badge]: https://github.com/akkinoc/logback-access-spring-boot-starter/actions/workflows/build.yml/badge.svg
-[codecov]: https://codecov.io/gh/akkinoc/logback-access-spring-boot-starter
-[codecov badge]: https://codecov.io/gh/akkinoc/logback-access-spring-boot-starter/branch/main/graph/badge.svg
+[maven central]: https://central.sonatype.com/artifact/io.github.seijikohara/logback-access-spring-boot-starter
+[maven central badge]: https://img.shields.io/maven-central/v/io.github.seijikohara/logback-access-spring-boot-starter
+[javadoc]: https://javadoc.io/doc/io.github.seijikohara/logback-access-spring-boot-starter
+[javadoc badge]: https://javadoc.io/badge2/io.github.seijikohara/logback-access-spring-boot-starter/javadoc.svg
+[release]: https://github.com/seijikohara/logback-access-spring-boot-starter/releases
+[release badge]: https://img.shields.io/github/v/release/seijikohara/logback-access-spring-boot-starter?color=brightgreen&sort=semver
+[build]: https://github.com/seijikohara/logback-access-spring-boot-starter/actions/workflows/build.yml
+[build badge]: https://github.com/seijikohara/logback-access-spring-boot-starter/actions/workflows/build.yml/badge.svg
 [license]: LICENSE.txt
-[license badge]: https://img.shields.io/github/license/akkinoc/logback-access-spring-boot-starter?color=blue
-[sponsor]: https://github.com/sponsors/akkinoc
-[sponsor badge]: https://img.shields.io/static/v1?logo=github&label=sponsor&message=%E2%9D%A4&color=db61a2
+[license badge]: https://img.shields.io/github/license/seijikohara/logback-access-spring-boot-starter?color=blue
 
 [Spring Boot] Starter for [Logback-access].
+
+> **Note**: This is a fork of [akkinoc/logback-access-spring-boot-starter](https://github.com/akkinoc/logback-access-spring-boot-starter) with Spring Boot 4.0 support.
 
 [Spring Boot]: https://spring.io/projects/spring-boot
 [Logback-access]: https://logback.qos.ch/access.html
@@ -63,7 +59,7 @@ If you are using Maven, add the following dependency.
 
 ```xml
 <dependency>
-    <groupId>dev.akkinoc.spring.boot</groupId>
+    <groupId>io.github.seijikohara</groupId>
     <artifactId>logback-access-spring-boot-starter</artifactId>
     <version>${logback-access-spring-boot-starter.version}</version>
 </dependency>
@@ -134,7 +130,7 @@ The first configuration file found will be used.
 2. "logback-access.xml" in the root of the classpath.
 3. "logback-access-test-spring.xml" in the root of the classpath.
 4. "logback-access-spring.xml" in the root of the classpath.
-5. [fallback configuration file (appends to the console with a common pattern)](src/main/resources/dev/akkinoc/spring/boot/logback/access/logback-access-spring.xml).
+5. [fallback configuration file (appends to the console with a common pattern)](src/main/resources/io/github/seijikohara/logback/access/logback-access-spring.xml).
 
 ### Separation for Testing
 
@@ -200,7 +196,7 @@ logback.access:
   #   2. "classpath:logback-access.xml"
   #   3. "classpath:logback-access-test-spring.xml"
   #   4. "classpath:logback-access-spring.xml"
-  #   5. "classpath:dev/akkinoc/spring/boot/logback/access/logback-access-spring.xml"
+  #   5. "classpath:io/github/seijikohara/logback/access/logback-access-spring.xml"
   config: classpath:your-logback-access.xml
   # The strategy to change the behavior of IAccessEvent.getLocalPort.
   # Defaults to "server".
@@ -242,8 +238,7 @@ Please refer to the [Releases][release] page.
 
 Licensed under the [Apache License, Version 2.0][license].
 
-## Support the Project
+## Acknowledgments
 
-If this project is useful to you, I appreciate giving a ⭐ star to this repository.
-I would also appreciate if you would consider 💖 [sponsoring][sponsor] as well.
-Your support is my biggest motive force. Thanks ✨
+This project is a fork of [akkinoc/logback-access-spring-boot-starter](https://github.com/akkinoc/logback-access-spring-boot-starter).
+Thanks to the original author for creating this useful library.

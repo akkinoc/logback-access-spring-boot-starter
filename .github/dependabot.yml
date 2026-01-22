@@ -3,31 +3,25 @@ updates:
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: cron
-      cronjob: 0 12 * * *
+      interval: weekly
     assignees:
-      - akkinoc
+      - seijikohara
     labels:
       - type:dependencies
-    milestone: 4
   - package-ecosystem: maven
     directories:
       - /
       - /examples/webflux-jetty-java
       - /examples/webflux-tomcat-java
-      - /examples/webflux-undertow-java
       - /examples/webmvc-jetty-java
       - /examples/webmvc-tomcat-java
       - /examples/webmvc-tomcat-kotlin
-      - /examples/webmvc-undertow-java
     schedule:
-      interval: cron
-      cronjob: 0 12 * * *
+      interval: weekly
     assignees:
-      - akkinoc
+      - seijikohara
     labels:
       - type:dependencies
-    milestone: 4
     groups:
       spring-boot:
         patterns:

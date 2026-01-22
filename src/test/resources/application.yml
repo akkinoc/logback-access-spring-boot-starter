@@ -4,4 +4,4 @@ spring:
 logging:
   level:
     root: info
-    dev.akkinoc.spring.boot.logback.access: debug
+    io.github.seijikohara.logback.access: debug
