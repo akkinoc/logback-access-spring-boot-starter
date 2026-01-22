@@ -4,12 +4,12 @@
 [![pulls badge]][pulls]
 [![license badge]][license]
 
-[issues]: https://github.com/akkinoc/logback-access-spring-boot-starter/issues
-[issues badge]: https://img.shields.io/github/issues/akkinoc/logback-access-spring-boot-starter
-[pulls]: https://github.com/akkinoc/logback-access-spring-boot-starter/pulls
-[pulls badge]: https://img.shields.io/github/issues-pr/akkinoc/logback-access-spring-boot-starter
+[issues]: https://github.com/seijikohara/logback-access-spring-boot-starter/issues
+[issues badge]: https://img.shields.io/github/issues/seijikohara/logback-access-spring-boot-starter
+[pulls]: https://github.com/seijikohara/logback-access-spring-boot-starter/pulls
+[pulls badge]: https://img.shields.io/github/issues-pr/seijikohara/logback-access-spring-boot-starter
 [license]: LICENSE.txt
-[license badge]: https://img.shields.io/github/license/akkinoc/logback-access-spring-boot-starter?color=blue
+[license badge]: https://img.shields.io/github/license/seijikohara/logback-access-spring-boot-starter?color=blue
 
 [Bug reports][issues] and [pull requests][pulls] are welcome :)
 
@@ -18,7 +18,7 @@
 To set up, run:
 
 ```console
-$ git clone https://github.com/akkinoc/logback-access-spring-boot-starter.git
+$ git clone https://github.com/seijikohara/logback-access-spring-boot-starter.git
 $ cd logback-access-spring-boot-starter
 ```
 
