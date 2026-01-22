@@ -38,7 +38,7 @@ jobs:
           git_commit_gpgsign: true
           git_tag_gpgsign: true
       - name: Release the project
-        run: mvn -DreleaseVersion=${{ inputs.version }} release:clean release:prepare
+        run: ./mvnw -DreleaseVersion=${{ inputs.version }} release:clean release:prepare
         env:
           MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
           MAVEN_CENTRAL_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}

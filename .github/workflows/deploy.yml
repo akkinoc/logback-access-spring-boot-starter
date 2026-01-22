@@ -33,9 +33,9 @@ jobs:
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
       - name: Export the project version
-        run: echo PROJECT_VERSION=$(mvn -Dexpression=project.version -q help:evaluate) | tee -a $GITHUB_ENV
+        run: echo PROJECT_VERSION=$(./mvnw -Dexpression=project.version -q help:evaluate) | tee -a $GITHUB_ENV
       - name: Deploy the project
-        run: mvn clean deploy
+        run: ./mvnw clean deploy
         if: ${{ startsWith(github.ref, 'refs/tags/') || endsWith(env.PROJECT_VERSION, '-SNAPSHOT') }}
         env:
           MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
