@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: [17, 21]
+        java: [17, 21, 25]
     name: Build with Java ${{ matrix.java }}
     runs-on: ubuntu-24.04
     env:
@@ -30,21 +30,31 @@ jobs:
       - name: Build the project
         run: ./mvnw clean install
       - name: Build the "examples/webmvc-tomcat-java" project
-        run: ./mvnw -Dlogback-access-spring-boot-starter.version=$PROJECT_VERSION clean install
-        working-directory: examples/webmvc-tomcat-java
+        run: ./mvnw -f examples/webmvc-tomcat-java/pom.xml -Dlogback-access-spring-boot-starter.version=$PROJECT_VERSION clean install
       - name: Build the "examples/webmvc-tomcat-kotlin" project
-        run: ./mvnw -Dlogback-access-spring-boot-starter.version=$PROJECT_VERSION clean install
-        working-directory: examples/webmvc-tomcat-kotlin
+        run: ./mvnw -f examples/webmvc-tomcat-kotlin/pom.xml -Dlogback-access-spring-boot-starter.version=$PROJECT_VERSION clean install
       - name: Build the "examples/webmvc-jetty-java" project
-        run: ./mvnw -Dlogback-access-spring-boot-starter.version=$PROJECT_VERSION clean install
-        working-directory: examples/webmvc-jetty-java
+        run: ./mvnw -f examples/webmvc-jetty-java/pom.xml -Dlogback-access-spring-boot-starter.version=$PROJECT_VERSION clean install
       - name: Build the "examples/webflux-tomcat-java" project
-        run: ./mvnw -Dlogback-access-spring-boot-starter.version=$PROJECT_VERSION clean install
-        working-directory: examples/webflux-tomcat-java
+        run: ./mvnw -f examples/webflux-tomcat-java/pom.xml -Dlogback-access-spring-boot-starter.version=$PROJECT_VERSION clean install
       - name: Build the "examples/webflux-jetty-java" project
-        run: ./mvnw -Dlogback-access-spring-boot-starter.version=$PROJECT_VERSION clean install
-        working-directory: examples/webflux-jetty-java
+        run: ./mvnw -f examples/webflux-jetty-java/pom.xml -Dlogback-access-spring-boot-starter.version=$PROJECT_VERSION clean install
       - name: Upload the coverage report to Codecov
         uses: codecov/codecov-action@v5.5.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+  build-summary:
+    name: Build Summary
+    runs-on: ubuntu-24.04
+    needs: build
+    if: always()
+    steps:
+      - name: Check build results
+        run: |
+          if [[ "${{ needs.build.result }}" == "success" ]]; then
+            echo "All builds passed successfully"
+            exit 0
+          else
+            echo "Some builds failed"
+            exit 1
+          fi
