@@ -1,6 +1,7 @@
 package io.github.seijikohara.logback.access
 
 import io.github.seijikohara.logback.access.jetty.LogbackAccessJettyConfiguration
+import io.github.seijikohara.logback.access.netty.LogbackAccessNettyConfiguration
 import io.github.seijikohara.logback.access.security.LogbackAccessSecurityServletFilterConfiguration
 import io.github.seijikohara.logback.access.tee.LogbackAccessTeeServletFilterConfiguration
 import io.github.seijikohara.logback.access.tomcat.LogbackAccessTomcatConfiguration
@@ -31,6 +32,7 @@ import org.springframework.core.io.ResourceLoader
 @Import(
     LogbackAccessTomcatConfiguration::class,
     LogbackAccessJettyConfiguration::class,
+    LogbackAccessNettyConfiguration::class,
     LogbackAccessSecurityServletFilterConfiguration::class,
     LogbackAccessTeeServletFilterConfiguration::class,
     LogbackAccessTracingServletFilterConfiguration::class,

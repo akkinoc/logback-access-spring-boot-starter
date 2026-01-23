@@ -5,6 +5,7 @@ import io.github.seijikohara.logback.access.test.extension.EventsCapture
 import io.github.seijikohara.logback.access.test.extension.EventsCaptureExtension
 import io.github.seijikohara.logback.access.test.type.JettyReactiveWebTest
 import io.github.seijikohara.logback.access.test.type.JettyServletWebTest
+import io.github.seijikohara.logback.access.test.type.NettyReactiveWebTest
 import io.github.seijikohara.logback.access.test.type.TomcatReactiveWebTest
 import io.github.seijikohara.logback.access.test.type.TomcatServletWebTest
 import io.kotest.assertions.throwables.shouldThrowUnit
@@ -378,6 +379,18 @@ class JettyServletWebBasicEventTest :
  */
 @JettyReactiveWebTest
 class JettyReactiveWebBasicEventTest :
+    BasicEventTest(
+        supportsRequestParametersByFormData = false,
+        supportsRequestAttributes = false,
+        supportsSessionIDs = false,
+        canForwardRequests = false,
+    )
+
+/**
+ * Tests the [BasicEventTest] using the Netty reactive web server.
+ */
+@NettyReactiveWebTest
+class NettyReactiveWebBasicEventTest :
     BasicEventTest(
         supportsRequestParametersByFormData = false,
         supportsRequestAttributes = false,
