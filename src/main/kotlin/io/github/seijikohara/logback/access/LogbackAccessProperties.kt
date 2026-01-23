@@ -21,6 +21,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties
  *      5. "classpath:io/github/seijikohara/logback/access/logback-access-spring.xml"
  * @property localPortStrategy
  *  The strategy to change the behavior of [IAccessEvent.getLocalPort].
+ * @property excludePatterns
+ *  The URI patterns to exclude from access logging.
+ *  Supports Ant-style path patterns (e.g., `/actuator/` with wildcards, `/health`).
+ * @property excludeSuccessfulOnly
+ *  When true, only exclude requests that return successful status codes (2xx).
+ *  When false (default), exclude all requests matching the patterns regardless of status.
  * @property tomcat
  *  The properties for the Tomcat web server.
  * @property teeFilter
@@ -33,6 +39,8 @@ constructor(
     val enabled: Boolean = true,
     val config: String? = null,
     val localPortStrategy: LogbackAccessLocalPortStrategy = LogbackAccessLocalPortStrategy.SERVER,
+    val excludePatterns: List<String> = emptyList(),
+    val excludeSuccessfulOnly: Boolean = false,
     val tomcat: Tomcat = Tomcat(),
     val teeFilter: TeeFilter = TeeFilter(),
 ) {

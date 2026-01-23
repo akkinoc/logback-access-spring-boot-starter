@@ -32,6 +32,17 @@ class MockController {
     }
 
     /**
+     * Throws an exception for testing error scenarios.
+     *
+     * @throws IllegalStateException Always throws an exception.
+     */
+    @GetMapping("/exception")
+    fun getException(): String {
+        log.debug("Throwing an exception")
+        error("Test exception")
+    }
+
+    /**
      * Gets a text with response headers.
      *
      * @return A [ResponseEntity] to return a text with response headers.
