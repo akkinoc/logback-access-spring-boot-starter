@@ -4,6 +4,7 @@ import io.github.seijikohara.logback.access.jetty.LogbackAccessJettyConfiguratio
 import io.github.seijikohara.logback.access.security.LogbackAccessSecurityServletFilterConfiguration
 import io.github.seijikohara.logback.access.tee.LogbackAccessTeeServletFilterConfiguration
 import io.github.seijikohara.logback.access.tomcat.LogbackAccessTomcatConfiguration
+import io.github.seijikohara.logback.access.tracing.LogbackAccessTracingServletFilterConfiguration
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory.getLogger
 import org.springframework.boot.autoconfigure.AutoConfigureBefore
@@ -32,6 +33,7 @@ import org.springframework.core.io.ResourceLoader
     LogbackAccessJettyConfiguration::class,
     LogbackAccessSecurityServletFilterConfiguration::class,
     LogbackAccessTeeServletFilterConfiguration::class,
+    LogbackAccessTracingServletFilterConfiguration::class,
 )
 class LogbackAccessAutoConfiguration {
 
