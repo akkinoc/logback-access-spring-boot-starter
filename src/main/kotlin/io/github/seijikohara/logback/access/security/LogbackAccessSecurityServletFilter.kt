@@ -24,7 +24,5 @@ class LogbackAccessSecurityServletFilter : Filter {
          */
         @JvmField
         val REMOTE_USER_ATTRIBUTE: String = "${LogbackAccessSecurityServletFilter::class.qualifiedName}.remoteUser"
-
     }
-
 }

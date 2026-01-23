@@ -15,10 +15,7 @@ import ch.qos.logback.core.model.processor.ModelHandlerBase as ModelHandler
  * @property environment The environment.
  * @see org.springframework.boot.logging.logback.SpringPropertyModelHandler
  */
-class LogbackAccessJoranSpringPropertyModelHandler(
-    context: Context,
-    private val environment: Environment,
-) : ModelHandler(context) {
+class LogbackAccessJoranSpringPropertyModelHandler(context: Context, private val environment: Environment) : ModelHandler(context) {
 
     override fun handle(ic: ModelInterpretationContext, model: Model) {
         model as LogbackAccessJoranSpringPropertyModel
@@ -33,5 +30,4 @@ class LogbackAccessJoranSpringPropertyModelHandler(
         val value = environment.getProperty(source, defaultValue)
         setProperty(ic, name, value, scope)
     }
-
 }

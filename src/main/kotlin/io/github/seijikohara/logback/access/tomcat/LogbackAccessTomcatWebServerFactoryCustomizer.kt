@@ -12,9 +12,7 @@ import org.springframework.boot.web.server.WebServerFactoryCustomizer
  * @property logbackAccessContext The Logback-access context.
  * @see org.springframework.boot.autoconfigure.web.embedded.TomcatWebServerFactoryCustomizer
  */
-class LogbackAccessTomcatWebServerFactoryCustomizer(
-    private val logbackAccessContext: LogbackAccessContext,
-) : WebServerFactoryCustomizer<ConfigurableTomcatWebServerFactory> {
+class LogbackAccessTomcatWebServerFactoryCustomizer(private val logbackAccessContext: LogbackAccessContext) : WebServerFactoryCustomizer<ConfigurableTomcatWebServerFactory> {
 
     override fun customize(factory: ConfigurableTomcatWebServerFactory) {
         val valve = LogbackAccessTomcatValve(logbackAccessContext)
@@ -33,7 +31,5 @@ class LogbackAccessTomcatWebServerFactoryCustomizer(
          * The logger.
          */
         private val log: Logger = getLogger(LogbackAccessTomcatWebServerFactoryCustomizer::class.java)
-
     }
-
 }

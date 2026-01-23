@@ -167,5 +167,4 @@ class LogbackAccessJettyEventSource(
         val bytes = request.getAttribute(LB_OUTPUT_BUFFER) as ByteArray?
         bytes?.let { String(it, UTF_8) }
     }
-
 }

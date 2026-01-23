@@ -46,7 +46,5 @@ class LogbackAccessJettyConfiguration {
          * The logger.
          */
         private val log: Logger = getLogger(LogbackAccessJettyConfiguration::class.java)
-
     }
-
 }

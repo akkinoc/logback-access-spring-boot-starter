@@ -45,9 +45,7 @@ import org.springframework.test.context.TestPropertySource
         "logback.access.config=classpath:logback-access-test.capture.xml",
     ],
 )
-sealed class SecurityAttributesTest(
-    private val supportsRemoteUsers: Boolean,
-) {
+sealed class SecurityAttributesTest(private val supportsRemoteUsers: Boolean) {
 
     @Test
     fun `Rewrites the remote user of the appended Logback-access event with Spring Security`(
@@ -64,37 +62,40 @@ sealed class SecurityAttributesTest(
             event.remoteUser.shouldBe("-")
         }
     }
-
 }
 
 /**
  * Tests the [SecurityAttributesTest] using the Tomcat servlet web server.
  */
 @TomcatServletWebTest
-class TomcatServletWebSecurityAttributesTest : SecurityAttributesTest(
-    supportsRemoteUsers = true,
-)
+class TomcatServletWebSecurityAttributesTest :
+    SecurityAttributesTest(
+        supportsRemoteUsers = true,
+    )
 
 /**
  * Tests the [SecurityAttributesTest] using the Tomcat reactive web server.
  */
 @TomcatReactiveWebTest
-class TomcatReactiveWebSecurityAttributesTest : SecurityAttributesTest(
-    supportsRemoteUsers = false,
-)
+class TomcatReactiveWebSecurityAttributesTest :
+    SecurityAttributesTest(
+        supportsRemoteUsers = false,
+    )
 
 /**
  * Tests the [SecurityAttributesTest] using the Jetty servlet web server.
  */
 @JettyServletWebTest
-class JettyServletWebSecurityAttributesTest : SecurityAttributesTest(
-    supportsRemoteUsers = true,
-)
+class JettyServletWebSecurityAttributesTest :
+    SecurityAttributesTest(
+        supportsRemoteUsers = true,
+    )
 
 /**
  * Tests the [SecurityAttributesTest] using the Jetty reactive web server.
  */
 @JettyReactiveWebTest
-class JettyReactiveWebSecurityAttributesTest : SecurityAttributesTest(
-    supportsRemoteUsers = false,
-)
+class JettyReactiveWebSecurityAttributesTest :
+    SecurityAttributesTest(
+        supportsRemoteUsers = false,
+    )

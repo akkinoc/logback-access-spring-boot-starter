@@ -43,9 +43,7 @@ import org.springframework.test.context.TestPropertySource
  */
 @ExtendWith(EventsCaptureExtension::class)
 @TestPropertySource(properties = ["logback.access.config=classpath:logback-access-test.capture.xml"])
-sealed class InvalidAccessEventTest(
-    private val queryString: String,
-) {
+sealed class InvalidAccessEventTest(private val queryString: String) {
 
     @Test
     fun `Appends a Logback-access event with an invalid URL`(
@@ -64,7 +62,6 @@ sealed class InvalidAccessEventTest(
         event.queryString.shouldBe(queryString)
         event.requestURL.shouldBe("GET /mock-controller/text$queryString HTTP/1.1")
     }
-
 }
 
 /**
@@ -74,9 +71,10 @@ sealed class InvalidAccessEventTest(
  * before reaching the server, so Tomcat 11 receives a valid RFC 3986 compliant URL.
  */
 @TomcatServletWebTest
-class TomcatServletWebInvalidAccessEventTest : InvalidAccessEventTest(
-    queryString = "?%5B%5D",
-)
+class TomcatServletWebInvalidAccessEventTest :
+    InvalidAccessEventTest(
+        queryString = "?%5B%5D",
+    )
 
 /**
  * Tests the [InvalidAccessEventTest] using the Tomcat reactive web server.
@@ -85,9 +83,10 @@ class TomcatServletWebInvalidAccessEventTest : InvalidAccessEventTest(
  * before reaching the server, so Tomcat 11 receives a valid RFC 3986 compliant URL.
  */
 @TomcatReactiveWebTest
-class TomcatReactiveWebInvalidAccessEventTest : InvalidAccessEventTest(
-    queryString = "?%5B%5D",
-)
+class TomcatReactiveWebInvalidAccessEventTest :
+    InvalidAccessEventTest(
+        queryString = "?%5B%5D",
+    )
 
 /**
  * Tests the [InvalidAccessEventTest] using the Jetty servlet web server.
@@ -96,9 +95,10 @@ class TomcatReactiveWebInvalidAccessEventTest : InvalidAccessEventTest(
  * before reaching the server, so Jetty 12 receives a valid RFC 3986 compliant URL.
  */
 @JettyServletWebTest
-class JettyServletWebInvalidAccessEventTest : InvalidAccessEventTest(
-    queryString = "?%5B%5D",
-)
+class JettyServletWebInvalidAccessEventTest :
+    InvalidAccessEventTest(
+        queryString = "?%5B%5D",
+    )
 
 /**
  * Tests the [InvalidAccessEventTest] using the Jetty reactive web server.
@@ -107,6 +107,7 @@ class JettyServletWebInvalidAccessEventTest : InvalidAccessEventTest(
  * before reaching the server, so Jetty 12 receives a valid RFC 3986 compliant URL.
  */
 @JettyReactiveWebTest
-class JettyReactiveWebInvalidAccessEventTest : InvalidAccessEventTest(
-    queryString = "?%5B%5D",
-)
+class JettyReactiveWebInvalidAccessEventTest :
+    InvalidAccessEventTest(
+        queryString = "?%5B%5D",
+    )

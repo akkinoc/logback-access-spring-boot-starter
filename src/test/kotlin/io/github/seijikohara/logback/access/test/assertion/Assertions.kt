@@ -44,5 +44,4 @@ object Assertions {
         }
         continually(config) { assert() }
     }
-
 }

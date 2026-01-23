@@ -18,7 +18,11 @@ import org.slf4j.LoggerFactory.getLogger
  * The captured Logback-access events can be obtained from a [EventsCapture] test parameter.
  */
 class EventsCaptureExtension :
-    BeforeAllCallback, AfterAllCallback, BeforeEachCallback, AfterEachCallback, ParameterResolver {
+    BeforeAllCallback,
+    AfterAllCallback,
+    BeforeEachCallback,
+    AfterEachCallback,
+    ParameterResolver {
 
     override fun beforeAll(extensionContext: ExtensionContext) {
         val id = extensionContext.uniqueId
@@ -44,13 +48,9 @@ class EventsCaptureExtension :
         captures -= id
     }
 
-    override fun supportsParameter(parameterContext: ParameterContext, extensionContext: ExtensionContext): Boolean {
-        return parameterContext.parameter.type == EventsCapture::class.java
-    }
+    override fun supportsParameter(parameterContext: ParameterContext, extensionContext: ExtensionContext): Boolean = parameterContext.parameter.type == EventsCapture::class.java
 
-    override fun resolveParameter(parameterContext: ParameterContext, extensionContext: ExtensionContext): Any {
-        return extensionContext.getAccessEventsCapture()
-    }
+    override fun resolveParameter(parameterContext: ParameterContext, extensionContext: ExtensionContext): Any = extensionContext.getAccessEventsCapture()
 
     /**
      * Retrieves the Logback-access events capture that is present in the extension context.
@@ -71,7 +71,5 @@ class EventsCaptureExtension :
          * The logger.
          */
         private val log: Logger = getLogger(EventsCaptureExtension::class.java)
-
     }
-
 }

@@ -15,9 +15,7 @@ import org.slf4j.LoggerFactory.getLogger
  * @see org.eclipse.jetty.server.CustomRequestLog
  * @see ch.qos.logback.access.jetty.RequestLogImpl
  */
-class LogbackAccessJettyRequestLog(
-    private val logbackAccessContext: LogbackAccessContext,
-) : RequestLog {
+class LogbackAccessJettyRequestLog(private val logbackAccessContext: LogbackAccessContext) : RequestLog {
 
     override fun log(request: Request, response: Response) {
         log.debug(
@@ -43,7 +41,5 @@ class LogbackAccessJettyRequestLog(
          * The logger.
          */
         private val log: Logger = getLogger(LogbackAccessJettyRequestLog::class.java)
-
     }
-
 }

@@ -96,41 +96,44 @@ sealed class TeeFilterTest(
         if (supportsRequestContents) event.requestContent.shouldBeEmpty()
         if (supportsResponseContents) event.responseContent.shouldBe("[IMAGE CONTENTS SUPPRESSED]")
     }
-
 }
 
 /**
  * Tests the [TeeFilterTest] using the Tomcat servlet web server.
  */
 @TomcatServletWebTest
-class TomcatServletWebTeeFilterTest : TeeFilterTest(
-    supportsRequestContents = true,
-    supportsResponseContents = true,
-)
+class TomcatServletWebTeeFilterTest :
+    TeeFilterTest(
+        supportsRequestContents = true,
+        supportsResponseContents = true,
+    )
 
 /**
  * Tests the [TeeFilterTest] using the Tomcat reactive web server.
  */
 @TomcatReactiveWebTest
-class TomcatReactiveWebTeeFilterTest : TeeFilterTest(
-    supportsRequestContents = false,
-    supportsResponseContents = false,
-)
+class TomcatReactiveWebTeeFilterTest :
+    TeeFilterTest(
+        supportsRequestContents = false,
+        supportsResponseContents = false,
+    )
 
 /**
  * Tests the [TeeFilterTest] using the Jetty servlet web server.
  */
 @JettyServletWebTest
-class JettyServletWebTeeFilterTest : TeeFilterTest(
-    supportsRequestContents = true,
-    supportsResponseContents = true,
-)
+class JettyServletWebTeeFilterTest :
+    TeeFilterTest(
+        supportsRequestContents = true,
+        supportsResponseContents = true,
+    )
 
 /**
  * Tests the [TeeFilterTest] using the Jetty reactive web server.
  */
 @JettyReactiveWebTest
-class JettyReactiveWebTeeFilterTest : TeeFilterTest(
-    supportsRequestContents = false,
-    supportsResponseContents = false,
-)
+class JettyReactiveWebTeeFilterTest :
+    TeeFilterTest(
+        supportsRequestContents = false,
+        supportsResponseContents = false,
+    )

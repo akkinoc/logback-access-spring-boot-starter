@@ -48,7 +48,6 @@ sealed class JoranSpringProfileTest {
             capture.out.shouldNotContain("ignored_console:")
         }
     }
-
 }
 
 /**

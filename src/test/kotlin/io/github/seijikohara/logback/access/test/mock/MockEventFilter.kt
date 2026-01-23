@@ -14,5 +14,4 @@ class MockEventFilter : Filter<IAccessEvent>() {
         val value = event.getRequestHeader("mock-event-filter-reply")
         return FilterReply.entries.find { it.name.equals(value, ignoreCase = true) } ?: FilterReply.NEUTRAL
     }
-
 }

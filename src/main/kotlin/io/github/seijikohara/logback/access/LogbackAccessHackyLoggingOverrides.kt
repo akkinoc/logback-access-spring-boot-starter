@@ -26,5 +26,4 @@ object LogbackAccessHackyLoggingOverrides {
     @JvmStatic
     @Suppress("UNUSED_PARAMETER")
     fun overriddenResponseBody(request: HttpServletRequest?, response: HttpServletResponse?): String? = null
-
 }

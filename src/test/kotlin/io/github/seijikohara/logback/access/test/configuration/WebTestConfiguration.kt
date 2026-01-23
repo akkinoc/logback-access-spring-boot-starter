@@ -59,7 +59,5 @@ class WebTestConfiguration {
          * The logger.
          */
         private val log: Logger = getLogger(WebTestConfiguration::class.java)
-
     }
-
 }

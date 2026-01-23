@@ -157,16 +157,16 @@ abstract class LogbackAccessEventSource {
      *
      * @return A serializable Logback-access event source with fixed evaluated values.
      */
-    open fun fix(): LogbackAccessEventSource {
-        return Fixed(this)
-    }
+    open fun fix(): LogbackAccessEventSource = Fixed(this)
 
     /**
      * The serializable Logback-access event source with fixed evaluated values.
      *
      * @param source The Logback-access event source.
      */
-    private class Fixed(source: LogbackAccessEventSource) : LogbackAccessEventSource(), Serializable {
+    private class Fixed(source: LogbackAccessEventSource) :
+        LogbackAccessEventSource(),
+        Serializable {
 
         @Transient
         override val request: HttpServletRequest? = source.request
@@ -226,7 +226,5 @@ abstract class LogbackAccessEventSource {
         override val responseContent: String? = source.responseContent
 
         override fun fix(): LogbackAccessEventSource = this
-
     }
-
 }

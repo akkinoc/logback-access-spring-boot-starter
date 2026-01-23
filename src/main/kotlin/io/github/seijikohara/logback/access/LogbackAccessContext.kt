@@ -86,7 +86,5 @@ class LogbackAccessContext(
          * The logger.
          */
         private val log: Logger = getLogger(LogbackAccessContext::class.java)
-
     }
-
 }

@@ -32,7 +32,5 @@ class EventsCaptureAppender : AppenderBase<LogbackAccessEvent>() {
          * The Logback-access events captures.
          */
         val captures: MutableMap<String, EventsCapture> = ConcurrentHashMap()
-
     }
-
 }

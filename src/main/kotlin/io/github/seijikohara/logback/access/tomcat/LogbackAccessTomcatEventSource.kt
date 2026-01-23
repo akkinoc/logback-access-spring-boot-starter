@@ -62,6 +62,7 @@ class LogbackAccessTomcatEventSource(
     override val localPort: Int by lazy(LazyThreadSafetyMode.NONE) {
         when (logbackAccessContext.properties.localPortStrategy) {
             LogbackAccessLocalPortStrategy.LOCAL -> request.localPort
+
             LogbackAccessLocalPortStrategy.SERVER ->
                 request.getAccessLogAttribute(SERVER_PORT_ATTRIBUTE) ?: request.serverPort
         }
@@ -170,8 +171,5 @@ class LogbackAccessTomcatEventSource(
      * @param name The request attribute name.
      * @return The request attribute value.
      */
-    private inline fun <reified T> Request.getAccessLogAttribute(name: String): T? {
-        return if (requestAttributesEnabled) getAttribute(name) as T? else null
-    }
-
+    private inline fun <reified T> Request.getAccessLogAttribute(name: String): T? = if (requestAttributesEnabled) getAttribute(name) as T? else null
 }

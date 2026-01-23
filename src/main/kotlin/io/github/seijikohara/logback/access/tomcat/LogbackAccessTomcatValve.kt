@@ -18,18 +18,16 @@ import org.slf4j.LoggerFactory.getLogger
  * @see org.apache.catalina.valves.AccessLogValve
  * @see ch.qos.logback.access.tomcat.LogbackValve
  */
-class LogbackAccessTomcatValve(
-    private val logbackAccessContext: LogbackAccessContext,
-) : ValveBase(true), AccessLog {
+class LogbackAccessTomcatValve(private val logbackAccessContext: LogbackAccessContext) :
+    ValveBase(true),
+    AccessLog {
 
     /**
      * The value of [getRequestAttributesEnabled] and [setRequestAttributesEnabled].
      */
     private var requestAttributesEnabledValue: Boolean = false
 
-    override fun getRequestAttributesEnabled(): Boolean {
-        return requestAttributesEnabledValue
-    }
+    override fun getRequestAttributesEnabled(): Boolean = requestAttributesEnabledValue
 
     override fun setRequestAttributesEnabled(value: Boolean) {
         requestAttributesEnabledValue = value
@@ -81,7 +79,5 @@ class LogbackAccessTomcatValve(
          * The logger.
          */
         private val log: Logger = getLogger(LogbackAccessTomcatValve::class.java)
-
     }
-
 }

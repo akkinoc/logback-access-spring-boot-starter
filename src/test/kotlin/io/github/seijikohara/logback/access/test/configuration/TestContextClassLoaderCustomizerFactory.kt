@@ -71,15 +71,13 @@ class TestContextClassLoaderCustomizerFactory : ContextCustomizerFactory {
      * @param testClass The test class.
      * @return The class paths to add to the class loader.
      */
-    private fun getAdditionalClassPaths(testClass: Class<*>): List<URL> {
-        return generateSequence(testClass) { it.superclass }
-            .takeWhile { it != Any::class.java }
-            .map { convertClassNameToResourcePath(it.name) }
-            .map { ClassPathResource("$it/") }
-            .filter { it.exists() }
-            .map { it.url }
-            .toList()
-    }
+    private fun getAdditionalClassPaths(testClass: Class<*>): List<URL> = generateSequence(testClass) { it.superclass }
+        .takeWhile { it != Any::class.java }
+        .map { convertClassNameToResourcePath(it.name) }
+        .map { ClassPathResource("$it/") }
+        .filter { it.exists() }
+        .map { it.url }
+        .toList()
 
     companion object {
 
@@ -87,7 +85,5 @@ class TestContextClassLoaderCustomizerFactory : ContextCustomizerFactory {
          * The logger.
          */
         private val log: Logger = getLogger(TestContextClassLoaderCustomizerFactory::class.java)
-
     }
-
 }

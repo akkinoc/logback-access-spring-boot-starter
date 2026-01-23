@@ -115,7 +115,6 @@ class MockController {
          * The logger.
          */
         private val log: Logger = getLogger(MockController::class.java)
-
     }
 
     /**
@@ -126,5 +125,4 @@ class MockController {
      * @property c The string value.
      */
     data class FormData(val a: String?, val b: List<String>?, val c: String?)
-
 }

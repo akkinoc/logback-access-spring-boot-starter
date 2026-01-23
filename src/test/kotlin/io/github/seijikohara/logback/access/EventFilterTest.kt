@@ -64,7 +64,6 @@ sealed class EventFilterTest {
         response.statusCode.value().shouldBe(200)
         assertLogbackAccessEventsContinually { capture.shouldBeEmpty() }
     }
-
 }
 
 /**

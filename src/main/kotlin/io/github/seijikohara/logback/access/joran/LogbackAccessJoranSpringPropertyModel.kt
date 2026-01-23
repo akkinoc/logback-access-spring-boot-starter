@@ -24,5 +24,4 @@ class LogbackAccessJoranSpringPropertyModel : NamedModel() {
      * The Logback property scope.
      */
     var scope: String? = null
-
 }

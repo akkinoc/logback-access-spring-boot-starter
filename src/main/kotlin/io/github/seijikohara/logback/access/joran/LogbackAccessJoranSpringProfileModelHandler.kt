@@ -17,10 +17,7 @@ import ch.qos.logback.core.model.processor.ModelHandlerBase as ModelHandler
  * @property environment The environment.
  * @see org.springframework.boot.logging.logback.SpringProfileModelHandler
  */
-class LogbackAccessJoranSpringProfileModelHandler(
-    context: Context,
-    private val environment: Environment,
-) : ModelHandler(context) {
+class LogbackAccessJoranSpringProfileModelHandler(context: Context, private val environment: Environment) : ModelHandler(context) {
 
     override fun handle(ic: ModelInterpretationContext, model: Model) {
         model as LogbackAccessJoranSpringProfileModel
@@ -30,5 +27,4 @@ class LogbackAccessJoranSpringProfileModelHandler(
             model.deepMarkAsSkipped()
         }
     }
-
 }

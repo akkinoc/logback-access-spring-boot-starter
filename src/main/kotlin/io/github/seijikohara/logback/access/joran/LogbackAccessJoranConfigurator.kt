@@ -38,5 +38,4 @@ class LogbackAccessJoranConfigurator(private val environment: Environment) : Jor
             LogbackAccessJoranConfigurator(environment).also { it.context = context }
         }
     }
-
 }

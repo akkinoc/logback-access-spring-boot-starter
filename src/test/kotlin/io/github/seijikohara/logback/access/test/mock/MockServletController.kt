@@ -64,7 +64,5 @@ class MockServletController {
          * The logger.
          */
         private val log: Logger = getLogger(MockServletController::class.java)
-
     }
-
 }

@@ -22,5 +22,4 @@ class LogbackAccessJoranSpringPropertyAction : BaseModelAction() {
         model.scope = attrs.getValue(SCOPE_ATTRIBUTE)
         return model
     }
-
 }

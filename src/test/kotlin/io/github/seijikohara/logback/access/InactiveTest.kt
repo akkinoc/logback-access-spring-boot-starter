@@ -23,12 +23,9 @@ sealed class InactiveTest {
     }
 
     @Test
-    fun `Does not provide the Logback-access context`(
-        @Autowired logbackAccessContext: LogbackAccessContext?,
-    ) {
+    fun `Does not provide the Logback-access context`(@Autowired logbackAccessContext: LogbackAccessContext?) {
         logbackAccessContext.shouldBeNull()
     }
-
 }
 
 /**

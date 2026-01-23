@@ -19,5 +19,4 @@ class LogbackAccessJoranSpringProfileAction : BaseModelAction() {
         model.name = attrs.getValue(NAME_ATTRIBUTE)
         return model
     }
-
 }

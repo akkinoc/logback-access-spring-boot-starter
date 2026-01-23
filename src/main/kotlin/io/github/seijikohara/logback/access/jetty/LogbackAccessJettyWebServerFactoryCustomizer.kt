@@ -13,9 +13,7 @@ import org.springframework.boot.web.server.WebServerFactoryCustomizer
  * @property logbackAccessContext The Logback-access context.
  * @see org.springframework.boot.autoconfigure.web.embedded.JettyWebServerFactoryCustomizer
  */
-class LogbackAccessJettyWebServerFactoryCustomizer(
-    private val logbackAccessContext: LogbackAccessContext,
-) : WebServerFactoryCustomizer<ConfigurableJettyWebServerFactory> {
+class LogbackAccessJettyWebServerFactoryCustomizer(private val logbackAccessContext: LogbackAccessContext) : WebServerFactoryCustomizer<ConfigurableJettyWebServerFactory> {
 
     override fun customize(factory: ConfigurableJettyWebServerFactory) {
         factory.addServerCustomizers(::customize)
@@ -48,7 +46,5 @@ class LogbackAccessJettyWebServerFactoryCustomizer(
          * The logger.
          */
         private val log: Logger = getLogger(LogbackAccessJettyWebServerFactoryCustomizer::class.java)
-
     }
-
 }

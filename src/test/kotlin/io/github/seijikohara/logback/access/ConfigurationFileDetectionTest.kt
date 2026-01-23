@@ -32,7 +32,6 @@ sealed class ConfigurationFileDetectionTest {
         response.statusCode.value().shouldBe(200)
         assertLogbackAccessEventsEventually { capture.shouldBeSingleton() }
     }
-
 }
 
 /**

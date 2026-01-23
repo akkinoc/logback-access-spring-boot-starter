@@ -54,7 +54,6 @@ constructor(
          * The fallback location of the configuration file.
          */
         const val FALLBACK_CONFIG: String = "classpath:io/github/seijikohara/logback/access/logback-access-spring.xml"
-
     }
 
     /**
@@ -89,5 +88,4 @@ constructor(
         val includes: String? = null,
         val excludes: String? = null,
     )
-
 }

@@ -54,7 +54,6 @@ sealed class TeeFilterInactiveTest(
         if (supportsRequestContents) event.requestContent.shouldBeEmpty()
         if (supportsResponseContents) event.responseContent.shouldBeEmpty()
     }
-
 }
 
 /**
@@ -63,13 +62,11 @@ sealed class TeeFilterInactiveTest(
  * @property supportsRequestContents Whether to support request contents.
  * @property supportsResponseContents Whether to support response contents.
  */
-sealed class TeeFilterHostNotIncludedTest(
-    supportsRequestContents: Boolean,
-    supportsResponseContents: Boolean,
-) : TeeFilterInactiveTest(
-    supportsRequestContents = supportsRequestContents,
-    supportsResponseContents = supportsResponseContents,
-) {
+sealed class TeeFilterHostNotIncludedTest(supportsRequestContents: Boolean, supportsResponseContents: Boolean) :
+    TeeFilterInactiveTest(
+        supportsRequestContents = supportsRequestContents,
+        supportsResponseContents = supportsResponseContents,
+    ) {
 
     companion object {
 
@@ -84,46 +81,48 @@ sealed class TeeFilterHostNotIncludedTest(
             val host = InetAddress.getLocalHost().hostName
             registry.add("logback.access.tee-filter.includes") { "non-$host" }
         }
-
     }
-
 }
 
 /**
  * Tests the [TeeFilterHostNotIncludedTest] using the Tomcat servlet web server.
  */
 @TomcatServletWebTest
-class TomcatServletWebTeeFilterHostNotIncludedTest : TeeFilterHostNotIncludedTest(
-    supportsRequestContents = true,
-    supportsResponseContents = true,
-)
+class TomcatServletWebTeeFilterHostNotIncludedTest :
+    TeeFilterHostNotIncludedTest(
+        supportsRequestContents = true,
+        supportsResponseContents = true,
+    )
 
 /**
  * Tests the [TeeFilterHostNotIncludedTest] using the Tomcat reactive web server.
  */
 @TomcatReactiveWebTest
-class TomcatReactiveWebTeeFilterHostNotIncludedTest : TeeFilterHostNotIncludedTest(
-    supportsRequestContents = false,
-    supportsResponseContents = false,
-)
+class TomcatReactiveWebTeeFilterHostNotIncludedTest :
+    TeeFilterHostNotIncludedTest(
+        supportsRequestContents = false,
+        supportsResponseContents = false,
+    )
 
 /**
  * Tests the [TeeFilterHostNotIncludedTest] using the Jetty servlet web server.
  */
 @JettyServletWebTest
-class JettyServletWebTeeFilterHostNotIncludedTest : TeeFilterHostNotIncludedTest(
-    supportsRequestContents = true,
-    supportsResponseContents = true,
-)
+class JettyServletWebTeeFilterHostNotIncludedTest :
+    TeeFilterHostNotIncludedTest(
+        supportsRequestContents = true,
+        supportsResponseContents = true,
+    )
 
 /**
  * Tests the [TeeFilterHostNotIncludedTest] using the Jetty reactive web server.
  */
 @JettyReactiveWebTest
-class JettyReactiveWebTeeFilterHostNotIncludedTest : TeeFilterHostNotIncludedTest(
-    supportsRequestContents = false,
-    supportsResponseContents = false,
-)
+class JettyReactiveWebTeeFilterHostNotIncludedTest :
+    TeeFilterHostNotIncludedTest(
+        supportsRequestContents = false,
+        supportsResponseContents = false,
+    )
 
 /**
  * Tests the case where the current host is included in the tee filter's exclusion hosts.
@@ -131,13 +130,11 @@ class JettyReactiveWebTeeFilterHostNotIncludedTest : TeeFilterHostNotIncludedTes
  * @property supportsRequestContents Whether to support request contents.
  * @property supportsResponseContents Whether to support response contents.
  */
-sealed class TeeFilterHostExcludedTest(
-    supportsRequestContents: Boolean,
-    supportsResponseContents: Boolean,
-) : TeeFilterInactiveTest(
-    supportsRequestContents = supportsRequestContents,
-    supportsResponseContents = supportsResponseContents,
-) {
+sealed class TeeFilterHostExcludedTest(supportsRequestContents: Boolean, supportsResponseContents: Boolean) :
+    TeeFilterInactiveTest(
+        supportsRequestContents = supportsRequestContents,
+        supportsResponseContents = supportsResponseContents,
+    ) {
 
     companion object {
 
@@ -152,43 +149,45 @@ sealed class TeeFilterHostExcludedTest(
             val host = InetAddress.getLocalHost().hostName
             registry.add("logback.access.tee-filter.excludes") { host }
         }
-
     }
-
 }
 
 /**
  * Tests the [TeeFilterHostExcludedTest] using the Tomcat servlet web server.
  */
 @TomcatServletWebTest
-class TomcatServletWebTeeFilterHostExcludedTest : TeeFilterHostExcludedTest(
-    supportsRequestContents = true,
-    supportsResponseContents = true,
-)
+class TomcatServletWebTeeFilterHostExcludedTest :
+    TeeFilterHostExcludedTest(
+        supportsRequestContents = true,
+        supportsResponseContents = true,
+    )
 
 /**
  * Tests the [TeeFilterHostExcludedTest] using the Tomcat reactive web server.
  */
 @TomcatReactiveWebTest
-class TomcatReactiveWebTeeFilterHostExcludedTest : TeeFilterHostExcludedTest(
-    supportsRequestContents = false,
-    supportsResponseContents = false,
-)
+class TomcatReactiveWebTeeFilterHostExcludedTest :
+    TeeFilterHostExcludedTest(
+        supportsRequestContents = false,
+        supportsResponseContents = false,
+    )
 
 /**
  * Tests the [TeeFilterHostExcludedTest] using the Jetty servlet web server.
  */
 @JettyServletWebTest
-class JettyServletWebTeeFilterHostExcludedTest : TeeFilterHostExcludedTest(
-    supportsRequestContents = true,
-    supportsResponseContents = true,
-)
+class JettyServletWebTeeFilterHostExcludedTest :
+    TeeFilterHostExcludedTest(
+        supportsRequestContents = true,
+        supportsResponseContents = true,
+    )
 
 /**
  * Tests the [TeeFilterHostExcludedTest] using the Jetty reactive web server.
  */
 @JettyReactiveWebTest
-class JettyReactiveWebTeeFilterHostExcludedTest : TeeFilterHostExcludedTest(
-    supportsRequestContents = false,
-    supportsResponseContents = false,
-)
+class JettyReactiveWebTeeFilterHostExcludedTest :
+    TeeFilterHostExcludedTest(
+        supportsRequestContents = false,
+        supportsResponseContents = false,
+    )

@@ -55,7 +55,5 @@ data class TestContextClassLoaderCustomizer(
          * The logger.
          */
         private val log: Logger = getLogger(TestContextClassLoaderCustomizer::class.java)
-
     }
-
 }

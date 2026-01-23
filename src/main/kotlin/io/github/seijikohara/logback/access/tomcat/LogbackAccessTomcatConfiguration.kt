@@ -46,7 +46,5 @@ class LogbackAccessTomcatConfiguration {
          * The logger.
          */
         private val log: Logger = getLogger(LogbackAccessTomcatConfiguration::class.java)
-
     }
-
 }

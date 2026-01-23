@@ -62,7 +62,6 @@ sealed class TomcatRequestAttributesEnabledTest {
         event.remoteHost.shouldBe("127.0.0.1")
         event.protocol.shouldBe("HTTP/1.1")
     }
-
 }
 
 /**

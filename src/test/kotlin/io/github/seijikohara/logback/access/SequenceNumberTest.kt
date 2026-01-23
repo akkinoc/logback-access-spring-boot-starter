@@ -28,10 +28,7 @@ import org.springframework.test.context.TestPropertySource
 sealed class SequenceNumberTest {
 
     @Test
-    fun `Generates unique sequence numbers`(
-        @Autowired rest: TestRestTemplate,
-        capture: EventsCapture,
-    ) {
+    fun `Generates unique sequence numbers`(@Autowired rest: TestRestTemplate, capture: EventsCapture) {
         for (n in 1..3) {
             val request = RequestEntity.get("/mock-controller/text").build()
             val response = rest.exchange<String>(request)
@@ -41,7 +38,6 @@ sealed class SequenceNumberTest {
         }
         capture.map { it.sequenceNumber }.shouldBeUnique().shouldBeSorted()
     }
-
 }
 
 /**

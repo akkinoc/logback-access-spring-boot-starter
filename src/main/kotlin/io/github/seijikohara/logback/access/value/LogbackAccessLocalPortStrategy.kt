@@ -20,5 +20,4 @@ enum class LogbackAccessLocalPortStrategy {
      * Helps to identify the destination port number used by the client when forward headers are enabled.
      */
     SERVER,
-
 }

@@ -43,7 +43,6 @@ sealed class JoranSpringPropertyAsIncludeTest {
             capture.out.lines().shouldHaveSingleElement { it.startsWith(">>>") && it.endsWith("<<<") }
         }
     }
-
 }
 
 /**

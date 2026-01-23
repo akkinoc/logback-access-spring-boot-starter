@@ -55,7 +55,5 @@ class LogbackAccessTeeServletFilterConfiguration {
          * The logger.
          */
         private val log: Logger = getLogger(LogbackAccessTeeServletFilterConfiguration::class.java)
-
     }
-
 }

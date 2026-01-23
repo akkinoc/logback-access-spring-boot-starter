@@ -52,7 +52,5 @@ class MockReactiveController {
          * The logger.
          */
         private val log: Logger = getLogger(MockReactiveController::class.java)
-
     }
-
 }

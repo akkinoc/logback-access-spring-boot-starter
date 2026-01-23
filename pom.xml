@@ -278,21 +278,31 @@
                 </executions>
             </plugin>
             <plugin>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <kotlin>
+                        <ktlint>
+                            <editorConfigOverride>
+                                <ktlint_code_style>intellij_idea</ktlint_code_style>
+                            </editorConfigOverride>
+                        </ktlint>
+                    </kotlin>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>check</id>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>com.github.ozsie</groupId>
                 <artifactId>detekt-maven-plugin</artifactId>
                 <version>1.23.8</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>io.gitlab.arturbosch.detekt</groupId>
-                        <artifactId>detekt-cli</artifactId>
-                        <version>1.23.8</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>io.gitlab.arturbosch.detekt</groupId>
-                        <artifactId>detekt-formatting</artifactId>
-                        <version>1.23.8</version>
-                    </dependency>
-                </dependencies>
                 <configuration>
                     <buildUponDefaultConfig>true</buildUponDefaultConfig>
                     <config>.detekt/config.yml</config>

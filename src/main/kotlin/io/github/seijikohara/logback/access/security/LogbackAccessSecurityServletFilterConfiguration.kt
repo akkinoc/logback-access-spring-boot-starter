@@ -41,7 +41,5 @@ class LogbackAccessSecurityServletFilterConfiguration {
          * The logger.
          */
         private val log: Logger = getLogger(LogbackAccessSecurityServletFilterConfiguration::class.java)
-
     }
-
 }

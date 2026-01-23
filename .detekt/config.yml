@@ -1,39 +1,72 @@
+# detekt configuration for Kotlin 2.x
+# Static analysis only - formatting handled by Spotless/ktlint
+# Uses buildUponDefaultConfig=true, so only overrides are specified here
+
 comments:
+  # Enable documentation rules for public API (library best practice)
   UndocumentedPublicClass:
     active: true
     searchInInnerObject: false
+    searchInInnerClass: true
+    searchInInnerInterface: true
+    searchInProtectedClass: false
   UndocumentedPublicFunction:
     active: true
+    searchProtectedFunction: false
   UndocumentedPublicProperty:
     active: true
+    searchProtectedProperty: false
+
 complexity:
+  # Relax TooManyFunctions for test classes and Spring configurations
   TooManyFunctions:
     ignoreDeprecated: true
     ignoreOverridden: true
     ignorePrivate: true
-formatting:
-  ImportOrdering:
-    active: true
-  NoBlankLineBeforeRbrace:
-    active: false
-  ParameterListWrapping:
-    active: false
+    ignoreAnnotatedFunctions:
+      - 'Preview'
+
+exceptions:
+  # Allow catching generic exceptions in specific cases
+  TooGenericExceptionCaught:
+    allowedExceptionNameRegex: '_|(ignore|expected).*'
+
 performance:
+  # SpreadOperator is acceptable in non-performance-critical code
   SpreadOperator:
     active: false
+
 style:
+  # Class member ordering (Kotlin style guide)
   ClassOrdering:
     active: true
+  # Allow TODO/FIXME comments during development
   ForbiddenComment:
     active: false
+  # Allow constant-returning functions (useful for default implementations)
   FunctionOnlyReturningConstant:
     active: false
+  # Line length handled by Spotless/ktlint
+  MaxLineLength:
+    active: false
+  # Enforce spaces over tabs
   NoTabs:
     active: true
+  # Relax return count for guard clauses
   ReturnCount:
+    max: 3
     excludeLabeled: true
+    excludeReturnFromLambda: true
     excludeGuardClauses: true
+  # SerialVersionUID not needed in Kotlin
   SerialVersionUIDInSerializableClass:
     active: false
+  # Allow serialization-related unused members
   UnusedPrivateMember:
-    allowedNames: (readObject|readObjectNoData|readResolve|serialVersionUID|writeObject|writeReplace)
+    allowedNames: '(_|ignored|expected|serialVersionUID|readObject|readObjectNoData|readResolve|writeObject|writeReplace)'
+  # Allow wildcard imports for common packages
+  WildcardImport:
+    excludeImports:
+      - 'java.util.*'
+      - 'kotlinx.coroutines.*'
+      - 'io.kotest.matchers.*'

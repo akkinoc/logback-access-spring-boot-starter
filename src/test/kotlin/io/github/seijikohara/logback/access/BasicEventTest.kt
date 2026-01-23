@@ -221,10 +221,7 @@ sealed class BasicEventTest(
     }
 
     @Test
-    fun `Appends a Logback-access event with a session`(
-        @Autowired rest: TestRestTemplate,
-        capture: EventsCapture,
-    ) {
+    fun `Appends a Logback-access event with a session`(@Autowired rest: TestRestTemplate, capture: EventsCapture) {
         val request = RequestEntity.get("/mock-controller/text-with-session").build()
         val response = rest.exchange<String>(request)
         response.statusCode.value().shouldBe(200)
@@ -338,49 +335,52 @@ sealed class BasicEventTest(
         event.statusCode.shouldBe(404)
         event.contentLength.shouldBePositive()
     }
-
 }
 
 /**
  * Tests the [BasicEventTest] using the Tomcat servlet web server.
  */
 @TomcatServletWebTest
-class TomcatServletWebBasicEventTest : BasicEventTest(
-    supportsRequestParametersByFormData = true,
-    supportsRequestAttributes = true,
-    supportsSessionIDs = true,
-    canForwardRequests = true,
-)
+class TomcatServletWebBasicEventTest :
+    BasicEventTest(
+        supportsRequestParametersByFormData = true,
+        supportsRequestAttributes = true,
+        supportsSessionIDs = true,
+        canForwardRequests = true,
+    )
 
 /**
  * Tests the [BasicEventTest] using the Tomcat reactive web server.
  */
 @TomcatReactiveWebTest
-class TomcatReactiveWebBasicEventTest : BasicEventTest(
-    supportsRequestParametersByFormData = false,
-    supportsRequestAttributes = false,
-    supportsSessionIDs = false,
-    canForwardRequests = false,
-)
+class TomcatReactiveWebBasicEventTest :
+    BasicEventTest(
+        supportsRequestParametersByFormData = false,
+        supportsRequestAttributes = false,
+        supportsSessionIDs = false,
+        canForwardRequests = false,
+    )
 
 /**
  * Tests the [BasicEventTest] using the Jetty servlet web server.
  */
 @JettyServletWebTest
-class JettyServletWebBasicEventTest : BasicEventTest(
-    supportsRequestParametersByFormData = true,
-    supportsRequestAttributes = true,
-    supportsSessionIDs = true,
-    canForwardRequests = true,
-)
+class JettyServletWebBasicEventTest :
+    BasicEventTest(
+        supportsRequestParametersByFormData = true,
+        supportsRequestAttributes = true,
+        supportsSessionIDs = true,
+        canForwardRequests = true,
+    )
 
 /**
  * Tests the [BasicEventTest] using the Jetty reactive web server.
  */
 @JettyReactiveWebTest
-class JettyReactiveWebBasicEventTest : BasicEventTest(
-    supportsRequestParametersByFormData = false,
-    supportsRequestAttributes = false,
-    supportsSessionIDs = false,
-    canForwardRequests = false,
-)
+class JettyReactiveWebBasicEventTest :
+    BasicEventTest(
+        supportsRequestParametersByFormData = false,
+        supportsRequestAttributes = false,
+        supportsSessionIDs = false,
+        canForwardRequests = false,
+    )

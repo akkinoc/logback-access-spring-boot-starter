@@ -61,7 +61,5 @@ class LogbackAccessAutoConfiguration {
          * The logger.
          */
         private val log: Logger = getLogger(LogbackAccessAutoConfiguration::class.java)
-
     }
-
 }
