@@ -7,15 +7,13 @@ import dev.akkinoc.spring.boot.logback.access.test.type.JettyReactiveWebTest
 import dev.akkinoc.spring.boot.logback.access.test.type.JettyServletWebTest
 import dev.akkinoc.spring.boot.logback.access.test.type.TomcatReactiveWebTest
 import dev.akkinoc.spring.boot.logback.access.test.type.TomcatServletWebTest
-import dev.akkinoc.spring.boot.logback.access.test.type.UndertowReactiveWebTest
-import dev.akkinoc.spring.boot.logback.access.test.type.UndertowServletWebTest
 import io.kotest.matchers.collections.shouldBeSingleton
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.web.client.TestRestTemplate
-import org.springframework.boot.test.web.client.exchange
+import org.springframework.boot.resttestclient.TestRestTemplate
+import org.springframework.boot.resttestclient.exchange
 import org.springframework.http.RequestEntity
 
 /**
@@ -67,18 +65,6 @@ class JettyServletWebTestConfigurationFileDetectionTest : TestConfigurationFileD
 class JettyReactiveWebTestConfigurationFileDetectionTest : TestConfigurationFileDetectionTest()
 
 /**
- * Tests the [TestConfigurationFileDetectionTest] using the Undertow servlet web server.
- */
-@UndertowServletWebTest
-class UndertowServletWebTestConfigurationFileDetectionTest : TestConfigurationFileDetectionTest()
-
-/**
- * Tests the [TestConfigurationFileDetectionTest] using the Undertow reactive web server.
- */
-@UndertowReactiveWebTest
-class UndertowReactiveWebTestConfigurationFileDetectionTest : TestConfigurationFileDetectionTest()
-
-/**
  * Tests the case where the configuration file ("classpath:logback-access.xml") is detected.
  */
 sealed class MainConfigurationFileDetectionTest : ConfigurationFileDetectionTest()
@@ -106,18 +92,6 @@ class JettyServletWebMainConfigurationFileDetectionTest : MainConfigurationFileD
  */
 @JettyReactiveWebTest
 class JettyReactiveWebMainConfigurationFileDetectionTest : MainConfigurationFileDetectionTest()
-
-/**
- * Tests the [MainConfigurationFileDetectionTest] using the Undertow servlet web server.
- */
-@UndertowServletWebTest
-class UndertowServletWebMainConfigurationFileDetectionTest : MainConfigurationFileDetectionTest()
-
-/**
- * Tests the [MainConfigurationFileDetectionTest] using the Undertow reactive web server.
- */
-@UndertowReactiveWebTest
-class UndertowReactiveWebMainConfigurationFileDetectionTest : MainConfigurationFileDetectionTest()
 
 /**
  * Tests the case where the configuration file ("classpath:logback-access-test-spring.xml") is detected.
@@ -149,18 +123,6 @@ class JettyServletWebTestSpringConfigurationFileDetectionTest : TestSpringConfig
 class JettyReactiveWebTestSpringConfigurationFileDetectionTest : TestSpringConfigurationFileDetectionTest()
 
 /**
- * Tests the [TestSpringConfigurationFileDetectionTest] using the Undertow servlet web server.
- */
-@UndertowServletWebTest
-class UndertowServletWebTestSpringConfigurationFileDetectionTest : TestSpringConfigurationFileDetectionTest()
-
-/**
- * Tests the [TestSpringConfigurationFileDetectionTest] using the Undertow reactive web server.
- */
-@UndertowReactiveWebTest
-class UndertowReactiveWebTestSpringConfigurationFileDetectionTest : TestSpringConfigurationFileDetectionTest()
-
-/**
  * Tests the case where the configuration file ("classpath:logback-access-spring.xml") is detected.
  */
 sealed class MainSpringConfigurationFileDetectionTest : ConfigurationFileDetectionTest()
@@ -188,15 +150,3 @@ class JettyServletWebMainSpringConfigurationFileDetectionTest : MainSpringConfig
  */
 @JettyReactiveWebTest
 class JettyReactiveWebMainSpringConfigurationFileDetectionTest : MainSpringConfigurationFileDetectionTest()
-
-/**
- * Tests the [MainSpringConfigurationFileDetectionTest] using the Undertow servlet web server.
- */
-@UndertowServletWebTest
-class UndertowServletWebMainSpringConfigurationFileDetectionTest : MainSpringConfigurationFileDetectionTest()
-
-/**
- * Tests the [MainSpringConfigurationFileDetectionTest] using the Undertow reactive web server.
- */
-@UndertowReactiveWebTest
-class UndertowReactiveWebMainSpringConfigurationFileDetectionTest : MainSpringConfigurationFileDetectionTest()

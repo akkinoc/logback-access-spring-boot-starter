@@ -13,12 +13,6 @@
       "description": "The properties for the Tomcat web server."
     },
     {
-      "name": "logback.access.undertow",
-      "type": "dev.akkinoc.spring.boot.logback.access.LogbackAccessProperties$Undertow",
-      "sourceType": "dev.akkinoc.spring.boot.logback.access.LogbackAccessProperties",
-      "description": "The properties for the Undertow web server."
-    },
-    {
       "name": "logback.access.tee-filter",
       "type": "dev.akkinoc.spring.boot.logback.access.LogbackAccessProperties$TeeFilter",
       "sourceType": "dev.akkinoc.spring.boot.logback.access.LogbackAccessProperties",
@@ -51,12 +45,6 @@
       "type": "java.lang.Boolean",
       "sourceType": "dev.akkinoc.spring.boot.logback.access.LogbackAccessProperties$Tomcat",
       "description": "Whether to enable the request attributes to work with RemoteIpValve. Defaults to the presence of RemoteIpValve enabled by the property \"server.forward-headers-strategy=native\"."
-    },
-    {
-      "name": "logback.access.undertow.record-request-start-time",
-      "type": "java.lang.Boolean",
-      "sourceType": "dev.akkinoc.spring.boot.logback.access.LogbackAccessProperties$Undertow",
-      "description": "Whether to enable UndertowOptions.RECORD_REQUEST_START_TIME. Used to measure IAccessEvent.getElapsedTime and IAccessEvent.getElapsedSeconds."
     },
     {
       "name": "logback.access.tee-filter.enabled",

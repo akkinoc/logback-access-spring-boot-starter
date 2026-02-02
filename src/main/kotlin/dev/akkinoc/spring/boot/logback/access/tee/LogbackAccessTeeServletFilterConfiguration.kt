@@ -6,9 +6,9 @@ import ch.qos.logback.access.common.servlet.TeeFilter
 import dev.akkinoc.spring.boot.logback.access.LogbackAccessProperties
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory.getLogger
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingFilterBean
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication
-import org.springframework.boot.autoconfigure.web.servlet.ConditionalOnMissingFilterBean
 import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

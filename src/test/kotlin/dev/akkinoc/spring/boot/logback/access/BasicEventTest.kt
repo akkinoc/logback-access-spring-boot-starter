@@ -7,8 +7,6 @@ import dev.akkinoc.spring.boot.logback.access.test.type.JettyReactiveWebTest
 import dev.akkinoc.spring.boot.logback.access.test.type.JettyServletWebTest
 import dev.akkinoc.spring.boot.logback.access.test.type.TomcatReactiveWebTest
 import dev.akkinoc.spring.boot.logback.access.test.type.TomcatServletWebTest
-import dev.akkinoc.spring.boot.logback.access.test.type.UndertowReactiveWebTest
-import dev.akkinoc.spring.boot.logback.access.test.type.UndertowServletWebTest
 import io.kotest.assertions.throwables.shouldThrowUnit
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
@@ -32,8 +30,8 @@ import io.kotest.matchers.string.shouldStartWith
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.web.client.TestRestTemplate
-import org.springframework.boot.test.web.client.exchange
+import org.springframework.boot.resttestclient.TestRestTemplate
+import org.springframework.boot.resttestclient.exchange
 import org.springframework.boot.test.web.server.LocalServerPort
 import org.springframework.http.RequestEntity
 import org.springframework.test.context.TestPropertySource
@@ -381,28 +379,6 @@ class JettyServletWebBasicEventTest : BasicEventTest(
  */
 @JettyReactiveWebTest
 class JettyReactiveWebBasicEventTest : BasicEventTest(
-    supportsRequestParametersByFormData = false,
-    supportsRequestAttributes = false,
-    supportsSessionIDs = false,
-    canForwardRequests = false,
-)
-
-/**
- * Tests the [BasicEventTest] using the Undertow servlet web server.
- */
-@UndertowServletWebTest
-class UndertowServletWebBasicEventTest : BasicEventTest(
-    supportsRequestParametersByFormData = true,
-    supportsRequestAttributes = true,
-    supportsSessionIDs = true,
-    canForwardRequests = true,
-)
-
-/**
- * Tests the [BasicEventTest] using the Undertow reactive web server.
- */
-@UndertowReactiveWebTest
-class UndertowReactiveWebBasicEventTest : BasicEventTest(
     supportsRequestParametersByFormData = false,
     supportsRequestAttributes = false,
     supportsSessionIDs = false,

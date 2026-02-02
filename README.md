@@ -43,16 +43,15 @@ Supports the following web servers:
 |:--------:|:-----------------------:|:------------------------:|
 |  Tomcat  |            ✅           |            ✅            |
 |  Jetty   |            ✅           |            ✅            |
-| Undertow |            ✅           |            ✅            |
 |  Netty   |            -            |  🚧 (under development)  |
 
 ## Dependencies
 
 Depends on:
 
-* Java 17 or 21
-* Kotlin 1.9
-* Spring Boot 3.5
+* Java 17 or later
+* Kotlin 2.2 or later
+* Spring Boot 4.0
 * Logback-access 2.0
 
 ## Usage
@@ -154,7 +153,7 @@ This is the same concept as the [Logback configuration ("logback.xml" and "logba
 The `<springProfile>` tag lets you optionally include or exclude sections of configuration based on the active Spring profiles.
 The usage of this extension is the same as the [Spring Boot Logback Extension "Profile-specific Configuration"].
 
-[Spring Boot Logback Extension "Profile-specific Configuration"]: https://docs.spring.io/spring-boot/docs/3.0.6/reference/html/features.html#features.logging.logback-extensions.profile-specific
+[Spring Boot Logback Extension "Profile-specific Configuration"]: https://docs.spring.io/spring-boot/reference/features/logging.html#features.logging.logback-extensions.profile-specific
 
 > ```xml
 > <springProfile name="staging">
@@ -173,7 +172,7 @@ The usage of this extension is the same as the [Spring Boot Logback Extension "P
 The `<springProperty>` tag lets you expose properties from the Spring Environment for use within Logback.
 The usage of this extension is the same as the [Spring Boot Logback Extension "Environment Properties"].
 
-[Spring Boot Logback Extension "Environment Properties"]: https://docs.spring.io/spring-boot/docs/3.0.6/reference/html/features.html#features.logging.logback-extensions.environment-properties
+[Spring Boot Logback Extension "Environment Properties"]: https://docs.spring.io/spring-boot/reference/features/logging.html#features.logging.logback-extensions.environment-properties
 
 > ```xml
 > <springProperty scope="context" name="fluentHost" source="myapp.fluentd.host" defaultValue="localhost"/>
@@ -218,12 +217,6 @@ logback.access:
     # Whether to enable the request attributes to work with RemoteIpValve.
     # Defaults to the presence of RemoteIpValve enabled by the property "server.forward-headers-strategy=native".
     request-attributes-enabled: true
-  # The properties for the Undertow web server.
-  undertow:
-    # Whether to enable UndertowOptions.RECORD_REQUEST_START_TIME.
-    # Used to measure IAccessEvent.getElapsedTime and IAccessEvent.getElapsedSeconds.
-    # Defaults to true.
-    record-request-start-time: true
   # The properties for the tee filter.
   tee-filter:
     # Whether to enable the tee filter.

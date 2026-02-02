@@ -47,6 +47,9 @@ class LogbackAccessJettyEventSource(
 
     override val response: ResponseWrapper = object : ResponseWrapper(rawResponse) {
         override fun getContentType(): String? = rawResponse.headers[HttpHeader.CONTENT_TYPE]
+        override fun sendRedirect(location: String, sc: Int, clearBuffer: Boolean) {
+            // No-op: This wrapper is used only for reading response data, not for actual redirects
+        }
     }
 
     override val serverAdapter: JettyModernServerAdapter = JettyModernServerAdapter(rawRequest, rawResponse)
