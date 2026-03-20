@@ -49,8 +49,8 @@ Supports the following web servers:
 
 Depends on:
 
-* Java 17 or later
-* Kotlin 2.2 or later
+* Java 17 or 21
+* Kotlin 2.2
 * Spring Boot 4.0
 * Logback-access 2.0
 

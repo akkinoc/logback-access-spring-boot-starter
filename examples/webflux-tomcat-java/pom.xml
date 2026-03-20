@@ -14,7 +14,7 @@
     </parent>
 
     <properties>
-        <logback-access-spring-boot-starter.version>[4.0.0,)</logback-access-spring-boot-starter.version>
+        <logback-access-spring-boot-starter.version>[5.0.0,)</logback-access-spring-boot-starter.version>
     </properties>
 
     <dependencies>
