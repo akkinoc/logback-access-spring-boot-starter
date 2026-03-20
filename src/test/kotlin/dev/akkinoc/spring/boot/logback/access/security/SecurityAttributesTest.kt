@@ -1,4 +1,4 @@
-package dev.akkinoc.spring.boot.logback.access
+package dev.akkinoc.spring.boot.logback.access.security
 
 import dev.akkinoc.spring.boot.logback.access.test.assertion.Assertions.assertLogbackAccessEventsEventually
 import dev.akkinoc.spring.boot.logback.access.test.extension.EventsCapture
