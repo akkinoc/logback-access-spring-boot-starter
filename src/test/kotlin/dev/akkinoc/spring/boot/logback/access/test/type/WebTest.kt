@@ -13,9 +13,9 @@ import org.springframework.test.context.TestPropertySource
 @Retention(AnnotationRetention.RUNTIME)
 @MustBeDocumented
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureTestRestTemplate
 @TestPropertySource(properties = ["spring.main.web-application-type=servlet"])
 @Import(WebTestConfiguration::class)
+@AutoConfigureTestRestTemplate
 annotation class TomcatServletWebTest
 
 /**
@@ -25,9 +25,9 @@ annotation class TomcatServletWebTest
 @Retention(AnnotationRetention.RUNTIME)
 @MustBeDocumented
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureTestRestTemplate
 @TestPropertySource(properties = ["spring.main.web-application-type=reactive"])
 @Import(WebTestConfiguration::class)
+@AutoConfigureTestRestTemplate
 annotation class TomcatReactiveWebTest
 
 /**
@@ -37,9 +37,9 @@ annotation class TomcatReactiveWebTest
 @Retention(AnnotationRetention.RUNTIME)
 @MustBeDocumented
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureTestRestTemplate
 @TestPropertySource(properties = ["spring.main.web-application-type=servlet"])
 @Import(WebTestConfiguration::class)
+@AutoConfigureTestRestTemplate
 annotation class JettyServletWebTest
 
 /**
@@ -49,9 +49,9 @@ annotation class JettyServletWebTest
 @Retention(AnnotationRetention.RUNTIME)
 @MustBeDocumented
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureTestRestTemplate
 @TestPropertySource(properties = ["spring.main.web-application-type=reactive"])
 @Import(WebTestConfiguration::class)
+@AutoConfigureTestRestTemplate
 annotation class JettyReactiveWebTest
 
 /**
@@ -61,7 +61,7 @@ annotation class JettyReactiveWebTest
 @Retention(AnnotationRetention.RUNTIME)
 @MustBeDocumented
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@AutoConfigureTestRestTemplate
 @TestPropertySource(properties = ["spring.main.web-application-type=reactive"])
 @Import(WebTestConfiguration::class)
+@AutoConfigureTestRestTemplate
 annotation class NettyReactiveWebTest

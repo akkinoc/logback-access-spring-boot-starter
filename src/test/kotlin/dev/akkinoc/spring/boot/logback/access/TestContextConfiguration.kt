@@ -16,17 +16,11 @@ import org.springframework.boot.security.autoconfigure.web.servlet.ServletWebSec
 @EnableAutoConfiguration(
     exclude = [
         SecurityAutoConfiguration::class,
-        ReactiveWebSecurityAutoConfiguration::class,
-        ServletWebSecurityAutoConfiguration::class,
-        SecurityFilterAutoConfiguration::class,
         UserDetailsServiceAutoConfiguration::class,
         ReactiveUserDetailsServiceAutoConfiguration::class,
-    ],
-    excludeName = [
-        "org.springframework.boot.security.autoconfigure.actuate" +
-            ".web.reactive.ReactiveManagementWebSecurityAutoConfiguration",
-        "org.springframework.boot.security.autoconfigure.actuate" +
-            ".web.servlet.ManagementWebSecurityAutoConfiguration",
+        ServletWebSecurityAutoConfiguration::class,
+        SecurityFilterAutoConfiguration::class,
+        ReactiveWebSecurityAutoConfiguration::class,
     ],
 )
 class TestContextConfiguration
