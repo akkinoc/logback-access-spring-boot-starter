@@ -3,7 +3,7 @@ package dev.akkinoc.spring.boot.logback.access.tomcat
 import dev.akkinoc.spring.boot.logback.access.LogbackAccessContext
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory.getLogger
-import org.springframework.boot.web.embedded.tomcat.ConfigurableTomcatWebServerFactory
+import org.springframework.boot.tomcat.ConfigurableTomcatWebServerFactory
 import org.springframework.boot.web.server.WebServerFactoryCustomizer
 
 /**

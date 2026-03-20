@@ -7,15 +7,13 @@ import dev.akkinoc.spring.boot.logback.access.test.type.JettyReactiveWebTest
 import dev.akkinoc.spring.boot.logback.access.test.type.JettyServletWebTest
 import dev.akkinoc.spring.boot.logback.access.test.type.TomcatReactiveWebTest
 import dev.akkinoc.spring.boot.logback.access.test.type.TomcatServletWebTest
-import dev.akkinoc.spring.boot.logback.access.test.type.UndertowReactiveWebTest
-import dev.akkinoc.spring.boot.logback.access.test.type.UndertowServletWebTest
 import io.kotest.matchers.collections.shouldBeSingleton
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.web.client.TestRestTemplate
-import org.springframework.boot.test.web.client.exchange
+import org.springframework.boot.resttestclient.TestRestTemplate
+import org.springframework.boot.resttestclient.exchange
 import org.springframework.http.RequestEntity
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
@@ -127,24 +125,6 @@ class JettyReactiveWebTeeFilterHostIncludedTest : TeeFilterHostIncludedTest(
 )
 
 /**
- * Tests the [TeeFilterHostIncludedTest] using the Undertow servlet web server.
- */
-@UndertowServletWebTest
-class UndertowServletWebTeeFilterHostIncludedTest : TeeFilterHostIncludedTest(
-    supportsRequestContents = true,
-    supportsResponseContents = false,
-)
-
-/**
- * Tests the [TeeFilterHostIncludedTest] using the Undertow reactive web server.
- */
-@UndertowReactiveWebTest
-class UndertowReactiveWebTeeFilterHostIncludedTest : TeeFilterHostIncludedTest(
-    supportsRequestContents = false,
-    supportsResponseContents = false,
-)
-
-/**
  * Tests the case where the current host is not included in the tee filter's exclusion hosts.
  *
  * @property supportsRequestContents Whether to support request contents.
@@ -208,24 +188,6 @@ class JettyServletWebTeeFilterHostNotExcludedTest : TeeFilterHostNotExcludedTest
  */
 @JettyReactiveWebTest
 class JettyReactiveWebTeeFilterHostNotExcludedTest : TeeFilterHostNotExcludedTest(
-    supportsRequestContents = false,
-    supportsResponseContents = false,
-)
-
-/**
- * Tests the [TeeFilterHostNotExcludedTest] using the Undertow servlet web server.
- */
-@UndertowServletWebTest
-class UndertowServletWebTeeFilterHostNotExcludedTest : TeeFilterHostNotExcludedTest(
-    supportsRequestContents = true,
-    supportsResponseContents = false,
-)
-
-/**
- * Tests the [TeeFilterHostNotExcludedTest] using the Undertow reactive web server.
- */
-@UndertowReactiveWebTest
-class UndertowReactiveWebTeeFilterHostNotExcludedTest : TeeFilterHostNotExcludedTest(
     supportsRequestContents = false,
     supportsResponseContents = false,
 )

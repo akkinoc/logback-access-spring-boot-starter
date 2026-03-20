@@ -33,7 +33,7 @@ data class TestContextClassLoaderCustomizer(
      */
     private fun hideClasses(context: ConfigurableApplicationContext) {
         if (hiddenClasses.isEmpty()) return
-        context.classLoader = FilteredClassLoader(*hiddenClasses.toTypedArray())
+        context.setClassLoader(FilteredClassLoader(*hiddenClasses.toTypedArray()))
     }
 
     /**
@@ -46,7 +46,7 @@ data class TestContextClassLoaderCustomizer(
         val urls = additionalClassPaths.toTypedArray()
         val parent = context.classLoader
         checkNotNull(parent) { "Failed to get the current class loader: $context" }
-        context.classLoader = URLClassLoader(urls, parent)
+        context.setClassLoader(URLClassLoader(urls, parent))
     }
 
     companion object {

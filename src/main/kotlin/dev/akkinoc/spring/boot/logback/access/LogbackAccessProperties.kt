@@ -2,7 +2,6 @@ package dev.akkinoc.spring.boot.logback.access
 
 import ch.qos.logback.access.common.spi.IAccessEvent
 import dev.akkinoc.spring.boot.logback.access.value.LogbackAccessLocalPortStrategy
-import io.undertow.UndertowOptions
 import org.apache.catalina.valves.RemoteIpValve
 import org.springframework.boot.context.properties.ConfigurationProperties
 
@@ -24,8 +23,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties
  *  The strategy to change the behavior of [IAccessEvent.getLocalPort].
  * @property tomcat
  *  The properties for the Tomcat web server.
- * @property undertow
- *  The properties for the Undertow web server.
  * @property teeFilter
  *  The properties for the tee filter.
  */
@@ -37,7 +34,6 @@ constructor(
     val config: String? = null,
     val localPortStrategy: LogbackAccessLocalPortStrategy = LogbackAccessLocalPortStrategy.SERVER,
     val tomcat: Tomcat = Tomcat(),
-    val undertow: Undertow = Undertow(),
     val teeFilter: TeeFilter = TeeFilter(),
 ) {
 
@@ -72,19 +68,6 @@ constructor(
     @JvmOverloads
     constructor(
         val requestAttributesEnabled: Boolean? = null,
-    )
-
-    /**
-     * The properties for the Undertow web server.
-     *
-     * @property recordRequestStartTime
-     *  Whether to enable [UndertowOptions.RECORD_REQUEST_START_TIME].
-     *  Used to measure [IAccessEvent.getElapsedTime] and [IAccessEvent.getElapsedSeconds].
-     */
-    data class Undertow
-    @JvmOverloads
-    constructor(
-        val recordRequestStartTime: Boolean = true,
     )
 
     /**
