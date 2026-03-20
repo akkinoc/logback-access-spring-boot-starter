@@ -101,10 +101,6 @@ class LogbackAccessJettyEventSource(
         rawRequest.httpURI.query?.let { "?$it" }.orEmpty()
     }
 
-    override val requestURL: String by lazy(LazyThreadSafetyMode.NONE) {
-        "$method $requestURI$queryString $protocol"
-    }
-
     override val requestHeaderMap: Map<String, String> by lazy(LazyThreadSafetyMode.NONE) {
         val headers = sortedMapOf<String, String>(String.CASE_INSENSITIVE_ORDER)
         rawRequest.headers.fieldNamesCollection.associateWithTo(headers) { rawRequest.headers[it] }

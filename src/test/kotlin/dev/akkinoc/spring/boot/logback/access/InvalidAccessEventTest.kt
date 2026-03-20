@@ -47,7 +47,7 @@ sealed class InvalidAccessEventTest(
         } else {
             event.requestURI.shouldBe("-")
             event.queryString.shouldBeEmpty()
-            event.requestURL.shouldBe("GET null HTTP/1.1")
+            event.requestURL.shouldBe("GET - HTTP/1.1")
         }
     }
 

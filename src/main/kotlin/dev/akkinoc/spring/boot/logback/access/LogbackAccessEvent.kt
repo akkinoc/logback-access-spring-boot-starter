@@ -95,7 +95,7 @@ class LogbackAccessEvent(private var source: LogbackAccessEventSource) : IAccess
     }
 
     override fun getRequestURL(): String {
-        return source.requestURL
+        return "$method $requestURI$queryString $protocol"
     }
 
     override fun getRequestHeaderMap(): Map<String, String> {
