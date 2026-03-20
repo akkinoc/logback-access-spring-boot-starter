@@ -15,11 +15,9 @@ updates:
       - /
       - /examples/webflux-jetty-java
       - /examples/webflux-tomcat-java
-      - /examples/webflux-undertow-java
       - /examples/webmvc-jetty-java
       - /examples/webmvc-tomcat-java
       - /examples/webmvc-tomcat-kotlin
-      - /examples/webmvc-undertow-java
     schedule:
       interval: cron
       cronjob: 0 12 * * *
