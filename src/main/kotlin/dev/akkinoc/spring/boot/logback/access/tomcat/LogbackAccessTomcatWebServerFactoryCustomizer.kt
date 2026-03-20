@@ -10,7 +10,7 @@ import org.springframework.boot.web.server.WebServerFactoryCustomizer
  * The [WebServerFactoryCustomizer] for the Tomcat web server.
  *
  * @property logbackAccessContext The Logback-access context.
- * @see org.springframework.boot.autoconfigure.web.embedded.TomcatWebServerFactoryCustomizer
+ * @see org.springframework.boot.tomcat.autoconfigure.TomcatWebServerFactoryCustomizer
  */
 class LogbackAccessTomcatWebServerFactoryCustomizer(
     private val logbackAccessContext: LogbackAccessContext,
