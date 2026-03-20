@@ -24,11 +24,9 @@ class LogbackAccessJoranSpringProfileModelHandler(
 
     override fun handle(ic: ModelInterpretationContext, model: Model) {
         model as LogbackAccessJoranSpringProfileModel
-        val names = trimArrayElements(commaDelimitedListToStringArray(model.name))
-        val resolvedNames = names.mapNotNull { it?.let { name -> substVars(name, ic, context) } }.toTypedArray()
-        if (resolvedNames.isEmpty() || !environment.acceptsProfiles(Profiles.of(*resolvedNames))) {
-            model.deepMarkAsSkipped()
-        }
+        val name = trimArrayElements(commaDelimitedListToStringArray(model.name))
+            .let { name -> Array(name.size) { substVars(name[it], ic, context) } }
+        if (name.isEmpty() || !environment.acceptsProfiles(Profiles.of(*name))) model.deepMarkAsSkipped()
     }
 
 }
