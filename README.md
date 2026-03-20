@@ -49,7 +49,7 @@ Supports the following web servers:
 
 Depends on:
 
-* Java 17 or 21
+* Java 17, 21, or 25
 * Kotlin 2.2
 * Spring Boot 4.0
 * Logback-access 2.0
