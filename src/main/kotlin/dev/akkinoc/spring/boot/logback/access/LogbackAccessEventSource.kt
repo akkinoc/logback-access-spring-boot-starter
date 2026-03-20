@@ -96,11 +96,6 @@ abstract class LogbackAccessEventSource {
     abstract val queryString: String
 
     /**
-     * The value of [IAccessEvent.getRequestURL].
-     */
-    abstract val requestURL: String
-
-    /**
      * The value of [IAccessEvent.getRequestHeaderMap],
      * [IAccessEvent.getRequestHeaderNames] and [IAccessEvent.getRequestHeader].
      */
@@ -202,8 +197,6 @@ abstract class LogbackAccessEventSource {
         override val requestURI: String? = source.requestURI
 
         override val queryString: String = source.queryString
-
-        override val requestURL: String = source.requestURL
 
         override val requestHeaderMap: Map<String, String> = source.requestHeaderMap
 

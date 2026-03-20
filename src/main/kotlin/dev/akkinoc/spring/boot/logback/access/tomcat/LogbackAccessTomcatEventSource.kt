@@ -95,10 +95,6 @@ class LogbackAccessTomcatEventSource(
         request.queryString?.let { "?$it" }.orEmpty()
     }
 
-    override val requestURL: String by lazy(LazyThreadSafetyMode.NONE) {
-        "$method $requestURI$queryString $protocol"
-    }
-
     override val requestHeaderMap: Map<String, String> by lazy(LazyThreadSafetyMode.NONE) {
         val headers = sortedMapOf<String, String>(String.CASE_INSENSITIVE_ORDER)
         request.headerNames.asSequence().associateWithTo(headers) { request.getHeader(it) }

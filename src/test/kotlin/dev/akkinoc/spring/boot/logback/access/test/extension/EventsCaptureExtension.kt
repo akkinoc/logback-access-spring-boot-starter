@@ -62,7 +62,7 @@ class EventsCaptureExtension :
     private fun ExtensionContext.getAccessEventsCapture(): EventsCapture {
         val namespace = Namespace.create(this::class)
         val store = getStore(namespace)
-        return store.getOrComputeIfAbsent(EventsCapture::class.java)
+        return store.computeIfAbsent(EventsCapture::class.java)
     }
 
     companion object {

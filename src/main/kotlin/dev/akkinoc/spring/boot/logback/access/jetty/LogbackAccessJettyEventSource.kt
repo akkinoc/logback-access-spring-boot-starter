@@ -47,6 +47,9 @@ class LogbackAccessJettyEventSource(
 
     override val response: ResponseWrapper = object : ResponseWrapper(rawResponse) {
         override fun getContentType(): String? = rawResponse.headers[HttpHeader.CONTENT_TYPE]
+        override fun sendRedirect(location: String, sc: Int, clearBuffer: Boolean) {
+            // No-op: This wrapper is used only for reading response data, not for actual redirects
+        }
     }
 
     override val serverAdapter: JettyModernServerAdapter = JettyModernServerAdapter(rawRequest, rawResponse)
@@ -96,10 +99,6 @@ class LogbackAccessJettyEventSource(
 
     override val queryString: String by lazy(LazyThreadSafetyMode.NONE) {
         rawRequest.httpURI.query?.let { "?$it" }.orEmpty()
-    }
-
-    override val requestURL: String by lazy(LazyThreadSafetyMode.NONE) {
-        "$method $requestURI$queryString $protocol"
     }
 
     override val requestHeaderMap: Map<String, String> by lazy(LazyThreadSafetyMode.NONE) {

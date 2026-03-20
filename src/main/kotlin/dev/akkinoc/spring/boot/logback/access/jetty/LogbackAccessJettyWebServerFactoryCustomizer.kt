@@ -4,14 +4,14 @@ import dev.akkinoc.spring.boot.logback.access.LogbackAccessContext
 import org.eclipse.jetty.server.Server
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory.getLogger
-import org.springframework.boot.web.embedded.jetty.ConfigurableJettyWebServerFactory
+import org.springframework.boot.jetty.ConfigurableJettyWebServerFactory
 import org.springframework.boot.web.server.WebServerFactoryCustomizer
 
 /**
  * The [WebServerFactoryCustomizer] for the Jetty web server.
  *
  * @property logbackAccessContext The Logback-access context.
- * @see org.springframework.boot.autoconfigure.web.embedded.JettyWebServerFactoryCustomizer
+ * @see org.springframework.boot.jetty.autoconfigure.JettyWebServerFactoryCustomizer
  */
 class LogbackAccessJettyWebServerFactoryCustomizer(
     private val logbackAccessContext: LogbackAccessContext,

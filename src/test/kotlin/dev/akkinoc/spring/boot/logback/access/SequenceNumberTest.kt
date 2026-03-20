@@ -7,8 +7,6 @@ import dev.akkinoc.spring.boot.logback.access.test.type.JettyReactiveWebTest
 import dev.akkinoc.spring.boot.logback.access.test.type.JettyServletWebTest
 import dev.akkinoc.spring.boot.logback.access.test.type.TomcatReactiveWebTest
 import dev.akkinoc.spring.boot.logback.access.test.type.TomcatServletWebTest
-import dev.akkinoc.spring.boot.logback.access.test.type.UndertowReactiveWebTest
-import dev.akkinoc.spring.boot.logback.access.test.type.UndertowServletWebTest
 import io.kotest.matchers.collections.shouldBeSorted
 import io.kotest.matchers.collections.shouldBeUnique
 import io.kotest.matchers.collections.shouldHaveSize
@@ -17,8 +15,8 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.web.client.TestRestTemplate
-import org.springframework.boot.test.web.client.exchange
+import org.springframework.boot.resttestclient.TestRestTemplate
+import org.springframework.boot.resttestclient.exchange
 import org.springframework.http.RequestEntity
 import org.springframework.test.context.TestPropertySource
 
@@ -69,15 +67,3 @@ class JettyServletWebSequenceNumberTest : SequenceNumberTest()
  */
 @JettyReactiveWebTest
 class JettyReactiveWebSequenceNumberTest : SequenceNumberTest()
-
-/**
- * Tests the [SequenceNumberTest] using the Undertow servlet web server.
- */
-@UndertowServletWebTest
-class UndertowServletWebSequenceNumberTest : SequenceNumberTest()
-
-/**
- * Tests the [SequenceNumberTest] using the Undertow reactive web server.
- */
-@UndertowReactiveWebTest
-class UndertowReactiveWebSequenceNumberTest : SequenceNumberTest()

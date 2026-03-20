@@ -10,17 +10,17 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.12</version>
+        <version>4.0.4</version>
     </parent>
 
     <properties>
-        <logback-access-spring-boot-starter.version>[4.0.0,)</logback-access-spring-boot-starter.version>
+        <logback-access-spring-boot-starter.version>[5.0.0,)</logback-access-spring-boot-starter.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-webmvc</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>

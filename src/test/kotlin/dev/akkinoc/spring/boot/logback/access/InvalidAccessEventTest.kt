@@ -7,18 +7,17 @@ import dev.akkinoc.spring.boot.logback.access.test.type.JettyReactiveWebTest
 import dev.akkinoc.spring.boot.logback.access.test.type.JettyServletWebTest
 import dev.akkinoc.spring.boot.logback.access.test.type.TomcatReactiveWebTest
 import dev.akkinoc.spring.boot.logback.access.test.type.TomcatServletWebTest
-import dev.akkinoc.spring.boot.logback.access.test.type.UndertowReactiveWebTest
-import dev.akkinoc.spring.boot.logback.access.test.type.UndertowServletWebTest
 import io.kotest.matchers.collections.shouldBeSingleton
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.string.shouldBeEmpty
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.web.client.TestRestTemplate
-import org.springframework.boot.test.web.client.exchange
+import org.springframework.boot.resttestclient.TestRestTemplate
+import org.springframework.boot.resttestclient.exchange
 import org.springframework.http.RequestEntity
 import org.springframework.test.context.TestPropertySource
+import org.springframework.web.util.DefaultUriBuilderFactory
 
 /**
  * Tests the appended Logback-access event in the case where the access is invalid.
@@ -36,6 +35,7 @@ sealed class InvalidAccessEventTest(
         @Autowired rest: TestRestTemplate,
         capture: EventsCapture,
     ) {
+        val rest = rest.withUriUnencodingMode()
         val request = RequestEntity.get("/mock-controller/text?[]").build()
         val response = rest.exchange<String>(request)
         response.statusCode.value().shouldBe(if (supportsInvalidUrls) 200 else 400)
@@ -47,8 +47,14 @@ sealed class InvalidAccessEventTest(
         } else {
             event.requestURI.shouldBe("-")
             event.queryString.shouldBeEmpty()
-            event.requestURL.shouldBe("GET null HTTP/1.1")
+            event.requestURL.shouldBe("GET - HTTP/1.1")
         }
+    }
+
+    private fun TestRestTemplate.withUriUnencodingMode(): TestRestTemplate {
+        val uriBuilderFactory = DefaultUriBuilderFactory(rootUri.orEmpty())
+            .apply { encodingMode = DefaultUriBuilderFactory.EncodingMode.NONE }
+        return withClientSettings { it }.apply { setUriTemplateHandler(uriBuilderFactory) }
     }
 
 }
@@ -82,21 +88,5 @@ class JettyServletWebInvalidAccessEventTest : InvalidAccessEventTest(
  */
 @JettyReactiveWebTest
 class JettyReactiveWebInvalidAccessEventTest : InvalidAccessEventTest(
-    supportsInvalidUrls = true,
-)
-
-/**
- * Tests the [InvalidAccessEventTest] using the Undertow servlet web server.
- */
-@UndertowServletWebTest
-class UndertowServletWebInvalidAccessEventTest : InvalidAccessEventTest(
-    supportsInvalidUrls = true,
-)
-
-/**
- * Tests the [InvalidAccessEventTest] using the Undertow reactive web server.
- */
-@UndertowReactiveWebTest
-class UndertowReactiveWebInvalidAccessEventTest : InvalidAccessEventTest(
     supportsInvalidUrls = true,
 )
