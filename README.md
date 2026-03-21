@@ -8,8 +8,8 @@
 [![license badge]][license]
 [![sponsor badge]][sponsor]
 
-[maven central]: https://maven-badges.herokuapp.com/maven-central/dev.akkinoc.spring.boot/logback-access-spring-boot-starter
-[maven central badge]: https://maven-badges.herokuapp.com/maven-central/dev.akkinoc.spring.boot/logback-access-spring-boot-starter/badge.svg
+[maven central]: https://central.sonatype.com/artifact/dev.akkinoc.spring.boot/logback-access-spring-boot-starter
+[maven central badge]: https://img.shields.io/maven-central/v/dev.akkinoc.spring.boot/logback-access-spring-boot-starter?color=brightgreen
 [javadoc]: https://javadoc.io/doc/dev.akkinoc.spring.boot/logback-access-spring-boot-starter
 [javadoc badge]: https://javadoc.io/badge2/dev.akkinoc.spring.boot/logback-access-spring-boot-starter/javadoc.svg
 [release]: https://github.com/akkinoc/logback-access-spring-boot-starter/releases
