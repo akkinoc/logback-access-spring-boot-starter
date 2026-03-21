@@ -3,9 +3,6 @@ on:
   push:
   pull_request:
   workflow_dispatch:
-concurrency:
-  group: build-${{ github.ref }}
-  cancel-in-progress: true
 jobs:
   build:
     strategy:
