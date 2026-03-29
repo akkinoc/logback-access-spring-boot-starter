@@ -6,6 +6,8 @@ on:
   schedule:
     - cron: 0 12 * * *
   workflow_dispatch:
+permissions:
+  contents: read
 concurrency:
   group: deploy
   cancel-in-progress: false
