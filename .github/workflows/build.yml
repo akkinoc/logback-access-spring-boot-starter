@@ -5,18 +5,19 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+  id-token: write
 jobs:
   build:
     strategy:
       fail-fast: false
       matrix:
         java: [17, 21, 25]
-    name: Build with Java ${{ matrix.java }}
+    name: Build - Java ${{ matrix.java }}
     runs-on: ubuntu-24.04
     env:
       MAVEN_ARGS: -B --color always
     steps:
-      - name: Checkout the Git repository
+      - name: Checkout
         uses: actions/checkout@v6.0.2
       - name: Setup Java
         uses: actions/setup-java@v5.2.0
@@ -24,26 +25,28 @@ jobs:
           distribution: temurin
           java-version: ${{ matrix.java }}
           cache: maven
-      - name: Export the project version
-        run: echo PROJECT_VERSION=$(mvn -Dexpression=project.version -q help:evaluate) | tee -a $GITHUB_ENV
-      - name: Build the project
+      - name: Get project version
+        run: |
+          PROJECT_VERSION="$(mvn -Dexpression=project.version -q help:evaluate)"
+          echo "PROJECT_VERSION=$PROJECT_VERSION" | tee -a "$GITHUB_ENV"
+      - name: Build
         run: mvn clean install
-      - name: Build the "examples/webmvc-tomcat-java" project
-        run: mvn -Dlogback-access-spring-boot-starter.version=$PROJECT_VERSION clean install
+      - name: Build example - webmvc-tomcat-java
+        run: mvn -Dlogback-access-spring-boot-starter.version="$PROJECT_VERSION" clean install
         working-directory: examples/webmvc-tomcat-java
-      - name: Build the "examples/webmvc-tomcat-kotlin" project
-        run: mvn -Dlogback-access-spring-boot-starter.version=$PROJECT_VERSION clean install
+      - name: Build example - webmvc-tomcat-kotlin
+        run: mvn -Dlogback-access-spring-boot-starter.version="$PROJECT_VERSION" clean install
         working-directory: examples/webmvc-tomcat-kotlin
-      - name: Build the "examples/webmvc-jetty-java" project
-        run: mvn -Dlogback-access-spring-boot-starter.version=$PROJECT_VERSION clean install
+      - name: Build example - webmvc-jetty-java
+        run: mvn -Dlogback-access-spring-boot-starter.version="$PROJECT_VERSION" clean install
         working-directory: examples/webmvc-jetty-java
-      - name: Build the "examples/webflux-tomcat-java" project
-        run: mvn -Dlogback-access-spring-boot-starter.version=$PROJECT_VERSION clean install
+      - name: Build example - webflux-tomcat-java
+        run: mvn -Dlogback-access-spring-boot-starter.version="$PROJECT_VERSION" clean install
         working-directory: examples/webflux-tomcat-java
-      - name: Build the "examples/webflux-jetty-java" project
-        run: mvn -Dlogback-access-spring-boot-starter.version=$PROJECT_VERSION clean install
+      - name: Build example - webflux-jetty-java
+        run: mvn -Dlogback-access-spring-boot-starter.version="$PROJECT_VERSION" clean install
         working-directory: examples/webflux-jetty-java
-      - name: Upload the coverage report to Codecov
+      - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v6.0.0
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+          use_oidc: true

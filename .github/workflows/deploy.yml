@@ -1,13 +1,14 @@
 name: Deploy
 on:
-  push:
-    tags:
-      - v*
   schedule:
     - cron: 0 12 * * *
   workflow_dispatch:
+    inputs:
+      release-version:
+        description: Release Version
+        type: string
 permissions:
-  contents: read
+  contents: write
 concurrency:
   group: deploy
   cancel-in-progress: false
@@ -18,8 +19,10 @@ jobs:
     env:
       MAVEN_ARGS: -B --color always
     steps:
-      - name: Checkout the Git repository
+      - name: Checkout
         uses: actions/checkout@v6.0.2
+        with:
+          fetch-depth: 0
       - name: Setup Java
         uses: actions/setup-java@v5.2.0
         with:
@@ -34,11 +37,24 @@ jobs:
         with:
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
-      - name: Export the project version
-        run: echo PROJECT_VERSION=$(mvn -Dexpression=project.version -q help:evaluate) | tee -a $GITHUB_ENV
-      - name: Deploy the project
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+          git_tag_gpgsign: true
+      - name: Prepare release
+        run: |
+          if git rev-parse -q --verify "refs/tags/v${{ inputs.release-version }}" &>/dev/null; then
+            echo "Skipping release preparation. Tag v${{ inputs.release-version }} already exists."
+          else
+            mvn -DreleaseVersion="${{ inputs.release-version }}" release:clean release:prepare
+          fi
+        if: ${{ inputs.release-version }}
+      - name: Checkout release tag
+        uses: actions/checkout@v6.0.2
+        with:
+          ref: refs/tags/v${{ inputs.release-version }}
+        if: ${{ inputs.release-version }}
+      - name: Deploy
         run: mvn clean deploy
-        if: ${{ startsWith(github.ref, 'refs/tags/') || endsWith(env.PROJECT_VERSION, '-SNAPSHOT') }}
         env:
           MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
           MAVEN_CENTRAL_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
