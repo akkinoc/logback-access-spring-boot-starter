@@ -1,7 +1,9 @@
+config:
+  warningsAsErrors: true
 comments:
   UndocumentedPublicClass:
     active: true
-    searchInInnerObject: false
+    ignoreDefaultCompanionObject: true
   UndocumentedPublicFunction:
     active: true
   UndocumentedPublicProperty:
@@ -9,17 +11,21 @@ comments:
 complexity:
   TooManyFunctions:
     ignoreDeprecated: true
+    ignoreInternal: true
     ignoreOverridden: true
     ignorePrivate: true
-formatting:
-  ImportOrdering:
-    active: true
+ktlint:
+  BlankLineBetweenWhenConditions:
+    active: false
+  ClassSignature:
+    active: false
+  EnumWrapping:
+    active: false
+  FunctionExpressionBody:
+    active: false
+  FunctionSignature:
+    active: false
   NoBlankLineBeforeRbrace:
-    active: false
-  ParameterListWrapping:
-    active: false
-performance:
-  SpreadOperator:
     active: false
 style:
   ClassOrdering:
@@ -35,5 +41,5 @@ style:
     excludeGuardClauses: true
   SerialVersionUIDInSerializableClass:
     active: false
-  UnusedPrivateMember:
-    allowedNames: (readObject|readObjectNoData|readResolve|serialVersionUID|writeObject|writeReplace)
+  UnusedPrivateFunction:
+    allowedNames: (readObject|readObjectNoData|readResolve|writeObject|writeReplace)
