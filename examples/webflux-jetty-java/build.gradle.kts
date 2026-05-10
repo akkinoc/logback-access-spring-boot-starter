@@ -1,0 +1,20 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
+plugins {
+    id("org.springframework.boot")
+    application
+}
+
+dependencies {
+    implementation(platform(SpringBootPlugin.BOM_COORDINATES))
+    implementation("org.springframework.boot:spring-boot-starter-webflux") {
+        exclude("org.springframework.boot", "spring-boot-starter-reactor-netty")
+    }
+    implementation("org.springframework.boot:spring-boot-starter-jetty")
+    implementation("dev.akkinoc.spring.boot:logback-access-spring-boot-starter")
+    implementation("ch.qos.logback.access:logback-access-jetty12:2.0.12")
+}
+
+application {
+    mainClass = "example.Application"
+}

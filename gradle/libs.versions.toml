@@ -1,0 +1,38 @@
+[versions]
+java = "17"
+java-additional = "21,25"
+kotlin = "2.2.21"
+spring-boot = "4.0.6"
+detekt = "2.0.0-alpha.3"
+dokka = "2.2.0"
+publish = "0.36.0"
+release = "1.21.1"
+logback-access = "2.0.12"
+kotest = "6.1.11"
+
+[plugins]
+kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" }
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
+detekt = { id = "dev.detekt", version.ref = "detekt" }
+dokka = { id = "org.jetbrains.dokka-javadoc", version.ref = "dokka" }
+publish = { id = "com.vanniktech.maven.publish", version.ref = "publish" }
+release = { id = "pl.allegro.tech.build.axion-release", version.ref = "release" }
+
+[libraries]
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm" }
+spring-boot-starter = { module = "org.springframework.boot:spring-boot-starter" }
+spring-boot-starter-webmvc = { module = "org.springframework.boot:spring-boot-starter-webmvc" }
+spring-boot-starter-webflux = { module = "org.springframework.boot:spring-boot-starter-webflux" }
+spring-boot-starter-tomcat = { module = "org.springframework.boot:spring-boot-starter-tomcat" }
+spring-boot-starter-jetty = { module = "org.springframework.boot:spring-boot-starter-jetty" }
+spring-boot-starter-security = { module = "org.springframework.boot:spring-boot-starter-security" }
+logback-access-common = { module = "ch.qos.logback.access:logback-access-common", version.ref = "logback-access" }
+logback-access-tomcat = { module = "ch.qos.logback.access:logback-access-tomcat", version.ref = "logback-access" }
+logback-access-jetty = { module = "ch.qos.logback.access:logback-access-jetty12", version.ref = "logback-access" }
+spring-boot-starter-webmvc-test = { module = "org.springframework.boot:spring-boot-starter-webmvc-test" }
+spring-boot-starter-webflux-test = { module = "org.springframework.boot:spring-boot-starter-webflux-test" }
+spring-boot-starter-restclient-test = { module = "org.springframework.boot:spring-boot-starter-restclient-test" }
+kotest-assertions = { module = "io.kotest:kotest-assertions-core-jvm", version.ref = "kotest" }
+detekt-rules-ktlint = { module = "dev.detekt:detekt-rules-ktlint-wrapper", version.ref = "detekt" }
