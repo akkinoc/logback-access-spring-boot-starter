@@ -4,10 +4,11 @@ import com.vanniktech.maven.publish.SourcesJar
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
 plugins {
+    `java-library`
+    jacoco
     alias(libs.plugins.kotlin)
     alias(libs.plugins.kotlin.spring)
     alias(libs.plugins.detekt)
-    jacoco
     alias(libs.plugins.dokka)
     alias(libs.plugins.publish)
 }

@@ -1,8 +1,8 @@
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
 plugins {
-    id("org.springframework.boot")
     application
+    id("org.springframework.boot")
 }
 
 dependencies {

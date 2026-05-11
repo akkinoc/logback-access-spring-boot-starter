@@ -1,10 +1,10 @@
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
 plugins {
+    application
     kotlin("jvm")
     kotlin("plugin.spring")
     id("org.springframework.boot")
-    application
 }
 
 dependencies {
