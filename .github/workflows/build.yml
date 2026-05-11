@@ -23,7 +23,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v6.1.0
       - name: Build
-        run: ./gradlew clean build publishToMavenLocal
+        run: ./gradlew clean build
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v6.0.0
         with:
