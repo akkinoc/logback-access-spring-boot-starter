@@ -39,7 +39,7 @@ sealed class ConfigurationFileLocationTest {
 /**
  * Tests the case where the location of the configuration file is specified as a file system path.
  */
-@TestPropertySource(properties = ["logback.access.config=target/test-classes/logback-access-test.capture.xml"])
+@TestPropertySource(properties = ["logback.access.config=src/test/resources/logback-access-test.capture.xml"])
 sealed class ConfigurationFilePathTest : ConfigurationFileLocationTest()
 
 /**
@@ -69,7 +69,7 @@ class JettyReactiveWebConfigurationFilePathTest : ConfigurationFilePathTest()
 /**
  * Tests the case where the location of the configuration file is specified as a file scheme URI.
  */
-@TestPropertySource(properties = ["logback.access.config=file:target/test-classes/logback-access-test.capture.xml"])
+@TestPropertySource(properties = ["logback.access.config=file:src/test/resources/logback-access-test.capture.xml"])
 sealed class ConfigurationFileUriTest : ConfigurationFileLocationTest()
 
 /**
