@@ -28,4 +28,13 @@ jobs:
         uses: codecov/codecov-action@v6.0.0
         with:
           use_oidc: true
+          report_type: coverage
           fail_ci_if_error: true
+        if: ${{ !cancelled() }}
+      - name: Upload test results to Codecov
+        uses: codecov/codecov-action@v6.0.0
+        with:
+          use_oidc: true
+          report_type: test_results
+          fail_ci_if_error: true
+        if: ${{ !cancelled() }}
