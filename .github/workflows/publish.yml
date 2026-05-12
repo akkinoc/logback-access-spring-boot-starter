@@ -15,6 +15,7 @@ jobs:
   publish:
     name: Publish
     runs-on: ubuntu-24.04
+    environment: ${{ case(startsWith(github.ref, 'refs/tags/v'), 'release', 'snapshot') }}
     env:
       GRADLE_OPTS: -Dorg.gradle.console=colored
     steps:
@@ -29,24 +30,15 @@ jobs:
         uses: gradle/actions/setup-gradle@v6.1.0
       - name: Build
         run: ./gradlew clean build
-      - name: Publish to Maven Local
-        run: ./gradlew publishToMavenLocal
+      - name: Publish ${{ case(startsWith(github.ref, 'refs/tags/v'), 'Release', 'Snapshot') }} to Maven Local
+        run: ./gradlew publishToMavenLocal ${{ case(startsWith(github.ref, 'refs/tags/v'), '', '-Prelease.forceSnapshot') }}
         env:
           ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_PRIVATE_KEY }}
           ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.GPG_PASSPHRASE }}
-      - name: Publish Snapshot to Maven Central
-        run: ./gradlew publishToMavenCentral -Prelease.forceSnapshot
-        env:
-          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_PRIVATE_KEY }}
-          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.GPG_PASSPHRASE }}
-          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
-          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
-        if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
-      - name: Publish Release to Maven Central
-        run: ./gradlew publishToMavenCentral
+      - name: Publish ${{ case(startsWith(github.ref, 'refs/tags/v'), 'Release', 'Snapshot') }} to Maven Central
+        run: ./gradlew publishToMavenCentral ${{ case(startsWith(github.ref, 'refs/tags/v'), '', '-Prelease.forceSnapshot') }}
         env:
           ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.GPG_PRIVATE_KEY }}
           ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.GPG_PASSPHRASE }}
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
-        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
