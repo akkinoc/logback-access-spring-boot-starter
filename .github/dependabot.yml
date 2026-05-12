@@ -10,14 +10,8 @@ updates:
     labels:
       - type:dependencies
     milestone: 5
-  - package-ecosystem: maven
-    directories:
-      - /
-      - /examples/webflux-jetty-java
-      - /examples/webflux-tomcat-java
-      - /examples/webmvc-jetty-java
-      - /examples/webmvc-tomcat-java
-      - /examples/webmvc-tomcat-kotlin
+  - package-ecosystem: gradle
+    directory: /
     schedule:
       interval: cron
       cronjob: 0 12 * * *
@@ -26,10 +20,3 @@ updates:
     labels:
       - type:dependencies
     milestone: 5
-    groups:
-      spring-boot:
-        patterns:
-          - org.springframework.boot:*
-      logback-access:
-        patterns:
-          - ch.qos.logback.access:*
