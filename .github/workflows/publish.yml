@@ -15,7 +15,7 @@ jobs:
   publish:
     name: Publish
     runs-on: ubuntu-24.04
-    environment: ${{ case(startsWith(github.ref, 'refs/tags/v'), 'release', 'snapshot') }}
+    environment: maven-central-${{ case(startsWith(github.ref, 'refs/tags/v'), 'release', 'snapshot') }}
     env:
       GRADLE_OPTS: -Dorg.gradle.console=colored
     steps:
