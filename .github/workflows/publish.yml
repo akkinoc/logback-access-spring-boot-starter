@@ -42,3 +42,12 @@ jobs:
           ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.GPG_PASSPHRASE }}
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+      - name: Upload artifact
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: artifact
+          path: |
+            **/build/publications/
+            **/build/libs/
+            **/build/reports/
+        if: ${{ !cancelled() }}
