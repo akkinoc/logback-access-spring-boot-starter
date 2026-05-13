@@ -1,0 +1,29 @@
+name: Submit Dependency Graph
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: submit-dependency-graph
+  cancel-in-progress: false
+jobs:
+  submit-dependency-graph:
+    name: Submit Dependency Graph
+    runs-on: ubuntu-24.04
+    env:
+      GRADLE_OPTS: -Dorg.gradle.console=colored
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+      - name: Setup Java
+        uses: actions/setup-java@v5.2.0
+        with:
+          distribution: temurin
+          java-version: 17
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v6.1.0
+      - name: Submit dependency graph
+        uses: gradle/actions/dependency-submission@v6.1.0
