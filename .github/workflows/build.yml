@@ -24,6 +24,8 @@ jobs:
         uses: gradle/actions/setup-gradle@v6.1.0
       - name: Build
         run: ./gradlew clean build
+      - name: Publish to Maven Local
+        run: ./gradlew publishToMavenLocal
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v6.0.0
         with:
