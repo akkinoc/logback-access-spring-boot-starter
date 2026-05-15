@@ -1,7 +1,7 @@
 [versions]
 java = "17"
 java-additional = "21,25"
-kotlin = "2.2.21"
+kotlin = "2.3.21"
 spring-boot = "4.0.6"
 detekt = "2.0.0-alpha.3"
 dokka = "2.2.0"
