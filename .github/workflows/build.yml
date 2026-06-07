@@ -29,14 +29,14 @@ jobs:
       - name: Publish to Maven Local
         run: ./gradlew publishToMavenLocal
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v6.0.1
+        uses: codecov/codecov-action@v7.0.0
         with:
           use_oidc: true
           report_type: coverage
           fail_ci_if_error: true
         if: ${{ !cancelled() }}
       - name: Upload test results to Codecov
-        uses: codecov/codecov-action@v6.0.1
+        uses: codecov/codecov-action@v7.0.0
         with:
           use_oidc: true
           report_type: test_results
