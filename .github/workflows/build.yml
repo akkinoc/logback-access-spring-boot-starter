@@ -23,7 +23,7 @@ jobs:
           distribution: temurin
           java-version-file: .tool-versions
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v6.1.0
+        uses: gradle/actions/setup-gradle@v6.1.1
       - name: Build
         run: ./gradlew clean build
       - name: Publish to Maven Local
