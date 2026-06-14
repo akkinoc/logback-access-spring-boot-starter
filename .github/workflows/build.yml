@@ -27,7 +27,7 @@ jobs:
       - name: Build
         run: ./gradlew clean build
       - name: Publish to Maven Local
-        run: ./gradlew publishToMavenLocal
+        run: ./gradlew publishToMavenLocal -Prelease.forceSnapshot
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v7.0.0
         with:
