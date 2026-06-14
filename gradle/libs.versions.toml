@@ -2,7 +2,7 @@
 java = "17"
 java-additional = "21,25"
 kotlin = "2.2.21"
-spring-boot = "4.0.6"
+spring-boot = "4.1.0"
 detekt = "2.0.0-alpha.3"
 dokka = "2.2.0"
 publish = "0.36.0"
