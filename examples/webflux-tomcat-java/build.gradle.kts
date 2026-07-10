@@ -12,7 +12,7 @@ dependencies {
     }
     implementation("org.springframework.boot:spring-boot-starter-tomcat")
     implementation("dev.akkinoc.spring.boot:logback-access-spring-boot-starter:$version")
-    implementation("ch.qos.logback.access:logback-access-tomcat:2.0.12")
+    implementation("ch.qos.logback.access:logback-access-tomcat:2.0.13")
 }
 
 application {
