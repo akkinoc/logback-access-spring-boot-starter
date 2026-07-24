@@ -7,7 +7,7 @@ detekt = "2.0.0-alpha.5"
 dokka = "2.2.0"
 publish = "0.37.0"
 release = "1.21.2"
-logback-access = "2.0.13"
+logback-access = "2.0.14"
 kotest = "6.2.3"
 
 [plugins]
