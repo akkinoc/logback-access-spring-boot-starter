@@ -17,17 +17,17 @@
 
 To set up, run:
 
-```console
-$ git clone https://github.com/akkinoc/logback-access-spring-boot-starter.git
-$ cd logback-access-spring-boot-starter
+```sh
+git clone https://github.com/akkinoc/logback-access-spring-boot-starter.git
+cd logback-access-spring-boot-starter
 ```
 
 ## Building and Testing
 
 To build and test, run:
 
-```console
-$ mvn clean install
+```sh
+mvn clean install
 ```
 
 ## License

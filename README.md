@@ -117,7 +117,7 @@ When access the web application, it is logged.
 
 For example:
 
-```console
+```log
 0:0:0:0:0:0:0:1 - - [24/Oct/2021:15:32:03 +0900] "GET / HTTP/1.1" 200 319
 0:0:0:0:0:0:0:1 - - [24/Oct/2021:15:32:03 +0900] "GET /favicon.ico HTTP/1.1" 404 111
 0:0:0:0:0:0:0:1 - - [24/Oct/2021:15:32:04 +0900] "GET / HTTP/1.1" 304 0
