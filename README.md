@@ -187,7 +187,7 @@ The usage of this extension is the same as the [Spring Boot Logback Extension "E
 Provides the following configuration properties.
 These can be configured by your "application.yml", "application.properties", etc.
 
-```yaml
+```yml
 # The configuration properties for Logback-access.
 logback.access:
   # Whether to enable auto-configuration.
