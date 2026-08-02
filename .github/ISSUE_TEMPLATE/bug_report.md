@@ -28,8 +28,8 @@ A clear and concise description of what you expected to happen.
 Please provide the following.
 -->
 
-* **Version of this library used**:
-* **Version of Java used**:
-* **Version of Spring Boot used**:
-* **Web server used (Tomcat, Jetty or Netty)**:
-* **Web application type used (Servlet Stack or Reactive Stack)**:
+- **Version of this library used**:
+- **Version of Java used**:
+- **Version of Spring Boot used**:
+- **Web server used (Tomcat, Jetty or Netty)**:
+- **Web application type used (Servlet Stack or Reactive Stack)**:

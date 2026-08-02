@@ -30,12 +30,12 @@
 
 ## Features
 
-* Auto-detects your configuration file and auto-configures Logback-access.
-* Supports configuration files on the classpath.
-* Provides extensions (`<springProfile>` tag, `<springProperty>` tag) for configuration files.
-* Supports rewriting of some attributes by HTTP forward headers ("X-Forwarded-*").
-* Supports remote user provided by Spring Security.
-* Provides configuration properties to enable the tee filter.
+- Auto-detects your configuration file and auto-configures Logback-access.
+- Supports configuration files on the classpath.
+- Provides extensions (`<springProfile>` tag, `<springProperty>` tag) for configuration files.
+- Supports rewriting of some attributes by HTTP forward headers ("X-Forwarded-*").
+- Supports remote user provided by Spring Security.
+- Provides configuration properties to enable the tee filter.
 
 Supports the following web servers:
 
@@ -49,10 +49,10 @@ Supports the following web servers:
 
 Depends on:
 
-* Java 17, 21, or 25
-* Kotlin 2.3
-* Spring Boot 4.1
-* Logback-access 2.0
+- Java 17, 21, or 25
+- Kotlin 2.3
+- Spring Boot 4.1
+- Logback-access 2.0
 
 ## Usage
 
@@ -109,7 +109,7 @@ For example:
 
 See also the Logback-access official documents:
 
-* [Logback-access configuration](https://logback.qos.ch/access.html)
+- [Logback-access configuration](https://logback.qos.ch/access.html)
 
 ### Access Logging
 
