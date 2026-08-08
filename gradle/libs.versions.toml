@@ -6,7 +6,7 @@ spring-boot = "4.1.0"
 detekt = "2.0.0-alpha.5"
 dokka = "2.2.0"
 publish = "0.37.0"
-release = "1.21.2"
+release = "1.21.3"
 logback-access = "2.0.14"
 kotest = "6.2.3"
 
