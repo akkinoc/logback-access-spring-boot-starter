@@ -123,7 +123,7 @@ mavenPublishing {
     )
     pom {
         name = project.name
-        description = "Spring Boot Starter for Orika."
+        description = "Spring Boot Starter for Logback-access."
         url = "https://github.com/akkinoc/logback-access-spring-boot-starter"
         inceptionYear = "2015"
         organization {
