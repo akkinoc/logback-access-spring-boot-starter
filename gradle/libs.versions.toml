@@ -8,7 +8,7 @@ dokka = "2.3.0"
 publish = "0.37.0"
 release = "1.21.4"
 logback-access = "2.0.15"
-kotest = "6.2.6"
+kotest = "6.2.7"
 
 [plugins]
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
