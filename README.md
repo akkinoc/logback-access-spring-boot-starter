@@ -50,8 +50,8 @@ Supports the following web servers:
 Depends on:
 
 - Java 17, 21, or 25
-- Kotlin 2.3
-- Spring Boot 4.1
+- Kotlin 2.4
+- Spring Boot 4.2
 - Logback-access 2.0
 
 ## Usage
